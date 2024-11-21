@@ -1,0 +1,6 @@
+﻿<?xml version="1.0"?>
+
+<helloworld>
+	<greeting>Hello, World!</greeting>
+	<description>An XSLT example.</description>
+</helloworld>

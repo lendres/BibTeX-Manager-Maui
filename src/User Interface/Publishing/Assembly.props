@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project>
+	<PropertyGroup>
+		<Title>BibTex Manager</Title>
+		<Product>BibTex Manager</Product>
+		<Copyright>2024 Lance A. Endres</Copyright>
+		<Company>Digital Production</Company>
+		<Description>.</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="DigitalProduction.Reflection.AuthorsAttribute">
+			<_Parameter1>Lance A. Endres</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="DigitalProduction.Reflection.WebsiteAttribute">
+			<_Parameter1>https://github.com/lendres/BibTex-Manager-Maui</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="DigitalProduction.Reflection.IssuesAddressAttribute">
+			<_Parameter1>https://github.com/lendres/BibTex-Manager-Maui/issues</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="DigitalProduction.Reflection.DocumentationAddressAttribute">
+			<_Parameter1>https://github.com/lendres/BibTex-Manager-Maui/wiki</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+	
+</Project>
