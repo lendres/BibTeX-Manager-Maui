@@ -1,41 +1,40 @@
-﻿namespace BibtexManager
+﻿namespace BibtexManager;
+
+/// <summary>
+/// Data used for processing by a single TagProcessor.
+/// </summary>
+public class TagProcessingData
 {
+	#region Fields
+
+	private bool			_acceptAll			= false;
+	private Correction		_correction			= new();
+
+	#endregion
+
+	#region Construction
+
 	/// <summary>
-	/// Data used for processing by a single TagProcessor.
+	/// Default constructor.
 	/// </summary>
-	public class TagProcessingData
+	public TagProcessingData()
 	{
-		#region Fields
+	}
 
-		private bool			_acceptAll			= false;
-		private Correction		_correction			= new();
+	#endregion
 
-		#endregion
+	#region Properties
 
-		#region Construction
+	/// <summary>
+	/// Accept all default replacements/corrections.
+	/// </summary>
+	public bool AcceptAll { get => _acceptAll; set => _acceptAll = value; }
 
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public TagProcessingData()
-		{
-		}
+	/// <summary>
+	/// Correction.
+	/// </summary>
+	public Correction Correction { get => _correction; set => _correction = value; }
 
-		#endregion
+	#endregion
 
-		#region Properties
-
-		/// <summary>
-		/// Accept all default replacements/corrections.
-		/// </summary>
-		public bool AcceptAll { get => _acceptAll; set => _acceptAll = value; }
-
-		/// <summary>
-		/// Correction.
-		/// </summary>
-		public Correction Correction { get => _correction; set => _correction = value; }
-
-		#endregion
-
-	} // End class.
-}
+} // End class.

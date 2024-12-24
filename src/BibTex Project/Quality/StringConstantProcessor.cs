@@ -1,89 +1,87 @@
 ﻿using BibTeXLibrary;
-using System.Collections.Generic;
 
-namespace BibtexManager
+namespace BibtexManager;
+
+/// <summary>
+/// Processor to handle bibliography constant strings.
+/// </summary>
+public class StringConstantProcessor
 {
+	#region Fields
+
+	private readonly Dictionary<string, string>			_map		= [];
+
+	#endregion
+
+	#region Construction
+
 	/// <summary>
-	/// Processor to handle bibliography constant strings.
+	/// Default constructor.
 	/// </summary>
-	public class StringConstantProcessor
+	public StringConstantProcessor()
 	{
-		#region Fields
+	}
 
-		private readonly Dictionary<string, string>			_map		= [];
+	#endregion
 
-		#endregion
+	#region Properties
 
-		#region Construction
+	#endregion
 
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public StringConstantProcessor()
+	#region Methods
+
+	/// <summary>
+	/// Clear values.
+	/// </summary>
+	public void Clear()
+	{
+		_map.Clear();
+	}
+
+	/// <summary>
+	/// Extract and save the String Constants from the document object models.
+	/// </summary>
+	/// <param name="bibliographyDOMs">List of BibliographyDOMs.</param>
+	public void AddStringConstantsToMap(List<BibliographyDOM> bibliographyDOMs)
+	{
+		foreach (BibliographyDOM bibliographyDOM in bibliographyDOMs)
 		{
+			AddStringConstantsToMap(bibliographyDOM);
 		}
+	}
 
-		#endregion
-
-		#region Properties
-
-		#endregion
-
-		#region Methods
-
-		/// <summary>
-		/// Clear values.
-		/// </summary>
-		public void Clear()
+	/// <summary>
+	/// Extract and save the String Constants from the document object model.
+	/// </summary>
+	/// <param name="bibliographyDOMs">BibliographyDOM.</param>
+	public void AddStringConstantsToMap(BibliographyDOM bibliographyDOM)
+	{
+		foreach (StringConstantPart entry in bibliographyDOM.StringConstants)
 		{
-			_map.Clear();
+			_map.Add(entry.StringName, entry.StringValue);
 		}
+	}
 
-		/// <summary>
-		/// Extract and save the String Constants from the document object models.
-		/// </summary>
-		/// <param name="bibliographyDOMs">List of BibliographyDOMs.</param>
-		public void AddStringConstantsToMap(List<BibliographyDOM> bibliographyDOMs)
+	/// <summary>
+	/// Replace text with string constants.
+	/// </summary>
+	/// <param name="entry">Entry to process for text constant replacements.</param>
+	public void ApplyStringConstants(BibEntry entry)
+	{
+		foreach (KeyValuePair<string, string> pair in _map)
 		{
-			foreach (BibliographyDOM bibliographyDOM in bibliographyDOMs)
+			string key = entry.FindTagValue(pair.Value);
+			if (key != "")
 			{
-				AddStringConstantsToMap(bibliographyDOM);
+				entry.SetTagValue(key, new TagValue(pair.Key, false));
 			}
 		}
+	}
 
-		/// <summary>
-		/// Extract and save the String Constants from the document object model.
-		/// </summary>
-		/// <param name="bibliographyDOMs">BibliographyDOM.</param>
-		public void AddStringConstantsToMap(BibliographyDOM bibliographyDOM)
-		{
-			foreach (StringConstantPart entry in bibliographyDOM.StringConstants)
-			{
-				_map.Add(entry.StringName, entry.StringValue);
-			}
-		}
+	#endregion
 
-		/// <summary>
-		/// Replace text with string constants.
-		/// </summary>
-		/// <param name="entry">Entry to process for text constant replacements.</param>
-		public void ApplyStringConstants(BibEntry entry)
-		{
-			foreach (KeyValuePair<string, string> pair in _map)
-			{
-				string key = entry.FindTagValue(pair.Value);
-				if (key != "")
-				{
-					entry.SetTagValue(key, new TagValue(pair.Key, false));
-				}
-			}
-		}
+	#region XML
 
-		#endregion
+	#endregion
 
-		#region XML
-
-		#endregion
-
-	} // End class.
-}
+} // End class.
