@@ -28,7 +28,7 @@
 
 	<ItemGroup>
 		<AssemblyAttribute Include="DigitalProduction.Reflection.DocumentationAddressAttribute">
-			<_Parameter1>https://github.com/lendres/BibTex-Manager-Maui/wiki</_Parameter1>
+			<_Parameter1>https://github.com/lendres/BibTeX-Library-Dot-Net/wiki</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
 	
