@@ -31,17 +31,20 @@
 			</HorizontalStackLayout>
 
 			<Button 
-						Grid.Column="1"
-						Text="Save Configs"
-						IsEnabled="{Binding Modified}"
-						HorizontalOptions="End"/>
+				Grid.Column="1"
+				Text="Save Configs"
+				IsEnabled="{Binding Modified}"
+				HorizontalOptions="End"/>
 
 		</Grid>
 		<Editor 
 			x:Name="_editor"
-			HeightRequest="250"
+			Text="{Binding RawBibEntry}"
+		/>
+
+		<!--HeightRequest="250"
 			TextChanged="OnEditorTextChanged"
-			Completed="OnEditorCompleted" />
+			Completed="OnEditorCompleted"-->
 
 	</VerticalStackLayout>
 

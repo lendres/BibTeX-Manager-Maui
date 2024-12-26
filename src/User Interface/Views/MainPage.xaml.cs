@@ -9,7 +9,9 @@ namespace BibTexManager.Views;
 
 public partial class MainPage : DigitalProductionMainPage
 {
-	private readonly FilePickerFileType _bibliographyProjectFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+	#region Fields
+
+	private readonly FilePickerFileType _bibliographyProjectFileType = new(new Dictionary<DevicePlatform, IEnumerable<string>>
 	{
 		{
 			DevicePlatform.WinUI, new[]
@@ -19,18 +21,18 @@ public partial class MainPage : DigitalProductionMainPage
 		},
 	});
 
+	#endregion
+
+	#region Construction
+
 	public MainPage()
 	{
 		InitializeComponent();
 	}
 
-	/// <summary>
-	/// Override to set the height to something usable.
-	/// </summary>
-	protected override void OnAppearing()
-	{
-		base.OnAppearing();
-	}
+	#endregion
+
+	#region Menu Events
 
 	async void OnOpen(object sender, EventArgs eventArgs)
 	{
@@ -47,20 +49,6 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 	}
 
-	async void OnHelp(object sender, EventArgs eventArgs)
-	{
-		System.Reflection.Assembly? entryAssembly = System.Reflection.Assembly.GetEntryAssembly();
-		System.Diagnostics.Debug.Assert(entryAssembly != null);
-		string url = DigitalProduction.Reflection.Assembly.DocumentationAddress(entryAssembly);
-		await Launcher.OpenAsync(url);
-	}
-
-	async void OnAbout(object sender, EventArgs eventArgs)
-	{
-		AboutView1 view = new(new AboutViewModel(true));
-		_ = await Shell.Current.ShowPopupAsync(view);
-	}
-
 	public static async Task<FileResult?> BrowseForFile(PickOptions options)
 	{
 		try
@@ -75,4 +63,51 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 		return null;
 	}
+
+	async void OnHelp(object sender, EventArgs eventArgs)
+	{
+		System.Reflection.Assembly? entryAssembly = System.Reflection.Assembly.GetEntryAssembly();
+		System.Diagnostics.Debug.Assert(entryAssembly != null);
+		string url = DigitalProduction.Reflection.Assembly.DocumentationAddress(entryAssembly);
+		await Launcher.OpenAsync(url);
+	}
+
+	async void OnAbout(object sender, EventArgs eventArgs)
+	{
+		AboutView1 view = new(new AboutViewModel(true));
+		_ = await Shell.Current.ShowPopupAsync(view);
+	}
+
+	#endregion
+
+	#region Button Events
+
+	async void OnNew(object sender, EventArgs eventArgs)
+	{
+		//TranslationMatrix translationMatrix = TranslationMatrix.CreateNewTranslationMatrix(TranslationMatrixNewName, InputProcessor, InputFile);
+		
+		//await Shell.Current.GoToAsync(nameof(TranslationMatrixView), true, new Dictionary<string, object>
+		//{
+		//	{"TranslationMatrix",  translationMatrix},
+		//});
+
+
+
+
+
+
+		//ConfigurationsViewModel? configurationsViewModel = BindingContext as ConfigurationsViewModel;
+		//System.Diagnostics.Debug.Assert(configurationsViewModel != null);
+
+		//ConfigurationViewModel	viewModel	= new(Interface.ConfigurationList?.ConfigurationNames ?? []);
+		//ConfigurationView		view		= new(viewModel);
+		//object?					result		= await Shell.Current.ShowPopupAsync(view);
+
+		//if (result is bool boolResult && boolResult)
+		//{
+		//	configurationsViewModel?.Insert(viewModel.Configuration);
+		//}
+	}
+
+	#endregion
 }

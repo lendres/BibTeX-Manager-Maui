@@ -13,7 +13,7 @@ public abstract class BulkImporter : ImporterBase
 	#region Fields
 
 	private ImportErrorHandlingType				_importErrorHandling			= ImportErrorHandlingType.TryAgain;
-	private readonly List<string[]>				_bulkImportResults				= new List<string[]>();
+	private readonly List<string[]>				_bulkImportResults				= [];
 
 	#endregion
 
@@ -94,18 +94,17 @@ public abstract class BulkImporter : ImporterBase
 		if (importResult.BibEntry is null)
 		{
 			// A bibliography entry was not found.
-			SaveResult(new string[] { "", "", searchString });
+			SaveResult(["", "", searchString]);
 		}
 		else
 		{
 			// A bibliography entry was found and returned.
 			SaveResult(
-				new string[]
-				{ 
+				[ 
 					importResult.BibEntry.Key,
 					importResult.BibEntry.Title,
 					searchString
-				}
+				]
 			);
 		}
 	}
@@ -131,8 +130,8 @@ public abstract class BulkImporter : ImporterBase
 	{
 		try
 		{
-			BibEntry bibEntry       = Import(searchString);
-			ResultType resultType   = bibEntry==null ? ResultType.NotFound : ResultType.Successful;
+			BibEntry? bibEntry		= Import(searchString);
+			ResultType resultType	= bibEntry==null ? ResultType.NotFound : ResultType.Successful;
 			return new ImportResult(resultType, bibEntry, "");
 		}
 		catch (Exception exception)
@@ -149,34 +148,32 @@ public abstract class BulkImporter : ImporterBase
 	protected void WriteBulkImportResults(string filePath, string[]? headers = null)
 	{
 		int rowOffset = 1;
-		using (XLWorkbook workbook = new XLWorkbook())
+		using XLWorkbook workbook = new();
+		var worksheet = workbook.Worksheets.Add("Sheet 1");
+
+		if (headers != null)
 		{
-			var worksheet = workbook.Worksheets.Add("Sheet 1");
-
-			if (headers != null)
+			for (int j = 0; j < headers.Length; j++)
 			{
-				for (int j = 0; j < headers.Length; j++)
-				{
-					worksheet.Cell(1, j+1).Value = headers[j];
-					worksheet.Cell(1, j+1).Style.Font.Bold = true;
-					worksheet.Cell(1, j+1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-				}
-				rowOffset++;
+				worksheet.Cell(1, j+1).Value = headers[j];
+				worksheet.Cell(1, j+1).Style.Font.Bold = true;
+				worksheet.Cell(1, j+1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 			}
-
-			// Write each row of data to the file.
-			for (int i = 0; i < _bulkImportResults.Count; i++)
-			{
-				for (int j = 0; j < _bulkImportResults[i].Length; j++)
-				{
-					worksheet.Cell(i+rowOffset, j+1).Value = _bulkImportResults[i][j];
-				}
-			}
-
-			worksheet.Columns().AdjustToContents();
-
-			workbook.SaveAs(filePath);
+			rowOffset++;
 		}
+
+		// Write each row of data to the file.
+		for (int i = 0; i < _bulkImportResults.Count; i++)
+		{
+			for (int j = 0; j < _bulkImportResults[i].Length; j++)
+			{
+				worksheet.Cell(i+rowOffset, j+1).Value = _bulkImportResults[i][j];
+			}
+		}
+
+		worksheet.Columns().AdjustToContents();
+
+		workbook.SaveAs(filePath);
 	}
 
 	#endregion
