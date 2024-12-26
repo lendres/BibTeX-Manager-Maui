@@ -4,6 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Controls;assembly=DigitalProductionMauiLibrary"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Converters;assembly=DigitalProductionMauiLibrary"
+	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
 	x:DataType="viewmodel:MainViewModel"
@@ -15,6 +16,7 @@
 
 	<ContentPage.MenuBarItems>
 		<MenuBarItem Text="File">
+			<MenuFlyoutItem Text="Open" Clicked="OnOpen"/>
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
 		</MenuBarItem>
 		<MenuBarItem Text="Help">
@@ -24,6 +26,7 @@
 	</ContentPage.MenuBarItems>
 
 	<ContentPage.Resources>
+		<toolkit:IsNotNullConverter x:Key="IsNotNullConverter"/>
 		<!--<toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
 		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>-->
 	</ContentPage.Resources>
@@ -37,6 +40,86 @@
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"/>
 			<BoxView Style="{StaticResource HorizontalBoarder}"/>
+
+			<!--<Grid RowDefinitions="Auto,*" RowSpacing="20" Padding="20" VerticalOptions="Start">-->
+
+				<!--<Label
+					Grid.Row="0"
+					Text="A project is not loaded."
+					IsVisible="{Binding Items, Converter={StaticResource IsNullConverter}}"
+					Style="{StaticResource LargeErrorMessageStyle}"/>-->
+
+				<Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="200"/>
+					</Grid.ColumnDefinitions>
+
+					<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
+						<Button
+							Text="New"
+							HorizontalOptions="Start"
+							/>
+
+						<Button 
+							Text="Edit"
+							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"
+							HorizontalOptions="Start"
+							/>
+
+						<Button 
+							Text="Delete"
+							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"
+							HorizontalOptions="Start"
+							/>
+					</HorizontalStackLayout>
+
+					<Button 
+						Grid.Column="1"
+						Text="Save Configs"
+						IsVisible="{Binding Items, Converter={StaticResource IsNotNullConverter}}"
+						IsEnabled="{Binding Modified}"
+						HorizontalOptions="End"/>
+					<!-- 
+							StyleClass="WideButtonStyle"
+							Command="{Binding SaveConfigurationsCommand}" -->
+				</Grid>
+
+				<dg:DataGrid
+					Grid.Row="1"
+					x:Name="_dataGrid"
+					IsVisible="{Binding Items, Converter={StaticResource IsNotNullConverter}}"
+					ItemsSource="{Binding Items}" SelectionMode="{Binding SelectionMode}"
+					SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
+					RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
+					BorderColor="{DynamicResource DataGridBorderColor}" BorderThickness="{Binding BorderThickness}"
+					HeaderBackground="{DynamicResource DataGridHeaderBackgroundColor}" HeaderBordersVisible="{Binding HeaderBordersVisible}"
+					BackgroundColor="{AppThemeBinding Light={DynamicResource DataGridBackgroundColorLight}, Dark={DynamicResource DataGridBackgroundColorDark}}"
+					FooterBackground="{DynamicResource DataGridFooterBackgroundColor}"
+					PaginationEnabled="false"
+					ActiveRowColor="{DynamicResource DataGridActiveRowColor}"
+					RowsBackgroundColorPalette="{AppThemeBinding Light={DynamicResource DataGridColorPaletteLight}, Dark={DynamicResource DataGridColorPaletteDark}}"
+					HeaderLabelStyle="{DynamicResource DataGridTitle}"
+					RowHeight="36" HeaderHeight="40"
+					RowTappedCommand="{Binding TappedCommand}">
+
+					<dg:DataGrid.Columns>
+
+						 <!--Name column.--> 
+						<dg:DataGridColumn Title="Key" PropertyName="Key" Width="0.25*" SortingEnabled="true"
+							CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
+
+						 <!--Description column.--> 
+						<dg:DataGridColumn Title="Author" PropertyName="Author" Width="1.0*" SortingEnabled="false"
+							CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
+
+						<dg:DataGridColumn Title="Title" PropertyName="Title" Width="1.0*" SortingEnabled="false"
+								CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
+
+					</dg:DataGrid.Columns>
+				</dg:DataGrid>
+
+			<!--</Grid>-->
 
 		</VerticalStackLayout>
 	</ScrollView>

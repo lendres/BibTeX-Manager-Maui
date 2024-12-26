@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>BibTex_Project</RootNamespace>
+    <RootNamespace>BibtexManager</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BibTeXLibraryDotNet" Version="0.1.2" />
+    <PackageReference Include="BibTeXLibraryDotNet" Version="0.1.3" />
     <PackageReference Include="ClosedXML" Version="0.104.2" />
     <PackageReference Include="DigitalProductionDotNetLibrary" Version="0.5.1" />
     <PackageReference Include="Google.Apis.CustomSearchAPI.v1" Version="1.68.0.3520" />

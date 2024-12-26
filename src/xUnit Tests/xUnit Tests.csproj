@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BibTex Project\BibTex Project.csproj" />
+    <ProjectReference Include="..\BibTex Project\BibTexProject.csproj" />
   </ItemGroup>
 
   <ItemGroup>

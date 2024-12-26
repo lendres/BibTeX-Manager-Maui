@@ -5,61 +5,30 @@
 /// </summary>
 public static class Preferences
 {
-	#region Settings Properties
-
 	/// <summary>
-	/// XML file location.
+	/// Load last project as start up.
 	/// </summary>
-	public static string XmlInputFile
+	public static string LoadLastProjectAtStartUp
 	{
-		get => Microsoft.Maui.Storage.Preferences.Default.Get("XML File", "");
-		set => Microsoft.Maui.Storage.Preferences.Default.Set("XML File", value);
+		get => Microsoft.Maui.Storage.Preferences.Default.Get("Load Last Project At Start Up", "");
+		set => Microsoft.Maui.Storage.Preferences.Default.Set("Load Last Project At Start Up", value);
 	}
 
 	/// <summary>
-	/// XSLT file location.
+	/// Google search endige cx identifier.
 	/// </summary>
-	public static string XsltFile
+	public static string CustomSearchEngineIdentifier
 	{
-		get => Microsoft.Maui.Storage.Preferences.Default.Get("XSLT File", "");
-		set => Microsoft.Maui.Storage.Preferences.Default.Set("XSLT File", value);
+		get => Microsoft.Maui.Storage.Preferences.Default.Get("Custom Search Engine Identifier", "");
+		set => Microsoft.Maui.Storage.Preferences.Default.Set("Custom Search Engine Identifier", value);
 	}
 
 	/// <summary>
-	/// Xslt arguments.
+	/// Google search engine API key.
 	/// </summary>
-	public static string XsltArguments
+	public static string SearchEngineApiKey
 	{
-		get => Microsoft.Maui.Storage.Preferences.Default.Get("XSLT Arguments", "");
-		set => Microsoft.Maui.Storage.Preferences.Default.Set("XSLT Arguments", value);
+		get => Microsoft.Maui.Storage.Preferences.Default.Get("Search Engine Api Key", "");
+		set => Microsoft.Maui.Storage.Preferences.Default.Set("Search Engine Api Key", value);
 	}
-
-	/// <summary>
-	/// Output file name.
-	/// </summary>
-	public static string OutputFile
-	{
-		get => Microsoft.Maui.Storage.Preferences.Default.Get("Output File", "");
-		set => Microsoft.Maui.Storage.Preferences.Default.Set("Output File", value);
-	}
-
-	/// <summary>
-	/// Run postprocessing.
-	/// </summary>
-	public static bool RunPostprocessor
-	{
-		get => Microsoft.Maui.Storage.Preferences.Default.Get("Run Postprocessor", false);
-		set => Microsoft.Maui.Storage.Preferences.Default.Set("Run Postprocessor", value);
-	}
-
-	/// <summary>
-	/// Postprocess.
-	/// </summary>
-	public static string Postprocessor
-	{
-		get => Microsoft.Maui.Storage.Preferences.Default.Get("Postprocessor", "");
-		set => Microsoft.Maui.Storage.Preferences.Default.Set("Postprocessor", value);
-	}
-
-	#endregion
 }

@@ -9,6 +9,16 @@ namespace BibTexManager.Views;
 
 public partial class MainPage : DigitalProductionMainPage
 {
+	private readonly FilePickerFileType _bibliographyProjectFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+	{
+		{
+			DevicePlatform.WinUI, new[]
+			{
+				".bibproj"
+			}
+		},
+	});
+
 	public MainPage()
 	{
 		InitializeComponent();
@@ -20,6 +30,21 @@ public partial class MainPage : DigitalProductionMainPage
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();
+	}
+
+	async void OnOpen(object sender, EventArgs eventArgs)
+	{
+		PickOptions pickOptions = new()
+		{
+			PickerTitle = "Select an Bibliography Project File",
+			FileTypes   = _bibliographyProjectFileType
+		};
+		FileResult? result = await BrowseForFile(pickOptions);
+		if (result != null)
+		{
+			MainViewModel? viewModel = BindingContext as MainViewModel;
+			viewModel?.OpenProject(result.FullPath);
+		}
 	}
 
 	async void OnHelp(object sender, EventArgs eventArgs)
@@ -36,23 +61,6 @@ public partial class MainPage : DigitalProductionMainPage
 		_ = await Shell.Current.ShowPopupAsync(view);
 	}
 
-
-
-	//public async void OnBrowseForXmlile(object sender, EventArgs eventArgs)
-	//{
-	//	PickOptions pickOptions = new()
-	//	{
-	//		PickerTitle = "Select an XML File",
-	//		FileTypes   = DigitalProduction.IO.FileTypes.Xml
-	//	};
-	//	FileResult? result = await BrowseForFile(pickOptions);
-	//	if (result != null)
-	//	{
-	//		Entry.Text = result.FullPath;
-	//	}
-	//}
-
-
 	public static async Task<FileResult?> BrowseForFile(PickOptions options)
 	{
 		try
@@ -67,5 +75,4 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 		return null;
 	}
-
 }

@@ -1,5 +1,6 @@
 ﻿using BibTeXLibrary;
 using DigitalProduction.Projects;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -42,6 +43,8 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	private bool                                _sortBibliography				= true;
 	private SortBy                              _bibliographySortMethod			= SortBy.Key;
 
+	private static ProjectExtractor?            _projectExtractor               = null;
+
 	#endregion
 
 	#region Construction
@@ -52,6 +55,13 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	public BibtexProject()
 	{
 	}
+
+	#endregion
+
+	#region Static Properties
+
+	[XmlIgnore()]
+	public static BibtexProject? Instance { get; set; }
 
 	#endregion
 
@@ -509,7 +519,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 
 	public BibEntry ParseSingleEntryText(string text)
 	{
-		BindingList<BibEntry> entries = ParseText(text);
+		ObservableCollection<BibEntry> entries = ParseText(text);
 		return entries[0];
 	}
 
@@ -517,7 +527,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	/// Parse a string and return BibEntrys.
 	/// </summary>
 	/// <param name="text">Text to process.</param>
-	public BindingList<BibEntry> ParseText(string text)
+	public ObservableCollection<BibEntry> ParseText(string text)
 	{
 		StringReader textReader = new(text);
 		BibliographyDOM result;
@@ -543,6 +553,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 		// make it safe to close the Bibliography.
 		base.Close();
 		_bibliography.Close();
+		Instance = null;
 	}
 
 	#endregion
@@ -737,12 +748,11 @@ public class BibtexProject : DigitalProduction.Projects.Project
 		base.Serialize();
 	}
 
-	public static ProjectExtractor Deserialize(string path)
+	public static void Deserialize(string path)
 	{
-		ProjectExtractor projectExtractor	= ProjectExtractor.ExtractFiles(path);
-		BibtexProject project				= Deserialize<BibtexProject>(projectExtractor);
-		project.ReadAccessoaryFiles();
-		return projectExtractor;
+		_projectExtractor	= ProjectExtractor.ExtractFiles(path);
+		Instance			= Deserialize<BibtexProject>(_projectExtractor);
+		Instance.ReadAccessoaryFiles();
 	}
 
 	/// <summary>
