@@ -32,22 +32,7 @@
 	</ContentPage.Resources>
 
 	<ScrollView>
-		<VerticalStackLayout Padding="30,0" Spacing="0">
-
-			<!-- Temporary Placeholder -->
-			<Label
-                Text="BibTex Manager"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"/>
-			<BoxView Style="{StaticResource HorizontalBoarder}"/>
-
-			<!--<Grid RowDefinitions="Auto,*" RowSpacing="20" Padding="20" VerticalOptions="Start">-->
-
-				<!--<Label
-					Grid.Row="0"
-					Text="A project is not loaded."
-					IsVisible="{Binding Items, Converter={StaticResource IsNullConverter}}"
-					Style="{StaticResource LargeErrorMessageStyle}"/>-->
+		<VerticalStackLayout Padding="30,0" Spacing="20">
 
 				<Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">
 					<Grid.ColumnDefinitions>
@@ -58,37 +43,31 @@
 					<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
 						<Button
 							Text="New"
-							HorizontalOptions="Start"
-							/>
+							StyleClass="SquareButton"
+							IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
 
 						<Button 
 							Text="Edit"
-							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"
-							HorizontalOptions="Start"
-							/>
+							StyleClass="SquareButton"
+							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
 						<Button 
 							Text="Delete"
-							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"
-							HorizontalOptions="Start"
-							/>
+							StyleClass="SquareButton"
+							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 					</HorizontalStackLayout>
 
 					<Button 
 						Grid.Column="1"
 						Text="Save Configs"
-						IsVisible="{Binding Items, Converter={StaticResource IsNotNullConverter}}"
 						IsEnabled="{Binding Modified}"
 						HorizontalOptions="End"/>
-					<!-- 
-							StyleClass="WideButtonStyle"
-							Command="{Binding SaveConfigurationsCommand}" -->
+
 				</Grid>
 
 				<dg:DataGrid
 					Grid.Row="1"
 					x:Name="_dataGrid"
-					IsVisible="{Binding Items, Converter={StaticResource IsNotNullConverter}}"
 					ItemsSource="{Binding Items}" SelectionMode="{Binding SelectionMode}"
 					SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
 					RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
@@ -110,7 +89,7 @@
 							CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
 
 						 <!--Description column.--> 
-						<dg:DataGridColumn Title="Author" PropertyName="Author" Width="1.0*" SortingEnabled="false"
+						<dg:DataGridColumn Title="Author(s)" PropertyName="Author" Width="1.0*" SortingEnabled="false"
 							CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
 
 						<dg:DataGridColumn Title="Title" PropertyName="Title" Width="1.0*" SortingEnabled="false"
@@ -118,8 +97,6 @@
 
 					</dg:DataGrid.Columns>
 				</dg:DataGrid>
-
-			<!--</Grid>-->
 
 		</VerticalStackLayout>
 	</ScrollView>

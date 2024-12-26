@@ -12,4 +12,8 @@
 		</ContentView>
 	</DataTemplate>
 
+	<Style TargetType="Button" Class="SquareButton">
+		<Setter Property="MinimumWidthRequest" Value="38"/>
+	</Style>
+
 </ResourceDictionary>
