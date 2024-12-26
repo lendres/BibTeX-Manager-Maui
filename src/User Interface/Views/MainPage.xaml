@@ -43,6 +43,7 @@
 					<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
 						<Button
 							Text="New"
+							Clicked="OnNew"
 							StyleClass="SquareButton"
 							IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
 
