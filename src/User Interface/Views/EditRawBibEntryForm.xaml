@@ -2,10 +2,9 @@
 <ContentPage
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	x:Class="XSLTProcessorMaui.Views.EditRawBibEntryForm"
-	Title="EditRawBibEntryForm">
+	x:Class="BibTexManager.Views.EditRawBibEntryForm">
 
-	<VerticalStackLayout Padding="30,0" Spacing="20">
+	<VerticalStackLayout Padding="30" Spacing="20" HorizontalOptions="Fill">
 
 		<Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">
 			<Grid.ColumnDefinitions>
@@ -15,19 +14,19 @@
 
 			<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
 				<Button
-							Text="New"
-							StyleClass="SquareButton"
-							IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
+					Text="New"
+					StyleClass="SquareButton"
+					IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
 
 				<Button 
-							Text="Edit"
-							StyleClass="SquareButton"
-							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+					Text="Edit"
+					StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
 				<Button 
-							Text="Delete"
-							StyleClass="SquareButton"
-							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+					Text="Delete"
+					StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 			</HorizontalStackLayout>
 
 			<Button 
@@ -39,6 +38,7 @@
 		</Grid>
 		<Editor 
 			x:Name="_editor"
+			VerticalOptions="Fill"
 			Text="{Binding RawBibEntry}"
 		/>
 

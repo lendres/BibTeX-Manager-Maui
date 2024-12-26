@@ -1,34 +1,27 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using DigitalProduction.Validation;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BibTeXLibrary;
-using Microsoft.Extensions.Configuration;
+﻿using BibTeXLibrary;
+using BibtexManager;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Data.Translation.Validation;
-using DocumentFormat.OpenXml.Wordprocessing;
-using BibtexManager;
-using DigitalProduction.Projects;
+using DigitalProduction.Validation;
 
-namespace XSLTProcessorMaui.ViewModels;
+namespace BibTexManager.ViewModels;
 
+[QueryProperty(nameof(AddMode), "AddMode")]
+[QueryProperty(nameof(BibEntry), "BibEntry")]
 public partial class BibEntryViewModel : ObservableObject
 {
 	#region Fields
 
 	[ObservableProperty]
-	private string							_title;
-	private bool							_addMode;
+	private string							_title								= "Add Bibtex Entry";
+	private bool							_addMode							= true;
 
 	[ObservableProperty]
-	private string							_rawBibEntry;
+	private string							_rawBibEntry						= "";
 
 	[ObservableProperty]
-	private BibEntry						_bibEntry;
+	private BibEntry						_bibEntry							= new();
 
 	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
 	private ValidatableObject<string>		_key								= new();
@@ -44,18 +37,28 @@ public partial class BibEntryViewModel : ObservableObject
 
 	public BibEntryViewModel(List<string> configurationKeys)
 	{
-		BibEntry		= new();
-		Title			= "Add Bibtex Entry";
-		_addMode		= true;
 		Initialize();
 	}
 
-	public BibEntryViewModel(BibEntry bibEntry, List<string> configurationKeys)
-    {
-		BibEntry		= bibEntry;
-		Title			= "Edit Bibtex Entry";
-		_addMode		= false;
-		Initialize();
+	#endregion
+
+	#region Properties
+
+	public bool AddMode
+	{
+		get => _addMode;
+		set
+		{
+			_addMode = value;
+			if (_addMode)
+			{
+				Title = "Add Bibtex Entry";
+			}
+			else
+			{
+				Title = "Edit Bibtex Entry";
+			}
+		}
 	}
 
 	#endregion
@@ -71,7 +74,7 @@ public partial class BibEntryViewModel : ObservableObject
 
 	private void InitializeValues()
 	{
-		Key.Value			= BibEntry.Key;
+		Key.Value = BibEntry.Key;
 	}
 
 	private void AddValidations()

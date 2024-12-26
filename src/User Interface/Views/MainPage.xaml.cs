@@ -4,6 +4,7 @@ using DigitalProduction.Controls;
 using DigitalProduction.ViewModels;
 using DigitalProduction.Views;
 using BibTexManager.ViewModels;
+using BibTexManager.Views;
 
 namespace BibTexManager.Views;
 
@@ -85,11 +86,11 @@ public partial class MainPage : DigitalProductionMainPage
 	async void OnNew(object sender, EventArgs eventArgs)
 	{
 		//TranslationMatrix translationMatrix = TranslationMatrix.CreateNewTranslationMatrix(TranslationMatrixNewName, InputProcessor, InputFile);
-		
-		//await Shell.Current.GoToAsync(nameof(TranslationMatrixView), true, new Dictionary<string, object>
-		//{
-		//	{"TranslationMatrix",  translationMatrix},
-		//});
+
+		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
+		{
+			{"AddMode",  true},
+		});
 
 
 

@@ -1,4 +1,4 @@
-namespace XSLTProcessorMaui.Views;
+namespace BibTexManager.Views;
 
 public partial class EditRawBibEntryForm : ContentPage
 {
