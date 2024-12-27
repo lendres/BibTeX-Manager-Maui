@@ -54,12 +54,9 @@
 			VerticalOptions="Fill"
 			Text="{Binding RawBibEntry}"
 		/>
-
 		<!--
 			TextChanged="OnEditorTextChanged"
 			Completed="OnEditorCompleted"
 		-->
-
 	</Grid>
-
 </ContentPage>

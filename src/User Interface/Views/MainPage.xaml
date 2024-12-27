@@ -14,19 +14,7 @@
 		<viewmodel:MainViewModel/>
 	</ContentPage.BindingContext>
 
-	<ContentPage.MenuBarItems>
-		<MenuBarItem Text="File">
-			<MenuFlyoutItem Text="Open" Clicked="OnOpen"/>
-			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
-		</MenuBarItem>
-		<MenuBarItem Text="Tools">
-			<MenuFlyoutItem Text="Program Options" Clicked="OnShowProgramOptions"/>
-		</MenuBarItem>
-		<MenuBarItem Text="Help">
-			<MenuFlyoutItem Text="Help" Clicked="OnHelp"/>
-			<MenuFlyoutItem Text="About" Clicked="OnAbout"/>
-		</MenuBarItem>
-	</ContentPage.MenuBarItems>
+
 
 	<ContentPage.Resources>
 		<toolkit:IsNotNullConverter x:Key="IsNotNullConverter"/>
