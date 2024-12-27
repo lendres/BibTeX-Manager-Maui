@@ -8,9 +8,9 @@ public static class Preferences
 	/// <summary>
 	/// Load last project as start up.
 	/// </summary>
-	public static string LoadLastProjectAtStartUp
+	public static bool LoadLastProjectAtStartUp
 	{
-		get => Microsoft.Maui.Storage.Preferences.Default.Get("Load Last Project At Start Up", "");
+		get => Microsoft.Maui.Storage.Preferences.Default.Get("Load Last Project At Start Up", false);
 		set => Microsoft.Maui.Storage.Preferences.Default.Set("Load Last Project At Start Up", value);
 	}
 

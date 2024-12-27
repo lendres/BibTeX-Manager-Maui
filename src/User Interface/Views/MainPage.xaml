@@ -19,6 +19,9 @@
 			<MenuFlyoutItem Text="Open" Clicked="OnOpen"/>
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
 		</MenuBarItem>
+		<MenuBarItem Text="Tools">
+			<MenuFlyoutItem Text="Program Options" Clicked="OnShowProgramOptions"/>
+		</MenuBarItem>
 		<MenuBarItem Text="Help">
 			<MenuFlyoutItem Text="Help" Clicked="OnHelp"/>
 			<MenuFlyoutItem Text="About" Clicked="OnAbout"/>

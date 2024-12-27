@@ -25,19 +25,16 @@ public partial class BibEntryViewModel : ObservableObject
 
 	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
 	private ValidatableObject<string>		_key								= new();
-	private readonly string					_previousKey						= "";
-	private readonly List<string>			_existingKeys;
 
 	[ObservableProperty]
-	private bool							_isSubmittable;
+	private bool							_isSubmittable						= false;
 
 	#endregion
 
 	#region Construction
 
-	public BibEntryViewModel(List<string> configurationKeys)
+	public BibEntryViewModel()
 	{
-		Initialize();
 	}
 
 	#endregion
@@ -65,41 +62,7 @@ public partial class BibEntryViewModel : ObservableObject
 
 	#region Initialize and Validation
 
-	private void Initialize()
-	{
-		InitializeValues();
-		AddValidations();
-		ValidateSubmittable();
-	}
-
-	private void InitializeValues()
-	{
-		Key.Value = BibEntry.Key;
-	}
-
-	private void AddValidations()
-	{
-		Key.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A Key is required." });
-		Key.Validations.Add(new IsNotDuplicateStringRule
-		{
-			ValidationMessage		= "The value is already in use.",
-			Values					= _existingKeys,
-			ExcludeValue			= _previousKey
-		});
-		ValidateKey();
-	}
-
-	[RelayCommand]
-	private void ValidateKey()
-	{
-		if (Key.Validate())
-		{
-			BibEntry.Key = Key.Value ?? "";
-		}
-		ValidateSubmittable();
-	}
-
-	public bool ValidateSubmittable() => IsSubmittable = Key.IsValid;
+	public bool ValidateSubmittable() => IsSubmittable =  Parse();
 
 	#endregion
 

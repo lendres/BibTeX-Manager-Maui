@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Views;assembly=DigitalProductionMauiLibrary"
+	x:Class="BibTexManager.Views.ProgramOptionsView"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<Frame StyleClass="PopupFrameStyle" MinimumWidthRequest="430" MinimumHeightRequest="168" MaximumHeightRequest="521">
+
+		<VerticalStackLayout StyleClass="VerticalLayoutStyle" >
+
+			<Label Text="Program Options" StyleClass="Title" HorizontalOptions="Start"/>
+			
+			<HorizontalStackLayout Padding="0" Spacing="0" VerticalOptions="Center" HeightRequest="22">
+				<CheckBox
+					IsChecked="{Binding OpenLastProjectAtStartUp}"
+					VerticalOptions="Center"/>
+				<!-- Enlarge the label so the desenders don't get cut off. -->
+				<Label Text="Open the last project at start up." VerticalOptions="Center" Margin="0" HeightRequest="25" Padding="0"/>
+			</HorizontalStackLayout>
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+					Text="Save"
+					HorizontalOptions="End"
+					StyleClass="StandardSizeButtonStyle"
+					IsEnabled="{Binding IsSubmittable}"
+					Clicked="OnSaveButtonClicked"/>
+				<Button 
+					Text="Cancel"
+					StyleClass="StandardSizeButtonStyle"
+					HorizontalOptions="End"
+					Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+
+		</VerticalStackLayout>
+	</Frame>
+</dpviews:PopupView>

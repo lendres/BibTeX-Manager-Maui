@@ -5,6 +5,7 @@ using DigitalProduction.ViewModels;
 using DigitalProduction.Views;
 using BibTexManager.ViewModels;
 using BibTexManager.Views;
+using Microsoft.Maui.Controls;
 
 namespace BibTexManager.Views;
 
@@ -63,6 +64,18 @@ public partial class MainPage : DigitalProductionMainPage
 			// The user canceled or something went wrong.
 		}
 		return null;
+	}
+
+	async void OnShowProgramOptions(object sender, EventArgs eventArgs)
+	{
+		ProgramOptionsViewModel viewModel = new();
+
+		ProgramOptionsView	view	= new(viewModel);
+		object?				result	= await Shell.Current.ShowPopupAsync(view);
+
+		if (result is bool boolResult && boolResult)
+		{
+		}
 	}
 
 	async void OnHelp(object sender, EventArgs eventArgs)
