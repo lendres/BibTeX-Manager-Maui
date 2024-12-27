@@ -7,7 +7,7 @@
     Shell.FlyoutBehavior="Disabled"
     Title="BibTex Manager">
 
-    <ShellContent
+	<ShellContent
         ContentTemplate="{DataTemplate views:MainPage}"
         Route="MainPage"/>
 

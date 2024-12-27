@@ -4,12 +4,17 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="BibTexManager.Views.EditRawBibEntryForm">
 
-	<VerticalStackLayout Padding="30" Spacing="20" HorizontalOptions="Fill">
+
+	<Shell.BackButtonBehavior>
+		<BackButtonBehavior IsVisible="False" IsEnabled="False" />
+	</Shell.BackButtonBehavior>
+
+	<Grid RowDefinitions="auto,*"  Padding="30" RowSpacing="20" HorizontalOptions="Fill" VerticalOptions="Fill">
 
 		<Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="200"/>
+				<ColumnDefinition Width="300"/>
 			</Grid.ColumnDefinitions>
 
 			<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
@@ -29,23 +34,32 @@
 					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 			</HorizontalStackLayout>
 
-			<Button 
-				Grid.Column="1"
-				Text="Save Configs"
-				IsEnabled="{Binding Modified}"
-				HorizontalOptions="End"/>
+			<HorizontalStackLayout Grid.Column="1" StyleClass="TopButtonRowStyle" HorizontalOptions="End">
+				<Button 
+					Text="Save"
+					Clicked="OnSave"
+					IsEnabled="{Binding Modified}"
+					HorizontalOptions="End"/>
+
+				<Button 
+					Text="Cancel"
+					Clicked="OnCancel"
+					HorizontalOptions="End"/>
+			</HorizontalStackLayout>
 
 		</Grid>
 		<Editor 
+			Grid.Row="1"
 			x:Name="_editor"
 			VerticalOptions="Fill"
 			Text="{Binding RawBibEntry}"
 		/>
 
-		<!--HeightRequest="250"
+		<!--
 			TextChanged="OnEditorTextChanged"
-			Completed="OnEditorCompleted"-->
+			Completed="OnEditorCompleted"
+		-->
 
-	</VerticalStackLayout>
+	</Grid>
 
 </ContentPage>
