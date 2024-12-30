@@ -36,20 +36,20 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Menu Events
 
-	async void OnOpen(object sender, EventArgs eventArgs)
-	{
-		PickOptions pickOptions = new()
+		async void OnOpen(object sender, EventArgs eventArgs)
 		{
-			PickerTitle = "Select an Bibliography Project File",
-			FileTypes   = _bibliographyProjectFileType
-		};
-		FileResult? result = await BrowseForFile(pickOptions);
-		if (result != null)
-		{
-			MainViewModel? viewModel = BindingContext as MainViewModel;
-			viewModel?.OpenProject(result.FullPath);
+			PickOptions pickOptions = new()
+			{
+				PickerTitle = "Select an Bibliography Project File",
+				FileTypes   = _bibliographyProjectFileType
+			};
+			FileResult? result = await BrowseForFile(pickOptions);
+			if (result != null)
+			{
+				MainViewModel? viewModel = BindingContext as MainViewModel;
+				viewModel?.OpenProject(result.FullPath);
+			}
 		}
-	}
 
 	public static async Task<FileResult?> BrowseForFile(PickOptions options)
 	{
