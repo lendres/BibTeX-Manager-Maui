@@ -1,11 +1,8 @@
-﻿using CommunityToolkit.Maui.Storage;
+﻿using BibTexManager.ViewModels;
 using CommunityToolkit.Maui.Views;
-using DigitalProduction.Controls;
-using DigitalProduction.ViewModels;
-using DigitalProduction.Views;
-using BibTexManager.ViewModels;
-using BibTexManager.Views;
-using Microsoft.Maui.Controls;
+using DigitalProduction.Maui.Controls;
+using DigitalProduction.Maui.ViewModels;
+using DigitalProduction.Maui.Views;
 
 namespace BibTexManager.Views;
 

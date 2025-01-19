@@ -1,6 +1,6 @@
 ﻿using BibTeXLibrary;
 using BibtexManager.Quality;
-using DigitalProduction.XML.Serialization;
+using DigitalProduction.Xml.Serialization;
 using System.ComponentModel;
 using System.Xml.Serialization;
 

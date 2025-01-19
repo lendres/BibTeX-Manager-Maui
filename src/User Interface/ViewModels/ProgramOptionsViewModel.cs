@@ -1,9 +1,4 @@
-﻿using BibTeXLibrary;
-using BibtexManager;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Data.Translation.Validation;
-using DigitalProduction.Validation;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BibTexManager.ViewModels;
 

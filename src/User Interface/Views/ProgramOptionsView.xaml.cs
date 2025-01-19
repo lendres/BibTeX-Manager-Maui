@@ -1,7 +1,7 @@
 namespace BibTexManager.Views;
 
 using BibTexManager.ViewModels;
-using DigitalProduction.Views;
+using DigitalProduction.Maui.Views;
 using System;
 
 public partial class ProgramOptionsView : PopupView

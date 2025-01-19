@@ -1,4 +1,4 @@
-﻿using DigitalProduction.XML.Serialization;
+﻿using DigitalProduction.Xml.Serialization;
 using System.Xml.Serialization;
 
 namespace BibtexManager;

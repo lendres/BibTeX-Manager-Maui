@@ -2,7 +2,7 @@
 <dpviews:PopupView
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:dpviews="clr-namespace:DigitalProduction.Views;assembly=DigitalProductionMauiLibrary"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui"
 	x:Class="BibTexManager.Views.ProgramOptionsView"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
