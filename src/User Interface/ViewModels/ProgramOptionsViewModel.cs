@@ -5,10 +5,6 @@ namespace BibTexManager.ViewModels;
 public partial class ProgramOptionsViewModel : ObservableObject
 {
 	#region Fields
-
-	[ObservableProperty]
-	private bool				_openLastProjectAtStartUp			= false;
-
 	#endregion
 
 	#region Construction
@@ -17,6 +13,16 @@ public partial class ProgramOptionsViewModel : ObservableObject
 	{
 		Initialize();
 	}
+
+	#endregion
+
+	#region Properties
+
+	[ObservableProperty]
+	public partial bool				OpenLastProjectAtStartUp { get; set; }			= false;
+
+	[ObservableProperty]
+	public partial bool				IsSubmittable { get; set; }						= true;
 
 	#endregion
 

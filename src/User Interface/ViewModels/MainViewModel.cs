@@ -13,9 +13,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	ProjectExtractor?				_projectExtractor		= null;
 	BibtexProject?					_project				= null;
 
-	[ObservableProperty]
-	private bool					_isSubmittable			= false;
-
 	#endregion
 
 	#region Construction
@@ -38,6 +35,10 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	#endregion
 
 	#region Properties
+
+	[ObservableProperty]
+	public partial bool					IsSubmittable { get; set; }			= false;
+
 	#endregion
 
 	#region Validation

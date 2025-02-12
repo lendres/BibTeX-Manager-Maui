@@ -2,11 +2,13 @@
 <dpviews:PopupView
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
+	x:DataType="viewmodel:ProgramOptionsViewModel"
 	x:Class="BibTexManager.Views.ProgramOptionsView"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
-	<Frame StyleClass="PopupFrameStyle" MinimumWidthRequest="430" MinimumHeightRequest="168" MaximumHeightRequest="521">
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="430" MinimumHeightRequest="168" MaximumHeightRequest="521">
 
 		<VerticalStackLayout StyleClass="VerticalLayoutStyle" >
 
@@ -35,5 +37,5 @@
 			</HorizontalStackLayout>
 
 		</VerticalStackLayout>
-	</Frame>
+	</Border>
 </dpviews:PopupView>

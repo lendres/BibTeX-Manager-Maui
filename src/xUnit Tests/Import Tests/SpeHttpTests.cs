@@ -9,7 +9,9 @@ public class SpeHttpTests
 {
 	public SpeHttpTests()
 	{
-		CustomSearch.SetCxAndKey(CustomSearchKey.Deserialize(@"..\..\..\customsearchkey.xml"));
+		CustomSearchKey? customSearchKey = CustomSearchKey.Deserialize(@"..\..\..\customsearchkey.xml");
+		Assert.NotNull(customSearchKey);
+		CustomSearch.SetCxAndKey(customSearchKey);
 	}
 
 	/// <summary>
