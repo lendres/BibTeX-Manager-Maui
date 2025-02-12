@@ -11,21 +11,7 @@ public partial class BibEntryViewModel : ObservableObject
 {
 	#region Fields
 
-	[ObservableProperty]
-	private string							_title								= "Add Bibtex Entry";
-	private bool							_addMode							= true;
-
-	[ObservableProperty]
-	private string							_rawBibEntry						= "";
-
-	[ObservableProperty]
-	private BibEntry						_bibEntry							= new();
-
-	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
-	private ValidatableObject<string>		_key								= new();
-
-	[ObservableProperty]
-	private bool							_isSubmittable						= false;
+	private bool							_addMode { get; set; }				= true;
 
 	#endregion
 
@@ -38,6 +24,24 @@ public partial class BibEntryViewModel : ObservableObject
 	#endregion
 
 	#region Properties
+
+	[ObservableProperty]
+	public partial string						Title { get; set; }					= "Add Bibtex Entry";
+	
+	[ObservableProperty]
+	public partial string						RawBibEntry { get; set; }			= "";
+
+	[ObservableProperty]
+	public partial BibEntry						BibEntry { get; set; }				= new();
+
+	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
+	public partial ValidatableObject<string>	Key { get; set; }					= new();
+
+	[ObservableProperty]
+	public partial bool							Modified  { get; set; }				= false;
+
+	[ObservableProperty]
+	public partial bool							IsSubmittable { get; set; }			= false;
 
 	public bool AddMode
 	{
@@ -66,7 +70,6 @@ public partial class BibEntryViewModel : ObservableObject
 
 	#region
 
-	
 	/// <summary>
 	/// Check the quality of the text in the text box.
 	/// </summary>
@@ -121,7 +124,7 @@ public partial class BibEntryViewModel : ObservableObject
 		{
 			BibEntry = BibtexProject.Instance!.ParseSingleEntryText(RawBibEntry);
 		}
-		catch (Exception exception)
+		catch
 		{
 			// The text entered contained an error.  Display it and cancel the "ok" (return).
 			//MessageBox.Show(this, exception.Message, "Error Parsing Entry", MessageBoxButtons.OK, MessageBoxIcon.Error);
