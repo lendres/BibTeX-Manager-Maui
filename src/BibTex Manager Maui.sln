@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibTexManagerMaui", "User I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibTexProject", "BibTex Project\BibTexProject.csproj", "{35518904-431E-4B07-ABBE-989A827AA976}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xUnit Tests", "xUnit Tests\xUnit Tests.csproj", "{2262C014-36B0-44C6-8B7A-4F656466E7EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests", "Unit Tests\Unit Tests.csproj", "{2262C014-36B0-44C6-8B7A-4F656466E7EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
