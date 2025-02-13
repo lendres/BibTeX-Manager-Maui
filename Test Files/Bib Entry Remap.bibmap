@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<bibentryremapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<maps>
+		<item key="proceedings">
+			<value name="Proceedings to InProceedings" totype="inproceedings">
+				<tagmaps>
+					<item key="series">
+						<value>booktitle</value>
+					</item>
+					<item key="eprint">
+						<value>href</value>
+					</item>
+				</tagmaps>
+			</value>
+		</item>
+		<item key="article">
+			<value name="Article to Article" totype="article">
+				<tagmaps>
+					<item key="publisher">
+						<value>organization</value>
+					</item>
+				</tagmaps>
+			</value>
+		</item>
+	</maps>
+</bibentryremapping>
