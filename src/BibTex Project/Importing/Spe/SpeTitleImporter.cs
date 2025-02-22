@@ -20,7 +20,7 @@ public class SpeTitleImporter : ImporterBase, ISingleImporter
 	/// <param name="searchTerms">Terms to search the web for the paper.</param>
 	public BibEntry? Import(string searchTerms)
 	{
-		foreach (string? bibTexString in SpeImportUtilities.ArticleSearch(this.HttpClient, searchTerms))
+		foreach (string? bibTexString in SpeImportUtilities.ArticleSearch(HttpClient, searchTerms))
 		{
 			if (!String.IsNullOrEmpty(bibTexString))
 			{

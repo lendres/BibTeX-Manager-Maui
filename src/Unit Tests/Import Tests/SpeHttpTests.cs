@@ -9,7 +9,10 @@ public class SpeHttpTests
 {
 	public SpeHttpTests()
 	{
-		CustomSearchKey? customSearchKey = CustomSearchKey.Deserialize(@"..\..\..\customsearchkey.xml");
+		string current		= System.IO.Directory.GetCurrentDirectory();
+		string programming	= DigitalProduction.IO.Path.ChangeDirectoryDotDot(current, 6);
+		string keyFile      = System.IO.Path.Combine(programming, "Keys/Google/customsearchkey.xml");
+		CustomSearchKey? customSearchKey = CustomSearchKey.Deserialize(keyFile);
 		Assert.NotNull(customSearchKey);
 		CustomSearch.SetCxAndKey(customSearchKey);
 	}
