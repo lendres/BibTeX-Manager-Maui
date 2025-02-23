@@ -10,7 +10,7 @@ public abstract class ImporterBase
 	#region Fields
 
 	private bool								_useBibEntryInitialization		= false;
-	private BibEntryInitialization				_bibEntryInitialization			= new BibEntryInitialization();
+	private BibEntryInitialization				_bibEntryInitialization			= new();
 
 	#endregion
 
@@ -39,7 +39,7 @@ public abstract class ImporterBase
 	/// <param name="text">Text to process.</param>
 	protected BibEntry ParseSingleEntryText(string text)
 	{
-		StringReader textReader = new StringReader(text);
+		StringReader textReader = new(text);
 		BibliographyDOM result;
 
 		if (_useBibEntryInitialization)

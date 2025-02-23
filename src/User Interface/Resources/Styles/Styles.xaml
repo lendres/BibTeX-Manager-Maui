@@ -16,4 +16,19 @@
 		<Setter Property="MinimumWidthRequest" Value="38"/>
 	</Style>
 
+	<Style TargetType="Border" Class="SmallTitleBorder">
+		<Setter Property="StrokeShape" Value="RoundRectangle 8"/>
+		<Setter Property="StrokeThickness" Value="2"/>
+		<Setter Property="Padding" Value="0,0,0,2"/>
+		<Setter Property="Margin" Value="0,10,0,2"/>
+		<Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
+	</Style>
+
+	<Style TargetType="Label" Class="SmallDivisionHeader">
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="FontAttributes" Value="Bold"/>
+		<Setter Property="HorizontalOptions" Value="Center"/>
+		<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
+	</Style>
+
 </ResourceDictionary>

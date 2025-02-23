@@ -4,19 +4,21 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:dpatkcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
 	x:DataType="viewmodel:MainViewModel"
 	x:Class="BibTexManager.Views.MainPage">
 
-	<ContentPage.BindingContext>
-		<viewmodel:MainViewModel/>
-	</ContentPage.BindingContext>
-
 	<ContentPage.MenuBarItems>
 		<MenuBarItem Text="File">
 			<MenuFlyoutItem Text="Open" Clicked="OnOpen"/>
+			<dpcontrols:RecentlyUsedMenuFlyout
+				Text="Recently Used"
+				PathCommand="{Binding OpenProjectCommand}"
+				PathNotFoundCommand="{Binding ShowRemovedMessageCommand}"
+				RecentPathsManagerService="{Binding RecentPathsManagerService}"/>
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
 		</MenuBarItem>
 		<MenuBarItem Text="Tools">

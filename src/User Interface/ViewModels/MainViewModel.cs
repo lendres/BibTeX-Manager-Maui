@@ -1,6 +1,8 @@
 ﻿using BibTeXLibrary;
 using BibtexManager;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Projects;
 
@@ -10,15 +12,19 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 {
 	#region Fields
 
-	ProjectExtractor?				_projectExtractor		= null;
-	BibtexProject?					_project				= null;
+	private readonly IDialogService		_dialogService;
+	ProjectExtractor?					_projectExtractor		= null;
+	BibtexProject?						_project				= null;
 
 	#endregion
 
 	#region Construction
 
-	public MainViewModel()
+	public MainViewModel(IRecentPathsManagerService recentPathsManagerService, IDialogService dialogService)
     {
+		RecentPathsManagerService	= recentPathsManagerService;
+		_dialogService				= dialogService;
+
 		InitializeValues();
 		AddValidations();
 		//ValidateSubmittable();
@@ -37,7 +43,10 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	#region Properties
 
 	[ObservableProperty]
-	public partial bool					IsSubmittable { get; set; }			= false;
+	public partial IRecentPathsManagerService		RecentPathsManagerService { get; set; }
+
+	[ObservableProperty]
+	public partial bool								IsSubmittable { get; set; }						= false;
 
 	#endregion
 
@@ -58,19 +67,26 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Methods and Commands
 
-	private void SaveSettings()
+	public void OpenProjectWithPathSave(string projectFile)
 	{
-		//Preferences.XmlInputFile		= XmlInputFile.Value!.Trim();
+		RecentPathsManagerService.PushTop(projectFile);
+		OpenProject(projectFile);
 	}
 
-	public void OpenProject(string projectFile)
+	[RelayCommand]
+	void OpenProject(string projectFile)
 	{
 		BibtexProject.Deserialize(projectFile);
 		if (BibtexProject.Instance != null)
 		{
 			Items = BibtexProject.Instance.Bibliography.Entries;
 		}
+	}
 
+	[RelayCommand]
+	void ShowRemovedMessage(string path)
+	{
+		_dialogService.ShowMessage("File Not Found", $"The path \"{path}\" was was not found.", "OK");
 	}
 
 	#endregion

@@ -24,29 +24,30 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Construction
 
-	public MainPage()
+	public MainPage(MainViewModel viewModel)
 	{
 		InitializeComponent();
+		BindingContext = viewModel;
 	}
 
 	#endregion
 
 	#region Menu Events
 
-		async void OnOpen(object sender, EventArgs eventArgs)
+	async void OnOpen(object sender, EventArgs eventArgs)
+	{
+		PickOptions pickOptions = new()
 		{
-			PickOptions pickOptions = new()
-			{
-				PickerTitle = "Select an Bibliography Project File",
-				FileTypes   = _bibliographyProjectFileType
-			};
-			FileResult? result = await BrowseForFile(pickOptions);
-			if (result != null)
-			{
-				MainViewModel? viewModel = BindingContext as MainViewModel;
-				viewModel?.OpenProject(result.FullPath);
-			}
+			PickerTitle = "Select an Bibliography Project File",
+			FileTypes   = _bibliographyProjectFileType
+		};
+		FileResult? result = await BrowseForFile(pickOptions);
+		if (result != null)
+		{
+			MainViewModel? viewModel = BindingContext as MainViewModel;
+			viewModel?.OpenProjectWithPathSave(result.FullPath);
 		}
+	}
 
 	public static async Task<FileResult?> BrowseForFile(PickOptions options)
 	{

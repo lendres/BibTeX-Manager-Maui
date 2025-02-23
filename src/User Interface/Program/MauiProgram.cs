@@ -3,6 +3,8 @@ using BibTexManager.Views;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Media;
 using CommunityToolkit.Maui.Storage;
+using DigitalProduction.Maui.Services;
+using DigitalProduction.Maui.ViewModels;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 
@@ -34,6 +36,9 @@ public static class MauiProgram
 			});
 		#endif
 
+		RegisterViewsAndViewModels(builder.Services);
+		RegisterEssentials(builder.Services);
+		CreateServices(builder.Services);
 		#if DEBUG
 			builder.Logging.AddDebug();
 		#endif
@@ -48,8 +53,12 @@ public static class MauiProgram
 
 		services.AddTransient<EditRawBibEntryForm>();
 		services.AddTransient<BibEntryViewModel>();
+	}
 
-		//services.AddTransientPopup<ConfigurationView, ConfigurationViewModel>();
+	private static void CreateServices(IServiceCollection services)
+	{
+		services.AddSingleton<IDialogService, DialogService>();
+		services.AddSingleton<IRecentPathsManagerService, RecentPathsManagerService>();
 	}
 
 	static void RegisterEssentials(in IServiceCollection services)

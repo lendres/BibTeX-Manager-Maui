@@ -13,7 +13,12 @@
 		<VerticalStackLayout StyleClass="VerticalLayoutStyle" >
 
 			<Label Text="Program Options" StyleClass="Title" HorizontalOptions="Start"/>
-			
+
+			<Border StyleClass="SmallTitleBorder">
+				<Label Text="General" StyleClass="SmallDivisionHeader"/>
+			</Border>
+
+
 			<HorizontalStackLayout Padding="0" Spacing="0" VerticalOptions="Center" HeightRequest="22">
 				<CheckBox
 					IsChecked="{Binding OpenLastProjectAtStartUp}"
@@ -21,6 +26,48 @@
 				<!-- Enlarge the label so the desenders don't get cut off. -->
 				<Label Text="Open the last project at start up." VerticalOptions="Center" Margin="0" HeightRequest="25" Padding="0"/>
 			</HorizontalStackLayout>
+
+
+			<Border StyleClass="SmallTitleBorder">
+				<Label Text="Recently Used Files" StyleClass="SmallDivisionHeader"/>
+			</Border>
+
+			<Switch IsToggled="{Binding RemoveNotFoundPaths}"/>
+
+			<HorizontalStackLayout Padding="0" Spacing="0" VerticalOptions="Center" HeightRequest="22">
+				<CheckBox
+					IsChecked="{Binding RemoveNotFoundPaths}"
+					VerticalOptions="Center"/>
+				<!--Enlarge the label so the desenders don't get cut off.-->
+				<Label Text="Remove paths that do not exist." VerticalOptions="Center" Margin="0" HeightRequest="25" Padding="0"/>
+			</HorizontalStackLayout>
+
+			<Grid ColumnDefinitions="*,100,100">
+				<!--<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="100">
+	
+					</ColumnDefinition>
+				</Grid.ColumnDefinitions>-->
+				<Label Grid.Column="0" Text="Number of items to show" StyleClass="ControlLabel" VerticalOptions="Center"/>
+				<Label Grid.Column="1" Text="{Binding NumberOfItemsShown}" VerticalOptions="Center" HorizontalOptions="End"/>
+				<Stepper Grid.Column="2" Value="{Binding NumberOfItemsShown}" Maximum="{Binding MaximumNumberOfItems}" VerticalOptions="Center" HorizontalOptions="End">
+				</Stepper>
+			</Grid>
+
+			<Picker
+				x:Name="NumberOfItemsPicker"
+				Title="Number of items to show"
+				ItemsSource="{Binding DisplayedItemsNumbers}"
+				SelectedItem="{Binding NumberOfItemsShown}">
+			</Picker>
+
+			<Picker
+				x:Name="MaximumItemsPicker"
+				Title="Number of items to remember"
+				ItemsSource="{Binding MaximumItemsNumbers}"
+				SelectedItem="{Binding MaximumNumberOfItems}">
+			</Picker>
 
 			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
 				<Button 
