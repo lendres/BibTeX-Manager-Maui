@@ -9,7 +9,7 @@
 	x:Class="BibTexManager.Views.ProgramOptionsView"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
-	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="400" MinimumHeightRequest="128" MaximumHeightRequest="521">
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="360" MinimumHeightRequest="128" MaximumHeightRequest="521">
 
 		<VerticalStackLayout StyleClass="VerticalLayoutStyle" >
 
