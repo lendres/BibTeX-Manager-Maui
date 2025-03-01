@@ -3,12 +3,15 @@ using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
+using Google.Apis.CustomSearchAPI.v1.Data;
 
 namespace BibTexManager.Views;
 
 public partial class MainPage : DigitalProductionMainPage
 {
 	#region Fields
+
+	private MainViewModel				_viewModel;
 
 	private readonly FilePickerFileType _bibliographyProjectFileType = new(new Dictionary<DevicePlatform, IEnumerable<string>>
 	{
@@ -28,6 +31,13 @@ public partial class MainPage : DigitalProductionMainPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
+
+		_viewModel = viewModel;
+
+		if (Preferences.LoadLastProjectAtStartUp)
+		{
+			OpenLastProject();
+		}
 	}
 
 	#endregion
@@ -44,8 +54,7 @@ public partial class MainPage : DigitalProductionMainPage
 		FileResult? result = await BrowseForFile(pickOptions);
 		if (result != null)
 		{
-			MainViewModel? viewModel = BindingContext as MainViewModel;
-			viewModel?.OpenProjectWithPathSave(result.FullPath);
+			_viewModel.OpenProjectWithPathSave(result.FullPath);
 		}
 	}
 
@@ -71,9 +80,9 @@ public partial class MainPage : DigitalProductionMainPage
 		ProgramOptionsView	view	= new(viewModel);
 		object?				result	= await Shell.Current.ShowPopupAsync(view);
 
-		if (result is bool boolResult && boolResult)
-		{
-		}
+		//if (result is bool boolResult && boolResult)
+		//{
+		//}
 	}
 
 	async void OnHelp(object sender, EventArgs eventArgs)
@@ -119,6 +128,16 @@ public partial class MainPage : DigitalProductionMainPage
 		//{
 		//	configurationsViewModel?.Insert(viewModel.Configuration);
 		//}
+	}
+
+	#endregion
+
+	#region Methods
+
+	private void OpenLastProject()
+	{
+		//_viewModel.OpenProjectWithPathSave(Preferences.RecentPathsManagerService.TopPath);
+		_viewModel.OpenProjectWithPathSave(Preferences.RecentPathsManagerService.GetRecentPaths()[0]);
 	}
 
 	#endregion
