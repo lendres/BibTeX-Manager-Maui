@@ -38,71 +38,76 @@
 
 	<Grid StyleClass="DataGridEditStyle">
 
-				<Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="200"/>
-					</Grid.ColumnDefinitions>
+		<!-- Button Grid -->
+		<Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="200"/>
+			</Grid.ColumnDefinitions>
 
-					<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
-						<Button
-							Text="New"
-							Clicked="OnNew"
-							StyleClass="SquareButton"
-							IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
+			<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
+				<Button
+					Text="New"
+					Clicked="OnNew"/>
 
-						<Button 
-							Text="Edit"
-							Clicked="OnEdit"
-							StyleClass="SquareButton"
-							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+				<Button
+					Text="New"
+					Clicked="OnNew"
+					StyleClass="SquareButtonStyle"
+					IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
 
-						<Button 
-							Text="Delete"
-							Clicked="OnDelete"
-							StyleClass="SquareButton"
-							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-					</HorizontalStackLayout>
+				<Button 
+					Text="Edit"
+					Clicked="OnEdit"
+					StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
-					<Button 
-						Grid.Column="1"
-						Text="Save Configs"
-						IsEnabled="{Binding Modified}"
-						HorizontalOptions="End"/>
+				<Button 
+					Text="Delete"
+					Clicked="OnDelete"
+					StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+			</HorizontalStackLayout>
 
-				</Grid>
+			<Button 
+				Grid.Column="1"
+				Text="Save Configs"
+				IsEnabled="{Binding Modified}"
+				HorizontalOptions="End"/>
 
-				<dg:DataGrid
-					Grid.Row="1"
-					x:Name="_dataGrid"
-					ItemsSource="{Binding Items}" SelectionMode="{Binding SelectionMode}"
-					SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
-					RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
-					BorderColor="{DynamicResource DataGridBorderColor}" BorderThickness="{Binding BorderThickness}"
-					HeaderBackground="{DynamicResource DataGridHeaderBackgroundColor}" HeaderBordersVisible="{Binding HeaderBordersVisible}"
-					BackgroundColor="{AppThemeBinding Light={DynamicResource DataGridBackgroundColorLight}, Dark={DynamicResource DataGridBackgroundColorDark}}"
-					FooterBackground="{DynamicResource DataGridFooterBackgroundColor}"
-					PaginationEnabled="false"
-					ActiveRowColor="{DynamicResource DataGridActiveRowColor}"
-					RowsBackgroundColorPalette="{AppThemeBinding Light={DynamicResource DataGridColorPaletteLight}, Dark={DynamicResource DataGridColorPaletteDark}}"
-					HeaderLabelStyle="{DynamicResource DataGridTitle}"
-					RowHeight="36" HeaderHeight="40"
-					RowTappedCommand="{Binding TappedCommand}">
+		</Grid>
 
-					<dg:DataGrid.Columns>
+		<dg:DataGrid
+				Grid.Row="1"
+				x:Name="_dataGrid"
+				ItemsSource="{Binding Items}" SelectionMode="{Binding SelectionMode}"
+				SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
+				RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
+				BorderColor="{DynamicResource DataGridBorderColor}" BorderThickness="{Binding BorderThickness}"
+				HeaderBackground="{DynamicResource DataGridHeaderBackgroundColor}" HeaderBordersVisible="{Binding HeaderBordersVisible}"
+				BackgroundColor="{AppThemeBinding Light={DynamicResource DataGridBackgroundColorLight}, Dark={DynamicResource DataGridBackgroundColorDark}}"
+				FooterBackground="{DynamicResource DataGridFooterBackgroundColor}"
+				PaginationEnabled="false"
+				ActiveRowColor="{DynamicResource DataGridActiveRowColor}"
+				RowsBackgroundColorPalette="{AppThemeBinding Light={DynamicResource DataGridColorPaletteLight}, Dark={DynamicResource DataGridColorPaletteDark}}"
+				HeaderLabelStyle="{DynamicResource DataGridTitle}"
+				RowHeight="36" HeaderHeight="40"
+				RowTappedCommand="{Binding TappedCommand}">
 
-						 <!--Name column.--> 
-						<dg:DataGridColumn Title="Key" PropertyName="Key" Width="0.25*" SortingEnabled="true"
+			<dg:DataGrid.Columns>
+
+				<!--Name column.-->
+				<dg:DataGridColumn Title="Key" PropertyName="Key" Width="0.25*" SortingEnabled="true"
+						CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
+
+				<!--Description column.-->
+				<dg:DataGridColumn Title="Author(s)" PropertyName="Author" Width="1.0*" SortingEnabled="false"
+						CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
+
+				<dg:DataGridColumn Title="Title" PropertyName="Title" Width="1.0*" SortingEnabled="false"
 							CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
 
-						 <!--Description column.--> 
-						<dg:DataGridColumn Title="Author(s)" PropertyName="Author" Width="1.0*" SortingEnabled="false"
-							CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
-
-						<dg:DataGridColumn Title="Title" PropertyName="Title" Width="1.0*" SortingEnabled="false"
-								CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
-
-					</dg:DataGrid.Columns>
-				</dg:DataGrid>
+			</dg:DataGrid.Columns>
+		</dg:DataGrid>
 	</Grid>
 </dpatkcontrols:DigitalProductionMainPage>
