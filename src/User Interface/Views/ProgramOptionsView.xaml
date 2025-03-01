@@ -11,7 +11,7 @@
 
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="360" MinimumHeightRequest="128" MaximumHeightRequest="521">
 
-		<VerticalStackLayout StyleClass="VerticalLayoutStyle" >
+		<VerticalStackLayout >
 
 			<Label Text="Program Options" StyleClass="Title" HorizontalOptions="Start"/>
 
@@ -19,15 +19,15 @@
 				<Label Text="General" StyleClass="SmallDivisionHeader"/>
 			</Border>
 
-			<Grid ColumnDefinitions="76,*" RowDefinitions="40" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0"
-				HorizontalOptions="Fill" VerticalOptions="Start">
+			<Grid ColumnDefinitions="76,*" RowDefinitions="40" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+				<!--HorizontalOptions="Fill" VerticalOptions="Start">-->
 				<Switch Grid.Column="0"  Grid.Row="0" VerticalOptions="Center" HorizontalOptions="End"
 					IsToggled="{Binding OpenLastProjectAtStartUp}"/>
 				<Label Grid.Column="1" Grid.Row="0" VerticalOptions="Center" VerticalTextAlignment="Center"
 					Text="Open the last project at start up."/>
 			</Grid>
 
-			<Border StyleClass="SmallTitleBorder">
+			<Border StyleClass="SmallTitleBorder" Margin="0,20,0,0">
 				<Label Text="Recently Used Files" StyleClass="SmallDivisionHeader"/>
 			</Border>
 
