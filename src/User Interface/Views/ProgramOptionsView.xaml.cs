@@ -10,15 +10,6 @@ public partial class ProgramOptionsView : PopupView
 	{
 		BindingContext = viewModel;
 		InitializeComponent();
-
-		if (NumberOfItemsPicker.SelectedIndex < 0)
-		{
-			NumberOfItemsPicker.SelectedIndex = 0;
-		}
-		if (MaximumItemsPicker.SelectedIndex < 0)
-		{
-			MaximumItemsPicker.SelectedIndex = 0;
-		}
 	}
 
 	protected override void OnSaveButtonClicked(object? sender, EventArgs eventArgs)
