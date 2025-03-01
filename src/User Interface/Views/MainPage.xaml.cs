@@ -164,7 +164,11 @@ public partial class MainPage : DigitalProductionMainPage
 	private void OpenLastProject()
 	{
 		//_viewModel.OpenProjectWithPathSave(Preferences.RecentPathsManagerService.TopPath);
-		_viewModel.OpenProjectWithPathSave(Preferences.RecentPathsManagerService.GetRecentPaths()[0]);
+		List<string> paths = Preferences.RecentPathsManagerService.GetRecentPaths();
+		if (paths.Count > 0)
+		{
+			_viewModel.OpenProjectWithPathSave(paths[0]);
+		}
 	}
 
 	#endregion
