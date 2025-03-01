@@ -15,8 +15,8 @@
 
 			<Label Text="Program Options" StyleClass="Title" HorizontalOptions="Start"/>
 
-			<Border StyleClass="SmallTitleBorder">
-				<Label Text="General" StyleClass="SmallDivisionHeader"/>
+			<Border StyleClass="SmallTitleBorderStyle">
+				<Label Text="General" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
 
 			<Grid ColumnDefinitions="76,*" RowDefinitions="40" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
@@ -27,8 +27,8 @@
 					Text="Open the last project at start up."/>
 			</Grid>
 
-			<Border StyleClass="SmallTitleBorder" Margin="0,20,0,0">
-				<Label Text="Recently Used Files" StyleClass="SmallDivisionHeader"/>
+			<Border StyleClass="SmallTitleBorderStyle" Margin="0,20,0,0">
+				<Label Text="Recently Used Files" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
 
 			<Grid ColumnDefinitions="76,*" RowDefinitions="40,40,40" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0"

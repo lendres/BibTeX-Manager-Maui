@@ -6,17 +6,17 @@
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
-	<DataTemplate x:Key="DataGridDefaultCellTempate" x:DataType="x:String">
+	<!--<DataTemplate x:Key="DataGridDefaultCellTempate" x:DataType="x:String">
 		<ContentView StyleClass="DataGridContentViewStyle">
 			<Label Text="{Binding}" StyleClass="DataGridLabelStyle"/>
 		</ContentView>
-	</DataTemplate>
+	</DataTemplate>-->
 
 	<Style TargetType="Button" Class="SquareButton">
-		<Setter Property="MinimumWidthRequest" Value="38"/>
+		<Setter Property="MinimumWidthRequest" Value="32"/>
 	</Style>
 
-	<Style TargetType="Border" Class="SmallTitleBorder">
+	<Style TargetType="Border" Class="SmallTitleBorderStyle">
 		<Setter Property="StrokeShape" Value="RoundRectangle 8"/>
 		<Setter Property="StrokeThickness" Value="2"/>
 		<Setter Property="Padding" Value="0,0,0,2"/>
@@ -24,7 +24,7 @@
 		<Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
 	</Style>
 
-	<Style TargetType="Label" Class="SmallDivisionHeader">
+	<Style TargetType="Label" Class="SmallTitleLabelStyle">
 		<Setter Property="FontSize" Value="12"/>
 		<Setter Property="FontAttributes" Value="Bold"/>
 		<Setter Property="HorizontalOptions" Value="Center"/>
