@@ -1,10 +1,23 @@
-﻿namespace BibTexManager;
+﻿using DigitalProduction.Maui.Services;
+
+namespace BibTexManager;
 
 /// <summary>
 /// Registry access and setting storage.
 /// </summary>
 public static class Preferences
 {
+	private static readonly IRecentPathsManagerService      _recentPathsManagerService = 
+		DigitalProduction.Maui.Services.ServiceProvider.GetService<IRecentPathsManagerService>();
+
+	/// <summary>
+	/// Load last project as start up.
+	/// </summary>
+	public static IRecentPathsManagerService RecentPathsManagerService
+	{
+		get => _recentPathsManagerService;
+	}
+
 	/// <summary>
 	/// Load last project as start up.
 	/// </summary>

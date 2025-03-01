@@ -7,16 +7,12 @@ namespace BibTexManager.ViewModels;
 public partial class ProgramOptionsViewModel : ObservableObject
 {
 	#region Fields
-
-	private readonly IRecentPathsManagerService      _recentPathsManagerService;
-
 	#endregion
 
 	#region Construction
 
 	public ProgramOptionsViewModel()
 	{
-		_recentPathsManagerService = DigitalProduction.Maui.Services.ServiceProvider.GetService<IRecentPathsManagerService>();
 		Initialize();
 	}
 
@@ -44,16 +40,16 @@ public partial class ProgramOptionsViewModel : ObservableObject
 	private void Initialize()
 	{
 		OpenLastProjectAtStartUp	= Preferences.LoadLastProjectAtStartUp;
-		RemoveNotFoundPaths			= _recentPathsManagerService.RemoveNotFoundPaths;
-		NumberOfItemsShown			= (int)_recentPathsManagerService.NumberOfItemsShown;
-		NumberOfItemsToStore		= (int)_recentPathsManagerService.MaxSize;
+		RemoveNotFoundPaths			= Preferences.RecentPathsManagerService.RemoveNotFoundPaths;
+		NumberOfItemsShown			= (int)Preferences.RecentPathsManagerService.NumberOfItemsShown;
+		NumberOfItemsToStore		= (int)Preferences.RecentPathsManagerService.MaxSize;
 	}
 
 	public void Save()
 	{
-		Preferences.LoadLastProjectAtStartUp			= OpenLastProjectAtStartUp;
-		_recentPathsManagerService.RemoveNotFoundPaths	= RemoveNotFoundPaths;
-		_recentPathsManagerService.NumberOfItemsShown	= (uint)NumberOfItemsShown;
-		_recentPathsManagerService.MaxSize				= (uint)NumberOfItemsToStore;
+		Preferences.LoadLastProjectAtStartUp						= OpenLastProjectAtStartUp;
+		Preferences.RecentPathsManagerService.RemoveNotFoundPaths	= RemoveNotFoundPaths;
+		Preferences.RecentPathsManagerService.NumberOfItemsShown	= (uint)NumberOfItemsShown;
+		Preferences.RecentPathsManagerService.MaxSize				= (uint)NumberOfItemsToStore;
 	}
 }
