@@ -46,9 +46,19 @@
 			</Grid.ColumnDefinitions>
 
 			<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
+				<dpcontrols:Stepper
+					Minimum="0"
+					Maximum="10"
+					Value="5"/>
+
 				<Button
-					Text="New"
+					Text="None"
 					Clicked="OnNew"/>
+
+				<Button
+					Text="Square"
+					Clicked="OnNew"
+					StyleClass="SquareButtonStyle"/>
 
 				<Button
 					Text="New"
