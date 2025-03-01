@@ -11,7 +11,7 @@ public partial class BibEntryViewModel : ObservableObject
 {
 	#region Fields
 
-	private bool							_addMode { get; set; }				= true;
+	private bool								_addMode							= true;
 
 	#endregion
 

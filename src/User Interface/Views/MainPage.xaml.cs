@@ -113,9 +113,26 @@ public partial class MainPage : DigitalProductionMainPage
 		});
 
 
+		//ConfigurationsViewModel? configurationsViewModel = BindingContext as ConfigurationsViewModel;
+		//System.Diagnostics.Debug.Assert(configurationsViewModel != null);
 
+		//ConfigurationViewModel	viewModel	= new(Interface.ConfigurationList?.ConfigurationNames ?? []);
+		//ConfigurationView		view		= new(viewModel);
+		//object?					result		= await Shell.Current.ShowPopupAsync(view);
 
+		//if (result is bool boolResult && boolResult)
+		//{
+		//	configurationsViewModel?.Insert(viewModel.Configuration);
+		//}
+	}
 
+	async void OnEdit(object sender, EventArgs eventArgs)
+	{
+		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
+		{
+			{"AddMode",  true},
+			{"BibEntry", _viewModel.SelectedItem!}
+		});
 
 		//ConfigurationsViewModel? configurationsViewModel = BindingContext as ConfigurationsViewModel;
 		//System.Diagnostics.Debug.Assert(configurationsViewModel != null);
@@ -128,6 +145,16 @@ public partial class MainPage : DigitalProductionMainPage
 		//{
 		//	configurationsViewModel?.Insert(viewModel.Configuration);
 		//}
+	}
+
+	async void OnDelete(object sender, EventArgs eventArgs)
+	{
+		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+
+		if (result)
+		{
+			_viewModel.Delete();
+		}
 	}
 
 	#endregion

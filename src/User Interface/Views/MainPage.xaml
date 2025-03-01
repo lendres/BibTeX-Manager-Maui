@@ -36,8 +36,7 @@
 		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>-->
 	</ContentPage.Resources>
 
-	<ScrollView>
-		<VerticalStackLayout Padding="30,0" Spacing="20">
+	<Grid StyleClass="DataGridEditStyle">
 
 				<Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">
 					<Grid.ColumnDefinitions>
@@ -54,11 +53,13 @@
 
 						<Button 
 							Text="Edit"
+							Clicked="OnEdit"
 							StyleClass="SquareButton"
 							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
 						<Button 
 							Text="Delete"
+							Clicked="OnDelete"
 							StyleClass="SquareButton"
 							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 					</HorizontalStackLayout>
@@ -103,8 +104,5 @@
 
 					</dg:DataGrid.Columns>
 				</dg:DataGrid>
-
-		</VerticalStackLayout>
-	</ScrollView>
-
+	</Grid>
 </dpatkcontrols:DigitalProductionMainPage>
