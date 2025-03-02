@@ -74,7 +74,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	}
 
 	[RelayCommand]
-	void OpenProject(string projectFile)
+	public void OpenProject(string projectFile)
 	{
 		BibtexProject.Deserialize(projectFile);
 		if (BibtexProject.Instance != null)
@@ -87,6 +87,14 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	void ShowRemovedMessage(string path)
 	{
 		_dialogService.ShowMessage("File Not Found", $"The path \"{path}\" was was not found.", "OK");
+	}
+
+	public void CloseProject()
+	{
+		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
+		BibtexProject.Instance.Close();
+		Items?.Clear();
+		Items = null;
 	}
 
 	#endregion

@@ -73,6 +73,11 @@ public partial class MainPage : DigitalProductionMainPage
 		return null;
 	}
 
+	async void OnClose(object sender, EventArgs eventArgs)
+	{
+		_viewModel.CloseProject();
+	}
+
 	async void OnShowProgramOptions(object sender, EventArgs eventArgs)
 	{
 		ProgramOptionsViewModel viewModel = new();
@@ -167,7 +172,7 @@ public partial class MainPage : DigitalProductionMainPage
 		List<string> paths = Preferences.RecentPathsManagerService.GetRecentPaths();
 		if (paths.Count > 0)
 		{
-			_viewModel.OpenProjectWithPathSave(paths[0]);
+			_viewModel.OpenProject(paths[0]);
 		}
 	}
 
