@@ -47,20 +47,6 @@
 			</Grid.ColumnDefinitions>
 
 			<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
-				<dpcontrols:Stepper
-					Minimum="0"
-					Maximum="10"
-					Value="5"/>
-
-				<Button
-					Text="None"
-					Clicked="OnNew"/>
-
-				<Button
-					Text="Square"
-					Clicked="OnNew"
-					StyleClass="SquareButtonStyle"/>
-
 				<Button
 					Text="New"
 					Clicked="OnNew"
@@ -90,32 +76,25 @@
 		<dg:DataGrid
 			Grid.Row="1"
 			x:Name="_dataGrid"
+			Style="{DynamicResource DataGridDefaultLooseStyle}"
 			ItemsSource="{Binding Items, Mode=TwoWay}" SelectionMode="{Binding SelectionMode}"
 			SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
 			RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
-			BorderColor="{DynamicResource DataGridBorderColor}" BorderThickness="{Binding BorderThickness}"
-			HeaderBackground="{DynamicResource DataGridHeaderBackgroundColor}" HeaderBordersVisible="{Binding HeaderBordersVisible}"
-			BackgroundColor="{AppThemeBinding Light={DynamicResource DataGridBackgroundColorLight}, Dark={DynamicResource DataGridBackgroundColorDark}}"
-			FooterBackground="{DynamicResource DataGridFooterBackgroundColor}"
 			PaginationEnabled="false"
-			ActiveRowColor="{DynamicResource DataGridActiveRowColor}"
-			RowsBackgroundColorPalette="{AppThemeBinding Light={DynamicResource DataGridColorPaletteLight}, Dark={DynamicResource DataGridColorPaletteDark}}"
-			HeaderLabelStyle="{DynamicResource DataGridTitle}"
-			RowHeight="36" HeaderHeight="40"
 			RowTappedCommand="{Binding TappedCommand}">
 
 			<dg:DataGrid.Columns>
 
 				<!--Name column.-->
 				<dg:DataGridColumn Title="Key" PropertyName="Key" Width="0.25*" SortingEnabled="true"
-						CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
+						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
 
 				<!--Description column.-->
 				<dg:DataGridColumn Title="Author(s)" PropertyName="Author" Width="1.0*" SortingEnabled="false"
-						CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
+						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
 
 				<dg:DataGridColumn Title="Title" PropertyName="Title" Width="1.0*" SortingEnabled="false"
-							CellTemplate="{StaticResource DataGridDefaultCellTempate}"/>
+							CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
 
 			</dg:DataGrid.Columns>
 		</dg:DataGrid>
