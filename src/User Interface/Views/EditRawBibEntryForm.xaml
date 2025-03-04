@@ -18,22 +18,24 @@
 				<ColumnDefinition Width="300"/>
 			</Grid.ColumnDefinitions>
 
-			<!--<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
+			<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
 				<Button
-					Text="New"
+					Text="Paste"
+					Clicked="OnPaste"
 					StyleClass="SquareButton"
 					IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
 
 				<Button 
-					Text="Edit"
+					Text="Copy Key"
+					Command="{Binding CopyKeyCommand}"
 					StyleClass="SquareButton"
 					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
-				<Button 
+				<!--<Button 
 					Text="Delete"
 					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-			</HorizontalStackLayout>-->
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>-->
+			</HorizontalStackLayout>
 
 			<HorizontalStackLayout Grid.Column="1" StyleClass="TopButtonRowStyle" HorizontalOptions="End">
 				<Button 
@@ -51,7 +53,7 @@
 		</Grid>
 		<Editor 
 			Grid.Row="1"
-			x:Name="_editor"
+			x:Name="BibEntryEditor"
 			VerticalOptions="Fill"
 			FontFamily="IBMPlexMono-Regular"
 			Text="{Binding RawBibEntry}"

@@ -1,10 +1,14 @@
+using BibTeXLibrary;
+using BibTexManager.ViewModels;
+
 namespace BibTexManager.Views;
 
 public partial class EditRawBibEntryForm : ContentPage
 {
-	public EditRawBibEntryForm()
+	public EditRawBibEntryForm(BibEntryViewModel viewModel)
 	{
 		InitializeComponent();
+		BindingContext = viewModel;
 	}
 
 	async public void OnSave(object sender, EventArgs eventArgs)
@@ -15,5 +19,36 @@ public partial class EditRawBibEntryForm : ContentPage
 	async public void OnCancel(object sender, EventArgs eventArgs)
 	{
 		await Shell.Current.GoToAsync("../");
+	}
+
+	async void OnPaste(object sender, EventArgs eventArgs)
+	{
+		string? pastedText	= await Clipboard.Default.GetTextAsync();
+		if (pastedText == null)
+		{
+			return;
+		}
+
+		int start			= BibEntryEditor.CursorPosition;
+		int length			= BibEntryEditor.SelectionLength;
+		string originalText	= BibEntryEditor.Text ?? "";
+		string newText;
+
+		if (length > 0)
+		{
+			// Replace the selected text.
+			newText = originalText.Remove(start, length).Insert(start, pastedText);
+		}
+		else
+		{
+			// Insert at the cursor position.
+			newText = originalText.Insert(start, pastedText);
+		}
+
+		BibEntryEditor.Text = newText;
+
+		// Move cursor to the end of inserted text.
+		BibEntryEditor.CursorPosition = start + pastedText.Length;
+		BibEntryEditor.SelectionLength = 0;
 	}
 }

@@ -3,17 +3,9 @@
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
-	<!--<DataTemplate x:Key="DataGridDefaultCellTempate" x:DataType="x:String">
-		<ContentView StyleClass="DataGridContentViewStyle">
-			<Label Text="{Binding}" StyleClass="DataGridLabelStyle"/>
-		</ContentView>
-	</DataTemplate>-->
-
-	<Style TargetType="Button" Class="SquareButton">
-		<Setter Property="MinimumWidthRequest" Value="32"/>
+	<Style TargetType="Button" Class="SquareButtonStyle">
 	</Style>
 
 	<Style TargetType="Border" Class="SmallTitleBorderStyle">

@@ -205,7 +205,7 @@ public partial class MainPage : DigitalProductionMainPage
 		List<string> paths = Preferences.RecentPathsManagerService.GetRecentPaths();
 		if (paths.Count > 0)
 		{
-			_viewModel.OpenProjectWithPathSave(paths[0]);
+			_viewModel.OpenProject(paths[0]);
 		}
 	}
 

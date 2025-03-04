@@ -1,6 +1,7 @@
 ﻿using BibTeXLibrary;
 using BibtexManager;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Validation;
 
 namespace BibTexManager.ViewModels;
@@ -12,6 +13,7 @@ public partial class BibEntryViewModel : ObservableObject
 	#region Fields
 
 	private bool								_addMode							= true;
+	private BibEntry							_bibEntry							= new();
 
 	#endregion
 
@@ -30,9 +32,6 @@ public partial class BibEntryViewModel : ObservableObject
 	
 	[ObservableProperty]
 	public partial string						RawBibEntry { get; set; }			= "";
-
-	[ObservableProperty]
-	public partial BibEntry						BibEntry { get; set; }				= new();
 
 	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
 	public partial ValidatableObject<string>	Key { get; set; }					= new();
@@ -60,12 +59,34 @@ public partial class BibEntryViewModel : ObservableObject
 		}
 	}
 
+	public BibEntry BibEntry
+	{
+		get => _bibEntry;
+		set
+		{
+			if (value != _bibEntry)
+			{
+				_bibEntry   = value;
+				RawBibEntry	= _bibEntry.ToString(new WriteSettings());
+			}
+		}
+	}
+
 	#endregion
 
 	#region Initialize and Validation
 
 	public bool ValidateSubmittable() => IsSubmittable =  Parse();
 
+	#endregion
+
+	#region Commands
+
+	[RelayCommand]
+	private void CopyKey()
+	{
+		Clipboard.Default.SetTextAsync(_bibEntry.Key);
+	}
 	#endregion
 
 	#region
