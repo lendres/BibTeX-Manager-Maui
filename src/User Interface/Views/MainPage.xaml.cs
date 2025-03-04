@@ -1,8 +1,10 @@
-﻿using BibTexManager.ViewModels;
+﻿using BibTeXLibrary;
+using BibTexManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
+using DigitalProduction.Projects;
 using Google.Apis.CustomSearchAPI.v1.Data;
 
 namespace BibTexManager.Views;
@@ -73,7 +75,7 @@ public partial class MainPage : DigitalProductionMainPage
 		return null;
 	}
 
-	async void OnClose(object sender, EventArgs eventArgs)
+	void OnClose(object sender, EventArgs eventArgs)
 	{
 		_viewModel.CloseProject();
 	}
@@ -131,11 +133,42 @@ public partial class MainPage : DigitalProductionMainPage
 		//}
 	}
 
+	async void OnNewFromTemplate(object sender, EventArgs eventArgs)
+	{
+		TemplateSelectionViewModel	viewModel	= new(_viewModel.Project.BibEntryInitialization.TemplateNames);
+		TemplateSelectionView		view		= new(viewModel);
+		object?						result		= await Shell.Current.ShowPopupAsync(view);
+		if (result is bool boolResult && boolResult)
+		{
+			BibEntry entry = BibEntry.NewBibEntryTemplate(_viewModel.Project.BibEntryInitialization, viewModel.Template);
+	
+			await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
+			{
+				{"AddMode",  true},
+				{"BibEntry", entry}
+			});
+
+			//ConfigurationsViewModel? configurationsViewModel = BindingContext as ConfigurationsViewModel;
+			//System.Diagnostics.Debug.Assert(configurationsViewModel != null);
+
+			//ConfigurationViewModel	viewModel	= new(Interface.ConfigurationList?.ConfigurationNames ?? []);
+			//ConfigurationView		view		= new(viewModel);
+			//object?					result		= await Shell.Current.ShowPopupAsync(view);
+
+			//if (result is bool boolResult && boolResult)
+			//{
+			//	configurationsViewModel?.Insert(viewModel.Configuration);
+			//}
+		}
+
+	}
+
+
 	async void OnEdit(object sender, EventArgs eventArgs)
 	{
 		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
 		{
-			{"AddMode",  true},
+			{"AddMode",  false},
 			{"BibEntry", _viewModel.SelectedItem!}
 		});
 

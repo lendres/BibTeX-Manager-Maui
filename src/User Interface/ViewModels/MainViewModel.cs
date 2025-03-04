@@ -14,7 +14,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	private readonly IDialogService		_dialogService;
 	ProjectExtractor?					_projectExtractor		= null;
-	BibtexProject?						_project				= null;
 
 	#endregion
 
@@ -41,6 +40,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	#endregion
 
 	#region Properties
+
+	public BibtexProject							Project { get => BibtexProject.Instance ?? throw new NullReferenceException("Project is null.");  }
 
 	[ObservableProperty]
 	public partial IRecentPathsManagerService		RecentPathsManagerService { get; set; }

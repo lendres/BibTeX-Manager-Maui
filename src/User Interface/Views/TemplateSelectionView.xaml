@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
+	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
+	x:DataType="viewmodel:TemplateSelectionViewModel"
+	x:Class="BibTexManager.Views.TemplateSelectionView"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="360" MinimumHeightRequest="200" MaximumHeightRequest="201">
+
+		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+			<Label Text="Select a Template" StyleClass="Title" HorizontalOptions="Start"/>
+
+			<Picker
+				Title="Template"
+				x:Name="TemplatePicker"
+				ItemsSource="{Binding Templates}"
+				SelectedItem="{Binding Template, Converter={StaticResource DataTypeToStringConverter}}"/>
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+					Text="OK"
+					HorizontalOptions="End"
+					StyleClass="StandardSizeButtonStyle"
+					IsEnabled="{Binding IsSubmittable}"
+					Clicked="OnSaveButtonClicked"/>
+				<Button 
+					Text="Cancel"
+					StyleClass="StandardSizeButtonStyle"
+					HorizontalOptions="End"
+					Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+		</VerticalStackLayout>
+	</Border>
+</dpviews:PopupView>

@@ -55,6 +55,7 @@
 			Grid.Row="1"
 			x:Name="BibEntryEditor"
 			VerticalOptions="Fill"
+			FontFamily="IBMPlexMono-Regular"
 			Text="{Binding RawBibEntry}"
 		/>
 
