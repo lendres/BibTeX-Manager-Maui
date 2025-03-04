@@ -51,11 +51,17 @@
 							StyleClass="SquareButton"
 							IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
 
-						<Button 
-							Text="Edit"
-							Clicked="OnEdit"
-							StyleClass="SquareButton"
-							IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+					<Button
+						Text="New from Template"
+						Clicked="OnNewFromTemplate"
+						StyleClass="SquareButtonStyle"
+						IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
+
+					<Button 
+						Text="Edit"
+						Clicked="OnEdit"
+						StyleClass="SquareButton"
+						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
 						<Button 
 							Text="Delete"

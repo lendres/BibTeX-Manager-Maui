@@ -83,6 +83,9 @@
 	  <MauiXaml Update="Views\EditRawBibEntryForm.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\TemplateSelectionView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ProgramOptionsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -94,6 +97,12 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\BibTex Project\BibTexProject.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\TemplateSelectionView.xaml.cs">
+	    <DependentUpon>TemplateSelectionView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

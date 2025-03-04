@@ -3,6 +3,7 @@ using BibTexManager.Views;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Media;
 using CommunityToolkit.Maui.Storage;
+using DigitalProduction.Maui;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
 using Microsoft.Extensions.Logging;
@@ -18,6 +19,7 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
+			.UseDigitalProductionMauiAppToolkit()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

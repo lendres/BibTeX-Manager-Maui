@@ -11,7 +11,7 @@
 
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="360" MinimumHeightRequest="128" MaximumHeightRequest="521">
 
-		<VerticalStackLayout >
+		<VerticalStackLayout>
 
 			<Label Text="Program Options" StyleClass="Title" HorizontalOptions="Start"/>
 
@@ -56,7 +56,7 @@
 
 			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
 				<Button 
-					Text="Save"
+					Text="OK"
 					HorizontalOptions="End"
 					StyleClass="StandardSizeButtonStyle"
 					IsEnabled="{Binding IsSubmittable}"

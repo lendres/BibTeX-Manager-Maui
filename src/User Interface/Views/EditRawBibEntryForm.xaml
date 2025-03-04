@@ -53,6 +53,7 @@
 			Grid.Row="1"
 			x:Name="_editor"
 			VerticalOptions="Fill"
+			FontFamily="IBMPlexMono-Regular"
 			Text="{Binding RawBibEntry}"
 		/>
 
