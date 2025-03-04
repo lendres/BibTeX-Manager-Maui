@@ -63,6 +63,12 @@
 						StyleClass="SquareButton"
 						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
+					<Button 
+						Text="Edit"
+						Clicked="OnEdit"
+						StyleClass="SquareButton"
+						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+
 						<Button 
 							Text="Delete"
 							Clicked="OnDelete"
