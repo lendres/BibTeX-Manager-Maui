@@ -28,8 +28,11 @@
 				RecentPathsManagerService="{Binding RecentPathsManagerService}"/>
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
 		</MenuBarItem>
+		<MenuBarItem Text="Project">
+			<MenuFlyoutItem Text="Project Settings..." Clicked="OnProjectOptions"/>
+		</MenuBarItem>
 		<MenuBarItem Text="Tools">
-			<MenuFlyoutItem Text="Program Options" Clicked="OnShowProgramOptions"/>
+			<MenuFlyoutItem Text="Program Options" Clicked="OnProgramOptions"/>
 		</MenuBarItem>
 		<MenuBarItem Text="Help">
 			<MenuFlyoutItem Text="Help" Clicked="OnHelp"/>

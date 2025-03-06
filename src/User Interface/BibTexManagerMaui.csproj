@@ -84,6 +84,9 @@
 	  <MauiXaml Update="Views\EditRawBibEntryForm.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ProjectOptionsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\TemplateSelectionView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -101,6 +104,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\ProjectOptionsView.xaml.cs">
+	    <DependentUpon>ProjectOptionsView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\TemplateSelectionView.xaml.cs">
 	    <DependentUpon>TemplateSelectionView.xaml</DependentUpon>
 	  </Compile>

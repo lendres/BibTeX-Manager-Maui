@@ -90,7 +90,15 @@ public partial class MainPage : DigitalProductionMainPage
 		_viewModel.CloseProject();
 	}
 
-	async void OnShowProgramOptions(object sender, EventArgs eventArgs)
+	async void OnProjectOptions(object sender, EventArgs e)
+	{
+		ProjectOptionsViewModel viewModel = new();
+
+		ProjectOptionsView	view	= new(viewModel);
+		object?				result	= await Shell.Current.ShowPopupAsync(view);
+	}
+
+	async void OnProgramOptions(object sender, EventArgs eventArgs)
 	{
 		ProgramOptionsViewModel viewModel = new();
 

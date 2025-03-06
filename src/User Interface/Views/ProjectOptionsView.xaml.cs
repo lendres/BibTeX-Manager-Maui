@@ -4,11 +4,11 @@ using System;
 
 namespace BibTexManager.Views;
 
-public partial class ProgramOptionsView : PopupView
+public partial class ProjectOptionsView : PopupView
 {
-	ProgramOptionsViewModel _viewModel;
+	ProjectOptionsViewModel _viewModel;
 
-	public ProgramOptionsView(ProgramOptionsViewModel viewModel)
+	public ProjectOptionsView(ProjectOptionsViewModel viewModel)
 	{
 		InitializeComponent();
 		_viewModel = viewModel;

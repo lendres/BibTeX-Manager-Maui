@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
+	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
+	x:DataType="viewmodel:ProjectOptionsViewModel"
+	x:Class="BibTexManager.Views.ProjectOptionsView"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="360" MinimumHeightRequest="200" MaximumHeightRequest="521">
+
+		<VerticalStackLayout>
+
+			<Label Text="Project Options" StyleClass="Title" HorizontalOptions="Start"/>
+
+			<Border StyleClass="SmallTitleBorderStyle">
+				<Label Text="General" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+
+			<Grid ColumnDefinitions="76,*" RowDefinitions="40" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+				<!--HorizontalOptions="Fill" VerticalOptions="Start">-->
+				<Switch Grid.Column="0"  Grid.Row="0" VerticalOptions="Center" HorizontalOptions="End"
+					IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Label Grid.Column="1" Grid.Row="0" VerticalOptions="Center" VerticalTextAlignment="Center"
+					Text="Open the last project at start up."/>
+			</Grid>
+
+			<Border StyleClass="SmallTitleBorderStyle" Margin="0,20,0,0">
+				<Label Text="Recently Used Files" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+
+			<Grid ColumnDefinitions="76,*" RowDefinitions="40,40,40" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0"
+				HorizontalOptions="Fill" VerticalOptions="Start">
+
+				<Switch Grid.Column="0"  Grid.Row="0" VerticalOptions="Center" HorizontalOptions="End"
+					IsToggled="{Binding RemoveNotFoundPaths}"/>
+				<Label Grid.Column="1" Grid.Row="0" VerticalOptions="Center" VerticalTextAlignment="Center"
+					Text="Remove paths that do not exist."/>
+
+				<dpcontrols:Stepper Grid.Column="0" Grid.Row="1" HorizontalOptions="End" VerticalOptions="Center"
+					Minimum="5"	
+					Maximum="{Binding NumberOfItemsToStore}"
+					Value="{Binding NumberOfItemsShown}"/>
+				<Label Grid.Column="1" Grid.Row="1"
+					Text="Number of items to show." VerticalOptions="Center" Margin="0" VerticalTextAlignment="Center" Padding="0"/>
+
+				<dpcontrols:Stepper Grid.Column="0" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center"
+					Minimum="10"
+					Maximum="20"
+					Value="{Binding NumberOfItemsToStore}"/>
+				<Label Grid.Column="1" Grid.Row="2"
+					Text="Number of items to show." VerticalOptions="Center" Margin="0" VerticalTextAlignment="Center" Padding="0"/>
+			</Grid>
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+					Text="OK"
+					HorizontalOptions="End"
+					StyleClass="StandardSizeButtonStyle"
+					IsEnabled="{Binding IsSubmittable}"
+					Clicked="OnSaveButtonClicked"/>
+				<Button 
+					Text="Cancel"
+					StyleClass="StandardSizeButtonStyle"
+					HorizontalOptions="End"
+					Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+
+		</VerticalStackLayout>
+	</Border>
+</dpviews:PopupView>
