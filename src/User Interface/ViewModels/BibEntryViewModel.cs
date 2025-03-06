@@ -2,7 +2,10 @@
 using BibtexManager;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Data.Translation.Validation;
 using DigitalProduction.Maui.Validation;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Maui.Controls;
 
 namespace BibTexManager.ViewModels;
 
@@ -12,8 +15,9 @@ public partial class BibEntryViewModel : ObservableObject
 {
 	#region Fields
 
-	private bool								_addMode							= true;
-	private BibEntry							_bibEntry							= new();
+	private bool						_addMode				= true;
+	private BibEntry?					_bibEntry				= new();
+	private WriteSettings				_writeSettings			= new();
 
 	#endregion
 
@@ -30,17 +34,25 @@ public partial class BibEntryViewModel : ObservableObject
 	[ObservableProperty]
 	public partial string						Title { get; set; }					= "Add Bibtex Entry";
 	
-	[ObservableProperty]
+	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
 	public partial string						RawBibEntry { get; set; }			= "";
 
-	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
-	public partial ValidatableObject<string>	Key { get; set; }					= new();
+	//[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
+	//public partial ValidatableObject<string>	Key { get; set; }					= new();
+
+	//[ObservableProperty]
+	//public partial bool							Modified  { get; set; }				= false;
 
 	[ObservableProperty]
-	public partial bool							Modified  { get; set; }				= false;
+	public partial bool							IsKeyValid  { get; set; }			= false;
+
+	[ObservableProperty]
+	public partial bool							CanCopyKey  { get; set; }			= false;
 
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }			= false;
+
+	public string								SaveCommand { get; set; }			= "Save";
 
 	public bool AddMode
 	{
@@ -50,24 +62,46 @@ public partial class BibEntryViewModel : ObservableObject
 			_addMode = value;
 			if (_addMode)
 			{
-				Title = "Add Bibtex Entry";
+				Title		= "Add Bibtex Entry";
+				SaveCommand	= "Save";
 			}
 			else
 			{
-				Title = "Edit Bibtex Entry";
+				Title		= "Edit Bibtex Entry";
+				SaveCommand = "Replace";
 			}
 		}
 	}
 
-	public BibEntry BibEntry
+	public BibEntry? BibEntry
 	{
 		get => _bibEntry;
 		set
 		{
 			if (value != _bibEntry)
 			{
-				_bibEntry   = value;
-				RawBibEntry	= _bibEntry.ToString(new WriteSettings());
+				_bibEntry = value;
+				if (_bibEntry != null)
+				{
+					RawBibEntry = _bibEntry.ToString(new WriteSettings());
+				}
+			}
+		}
+	}
+
+	public WriteSettings WriteSettings
+	{
+		get => _writeSettings;
+		set
+		{
+			if (value != _writeSettings)
+			{
+				_writeSettings   = value;
+
+				if (_bibEntry != null)
+				{
+					RawBibEntry = _bibEntry.ToString(new WriteSettings());
+				}
 			}
 		}
 	}
@@ -76,17 +110,50 @@ public partial class BibEntryViewModel : ObservableObject
 
 	#region Initialize and Validation
 
-	public bool ValidateSubmittable() => IsSubmittable =  Parse();
+	private void ValidateKey()
+	{
+		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
+
+		CanCopyKey = _bibEntry != null && _bibEntry.Key != string.Empty;
+		if (!CanCopyKey)
+		{
+			IsKeyValid = false;
+		}
+		else
+		{
+			IsKeyValid = !BibtexProject.Instance.Bibliography.IsKeyInUse(_bibEntry!.Key);
+		}
+	}
+
+	public bool ValidateSubmittable() => IsSubmittable =
+		_bibEntry != null &&
+		IsKeyValid;
+
+	#endregion
+
+	#region Events
+
+	partial void OnRawBibEntryChanged(string value)
+	{
+		TryParse();
+	}
 
 	#endregion
 
 	#region Commands
 
 	[RelayCommand]
-	private void CopyKey()
+	private void CopyCiteKeyToClipboard()
 	{
+		System.Diagnostics.Debug.Assert(_bibEntry != null);
 		Clipboard.Default.SetTextAsync(_bibEntry.Key);
 	}
+
+	#endregion
+
+	#region Methods
+
+
 	#endregion
 
 	#region
@@ -96,63 +163,58 @@ public partial class BibEntryViewModel : ObservableObject
 	/// </summary>
 	private void CheckQuality()
 	{
-		if (Parse())
+		// Mapping.
+		BibtexProject.Instance!.RemapEntryNames(BibEntry);
+
+		// Cleaning.
+		bool breakNext = false;
+		foreach (TagProcessingData tagProcessingData in BibtexProject.Instance.CleanEntry(BibEntry))
 		{
-			// Mapping.
-			BibtexProject.Instance!.RemapEntryNames(BibEntry);
-
-			// Cleaning.
-			bool breakNext = false;
-			foreach (TagProcessingData tagProcessingData in BibtexProject.Instance.CleanEntry(BibEntry))
+			// If the processing was cancelled, we break.  We have to loop back around here to give the
+			// processing a chance to finish (it was yielded).  Now exit before processing another entry.
+			if (breakNext)
 			{
-				// If the processing was cancelled, we break.  We have to loop back around here to give the
-				// processing a chance to finish (it was yielded).  Now exit before processing another entry.
-				if (breakNext)
-				{
-					break;
-				}
-
-				//CorrectionForm correctionForm	= new CorrectionForm(tagProcessingData);
-				//DialogResult dialogResult		= correctionForm.Show(this);
-
-				//breakNext = dialogResult == DialogResult.Cancel;
+				break;
 			}
 
-			// String constants replacement.
-			BibtexProject.Instance.ApplyStringConstants(BibEntry);
+			//CorrectionForm correctionForm	= new CorrectionForm(tagProcessingData);
+			//DialogResult dialogResult		= correctionForm.Show(this);
 
-			// Key.
-			if (_addMode)
-			{
-				BibtexProject.Instance.GenerateNewKey(BibEntry);
-			}
-			else
-			{
-				BibtexProject.Instance.ValidateKey(BibEntry);
-			}
-
-				RawBibEntry = BibEntry.ToString(BibtexProject.Instance.WriteSettings);
-			}
+			//breakNext = dialogResult == DialogResult.Cancel;
 		}
+
+		// String constants replacement.
+		BibtexProject.Instance.ApplyStringConstants(BibEntry);
+
+		// Key.
+		if (_addMode)
+		{
+			BibtexProject.Instance.GenerateNewKey(BibEntry);
+		}
+		else
+		{
+			BibtexProject.Instance.ValidateKey(BibEntry);
+		}
+
+		RawBibEntry = BibEntry.ToString(BibtexProject.Instance.WriteSettings);
+	}
 
 	/// <summary>
 	/// Parse the text in the text box.  Returns true if successful and false otherwise.
 	/// </summary>
-	private bool Parse()
+	private void TryParse()
 	{
-		bool success = true;
 		try
 		{
-			BibEntry = BibtexProject.Instance!.ParseSingleEntryText(RawBibEntry);
+			_bibEntry = BibtexProject.Instance!.ParseSingleEntryText(RawBibEntry);
 		}
 		catch
 		{
-			// The text entered contained an error.  Display it and cancel the "ok" (return).
-			//MessageBox.Show(this, exception.Message, "Error Parsing Entry", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			success = false;
+			_bibEntry = null;
 		}
 
-		return success;
+		ValidateKey();
+		ValidateSubmittable();
 	}
 
 

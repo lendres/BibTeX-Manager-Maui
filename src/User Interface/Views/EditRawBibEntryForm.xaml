@@ -2,6 +2,7 @@
 <ContentPage
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
 	x:DataType="viewmodel:BibEntryViewModel"
 	x:Class="BibTexManager.Views.EditRawBibEntryForm">
@@ -9,6 +10,10 @@
 	<Shell.BackButtonBehavior>
 		<BackButtonBehavior IsVisible="False" IsEnabled="False" />
 	</Shell.BackButtonBehavior>
+
+	<ContentPage.Resources>
+		<toolkit:IsNotNullConverter x:Key="IsNotNullConverter"/>
+	</ContentPage.Resources>
 
 	<Grid RowDefinitions="auto,*"  Padding="30" RowSpacing="20" HorizontalOptions="Fill" VerticalOptions="Fill">
 
@@ -27,9 +32,9 @@
 
 				<Button 
 					Text="Copy Key"
-					Command="{Binding CopyKeyCommand}"
+					Command="{Binding CopyCiteKeyToClipboardCommand}"
 					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+					IsEnabled="{Binding CanCopyKey}"/>
 
 				<!--<Button 
 					Text="Delete"
@@ -41,8 +46,8 @@
 				<Button 
 					Text="Save"
 					Clicked="OnSave"
-					IsEnabled="{Binding Modified}"
-					HorizontalOptions="End"/>
+					HorizontalOptions="End"
+					IsEnabled="{Binding IsSubmittable}"/>
 
 				<Button 
 					Text="Cancel"

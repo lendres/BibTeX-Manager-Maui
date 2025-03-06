@@ -5,20 +5,35 @@ namespace BibTexManager.Views;
 
 public partial class EditRawBibEntryForm : ContentPage
 {
+	private BibEntryViewModel _viewModel;
+
 	public EditRawBibEntryForm(BibEntryViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext = viewModel;
+		_viewModel		= viewModel;
+		BindingContext	= viewModel;
 	}
 
 	async public void OnSave(object sender, EventArgs eventArgs)
 	{
-		await Shell.Current.GoToAsync("../");
+		// Navigate back with a result.
+		Dictionary<string, object> navigationParameter = new()
+		{
+			{ "NavigationCommand", _viewModel.SaveCommand },
+			{ "NavigationObject", _viewModel.BibEntry! }
+		};
+		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
 
 	async public void OnCancel(object sender, EventArgs eventArgs)
 	{
-		await Shell.Current.GoToAsync("../");
+		// Navigate back with a result.
+		Dictionary<string, object> navigationParameter = new()
+		{
+			{ "NavigationCommand", "Cancel" },
+			{ "Result", _viewModel.BibEntry! }
+		};
+		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
 
 	async void OnPaste(object sender, EventArgs eventArgs)

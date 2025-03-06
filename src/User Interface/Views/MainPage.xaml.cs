@@ -9,6 +9,8 @@ using Google.Apis.CustomSearchAPI.v1.Data;
 
 namespace BibTexManager.Views;
 
+[QueryProperty(nameof(NavigationCommand), "NavigationCommand")]
+[QueryProperty(nameof(NavigationObject), "NavigationObject")]
 public partial class MainPage : DigitalProductionMainPage
 {
 	#region Fields
@@ -41,6 +43,14 @@ public partial class MainPage : DigitalProductionMainPage
 			OpenLastProject();
 		}
 	}
+
+	#endregion
+
+	#region Properties
+
+	public string NavigationCommand { get; set; }
+
+	public BibEntry NavigationObject { get; set; }
 
 	#endregion
 
@@ -116,21 +126,8 @@ public partial class MainPage : DigitalProductionMainPage
 
 		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
 		{
-			{"AddMode",  true},
+			{ "AddMode",  true }
 		});
-
-
-		//ConfigurationsViewModel? configurationsViewModel = BindingContext as ConfigurationsViewModel;
-		//System.Diagnostics.Debug.Assert(configurationsViewModel != null);
-
-		//ConfigurationViewModel	viewModel	= new(Interface.ConfigurationList?.ConfigurationNames ?? []);
-		//ConfigurationView		view		= new(viewModel);
-		//object?					result		= await Shell.Current.ShowPopupAsync(view);
-
-		//if (result is bool boolResult && boolResult)
-		//{
-		//	configurationsViewModel?.Insert(viewModel.Configuration);
-		//}
 	}
 
 	async void OnNewFromTemplate(object sender, EventArgs eventArgs)
@@ -138,51 +135,42 @@ public partial class MainPage : DigitalProductionMainPage
 		TemplateSelectionViewModel	viewModel	= new(_viewModel.Project.BibEntryInitialization.TemplateNames);
 		TemplateSelectionView		view		= new(viewModel);
 		object?						result		= await Shell.Current.ShowPopupAsync(view);
+
 		if (result is bool boolResult && boolResult)
 		{
-			BibEntry entry = BibEntry.NewBibEntryTemplate(_viewModel.Project.BibEntryInitialization, viewModel.Template);
+			BibEntry entry = BibEntry.NewBibEntryFromTemplate(_viewModel.Project.BibEntryInitialization, viewModel.Template);
 	
 			await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
 			{
-				{"AddMode",  true},
-				{"BibEntry", entry}
+				{ "AddMode",  true },
+				{ "BibEntry", entry }
 			});
-
-			//ConfigurationsViewModel? configurationsViewModel = BindingContext as ConfigurationsViewModel;
-			//System.Diagnostics.Debug.Assert(configurationsViewModel != null);
-
-			//ConfigurationViewModel	viewModel	= new(Interface.ConfigurationList?.ConfigurationNames ?? []);
-			//ConfigurationView		view		= new(viewModel);
-			//object?					result		= await Shell.Current.ShowPopupAsync(view);
-
-			//if (result is bool boolResult && boolResult)
-			//{
-			//	configurationsViewModel?.Insert(viewModel.Configuration);
-			//}
 		}
-
 	}
 
+	protected override void OnNavigatedTo(NavigatedToEventArgs args)
+	{
+		base.OnNavigatedTo(args);
+
+		switch (NavigationCommand)
+		{
+			case "Save":
+				_viewModel.Insert(NavigationObject);
+				break;
+
+			case "Replace":
+				_viewModel.ReplaceSelected(NavigationObject);
+				break;
+		}
+	}
 
 	async void OnEdit(object sender, EventArgs eventArgs)
 	{
 		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
 		{
-			{"AddMode",  false},
-			{"BibEntry", _viewModel.SelectedItem!}
+			{ "AddMode",  false },
+			{ "BibEntry", _viewModel.SelectedItem! }
 		});
-
-		//ConfigurationsViewModel? configurationsViewModel = BindingContext as ConfigurationsViewModel;
-		//System.Diagnostics.Debug.Assert(configurationsViewModel != null);
-
-		//ConfigurationViewModel	viewModel	= new(Interface.ConfigurationList?.ConfigurationNames ?? []);
-		//ConfigurationView		view		= new(viewModel);
-		//object?					result		= await Shell.Current.ShowPopupAsync(view);
-
-		//if (result is bool boolResult && boolResult)
-		//{
-		//	configurationsViewModel?.Insert(viewModel.Configuration);
-		//}
 	}
 
 	async void OnDelete(object sender, EventArgs eventArgs)
