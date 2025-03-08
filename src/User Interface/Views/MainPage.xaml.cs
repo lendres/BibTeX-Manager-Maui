@@ -15,17 +15,8 @@ public partial class MainPage : DigitalProductionMainPage
 {
 	#region Fields
 
-	private MainViewModel				_viewModel;
-
-	private readonly FilePickerFileType _bibliographyProjectFileType = new(new Dictionary<DevicePlatform, IEnumerable<string>>
-	{
-		{
-			DevicePlatform.WinUI, new[]
-			{
-				".bibproj"
-			}
-		},
-	});
+	private MainViewModel		_viewModel;
+	IBibTexFilePicker			_filePicker     = DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTexFilePicker>();
 
 	#endregion
 
@@ -35,7 +26,6 @@ public partial class MainPage : DigitalProductionMainPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-
 		_viewModel = viewModel;
 
 		if (Preferences.LoadLastProjectAtStartUp)
@@ -48,41 +38,30 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Properties
 
-	public string NavigationCommand { get; set; }
+	public string NavigationCommand { get; set; } = string.Empty;
 
-	public BibEntry NavigationObject { get; set; }
+	public BibEntry NavigationObject { get; set; } = new();
 
 	#endregion
 
 	#region Menu Events
 
-	async void OnOpen(object sender, EventArgs eventArgs)
+	async void OnNew(object sender, EventArgs eventArgs)
 	{
-		PickOptions pickOptions = new()
+		string file = await _filePicker.BrowseForBibliographyFile();
+		if (!string.IsNullOrEmpty(file))
 		{
-			PickerTitle = "Select an Bibliography Project File",
-			FileTypes   = _bibliographyProjectFileType
-		};
-		FileResult? result = await BrowseForFile(pickOptions);
-		if (result != null)
-		{
-			_viewModel.OpenProjectWithPathSave(result.FullPath);
+			_viewModel.NewProject(file);
 		}
 	}
 
-	public static async Task<FileResult?> BrowseForFile(PickOptions options)
+	async void OnOpen(object sender, EventArgs eventArgs)
 	{
-		try
+		string file = await _filePicker.BrowseForProjectFile();
+		if (!string.IsNullOrEmpty(file))
 		{
-			return await FilePicker.PickAsync(options);
+			_viewModel.OpenProjectWithPathSave(file);
 		}
-		catch
-		{
-			//(Exception exception)
-			//string message = exception.Message;
-			// The user canceled or something went wrong.
-		}
-		return null;
 	}
 
 	void OnClose(object sender, EventArgs eventArgs)
@@ -127,16 +106,6 @@ public partial class MainPage : DigitalProductionMainPage
 	#endregion
 
 	#region Button Events
-
-	async void OnNew(object sender, EventArgs eventArgs)
-	{
-		//TranslationMatrix translationMatrix = TranslationMatrix.CreateNewTranslationMatrix(TranslationMatrixNewName, InputProcessor, InputFile);
-
-		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
-		{
-			{ "AddMode",  true }
-		});
-	}
 
 	async void OnNewFromTemplate(object sender, EventArgs eventArgs)
 	{

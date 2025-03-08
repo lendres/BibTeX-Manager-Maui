@@ -19,7 +19,8 @@
 
 	<ContentPage.MenuBarItems>
 		<MenuBarItem Text="File">
-			<MenuFlyoutItem Text="Open" Clicked="OnOpen"/>
+			<MenuFlyoutItem Text="New..." Clicked="OnNew"/>
+			<MenuFlyoutItem Text="Open..." Clicked="OnOpen"/>
 			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
 			<dpcontrols:RecentlyUsedMenuFlyout
 				Text="Recently Used"

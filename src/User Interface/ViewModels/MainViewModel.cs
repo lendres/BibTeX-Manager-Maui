@@ -68,6 +68,16 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Methods and Commands
 
+	public void NewProject(string bibliographyFile)
+	{
+		BibtexProject.New(bibliographyFile);
+		if (BibtexProject.Instance != null)
+		{
+			Items = BibtexProject.Instance.Bibliography.Entries;
+		}
+	}
+
+
 	public void OpenProjectWithPathSave(string projectFile)
 	{
 		RecentPathsManagerService.PushTop(projectFile);

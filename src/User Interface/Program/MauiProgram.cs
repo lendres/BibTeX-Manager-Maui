@@ -62,6 +62,7 @@ public static class MauiProgram
 
 	private static void CreateServices(IServiceCollection services)
 	{
+		services.AddSingleton<IBibTexFilePicker, BibTexFilePicker>();
 		services.AddSingleton<IDialogService, DialogService>();
 		services.AddSingleton<IRecentPathsManagerService, RecentPathsManagerService>();
 	}
