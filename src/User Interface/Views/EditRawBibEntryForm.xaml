@@ -2,7 +2,7 @@
 <ContentPage
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
 	x:DataType="viewmodel:BibEntryViewModel"
 	x:Class="BibTexManager.Views.EditRawBibEntryForm">
@@ -12,7 +12,7 @@
 	</Shell.BackButtonBehavior>
 
 	<ContentPage.Resources>
-		<toolkit:IsNotNullConverter x:Key="IsNotNullConverter"/>
+		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
 	</ContentPage.Resources>
 
 	<Grid RowDefinitions="auto,*"  Padding="30" RowSpacing="20" HorizontalOptions="Fill" VerticalOptions="Fill">

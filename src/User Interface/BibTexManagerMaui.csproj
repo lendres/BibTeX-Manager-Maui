@@ -77,39 +77,39 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Models\" />
+		<Folder Include="Models\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\EditRawBibEntryForm.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ProjectOptionsView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\TemplateSelectionView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ProgramOptionsView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="Views\EditRawBibEntryForm.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ProjectOptionsView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\TemplateSelectionView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ProgramOptionsView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\BibTex Project\BibTexProject.csproj" />
+		<ProjectReference Include="..\BibTex Project\BibTexProject.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\ProjectOptionsView.xaml.cs">
-	    <DependentUpon>ProjectOptionsView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\TemplateSelectionView.xaml.cs">
-	    <DependentUpon>TemplateSelectionView.xaml</DependentUpon>
-	  </Compile>
+		<Compile Update="Views\ProjectOptionsView.xaml.cs">
+			<DependentUpon>ProjectOptionsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\TemplateSelectionView.xaml.cs">
+			<DependentUpon>TemplateSelectionView.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 </Project>
