@@ -248,41 +248,28 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	{
 		switch (eventArgs.PropertyName)
 		{
+			case nameof(Settings.BibEntryInitializationFile):
+				ReadBibEntryInitializationFiles();
+				ReadBibliographyFile();
+				BuildStringConstantMap();
+				break;
+
 			case nameof(Settings.BibliographyFile):
-				if (IsInitialized)
-				{
-					ReadBibliographyFile();
-					BuildStringConstantMap();
-				}
+				ReadBibliographyFile();
+				BuildStringConstantMap();
 				break;
 
 			case nameof(Settings.AssessoryFiles):
-				if (IsInitialized)
-				{
-					ReadAccessoryFiles();
-					BuildStringConstantMap();
-				}
-				break;
-
-			case nameof(Settings.BibEntryInitializationFile):
-				if (IsInitialized)
-				{
-					ReadBibEntryInitializationFiles();
-				}
+				ReadAccessoryFiles();
+				BuildStringConstantMap();
 				break;
 
 			case nameof(Settings.TagQualityProcessingFile):
-				if (IsInitialized)
-				{
-					ReadTagQualityProcessingFile();
-				}
+				ReadTagQualityProcessingFile();
 				break;
 
 			case nameof(Settings.BibEntryRemappingFile):
-				if (IsInitialized)
-				{
-					ReadNameMappingFile();
-				}
+				ReadNameMappingFile();
 				break;
 		}
 	}

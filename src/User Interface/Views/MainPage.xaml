@@ -91,7 +91,9 @@
 			SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
 			RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
 			PaginationEnabled="false"
-			RowTappedCommand="{Binding TappedCommand}">
+			RowTappedCommand="{Binding TappedCommand}"
+			IsVisible="{Binding Items, Converter={StaticResource IsNotNullConverter}}"
+			IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
 
 			<dg:DataGrid.Columns>
 

@@ -77,7 +77,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		}
 	}
 
-
 	public void OpenProjectWithPathSave(string projectFile)
 	{
 		RecentPathsManagerService.PushTop(projectFile);

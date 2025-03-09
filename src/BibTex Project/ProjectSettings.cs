@@ -27,62 +27,10 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	#region Properties
 
 	/// <summary>
-	/// The path to the bibiography file.
-	/// </summary>
-	[XmlAttribute("bibfile")]
-	public string BibliographyFile
-	{
-		get => GetValueOrDefault<string>(string.Empty);
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
-	}
-
-	/// <summary>
 	/// Use paths relative to the bibliography file.
 	/// </summary>
 	[XmlAttribute("userelativepaths")]
 	public bool UsePathsRelativeToBibFile
-	{
-		get => GetValueOrDefault<bool>(false);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
-	}
-
-	/// <summary>
-	/// Assessory files that contain things like strings.
-	/// </summary>
-	[XmlArray("assessoryfiles"), XmlArrayItem("file")]
-	public List<string> AssessoryFiles
-	{
-		get => _assessoryFiles;
-
-		set
-		{
-			if (!_assessoryFiles.SequenceEqual(value))
-			{
-				_assessoryFiles = value;
-				Modified = true;
-				OnPropertyChanged(nameof(AssessoryFiles));
-			}
-		}
-	}
-
-	/// <summary>
-	/// Replace tag values with string constants.
-	/// </summary>
-	[XmlAttribute("usestringconstants")]
-	public bool UseStringConstants
 	{
 		get => GetValueOrDefault<bool>(false);
 
@@ -129,6 +77,57 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 		}
 	}
 
+	/// <summary>
+	/// The path to the bibiography file.
+	/// </summary>
+	[XmlAttribute("bibfile")]
+	public string BibliographyFile
+	{
+		get => GetValueOrDefault<string>(string.Empty);
+		set
+		{
+			if (SetValue(value))
+			{
+				Modified = true;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Assessory files that contain things like strings.
+	/// </summary>
+	[XmlArray("assessoryfiles"), XmlArrayItem("file")]
+	public List<string> AssessoryFiles
+	{
+		get => _assessoryFiles;
+
+		set
+		{
+			if (!_assessoryFiles.SequenceEqual(value))
+			{
+				_assessoryFiles = value;
+				Modified = true;
+				OnPropertyChanged(nameof(AssessoryFiles));
+			}
+		}
+	}
+
+	/// <summary>
+	/// Replace tag values with string constants.
+	/// </summary>
+	[XmlAttribute("usestringconstants")]
+	public bool UseStringConstants
+	{
+		get => GetValueOrDefault<bool>(false);
+
+		set
+		{
+			if (SetValue(value))
+			{
+				Modified = true;
+			}
+		}
+	}
 
 	/// <summary>
 	/// Specifies if the tags should be processed to ensure their quality.
