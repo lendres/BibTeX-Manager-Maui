@@ -71,6 +71,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="DigitalProduction.Maui" Version="0.8.3" />
 		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.11.4" />
 		<PackageReference Include="DigitalProduction.Maui.Images" Version="1.1.0" />
 		<PackageReference Include="DigitalProduction.Net" Version="0.8.5" />

@@ -2,6 +2,7 @@
 using BibTexManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
+using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
 using DigitalProduction.Projects;
@@ -16,7 +17,8 @@ public partial class MainPage : DigitalProductionMainPage
 	#region Fields
 
 	private MainViewModel		_viewModel;
-	IBibTexFilePicker			_filePicker     = DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTexFilePicker>();
+	private IBibTexFilePicker	_filePicker			= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTexFilePicker>();
+	private ISaveFilePicker		_saveFilePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveFilePicker>();
 
 	#endregion
 
@@ -61,6 +63,31 @@ public partial class MainPage : DigitalProductionMainPage
 		if (!string.IsNullOrEmpty(file))
 		{
 			_viewModel.OpenProjectWithPathSave(file);
+		}
+	}
+
+	async void OnSave(object sender, EventArgs eventArgs)
+	{
+		if (_viewModel.SavePathRequired)
+		{
+			string file = await _filePicker.BrowseForProjectFile();
+			if (!string.IsNullOrEmpty(file))
+			{
+				_viewModel.Save(file);
+			}
+		}
+		else
+		{
+			_viewModel.Save();
+		}
+	}
+
+	async void OnSaveAs(object sender, EventArgs eventArgs)
+	{
+		string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyProjectFileType() } );
+		if (!string.IsNullOrEmpty(file))
+		{
+			_viewModel.Save(file);
 		}
 	}
 

@@ -50,7 +50,7 @@ class BibTexFilePicker : IBibTexFilePicker
 		});
 	}
 
-	private static FilePickerFileType CreateBibliographyProjectFileType()
+	public FilePickerFileType CreateBibliographyProjectFileType()
 	{
 		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
 		{

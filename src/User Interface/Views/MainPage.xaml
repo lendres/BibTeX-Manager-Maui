@@ -21,7 +21,9 @@
 		<MenuBarItem Text="File">
 			<MenuFlyoutItem Text="New..." Clicked="OnNew"/>
 			<MenuFlyoutItem Text="Open..." Clicked="OnOpen"/>
-			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
+			<MenuFlyoutItem Text="Save" Clicked="OnSave" IsEnabled="{Binding CanSave}"/>
+			<MenuFlyoutItem Text="Save As..." Clicked="OnSaveAs" IsEnabled="{Binding ProjectOpen}"/>
+			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding ProjectOpen}"/>
 			<dpcontrols:RecentlyUsedMenuFlyout
 				Text="Recently Used"
 				PathCommand="{Binding OpenProjectCommand}"
@@ -55,31 +57,31 @@
 					Text="New"
 					Clicked="OnNew"
 					StyleClass="SquareButtonStyle"
-					IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
+					IsEnabled="{Binding ProjectOpen}"/>
 
 					<Button
 						Text="New from Template"
 						Clicked="OnNewFromTemplate"
 						StyleClass="SquareButtonStyle"
-						IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
+						IsEnabled="{Binding ProjectOpen}"/>
 
 					<Button 
 						Text="Edit"
 						Clicked="OnEdit"
 						StyleClass="SquareButton"
-						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+						IsEnabled="{Binding ProjectOpen}"/>
 
 				<Button 
 					Text="Delete"
 					Clicked="OnDelete"
 					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+					IsEnabled="{Binding ProjectOpen}"/>
 			</HorizontalStackLayout>
 
 			<Button 
 				Grid.Column="1"
 				Text="Save"
-				IsEnabled="{Binding Modified}"
+				IsEnabled="{Binding CanSave}"
 				HorizontalOptions="End"/>
 		</Grid>
 

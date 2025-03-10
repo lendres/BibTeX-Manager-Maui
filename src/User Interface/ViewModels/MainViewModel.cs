@@ -41,13 +41,19 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Properties
 
-	public BibtexProject							Project { get => BibtexProject.Instance ?? throw new NullReferenceException("Project is null.");  }
+	public BibtexProject							Project { get => BibtexProject.Instance ?? throw new NullReferenceException("Project is null."); }
+	public bool										SavePathRequired { get => BibtexProject.Instance?.IsSaveable ?? false; }
+
+	public IRecentPathsManagerService				RecentPathsManagerService { get; set; }
 
 	[ObservableProperty]
-	public partial IRecentPathsManagerService		RecentPathsManagerService { get; set; }
+	public partial bool								ProjectOpen { get; set; }					= false;
 
 	[ObservableProperty]
-	public partial bool								IsSubmittable { get; set; }						= false;
+	public partial bool								CanSave { get; set; }						= false;
+
+	[ObservableProperty]
+	public partial bool								IsSubmittable { get; set; }					= false;
 
 	#endregion
 
@@ -75,6 +81,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		{
 			Items = BibtexProject.Instance.Bibliography.Entries;
 		}
+		ProjectInitialization();
 	}
 
 	public void OpenProjectWithPathSave(string projectFile)
@@ -91,6 +98,24 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		{
 			Items = BibtexProject.Instance.Bibliography.Entries;
 		}
+		ProjectInitialization();
+	}
+
+	void ProjectInitialization()
+	{
+		BibtexProject.Instance!.ModifiedChanged += OnProjectModifiedChanged;
+		ProjectOpen = true;
+	}
+
+	private void OnProjectModifiedChanged(object sender, bool modified)
+	{
+		Modified = modified;
+		ValidateCanSave();
+	}
+
+	partial void OnProjectOpenChanged(bool value)
+	{
+		ValidateCanSave();
 	}
 
 	[RelayCommand]
@@ -99,13 +124,37 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		_dialogService.ShowMessage("File Not Found", $"The path \"{path}\" was was not found.", "OK");
 	}
 
+	public void Save(string path)
+	{
+		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
+		BibtexProject.Instance.Serialize(path);
+	}
+
+	[RelayCommand]
+	public void Save()
+	{
+		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
+		BibtexProject.Instance.Serialize();
+	}
+
 	public void CloseProject()
 	{
 		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
 		BibtexProject.Instance.Close();
 		Items?.Clear();
 		Items = null;
+		ProjectOpen = false;
 	}
+
+	#endregion
+
+	#region Helper Methods
+
+	private void ValidateCanSave()
+	{
+		CanSave = Modified && ProjectOpen;
+	}
+
 
 	#endregion
 
