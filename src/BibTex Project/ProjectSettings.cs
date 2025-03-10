@@ -1,6 +1,5 @@
 ﻿using BibTeXLibrary;
 using DigitalProduction.ComponentModel;
-using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace BibtexManager;

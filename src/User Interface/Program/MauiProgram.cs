@@ -6,7 +6,6 @@ using CommunityToolkit.Maui.Storage;
 using DigitalProduction.Maui;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
-using DigitalProduction.Maui.ViewModels;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 
