@@ -32,14 +32,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public bool UsePathsRelativeToBibFile
 	{
 		get => GetValueOrDefault<bool>(false);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -49,14 +42,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public bool UseBibEntryInitialization
 	{
 		get => GetValueOrDefault<bool>(false);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -66,14 +52,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public string BibEntryInitializationFile
 	{
 		get => GetValueOrDefault<string>(string.Empty);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -83,13 +62,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public string BibliographyFile
 	{
 		get => GetValueOrDefault<string>(string.Empty);
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -106,7 +79,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 			{
 				_assessoryFiles = value;
 				Modified = true;
-				OnPropertyChanged(nameof(AssessoryFiles));
+				OnPropertyChanged();
 			}
 		}
 	}
@@ -118,14 +91,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public bool UseStringConstants
 	{
 		get => GetValueOrDefault<bool>(false);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -135,14 +101,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public bool UseTagQualityProcessing
 	{
 		get => GetValueOrDefault<bool>(false);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -152,14 +111,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public string TagQualityProcessingFile
 	{
 		get => GetValueOrDefault<string>(string.Empty);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -169,14 +121,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public bool UseBibEntryRemapping
 	{
 		get => GetValueOrDefault<bool>(false);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -186,14 +131,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public string BibEntryRemappingFile
 	{
 		get => GetValueOrDefault<string>(string.Empty);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -212,6 +150,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 				_writeSettings = value;
 				_writeSettings.ModifiedChanged += OnChildModifiedChanged;
 				Modified = true;
+				OnPropertyChanged();
 			}
 		}
 	}
@@ -223,14 +162,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public bool AutoGenerateKeys
 	{
 		get => GetValueOrDefault<bool>(true);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -240,14 +172,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public bool CopyCiteKeyOnEntryAdd
 	{
 		get => GetValueOrDefault<bool>(true);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -257,14 +182,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public bool SortBibliography
 	{
 		get => GetValueOrDefault<bool>(true);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
@@ -274,14 +192,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public SortBy BibliographySortMethod
 	{
 		get => GetValueOrDefault<SortBy>(SortBy.Key);
-
-		set
-		{
-			if (SetValue(value))
-			{
-				Modified = true;
-			}
-		}
+		set => SetValue(value);
 	}
 
 	#endregion
