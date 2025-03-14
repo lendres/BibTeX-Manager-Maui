@@ -5,7 +5,7 @@ using CommunityToolkit.Maui.Media;
 using CommunityToolkit.Maui.Storage;
 using DigitalProduction.Maui;
 using DigitalProduction.Maui.Services;
-using DigitalProduction.Maui.ViewModels;
+using DigitalProduction.Maui.Storage;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 
@@ -62,8 +62,10 @@ public static class MauiProgram
 
 	private static void CreateServices(IServiceCollection services)
 	{
+		services.AddSingleton<IBibTexFilePicker, BibTexFilePicker>();
 		services.AddSingleton<IDialogService, DialogService>();
 		services.AddSingleton<IRecentPathsManagerService, RecentPathsManagerService>();
+		services.AddSingleton<ISaveFilePicker, SaveFilePicker>();
 	}
 
 	static void RegisterEssentials(in IServiceCollection services)

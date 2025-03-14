@@ -51,7 +51,7 @@ public abstract class ImporterBase
 			result = BibParser.Parse(textReader);
 		}
 
-		return result.BibliographyEntries[0];
+		return result.Entries[0];
 	}
 
 	#endregion

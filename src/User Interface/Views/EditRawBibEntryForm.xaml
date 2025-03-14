@@ -28,7 +28,7 @@
 					Text="Paste"
 					Clicked="OnPaste"
 					StyleClass="SquareButton"
-					IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
+					IsEnabled="{Binding CanPaste}"/>
 
 				<Button 
 					Text="Copy Key"

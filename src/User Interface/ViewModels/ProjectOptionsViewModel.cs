@@ -23,6 +23,8 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	#region Properties
 
+	//public Settings
+
 	[ObservableProperty]
 	public partial ValidatableObject<string>			BibliographyFile { get; set; }				= new();
 
