@@ -6,21 +6,24 @@
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
 	x:DataType="viewmodel:MainViewModel"
 	x:Class="BibTexManager.Views.MainPage">
 
 	<ContentPage.Resources>
-		<toolkit:IsNotNullConverter x:Key="IsNotNullConverter"/>
-		<!--<toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
+		<!--<mct:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
 		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>-->
 	</ContentPage.Resources>
 
 	<ContentPage.MenuBarItems>
 		<MenuBarItem Text="File">
-			<MenuFlyoutItem Text="Open" Clicked="OnOpen"/>
-			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
+			<MenuFlyoutItem Text="New..." Clicked="OnNew"/>
+			<MenuFlyoutItem Text="Open..." Clicked="OnOpen"/>
+			<MenuFlyoutItem Text="Save" Clicked="OnSave" IsEnabled="{Binding CanSave}"/>
+			<MenuFlyoutItem Text="Save As..." Clicked="OnSaveAs" IsEnabled="{Binding ProjectOpen}"/>
+			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding ProjectOpen}"/>
 			<dpcontrols:RecentlyUsedMenuFlyout
 				Text="Recently Used"
 				PathCommand="{Binding OpenProjectCommand}"
@@ -28,8 +31,11 @@
 				RecentPathsManagerService="{Binding RecentPathsManagerService}"/>
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
 		</MenuBarItem>
+		<MenuBarItem Text="Project">
+			<MenuFlyoutItem Text="Project Settings..." Clicked="OnProjectOptions"/>
+		</MenuBarItem>
 		<MenuBarItem Text="Tools">
-			<MenuFlyoutItem Text="Program Options" Clicked="OnShowProgramOptions"/>
+			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>
 		</MenuBarItem>
 		<MenuBarItem Text="Help">
 			<MenuFlyoutItem Text="Help" Clicked="OnHelp"/>
@@ -51,31 +57,31 @@
 					Text="New"
 					Clicked="OnNew"
 					StyleClass="SquareButtonStyle"
-					IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
+					IsEnabled="{Binding ProjectOpen}"/>
 
 					<Button
 						Text="New from Template"
 						Clicked="OnNewFromTemplate"
 						StyleClass="SquareButtonStyle"
-						IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}"/>
+						IsEnabled="{Binding ProjectOpen}"/>
 
 					<Button 
 						Text="Edit"
 						Clicked="OnEdit"
 						StyleClass="SquareButton"
-						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+						IsEnabled="{Binding ProjectOpen}"/>
 
 				<Button 
 					Text="Delete"
 					Clicked="OnDelete"
 					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+					IsEnabled="{Binding ProjectOpen}"/>
 			</HorizontalStackLayout>
 
 			<Button 
 				Grid.Column="1"
 				Text="Save"
-				IsEnabled="{Binding Modified}"
+				IsEnabled="{Binding CanSave}"
 				HorizontalOptions="End"/>
 		</Grid>
 
@@ -87,7 +93,9 @@
 			SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
 			RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
 			PaginationEnabled="false"
-			RowTappedCommand="{Binding TappedCommand}">
+			RowTappedCommand="{Binding TappedCommand}"
+			IsVisible="{Binding Items, Converter={StaticResource IsNotNullConverter}}"
+			IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
 
 			<dg:DataGrid.Columns>
 

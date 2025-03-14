@@ -2,9 +2,7 @@
 using BibtexManager;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Data.Translation.Validation;
 using DigitalProduction.Maui.Validation;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Maui.Controls;
 
 namespace BibTexManager.ViewModels;
@@ -19,12 +17,15 @@ public partial class BibEntryViewModel : ObservableObject
 	private BibEntry?					_bibEntry				= new();
 	private WriteSettings				_writeSettings			= new();
 
+	private readonly Timer              _timer;
+
 	#endregion
 
 	#region Construction
 
 	public BibEntryViewModel()
 	{
+		_timer = new Timer((obj) => CheckClipboard(), null, 200, Timeout.Infinite);
 	}
 
 	#endregion
@@ -44,10 +45,13 @@ public partial class BibEntryViewModel : ObservableObject
 	//public partial bool							Modified  { get; set; }				= false;
 
 	[ObservableProperty]
+	public partial bool							CanCopyKey  { get; set; }			= false;
+
+	[ObservableProperty]
 	public partial bool							IsKeyValid  { get; set; }			= false;
 
 	[ObservableProperty]
-	public partial bool							CanCopyKey  { get; set; }			= false;
+	public partial bool							CanPaste  { get; set; }				= false;
 
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }			= false;
@@ -153,6 +157,10 @@ public partial class BibEntryViewModel : ObservableObject
 
 	#region Methods
 
+    private void CheckClipboard()
+    {
+		CanPaste = Clipboard.Default.HasText;
+    }
 
 	#endregion
 
@@ -196,7 +204,7 @@ public partial class BibEntryViewModel : ObservableObject
 			BibtexProject.Instance.ValidateKey(BibEntry);
 		}
 
-		RawBibEntry = BibEntry.ToString(BibtexProject.Instance.WriteSettings);
+		RawBibEntry = BibEntry.ToString(BibtexProject.Instance.Settings.WriteSettings);
 	}
 
 	/// <summary>

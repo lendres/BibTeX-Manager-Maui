@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
+	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
+	xmlns:library="clr-namespace:BibTeXLibrary;assembly=DigitalProduction.BibTeXLibrary"
+	x:DataType="viewmodel:ProjectOptionsViewModel"
+	x:Class="BibTexManager.Views.ProjectOptionsView"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<mct:Popup.Resources>
+		<dpconverters:SingleEnumToBoolConverter x:Key="UseTabsConverteer" x:TypeArguments="library:WhiteSpace" TrueValue="{x:Static library:WhiteSpace.Tab}"/>
+		<dpconverters:EnumToStringConverter x:Key="EnumToStringConverter" x:TypeArguments="library:WhiteSpace"/>
+		<Style TargetType="Switch">
+			<Setter Property="VerticalOptions" Value="Start"/>
+			<Setter Property="HorizontalOptions" Value="Start"/>
+		</Style>
+		<Style TargetType="Label" Class="SwitchLabel">
+			<Setter Property="VerticalOptions" Value="Center"/>
+			<Setter Property="VerticalTextAlignment" Value="End"/>
+			<Setter Property="HeightRequest" Value="26"/>
+		</Style>
+	</mct:Popup.Resources>
+
+	<Border StyleClass="PopupFrameStyle" WidthRequest="720" HeightRequest="620">
+
+		<VerticalStackLayout>
+			<Label Text="Project Options" StyleClass="Title" HorizontalOptions="Start"/>
+
+			<Border StyleClass="SmallTitleBorderStyle">
+				<Label Text="Paths" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+				<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Label Grid.Column="1" Grid.Row="0"	Text="Use paths relative to the project file." StyleClass="SwitchLabel"/>
+			</Grid>
+
+			<!-- Bibliography file. -->
+			<Border StyleClass="SmallTitleBorderStyle" Margin="0,20,0,6">
+				<Label Text="Bibliography File" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<Grid
+				StyleClass="FileBrowsingGridStyle">
+				<Label Grid.Row="0" Text="Bibliography File" StyleClass="ControlLabel"/>
+				<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
+					x:Name="BibliographyFileEntry"
+					Placeholder="Bibliography File"
+					Text="{Binding BibliographyFile.Value}">
+					<Entry.Behaviors>
+						<mct:EventToCommandBehavior
+							x:TypeArguments="system:EventArgs"
+							Command="{Binding ValidateBibliographyFileCommand}"
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference BibliographyFileEntry}, x:DataType=Entry}"
+							EventName="TextChanged"/>
+					</Entry.Behaviors>
+				</Entry>
+				<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle"
+					Text="{Binding BibliographyFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
+				<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
+					Text="Browse" SemanticProperties.Hint="Browse for the input file."
+					Clicked="OnBrowseForInputFile"/>
+			</Grid>
+
+			<!-- Tabs, alignment, and automation. -->
+			<Grid ColumnDefinitions="*,*,*" RowDefinitions="auto,auto" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+				<Border Grid.Row="0" Grid.Column="0" StyleClass="SmallTitleBorderStyle">
+					<Label Text="Tabs" StyleClass="SmallTitleLabelStyle"/>
+				</Border>
+				<HorizontalStackLayout Grid.Row="1" Grid.Column="0"
+					RadioButtonGroup.GroupName="TabModeSelectorGroup" 
+					RadioButtonGroup.SelectedValue="{Binding WhiteSpace, Mode=TwoWay}"
+					VerticalOptions="Center" HorizontalOptions="Center" Spacing="0">
+					<HorizontalStackLayout.Resources>
+						<Style TargetType="RadioButton">
+							<Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
+							<Setter Property="BackgroundColor" Value="AliceBlue"/>
+						</Style>
+					</HorizontalStackLayout.Resources>
+					<RadioButton Content="Insert Spaces" Value="{x:Static library:WhiteSpace.Space}"/>
+					<RadioButton Content="Insert Tabs" Value="{x:Static library:WhiteSpace.Tab}"/>
+				</HorizontalStackLayout>
+				<Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="90,*" RowDefinitions="40">
+					<dpcontrols:Stepper VerticalOptions="Center" Minimum="10" Maximum="20" Value="{Binding NumberOfItemsToStore}"/>
+					<Label Grid.Column="1" Text="Tab size" Margin="0" VerticalTextAlignment="Center"/>
+				</Grid>
+
+				<Border Grid.Row="0" Grid.Column="1" StyleClass="SmallTitleBorderStyle">
+					<Label Text="Alignment" StyleClass="SmallTitleLabelStyle"/>
+				</Border>
+				<Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="90,*" RowDefinitions="40,40">
+					<dpcontrols:Stepper VerticalOptions="Center" Minimum="10" Maximum="20" Value="{Binding NumberOfItemsToStore}"/>
+					<Label Grid.Column="1" Text="Alignment Column" Margin="0" VerticalTextAlignment="Center"/>
+					<dpcontrols:Stepper VerticalOptions="Center" Minimum="10" Maximum="20" Value="{Binding NumberOfItemsToStore}"/>
+					<Label Grid.Column="1" Text="Alignment Tab Stop" Margin="0" VerticalTextAlignment="Center"/>
+
+				</Grid>
+
+				<Border Grid.Row="0" Grid.Column="2" StyleClass="SmallTitleBorderStyle">
+					<Label Text="Organization" StyleClass="SmallTitleLabelStyle"/>
+				</Border>
+
+			</Grid>
+
+			<Border StyleClass="SmallTitleBorderStyle">
+				<Label Text="Automation" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<Grid ColumnDefinitions="50,265,50,300" RowDefinitions="30,30,30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+				<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Label Grid.Column="1" Grid.Row="0" Text="Automatically generate cite keys." StyleClass="SwitchLabel"/>
+				<Switch Grid.Column="2"  Grid.Row="0" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Label Grid.Column="3" Grid.Row="0" Text="Replace tag values with constant strings." StyleClass="SwitchLabel"/>
+				<Switch Grid.Column="0"  Grid.Row="1" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Label Grid.Column="1" Grid.Row="1" Text="Copy cite key when entry is added." StyleClass="SwitchLabel"/>
+				<Switch Grid.Column="2"  Grid.Row="1" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Label Grid.Column="3" Grid.Row="1" Text="Use bibliography name mapping." StyleClass="SwitchLabel"/>
+				<Switch Grid.Column="0"  Grid.Row="2" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Label Grid.Column="1" Grid.Row="2" Text="Remove comma after last tag." StyleClass="SwitchLabel"/>
+			</Grid>
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+					Text="OK"
+					HorizontalOptions="End"
+					StyleClass="StandardSizeButtonStyle"
+					IsEnabled="{Binding IsSubmittable}"
+					Clicked="OnSaveButtonClicked"/>
+				<Button 
+					Text="Cancel"
+					StyleClass="StandardSizeButtonStyle"
+					HorizontalOptions="End"
+					Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+
+		</VerticalStackLayout>
+	</Border>
+</dpviews:PopupView>

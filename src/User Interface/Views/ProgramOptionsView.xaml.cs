@@ -1,21 +1,23 @@
-namespace BibTexManager.Views;
-
 using BibTexManager.ViewModels;
 using DigitalProduction.Maui.Views;
 using System;
 
+namespace BibTexManager.Views;
+
 public partial class ProgramOptionsView : PopupView
 {
+	ProgramOptionsViewModel _viewModel;
+
 	public ProgramOptionsView(ProgramOptionsViewModel viewModel)
 	{
-		BindingContext = viewModel;
 		InitializeComponent();
+		_viewModel = viewModel;
+		BindingContext = viewModel;
 	}
 
 	protected override void OnSaveButtonClicked(object? sender, EventArgs eventArgs)
 	{
-		ProgramOptionsViewModel viewModel = (ProgramOptionsViewModel)BindingContext;
-		viewModel.Save();
+		_viewModel.Save();
 		base.OnSaveButtonClicked(sender, eventArgs);
 	}
 }

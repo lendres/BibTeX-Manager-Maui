@@ -3,7 +3,7 @@
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
 	<Style TargetType="Button" Class="SquareButtonStyle">
 	</Style>
@@ -22,5 +22,40 @@
 		<Setter Property="HorizontalOptions" Value="Center"/>
 		<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
 	</Style>
+
+	<ControlTemplate x:Key="ButtonRadioTemplate">
+		<Border
+            StrokeThickness="1"
+            Background="Transparent"
+            HeightRequest="28">
+			<Border.StrokeShape>
+				<RoundRectangle CornerRadius="0"/>
+			</Border.StrokeShape>
+			<VisualStateManager.VisualStateGroups>
+				<VisualStateGroupList>
+					<VisualStateGroup x:Name="CheckedStates">
+						<VisualState x:Name="Checked">
+							<VisualState.Setters>
+								<Setter TargetName="TextLabel" Property="Label.TextColor" Value="{StaticResource White}"/>
+								<Setter Property="Background" Value="{StaticResource SelectorSelectedAlt}"/>
+								<Setter Property="Stroke" Value="{StaticResource SelectorSelectedAlt}"/>
+							</VisualState.Setters>
+						</VisualState>
+
+						<VisualState x:Name="Unchecked">
+							<VisualState.Setters>
+								<Setter TargetName="TextLabel" Property="Label.TextColor" Value="{StaticResource Primary}"/>
+								<Setter Property="Background" Value="{StaticResource SecondaryBrush}"/>
+								<Setter Property="Stroke" Value="{StaticResource SecondaryBrush}"/>
+							</VisualState.Setters>
+						</VisualState>
+					</VisualStateGroup>
+				</VisualStateGroupList>
+			</VisualStateManager.VisualStateGroups>
+
+			<Label Text="{TemplateBinding Content}" Margin="6,2" x:Name="TextLabel" x:DataType="RadioButton" FontSize="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+		</Border>
+	</ControlTemplate>
+
 
 </ResourceDictionary>

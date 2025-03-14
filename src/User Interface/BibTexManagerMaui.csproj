@@ -71,39 +71,47 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.11.2" />
+		<PackageReference Include="DigitalProduction.Maui" Version="0.8.3" />
+		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.11.4" />
 		<PackageReference Include="DigitalProduction.Maui.Images" Version="1.1.0" />
+		<PackageReference Include="DigitalProduction.Net" Version="0.8.9" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Models\" />
+		<Folder Include="Models\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\EditRawBibEntryForm.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\TemplateSelectionView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ProgramOptionsView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="Views\EditRawBibEntryForm.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ProjectOptionsView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\TemplateSelectionView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ProgramOptionsView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\BibTex Project\BibTexProject.csproj" />
+		<ProjectReference Include="..\BibTex Project\BibTexProject.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\TemplateSelectionView.xaml.cs">
-	    <DependentUpon>TemplateSelectionView.xaml</DependentUpon>
-	  </Compile>
+		<Compile Update="Views\ProjectOptionsView.xaml.cs">
+			<DependentUpon>ProjectOptionsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\TemplateSelectionView.xaml.cs">
+			<DependentUpon>TemplateSelectionView.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 </Project>
