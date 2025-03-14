@@ -213,7 +213,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	private void BuildStringConstantMap()
 	{
 		_stringConstantProcessor.Clear();
-		_stringConstantProcessor.AddStringConstantsToMap(_bibliography.DocumentObjectModel);
+		_stringConstantProcessor.AddStringConstantsToMap(_bibliography);
 		_stringConstantProcessor.AddStringConstantsToMap(_assessoryFilesDOMs);
 	}
 
@@ -315,7 +315,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 			result = BibParser.Parse(textReader);
 		}
 
-		return result.BibliographyEntries;
+		return result.Entries;
 	}
 
 	/// <summary>
@@ -427,7 +427,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	{
 		if (_settings.SortBibliography)
 		{
-			return _bibliography.DocumentObjectModel.FindInsertIndex(entry, _settings.BibliographySortMethod);
+			return _bibliography.FindInsertIndex(entry, _settings.BibliographySortMethod);
 		}
 		else
 		{
@@ -465,7 +465,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	{
 		if (_settings.SortBibliography)
 		{
-			_bibliography.DocumentObjectModel.SortBibEntries(_settings.BibliographySortMethod);
+			_bibliography.SortBibEntries(_settings.BibliographySortMethod);
 		}
 	}
 
@@ -478,7 +478,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 		{
 			bool modified = false;
 
-			foreach (BibEntry entry in _bibliography.DocumentObjectModel.BibliographyEntries)
+			foreach (BibEntry entry in _bibliography.Entries)
 			{
 				foreach (TagProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
 				{

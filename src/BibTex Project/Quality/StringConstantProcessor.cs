@@ -58,7 +58,7 @@ public class StringConstantProcessor
 	{
 		foreach (StringConstantPart entry in bibliographyDOM.StringConstants)
 		{
-			_map.Add(entry.StringName, entry.StringValue);
+			_map.Add(entry.Name, entry.Value);
 		}
 	}
 
@@ -73,7 +73,7 @@ public class StringConstantProcessor
 			string key = entry.FindTagValue(pair.Value);
 			if (key != "")
 			{
-				entry.SetTagValue(key, new TagValue(pair.Key, false));
+				entry.SetTagValue(key, pair.Key, TagValueType.StringConstant);
 			}
 		}
 	}
