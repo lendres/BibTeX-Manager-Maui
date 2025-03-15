@@ -15,6 +15,7 @@ public partial class BibEntryViewModel : ObservableObject
 
 	private bool						_addMode				= true;
 	private BibEntry?					_bibEntry				= new();
+	private string                      _originalKey            = string.Empty;
 	private WriteSettings				_writeSettings			= new();
 	private bool                        _modified               = false;
 
@@ -84,13 +85,11 @@ public partial class BibEntryViewModel : ObservableObject
 		get => _bibEntry;
 		set
 		{
-			if (value != _bibEntry)
+			_bibEntry = value;
+			if (_bibEntry != null)
 			{
-				_bibEntry = value;
-				if (_bibEntry != null)
-				{
-					RawBibEntry = _bibEntry.ToString(new WriteSettings());
-				}
+				RawBibEntry = _bibEntry.ToString(new WriteSettings());
+				_originalKey = _bibEntry.Key;
 			}
 		}
 	}
@@ -120,10 +119,34 @@ public partial class BibEntryViewModel : ObservableObject
 	{
 		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
 
+		// Set our value for if we can copy the key to the clipboard.
 		CanCopyKey = _bibEntry != null && _bibEntry.Key != string.Empty;
+
+		// To be a valid key, we first need to be able to copy it (same requirements).  We also need to check if it is in use.  It
+		// is allowed to be 
 		if (!CanCopyKey)
 		{
 			IsKeyValid = false;
+			return;
+		}
+
+		if (_bibEntry == null)
+		{
+			IsKeyValid = false;
+			return;
+		}
+
+		if (_addMode == true)
+		{
+			// In add mode, we need to make sure the key is not already in the bibliography.
+			IsKeyValid = !BibtexProject.Instance.Bibliography.IsKeyInUse(_bibEntry!.Key);
+			return;
+		}
+
+		// In edit mode, we accept the orignal key.  If it is not the orginal key, it must be unique.
+		if (_bibEntry.Key == _originalKey)
+		{
+			IsKeyValid = true;
 		}
 		else
 		{

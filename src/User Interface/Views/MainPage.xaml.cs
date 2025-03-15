@@ -152,6 +152,10 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 	}
 
+	/// <summary>
+	/// Navigation back from the bibliography edit page.  The NavigationCommand and NavigationObject get set and this gets called.
+	/// </summary>
+	/// <param name="args"></param>
 	protected override void OnNavigatedTo(NavigatedToEventArgs args)
 	{
 		base.OnNavigatedTo(args);

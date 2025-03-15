@@ -132,6 +132,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	public void Save(string path)
 	{
 		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
+		RecentPathsManagerService.PushTop(path);
 		BibtexProject.Instance.Serialize(path);
 	}
 
