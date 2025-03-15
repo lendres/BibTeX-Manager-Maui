@@ -1,4 +1,5 @@
 ﻿using BibTeXLibrary;
+using BibtexManager;
 using BibTexManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
@@ -96,12 +97,17 @@ public partial class MainPage : DigitalProductionMainPage
 		_viewModel.CloseProject();
 	}
 
-	async void OnProjectOptions(object sender, EventArgs e)
+	async void OnProjectOptions(object sender, EventArgs eventArgs)
 	{
-		ProjectOptionsViewModel viewModel = new();
+		ProjectOptionsViewModel viewModel = new(BibtexProject.Instance!.Settings);
 
 		ProjectOptionsView	view	= new(viewModel);
 		object?				result	= await Shell.Current.ShowPopupAsync(view);
+
+		if (result is bool boolResut && boolResut)
+		{
+			BibtexProject.Instance.Settings = viewModel.Settings;
+		}
 	}
 
 	async void OnProgramOptions(object sender, EventArgs eventArgs)

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using DigitalProduction.Maui.Validation;
 using CommunityToolkit.Mvvm.Input;
 using BibTeXLibrary;
+using BibtexManager;
 
 namespace BibTexManager.ViewModels;
 
@@ -14,16 +15,21 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	#region Construction
 
-	public ProjectOptionsViewModel()
+	public ProjectOptionsViewModel(ProjectSettings projectSettings)
 	{
+		Settings = projectSettings;
 		Initialize();
+		AddValidations();
+		ValidateSubmittable();
 	}
 
 	#endregion
 
 	#region Properties
 
-	//public Settings
+	[ObservableProperty]
+	public partial ProjectSettings						Settings { get; set; }
+
 
 	[ObservableProperty]
 	public partial ValidatableObject<string>			BibliographyFile { get; set; }				= new();
@@ -47,6 +53,7 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	private void Initialize()
 	{
+		BibliographyFile.Value  = Settings.BibliographyFile;
 	}
 
 
@@ -62,7 +69,10 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateBibliographyFile()
 	{
-		BibliographyFile.Validate();
+		if (BibliographyFile.Validate())
+		{
+			Settings.BibliographyFile = BibliographyFile.Value!;
+		}
 		ValidateSubmittable();
 	}
 
