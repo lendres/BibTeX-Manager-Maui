@@ -134,7 +134,15 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Button Events
 
-	async void OnNewFromTemplate(object sender, EventArgs eventArgs)
+	async void OnNewBibEntry(object sender, EventArgs eventArgs)
+	{
+		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
+		{
+			{ "AddMode",  true }
+		});
+	}
+
+	async void OnNewBibEntryFromTemplate(object sender, EventArgs eventArgs)
 	{
 		TemplateSelectionViewModel	viewModel	= new(_viewModel.Project.BibEntryInitialization.TemplateNames);
 		TemplateSelectionView		view		= new(viewModel);
@@ -172,7 +180,7 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 	}
 
-	async void OnEdit(object sender, EventArgs eventArgs)
+	async void OnEditBibEntry(object sender, EventArgs eventArgs)
 	{
 		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
 		{
@@ -181,7 +189,7 @@ public partial class MainPage : DigitalProductionMainPage
 		});
 	}
 
-	async void OnDelete(object sender, EventArgs eventArgs)
+	async void OnDeleteBibEntry(object sender, EventArgs eventArgs)
 	{
 		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 

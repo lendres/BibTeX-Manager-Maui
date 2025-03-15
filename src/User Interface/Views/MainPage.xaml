@@ -55,25 +55,25 @@
 			<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
 				<Button
 					Text="New"
-					Clicked="OnNew"
+					Clicked="OnNewBibEntry"
 					StyleClass="SquareButtonStyle"
 					IsEnabled="{Binding ProjectOpen}"/>
 
 					<Button
 						Text="New from Template"
-						Clicked="OnNewFromTemplate"
+						Clicked="OnNewBibEntryFromTemplate"
 						StyleClass="SquareButtonStyle"
 						IsEnabled="{Binding ProjectOpen}"/>
 
-					<Button 
+					<Button
 						Text="Edit"
-						Clicked="OnEdit"
+						Clicked="OnEditBibEntry"
 						StyleClass="SquareButton"
 						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
 				<Button 
 					Text="Delete"
-					Clicked="OnDelete"
+					Clicked="OnDeleteBibEntry"
 					StyleClass="SquareButton"
 					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 			</HorizontalStackLayout>
@@ -88,7 +88,7 @@
 
 		<dg:DataGrid
 			Grid.Row="1"
-			x:Name="_dataGrid"
+			x:Name="BibliographyDataGrid"
 			Style="{DynamicResource DataGridDefaultLooseStyle}"
 			ItemsSource="{Binding Items, Mode=TwoWay}" SelectionMode="{Binding SelectionMode}"
 			SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
