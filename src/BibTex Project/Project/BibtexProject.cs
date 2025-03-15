@@ -13,11 +13,26 @@ public class BibtexProject : DigitalProduction.Projects.Project
 {
 	#region Static Interface
 
+	private static BibtexProject? _instance;
+
 	[XmlIgnore()]
-	public static BibtexProject? Instance { get; set; }
+	public static BibtexProject? Instance
+	{
+		get => _instance;
+		set
+		{
+			_instance = value;
+			if (_instance != null)
+			{
+				_instance.Closed += OnClose;
+			}
+		}
+	}
 
 	public static void New() => Instance = new BibtexProject();
 	public static void New(string bibliographyFile) => Instance = new BibtexProject(bibliographyFile);
+
+	private static void OnClose() { _instance = null; }
 
 	#endregion
 
