@@ -96,6 +96,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 			{
 				_settings = value;
 				Modified = true;
+				OnPropertyChanged();
 			}
 		}
 	}
@@ -120,6 +121,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 			{
 				_currentBibEntryMap = value;
 				Modified = true;
+				OnPropertyChanged();
 			}
 		}
 	}

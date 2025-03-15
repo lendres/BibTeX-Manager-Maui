@@ -1,7 +1,5 @@
 using BibTexManager.ViewModels;
 using DigitalProduction.Maui.Views;
-using DocumentFormat.OpenXml.Spreadsheet;
-using System;
 
 namespace BibTexManager.Views;
 

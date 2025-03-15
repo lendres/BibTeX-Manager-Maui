@@ -71,7 +71,7 @@
 				</Grid>
 			</VerticalStackLayout>
 
-					<!-- Tabs, alignment, and automation. -->
+			<!-- Tabs, alignment, and automation. -->
 			<Grid ColumnDefinitions="*,*,*" RowDefinitions="auto,auto" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
 				<Border Grid.Row="0" Grid.Column="0" StyleClass="SmallTitleBorderStyle">
 					<Label Text="Tabs" StyleClass="SmallTitleLabelStyle"/>

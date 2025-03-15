@@ -21,6 +21,26 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 		_writeSettings.ModifiedChanged += OnChildModifiedChanged;
 	}
 
+	public ProjectSettings(ProjectSettings projectSettings)
+	{
+		_assessoryFiles             = new List<string>(projectSettings._assessoryFiles);
+		_writeSettings              = new WriteSettings(projectSettings.WriteSettings);
+		UsePathsRelativeToBibFile   = projectSettings.UsePathsRelativeToBibFile;
+		UseBibEntryInitialization   = projectSettings.UseBibEntryInitialization;
+		BibEntryInitializationFile  = projectSettings.BibEntryInitializationFile;
+		BibliographyFile            = projectSettings.BibliographyFile;
+		UseStringConstants          = projectSettings.UseStringConstants;
+		UseTagQualityProcessing     = projectSettings.UseTagQualityProcessing;
+		TagQualityProcessingFile    = projectSettings.TagQualityProcessingFile;
+		UseBibEntryRemapping        = projectSettings.UseBibEntryRemapping;
+		BibEntryRemappingFile       = projectSettings.BibEntryRemappingFile;
+		AutoGenerateKeys            = projectSettings.AutoGenerateKeys;
+		CopyCiteKeyOnEntryAdd       = projectSettings.CopyCiteKeyOnEntryAdd;
+		SortBibliography            = projectSettings.SortBibliography;
+		BibliographySortMethod      = projectSettings.BibliographySortMethod;
+		Modified					= false;
+	}
+
 	#endregion
 
 	#region Properties
@@ -32,7 +52,11 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public bool UsePathsRelativeToBibFile
 	{
 		get => GetValueOrDefault<bool>(false);
-		set => SetValue(value);
+		set
+		{
+			bool result = SetValue(value);
+			int nothing = 1;
+		}
 	}
 
 	/// <summary>

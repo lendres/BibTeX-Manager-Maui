@@ -17,10 +17,11 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	public ProjectOptionsViewModel(ProjectSettings projectSettings)
 	{
-		Settings = projectSettings;
+		Settings = new ProjectSettings(projectSettings);
 		Initialize();
 		AddValidations();
 		ValidateSubmittable();
+		Settings.ModifiedChanged += OnSettingsModifiedChanged;
 	}
 
 	#endregion
@@ -76,11 +77,18 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		ValidateSubmittable();
 	}
 
-	public bool ValidateSubmittable() => IsSubmittable = BibliographyFile.IsValid; //&& OutputDirectory.IsValid && OutputFileName.IsValid;
+	public bool ValidateSubmittable() => IsSubmittable =
+		Settings.Modified &&
+		BibliographyFile.IsValid;
 
 	#endregion
 
 	#region Events
+
+	private void OnSettingsModifiedChanged(object sender, bool modified)
+	{
+		ValidateSubmittable();
+	}
 
 	partial void OnWhiteSpaceChanged(WhiteSpace value)
 	{
