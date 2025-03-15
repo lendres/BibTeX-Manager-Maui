@@ -52,6 +52,9 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	public partial bool								CanSave { get; set; }						= false;
 
 	[ObservableProperty]
+	public partial bool								HasTemplates { get; set; }					= false;
+
+	[ObservableProperty]
 	public partial bool								IsSubmittable { get; set; }					= false;
 
 	#endregion
@@ -69,6 +72,16 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	//	XmlInputFile.IsValid &&
 	//	XsltFile.IsValid;
 
+	private void ValidateCanSave()
+	{
+		CanSave = Modified && ProjectOpen;
+	}
+
+	private void ValidateHasTemplates()
+	{
+		HasTemplates = ProjectOpen && BibtexProject.Instance?.BibEntryInitialization.TemplateNames.Count > 0;
+	}
+
 	#endregion
 
 	#region Events
@@ -77,11 +90,13 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	{
 		Modified = modified;
 		ValidateCanSave();
+		ValidateHasTemplates();
 	}
 
 	partial void OnProjectOpenChanged(bool value)
 	{
 		ValidateCanSave();
+		ValidateHasTemplates();
 	}
 
 	#endregion
@@ -150,15 +165,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		Items?.Clear();
 		Items = null;
 		ProjectOpen = false;
-	}
-
-	#endregion
-
-	#region Helper Methods
-
-	private void ValidateCanSave()
-	{
-		CanSave = Modified && ProjectOpen;
 	}
 
 	#endregion

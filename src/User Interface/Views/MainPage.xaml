@@ -59,17 +59,17 @@
 					StyleClass="SquareButtonStyle"
 					IsEnabled="{Binding ProjectOpen}"/>
 
-					<Button
-						Text="New from Template"
-						Clicked="OnNewBibEntryFromTemplate"
-						StyleClass="SquareButtonStyle"
-						IsEnabled="{Binding ProjectOpen}"/>
+				<Button
+					Text="New from Template"
+					Clicked="OnNewBibEntryFromTemplate"
+					StyleClass="SquareButtonStyle"
+					IsEnabled="{Binding HasTemplates}"/>
 
-					<Button
-						Text="Edit"
-						Clicked="OnEditBibEntry"
-						StyleClass="SquareButton"
-						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+				<Button
+					Text="Edit"
+					Clicked="OnEditBibEntry"
+					StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
 				<Button 
 					Text="Delete"
