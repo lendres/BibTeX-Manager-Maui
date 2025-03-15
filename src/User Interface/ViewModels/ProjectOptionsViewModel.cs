@@ -80,7 +80,12 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	#endregion
 
-	public void Save()
+	#region Events
+
+	partial void OnWhiteSpaceChanged(WhiteSpace value)
 	{
+		Settings.WriteSettings.WhiteSpace = value;
 	}
+
+	#endregion
 }

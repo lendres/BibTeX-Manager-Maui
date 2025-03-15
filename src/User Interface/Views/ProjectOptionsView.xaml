@@ -15,7 +15,10 @@
 
 	<mct:Popup.Resources>
 		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+
+		<dpconverters:SingleEnumToBoolConverter x:Key="UseSpacesConverteer" x:TypeArguments="library:WhiteSpace" TrueValue="{x:Static library:WhiteSpace.Space}"/>
 		<dpconverters:SingleEnumToBoolConverter x:Key="UseTabsConverteer" x:TypeArguments="library:WhiteSpace" TrueValue="{x:Static library:WhiteSpace.Tab}"/>
+
 		<dpconverters:EnumToStringConverter x:Key="EnumToStringConverter" x:TypeArguments="library:WhiteSpace"/>
 		<Style TargetType="Switch">
 			<Setter Property="VerticalOptions" Value="Start"/>
@@ -38,36 +41,37 @@
 			</Border>-->
 
 			<!-- Bibliography file. -->
-			<Border StyleClass="SmallTitleBorderStyle" Margin="0,20,0,6">
+			<Border StyleClass="SmallTitleBorderStyle" Margin="0,10,0,0">
 				<Label Text="Bibliography File" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
-			<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
-				<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UsePathsRelativeToBibFile}"/>
-				<Label Grid.Column="1" Grid.Row="0"	Text="Use paths relative to the project file." StyleClass="SwitchLabel"/>
-			</Grid>
-			<Grid
-				StyleClass="FileBrowsingGridStyle">
-				<Label Grid.Row="0" Text="Bibliography File" StyleClass="ControlLabel"/>
-				<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
-					x:Name="BibliographyFileEntry"
-					Placeholder="Bibliography File"
-					Text="{Binding BibliographyFile.Value}">
-					<Entry.Behaviors>
-						<mct:EventToCommandBehavior
-							x:TypeArguments="system:EventArgs"
-							Command="{Binding ValidateBibliographyFileCommand}"
-							BindingContext="{Binding Path=BindingContext, Source={x:Reference BibliographyFileEntry}, x:DataType=Entry}"
-							EventName="TextChanged"/>
-					</Entry.Behaviors>
-				</Entry>
-				<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle"
-					Text="{Binding BibliographyFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
-				<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
-					Text="Browse" SemanticProperties.Hint="Browse for the input file."
-					Clicked="OnBrowseForInputFile"/>
-			</Grid>
+			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+				<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UsePathsRelativeToBibFile}"/>
+					<Label Grid.Column="1" Grid.Row="0"	Text="Use paths relative to the project file." StyleClass="SwitchLabel"/>
+				</Grid>
+				<Grid StyleClass="FileBrowsingGridStyle">
+					<Label Grid.Row="0" Text="Bibliography File" StyleClass="ControlLabel"/>
+					<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
+						x:Name="BibliographyFileEntry"
+						Placeholder="Bibliography File"
+						Text="{Binding BibliographyFile.Value}">
+						<Entry.Behaviors>
+							<mct:EventToCommandBehavior
+								x:TypeArguments="system:EventArgs"
+								Command="{Binding ValidateBibliographyFileCommand}"
+								BindingContext="{Binding Path=BindingContext, Source={x:Reference BibliographyFileEntry}, x:DataType=Entry}"
+								EventName="TextChanged"/>
+						</Entry.Behaviors>
+					</Entry>
+					<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle"
+						Text="{Binding BibliographyFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
+					<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
+						Text="Browse" SemanticProperties.Hint="Browse for the input file."
+						Clicked="OnBrowseForInputFile"/>
+				</Grid>
+			</VerticalStackLayout>
 
-			<!-- Tabs, alignment, and automation. -->
+					<!-- Tabs, alignment, and automation. -->
 			<Grid ColumnDefinitions="*,*,*" RowDefinitions="auto,auto" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
 				<Border Grid.Row="0" Grid.Column="0" StyleClass="SmallTitleBorderStyle">
 					<Label Text="Tabs" StyleClass="SmallTitleLabelStyle"/>
@@ -86,7 +90,7 @@
 					<RadioButton Content="Insert Tabs" Value="{x:Static library:WhiteSpace.Tab}"/>
 				</HorizontalStackLayout>
 				<Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="90,*" RowDefinitions="40">
-					<dpcontrols:Stepper VerticalOptions="Center" Minimum="10" Maximum="20" Value="{Binding NumberOfItemsToStore}"/>
+					<dpcontrols:Stepper VerticalOptions="Center" Minimum="1" Maximum="10" Value="{Binding Settings.WriteSettings.TabSize}"/>
 					<Label Grid.Column="1" Text="Tab size" Margin="0" VerticalTextAlignment="Center"/>
 				</Grid>
 
@@ -94,10 +98,16 @@
 					<Label Text="Alignment" StyleClass="SmallTitleLabelStyle"/>
 				</Border>
 				<Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="90,*" RowDefinitions="40,40">
-					<dpcontrols:Stepper VerticalOptions="Center" Minimum="10" Maximum="20" Value="{Binding NumberOfItemsToStore}"/>
-					<Label Grid.Column="1" Text="Alignment Column" Margin="0" VerticalTextAlignment="Center"/>
-					<dpcontrols:Stepper VerticalOptions="Center" Minimum="10" Maximum="20" Value="{Binding NumberOfItemsToStore}"/>
-					<Label Grid.Column="1" Text="Alignment Tab Stop" Margin="0" VerticalTextAlignment="Center"/>
+					<dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="40"
+						Value="{Binding Settings.WriteSettings.AlignAtColumn}"
+						IsVisible="{Binding WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
+					<Label Grid.Column="1" Text="Alignment Column" Margin="0" VerticalTextAlignment="Center"
+						IsVisible="{Binding WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
+					<dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="10"
+						Value="{Binding Settings.WriteSettings.AlignAtTabStop}"
+						IsVisible="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+					<Label Grid.Column="1" Text="Alignment Tab Stop" Margin="0" VerticalTextAlignment="Center"
+						IsVisible="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
 
 				</Grid>
 
@@ -111,15 +121,15 @@
 				<Label Text="Automation" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
 			<Grid ColumnDefinitions="50,265,50,300" RowDefinitions="30,30,30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
-				<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.AutoGenerateKeys}"/>
 				<Label Grid.Column="1" Grid.Row="0" Text="Automatically generate cite keys." StyleClass="SwitchLabel"/>
-				<Switch Grid.Column="2"  Grid.Row="0" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Switch Grid.Column="2"  Grid.Row="0" IsToggled="{Binding Settings.UseStringConstants}"/>
 				<Label Grid.Column="3" Grid.Row="0" Text="Replace tag values with constant strings." StyleClass="SwitchLabel"/>
-				<Switch Grid.Column="0"  Grid.Row="1" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Switch Grid.Column="0"  Grid.Row="1" IsToggled="{Binding Settings.CopyCiteKeyOnEntryAdd}"/>
 				<Label Grid.Column="1" Grid.Row="1" Text="Copy cite key when entry is added." StyleClass="SwitchLabel"/>
-				<Switch Grid.Column="2"  Grid.Row="1" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Switch Grid.Column="2"  Grid.Row="1" IsToggled="{Binding Settings.UseBibEntryRemapping}"/>
 				<Label Grid.Column="3" Grid.Row="1" Text="Use bibliography name mapping." StyleClass="SwitchLabel"/>
-				<Switch Grid.Column="0"  Grid.Row="2" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+				<Switch Grid.Column="0"  Grid.Row="2" IsToggled="{Binding Settings.WriteSettings.RemoveLastComma}"/>
 				<Label Grid.Column="1" Grid.Row="2" Text="Remove comma after last tag." StyleClass="SwitchLabel"/>
 			</Grid>
 

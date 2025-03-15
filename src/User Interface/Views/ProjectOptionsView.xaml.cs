@@ -21,11 +21,4 @@ public partial class ProjectOptionsView : PopupView
 	{
 		BibliographyFileEntry.Text = await _filePicker.BrowseForBibliographyFile();
 	}
-
-
-	protected override void OnSaveButtonClicked(object? sender, EventArgs eventArgs)
-	{
-		_viewModel.Save();
-		base.OnSaveButtonClicked(sender, eventArgs);
-	}
 }
