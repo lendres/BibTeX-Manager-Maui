@@ -16,7 +16,9 @@ public partial class BibEntryViewModel : ObservableObject
 	private bool						_addMode				= true;
 	private BibEntry?					_bibEntry				= new();
 	private WriteSettings				_writeSettings			= new();
+	private bool                        _modified               = false;
 
+	// Clipboard timer.  It is require to periodically check if there is valid data, there is no automated way of knowing what is in the clipboard.
 	private readonly Timer              _timer;
 
 	#endregion
@@ -130,6 +132,7 @@ public partial class BibEntryViewModel : ObservableObject
 	}
 
 	public bool ValidateSubmittable() => IsSubmittable =
+		_modified &&
 		_bibEntry != null &&
 		IsKeyValid;
 
@@ -139,6 +142,7 @@ public partial class BibEntryViewModel : ObservableObject
 
 	partial void OnRawBibEntryChanged(string value)
 	{
+		_modified = true;
 		TryParse();
 	}
 

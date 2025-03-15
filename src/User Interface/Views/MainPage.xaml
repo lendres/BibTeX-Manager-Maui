@@ -32,7 +32,7 @@
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
 		</MenuBarItem>
 		<MenuBarItem Text="Project">
-			<MenuFlyoutItem Text="Project Settings..." Clicked="OnProjectOptions"/>
+			<MenuFlyoutItem Text="Project Settings..." Clicked="OnProjectOptions" IsEnabled="{Binding ProjectOpen}"/>
 		</MenuBarItem>
 		<MenuBarItem Text="Tools">
 			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>
@@ -69,19 +69,20 @@
 						Text="Edit"
 						Clicked="OnEdit"
 						StyleClass="SquareButton"
-						IsEnabled="{Binding ProjectOpen}"/>
+						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
 				<Button 
 					Text="Delete"
 					Clicked="OnDelete"
 					StyleClass="SquareButton"
-					IsEnabled="{Binding ProjectOpen}"/>
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 			</HorizontalStackLayout>
 
 			<Button 
 				Grid.Column="1"
 				Text="Save"
 				IsEnabled="{Binding CanSave}"
+				Clicked="OnSave"
 				HorizontalOptions="End"/>
 		</Grid>
 

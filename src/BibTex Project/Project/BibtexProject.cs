@@ -38,8 +38,6 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	private string								_currentBibEntryMap				= "";
 	private BibEntryRemapper					_nameRemapper					= new();
 
-	private static ProjectExtractor?            _projectExtractor               = null;
-
 	#endregion
 
 	#region Construction
@@ -47,11 +45,16 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	protected BibtexProject()
+	protected BibtexProject() :
+		base(CompressionType.Uncompressed)
 	{
 		ModifiedChanged += OnMyModifiedChanged;
+
 		_settings.ModifiedChanged += OnChildModifiedChanged;
-		_settings.PropertyChanged += SettingsPropertyChanged;
+		_settings.PropertyChanged += OnSettingsPropertyChanged;
+
+		_bibliography.ModifiedChanged += OnChildModifiedChanged;
+		_bibliography.PropertyChanged += OnPropertyChanged;
 	}
 
 	/// <summary>
@@ -230,21 +233,12 @@ public class BibtexProject : DigitalProduction.Projects.Project
 		}
 	}
 
-	private void OnChildModifiedChanged(object sender, bool modified)
-	{
-		// If a child was modified, then I am consider modified as well (propagate the change up).
-		if (modified)
-		{
-			Modified = modified;
-		}
-	}
-
 	/// <summary>
 	/// For certain properties, we need to do some work when they change.
 	/// </summary>
 	/// <param name="sender">Sender.</param>
 	/// <param name="eventArgs">Event arguments.</param>
-	private void SettingsPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs eventArgs)
+	private void OnSettingsPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs eventArgs)
 	{
 		switch (eventArgs.PropertyName)
 		{
@@ -326,7 +320,6 @@ public class BibtexProject : DigitalProduction.Projects.Project
 		// Must call base first.  This calls the OnClose event which should clear all forms (unbind) and
 		// make it safe to close the Bibliography.
 		base.Close();
-		_bibliography.Close();
 		Instance = null;
 	}
 
@@ -524,9 +517,9 @@ public class BibtexProject : DigitalProduction.Projects.Project
 
 	public static void Deserialize(string path)
 	{
-		_projectExtractor	= ProjectExtractor.ExtractFiles(path);
-		Instance			= Deserialize<BibtexProject>(_projectExtractor);
+		Instance = Deserialize<BibtexProject>(path, CompressionType.Uncompressed);
 		Instance.ReadAccessoaryFiles();
+		Instance.Modified = false;
 	}
 
 	/// <summary>

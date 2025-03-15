@@ -70,7 +70,7 @@ public partial class MainPage : DigitalProductionMainPage
 	{
 		if (_viewModel.SavePathRequired)
 		{
-			string file = await _filePicker.BrowseForProjectFile();
+			string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyProjectFileType() } );
 			if (!string.IsNullOrEmpty(file))
 			{
 				_viewModel.Save(file);

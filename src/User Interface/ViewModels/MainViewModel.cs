@@ -13,7 +13,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	#region Fields
 
 	private readonly IDialogService		_dialogService;
-	ProjectExtractor?					_projectExtractor		= null;
 
 	#endregion
 
@@ -42,7 +41,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	#region Properties
 
 	public BibtexProject							Project { get => BibtexProject.Instance ?? throw new NullReferenceException("Project is null."); }
-	public bool										SavePathRequired { get => BibtexProject.Instance?.IsSaveable ?? false; }
+	public bool										SavePathRequired { get => !(BibtexProject.Instance?.IsSaveable) ?? false; }
 
 	public IRecentPathsManagerService				RecentPathsManagerService { get; set; }
 
@@ -72,6 +71,21 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#endregion
 
+	#region Events
+
+	private void OnProjectModifiedChanged(object sender, bool modified)
+	{
+		Modified = modified;
+		ValidateCanSave();
+	}
+
+	partial void OnProjectOpenChanged(bool value)
+	{
+		ValidateCanSave();
+	}
+
+	#endregion
+
 	#region Methods and Commands
 
 	public void NewProject(string bibliographyFile)
@@ -82,6 +96,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 			Items = BibtexProject.Instance.Bibliography.Entries;
 		}
 		ProjectInitialization();
+		Modified = true;
+		ValidateCanSave();
 	}
 
 	public void OpenProjectWithPathSave(string projectFile)
@@ -105,17 +121,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	{
 		BibtexProject.Instance!.ModifiedChanged += OnProjectModifiedChanged;
 		ProjectOpen = true;
-	}
-
-	private void OnProjectModifiedChanged(object sender, bool modified)
-	{
-		Modified = modified;
-		ValidateCanSave();
-	}
-
-	partial void OnProjectOpenChanged(bool value)
-	{
-		ValidateCanSave();
 	}
 
 	[RelayCommand]
@@ -154,7 +159,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	{
 		CanSave = Modified && ProjectOpen;
 	}
-
 
 	#endregion
 
