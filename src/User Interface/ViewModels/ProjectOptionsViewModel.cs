@@ -29,41 +29,41 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	#region Properties
 
 	[ObservableProperty]
-	public partial ProjectSettings						Settings { get; set; }
-
-
-	[ObservableProperty]
-	public partial ValidatableObject<string>			BibliographyFile { get; set; }				= new();
+	public partial ProjectSettings Settings { get; set; }
 
 	[ObservableProperty]
-	public partial WhiteSpace							WhiteSpace { get; set; }					= WhiteSpace.Tab;
-
-	//[ObservableProperty]
-	//public partial int							NumberOfItemsShown { get; set; }
-
-	//[ObservableProperty]
-	//public partial int							NumberOfItemsToStore { get; set; }
-
-	//[ObservableProperty]
-	//public partial bool							IsSubmittable { get; set; }						= true;
+	public partial ValidatableObject<string> BibliographyFile { get; set; } = new();
 
 	[ObservableProperty]
-	public partial bool								IsSubmittable { get; set; }
+	public partial WhiteSpace WhiteSpace { get; set; } = WhiteSpace.Tab;
+
+	[ObservableProperty]
+	public partial bool AlignTagValues { get; set; }
+
+	[ObservableProperty]
+	public partial bool SortBibliographyEntries { get; set; }
+
+	[ObservableProperty]
+	public partial bool IsSubmittable { get; set; }
+
+	public IReadOnlyList<string> SorByItems { get; set; } = DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBy>();
 
 	#endregion
 
 	private void Initialize()
 	{
 		BibliographyFile.Value  = Settings.BibliographyFile;
+		WhiteSpace              = Settings.WriteSettings.WhiteSpace;
+		AlignTagValues          = Settings.WriteSettings.AlignTagValues;
+		SortBibliographyEntries = Settings.SortBibliography;
 	}
-
 
 	#region Validation
 
 	private void AddValidations()
 	{
-		BibliographyFile.Validations.Add(new IsNotNullOrEmptyRule	{ ValidationMessage = "A file name is required." });
-		BibliographyFile.Validations.Add(new FileExistsRule		{ ValidationMessage = "The file does not exist." });
+		BibliographyFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
+		BibliographyFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateBibliographyFile();
 	}
 
@@ -93,6 +93,16 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	partial void OnWhiteSpaceChanged(WhiteSpace value)
 	{
 		Settings.WriteSettings.WhiteSpace = value;
+	}
+
+	partial void OnAlignTagValuesChanged(bool value)
+	{
+		Settings.WriteSettings.AlignTagValues = value;
+	}
+
+	partial void OnSortBibliographyEntriesChanged(bool value)
+	{
+		Settings.SortBibliography = value;
 	}
 
 	#endregion

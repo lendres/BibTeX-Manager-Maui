@@ -23,11 +23,14 @@
 		<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
 	</Style>
 
+	<Style TargetType="RadioButton">
+		<Setter Property="MinimumWidthRequest" Value="15"/>
+	</Style>
+
 	<ControlTemplate x:Key="ButtonRadioTemplate">
 		<Border
             StrokeThickness="1"
-            Background="Transparent"
-            HeightRequest="28">
+            HorizontalOptions="Fill">
 			<Border.StrokeShape>
 				<RoundRectangle CornerRadius="0"/>
 			</Border.StrokeShape>
@@ -36,26 +39,32 @@
 					<VisualStateGroup x:Name="CheckedStates">
 						<VisualState x:Name="Checked">
 							<VisualState.Setters>
-								<Setter TargetName="TextLabel" Property="Label.TextColor" Value="{StaticResource White}"/>
-								<Setter Property="Background" Value="{StaticResource SelectorSelectedAlt}"/>
-								<Setter Property="Stroke" Value="{StaticResource SelectorSelectedAlt}"/>
+								<Setter TargetName="TextLabel" Property="Label.TextColor" Value="{DynamicResource White}"/>
+								<Setter Property="Background" Value="{DynamicResource SelectorSelectedColor}"/>
+								<Setter Property="Stroke" Value="{DynamicResource SelectorSelectedColor}"/>
 							</VisualState.Setters>
 						</VisualState>
 
 						<VisualState x:Name="Unchecked">
 							<VisualState.Setters>
-								<Setter TargetName="TextLabel" Property="Label.TextColor" Value="{StaticResource Primary}"/>
-								<Setter Property="Background" Value="{StaticResource SecondaryBrush}"/>
-								<Setter Property="Stroke" Value="{StaticResource SecondaryBrush}"/>
+								<Setter TargetName="TextLabel" Property="Label.TextColor" Value="{DynamicResource Primary}"/>
+								<Setter Property="Background" Value="{DynamicResource SecondaryBrush}"/>
+								<Setter Property="Stroke" Value="{DynamicResource SecondaryBrush}"/>
 							</VisualState.Setters>
 						</VisualState>
 					</VisualStateGroup>
 				</VisualStateGroupList>
 			</VisualStateManager.VisualStateGroups>
 
-			<Label Text="{TemplateBinding Content}" Margin="6,2" x:Name="TextLabel" x:DataType="RadioButton" FontSize="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+			<Label
+				Text="{TemplateBinding Content}"
+				Margin="0"
+				x:Name="TextLabel"
+				x:DataType="RadioButton"
+				FontSize="12" FontAttributes="Bold" 
+				HorizontalOptions="Fill" VerticalOptions="Center"
+				HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
 		</Border>
 	</ControlTemplate>
-
 
 </ResourceDictionary>

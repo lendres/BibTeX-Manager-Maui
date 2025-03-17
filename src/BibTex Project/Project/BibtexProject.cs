@@ -542,13 +542,6 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	/// <summary>
 	/// Initialize references.
 	/// </summary>
-	protected override void DeserializationInitialization()
-	{
-	}
-
-	/// <summary>
-	/// Initialize references.
-	/// </summary>
 	public void ReadAccessoaryFiles()
 	{
 		ReadBibEntryInitializationFiles();

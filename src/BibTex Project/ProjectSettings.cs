@@ -23,8 +23,8 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 
 	public ProjectSettings(ProjectSettings projectSettings)
 	{
-		_assessoryFiles             = new List<string>(projectSettings._assessoryFiles);
-		_writeSettings              = new WriteSettings(projectSettings.WriteSettings);
+		AssessoryFiles             = new List<string>(projectSettings._assessoryFiles);
+		WriteSettings              = new WriteSettings(projectSettings.WriteSettings);
 		UsePathsRelativeToBibFile   = projectSettings.UsePathsRelativeToBibFile;
 		UseBibEntryInitialization   = projectSettings.UseBibEntryInitialization;
 		BibEntryInitializationFile  = projectSettings.BibEntryInitializationFile;
@@ -52,11 +52,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public bool UsePathsRelativeToBibFile
 	{
 		get => GetValueOrDefault<bool>(false);
-		set
-		{
-			bool result = SetValue(value);
-			int nothing = 1;
-		}
+		set => SetValue(value);
 	}
 
 	/// <summary>
