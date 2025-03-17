@@ -4,7 +4,7 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     bibentrymap="">
     <settings
-        userelativepaths="false"
+        userelativepaths="true"
         usebibentryinitialization="false"
         bibentryinitializationfile=""
         bibfile="N:\Storage\Programming\BibTex Manager Maui\Test Files\le-short.bib"
