@@ -15,6 +15,7 @@
 
 	<mct:Popup.Resources>
 		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
+		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
 		<dpconverters:SingleEnumToBoolConverter x:Key="UseSpacesConverteer" x:TypeArguments="library:WhiteSpace" TrueValue="{x:Static library:WhiteSpace.Space}"/>
 		<dpconverters:SingleEnumToBoolConverter x:Key="UseTabsConverteer" x:TypeArguments="library:WhiteSpace" TrueValue="{x:Static library:WhiteSpace.Tab}"/>
 		<dpconverters:EnumToStringConverter x:Key="EnumToStringConverter" x:TypeArguments="library:WhiteSpace"/>
@@ -29,7 +30,7 @@
 		</Style>
 	</mct:Popup.Resources>
 
-	<Border StyleClass="PopupFrameStyle" WidthRequest="800" HeightRequest="620">
+	<Border StyleClass="PopupFrameStyle" WidthRequest="800" HeightRequest="800">
 
 		<VerticalStackLayout>
 			<Label Text="Project Options" StyleClass="Title" HorizontalOptions="Start"/>
@@ -45,7 +46,7 @@
 			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
 				<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
 					<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UsePathsRelativeToBibFile}"/>
-					<Label Grid.Column="1" Grid.Row="0"	Text="Use paths relative to the project file." StyleClass="SwitchLabel"/>
+					<Label Grid.Column="1" Grid.Row="0"	Text="Use paths relative to the project file" StyleClass="SwitchLabel"/>
 				</Grid>
 				<Grid StyleClass="FileBrowsingGridStyle">
 					<Label Grid.Row="0" Text="Bibliography File" StyleClass="ControlLabel"/>
@@ -63,6 +64,38 @@
 					</Entry>
 					<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle"
 						Text="{Binding BibliographyFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
+					<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
+						Text="Browse" SemanticProperties.Hint="Browse for the input file."
+						Clicked="OnBrowseForInputFile"/>
+				</Grid>
+			</VerticalStackLayout>
+
+
+			<!-- Bibliography entry tag file. -->
+			<Border StyleClass="SmallTitleBorderStyle" Margin="0,10,0,0">
+				<Label Text="Bibliography Entry Tag Order" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+				<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UseBibEntryInitialization}"/>
+					<Label Grid.Column="1" Grid.Row="0"	Text="Keep tags in a specified order" StyleClass="SwitchLabel"/>
+				</Grid>
+				<Grid StyleClass="FileBrowsingGridStyle">
+					<Label Grid.Row="0" Text="Bibliography Entry Tag Order" StyleClass="ControlLabel"/>
+					<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
+						x:Name="TagOrderEntry"
+						Placeholder="Bibliography Entry Tag Order"
+						Text="{Binding TagOrderFile.Value}">
+						<Entry.Behaviors>
+							<mct:EventToCommandBehavior
+								x:TypeArguments="system:EventArgs"
+								Command="{Binding ValidateTagOrderFileCommand}"
+								BindingContext="{Binding Path=BindingContext, Source={x:Reference TagOrderEntry}, x:DataType=Entry}"
+								EventName="TextChanged"/>
+						</Entry.Behaviors>
+					</Entry>
+					<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle"
+						Text="{Binding TagOrderFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
 					<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
 						Text="Browse" SemanticProperties.Hint="Browse for the input file."
 						Clicked="OnBrowseForInputFile"/>

@@ -29,24 +29,33 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	#region Properties
 
 	[ObservableProperty]
-	public partial ProjectSettings Settings { get; set; }
+	public partial ProjectSettings				Settings { get; set; }
 
 	[ObservableProperty]
-	public partial ValidatableObject<string> BibliographyFile { get; set; } = new();
+	public partial ValidatableObject<string>	BibliographyFile { get; set; }				= new();
 
 	[ObservableProperty]
-	public partial WhiteSpace WhiteSpace { get; set; } = WhiteSpace.Tab;
+	public partial ValidatableObject<string>	TagOrderFile { get; set; }					= new();
 
 	[ObservableProperty]
-	public partial bool AlignTagValues { get; set; }
+	public partial ValidatableObject<string>	TagQualityFile { get; set; }				= new();
 
 	[ObservableProperty]
-	public partial bool SortBibliographyEntries { get; set; }
+	public partial ValidatableObject<string>	NameRemappingFile { get; set; }				= new();
 
 	[ObservableProperty]
-	public partial bool IsSubmittable { get; set; }
+	public partial WhiteSpace					WhiteSpace { get; set; }					= WhiteSpace.Tab;
 
-	public IReadOnlyList<string> SorByItems { get; set; } = DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBy>();
+	[ObservableProperty]
+	public partial bool							AlignTagValues { get; set; }
+
+	[ObservableProperty]
+	public partial bool							SortBibliographyEntries { get; set; }
+
+	[ObservableProperty]
+	public partial bool							IsSubmittable { get; set; }
+
+	public IReadOnlyList<string>				SorByItems { get; set; }					= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBy>();
 
 	#endregion
 
@@ -65,6 +74,11 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		BibliographyFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
 		BibliographyFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateBibliographyFile();
+
+		TagOrderFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
+		TagOrderFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		ValidateTagOrderFile();
+
 	}
 
 	[RelayCommand]
@@ -76,6 +90,18 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		}
 		ValidateSubmittable();
 	}
+
+	[RelayCommand]
+	private void ValidateTagOrderFile()
+	{
+		if (TagOrderFile.Validate())
+		{
+			Settings.BibEntryInitializationFile = TagOrderFile.Value!;
+		}
+		ValidateSubmittable();
+	}
+
+
 
 	public bool ValidateSubmittable() => IsSubmittable =
 		Settings.Modified &&

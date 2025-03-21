@@ -17,27 +17,27 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 
 	public ProjectSettings()
 	{
-		ModifiedChanged += OnMyModifiedChanged;
-		_writeSettings.ModifiedChanged += OnChildModifiedChanged;
+		ModifiedChanged					+= OnMyModifiedChanged;
+		_writeSettings.ModifiedChanged	+= OnChildModifiedChanged;
 	}
 
 	public ProjectSettings(ProjectSettings projectSettings)
 	{
-		AssessoryFiles             = new List<string>(projectSettings._assessoryFiles);
-		WriteSettings              = new WriteSettings(projectSettings.WriteSettings);
-		UsePathsRelativeToBibFile   = projectSettings.UsePathsRelativeToBibFile;
-		UseBibEntryInitialization   = projectSettings.UseBibEntryInitialization;
-		BibEntryInitializationFile  = projectSettings.BibEntryInitializationFile;
-		BibliographyFile            = projectSettings.BibliographyFile;
-		UseStringConstants          = projectSettings.UseStringConstants;
-		UseTagQualityProcessing     = projectSettings.UseTagQualityProcessing;
-		TagQualityProcessingFile    = projectSettings.TagQualityProcessingFile;
-		UseBibEntryRemapping        = projectSettings.UseBibEntryRemapping;
-		BibEntryRemappingFile       = projectSettings.BibEntryRemappingFile;
-		AutoGenerateKeys            = projectSettings.AutoGenerateKeys;
-		CopyCiteKeyOnEntryAdd       = projectSettings.CopyCiteKeyOnEntryAdd;
-		SortBibliography            = projectSettings.SortBibliography;
-		BibliographySortMethod      = projectSettings.BibliographySortMethod;
+		AssessoryFiles				= [.. projectSettings._assessoryFiles];
+		WriteSettings				= new WriteSettings(projectSettings.WriteSettings);
+		UsePathsRelativeToBibFile	= projectSettings.UsePathsRelativeToBibFile;
+		UseBibEntryInitialization	= projectSettings.UseBibEntryInitialization;
+		BibEntryInitializationFile	= projectSettings.BibEntryInitializationFile;
+		BibliographyFile			= projectSettings.BibliographyFile;
+		UseStringConstants			= projectSettings.UseStringConstants;
+		UseTagQualityProcessing		= projectSettings.UseTagQualityProcessing;
+		TagQualityProcessingFile	= projectSettings.TagQualityProcessingFile;
+		UseBibEntryRemapping		= projectSettings.UseBibEntryRemapping;
+		BibEntryRemappingFile		= projectSettings.BibEntryRemappingFile;
+		AutoGenerateKeys			= projectSettings.AutoGenerateKeys;
+		CopyCiteKeyOnEntryAdd		= projectSettings.CopyCiteKeyOnEntryAdd;
+		SortBibliography			= projectSettings.SortBibliography;
+		BibliographySortMethod		= projectSettings.BibliographySortMethod;
 		Modified					= false;
 	}
 
