@@ -79,6 +79,13 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		TagOrderFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateTagOrderFile();
 
+		TagQualityFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
+		TagQualityFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		ValidateTagQualityFile();
+
+		NameRemappingFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
+		NameRemappingFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		ValidateNameRemappingFile();
 	}
 
 	[RelayCommand]
@@ -102,6 +109,25 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	}
 
 
+	[RelayCommand]
+	private void ValidateTagQualityFile()
+	{
+		if (TagQualityFile.Validate())
+		{
+			Settings.TagQualityProcessingFile = TagQualityFile.Value!;
+		}
+		ValidateSubmittable();
+	}
+
+	[RelayCommand]
+	private void ValidateNameRemappingFile()
+	{
+		if (NameRemappingFile.Validate())
+		{
+			Settings.BibEntryRemappingFile = NameRemappingFile.Value!;
+		}
+		ValidateSubmittable();
+	}
 
 	public bool ValidateSubmittable() => IsSubmittable =
 		Settings.Modified &&
