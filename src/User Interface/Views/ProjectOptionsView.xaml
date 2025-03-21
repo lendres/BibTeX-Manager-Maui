@@ -30,7 +30,7 @@
 		</Style>
 	</mct:Popup.Resources>
 
-	<Border StyleClass="PopupFrameStyle" WidthRequest="800" HeightRequest="800">
+	<Border StyleClass="PopupFrameStyle" WidthRequest="800" HeightRequest="960">
 
 		<VerticalStackLayout>
 			<Label Text="Project Options" StyleClass="Title" HorizontalOptions="Start"/>
@@ -70,7 +70,6 @@
 				</Grid>
 			</VerticalStackLayout>
 
-
 			<!-- Bibliography entry tag file. -->
 			<Border StyleClass="SmallTitleBorderStyle" Margin="0,10,0,0">
 				<Label Text="Bibliography Entry Tag Order" StyleClass="SmallTitleLabelStyle"/>
@@ -96,6 +95,68 @@
 					</Entry>
 					<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle"
 						Text="{Binding TagOrderFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
+					<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
+						Text="Browse" SemanticProperties.Hint="Browse for the input file."
+						Clicked="OnBrowseForInputFile"/>
+				</Grid>
+			</VerticalStackLayout>
+
+			<!-- Bibliography entry tag quality. -->
+			<Border StyleClass="SmallTitleBorderStyle" Margin="0,10,0,0">
+				<Label Text="Bibliography Entry Tag Order" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+				<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.TagQualityProcessingFile}"/>
+					<Label Grid.Column="1" Grid.Row="0"	Text="Keep tags in a specified order" StyleClass="SwitchLabel"/>
+				</Grid>
+				<Grid StyleClass="FileBrowsingGridStyle">
+					<Label Grid.Row="0" Text="Bibliography Entry Tag Quality" StyleClass="ControlLabel"/>
+					<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
+						x:Name="TagQualityEntry"
+						Placeholder="Bibliography Entry Tag Quality"
+						Text="{Binding TagQualityFile.Value}">
+						<Entry.Behaviors>
+							<mct:EventToCommandBehavior
+								x:TypeArguments="system:EventArgs"
+								Command="{Binding ValidateTagQualityFileCommand}"
+								BindingContext="{Binding Path=BindingContext, Source={x:Reference TagQualityEntry}, x:DataType=Entry}"
+								EventName="TextChanged"/>
+						</Entry.Behaviors>
+					</Entry>
+					<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle"
+						Text="{Binding TagQualityFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
+					<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
+						Text="Browse" SemanticProperties.Hint="Browse for the input file."
+						Clicked="OnBrowseForInputFile"/>
+				</Grid>
+			</VerticalStackLayout>
+
+			<!-- Bibliography entry name remapping. -->
+			<Border StyleClass="SmallTitleBorderStyle" Margin="0,10,0,0">
+				<Label Text="Bibliography Entry Tag Order" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+				<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.BibEntryRemappingFile}"/>
+					<Label Grid.Column="1" Grid.Row="0"	Text="Keep tags in a specified order" StyleClass="SwitchLabel"/>
+				</Grid>
+				<Grid StyleClass="FileBrowsingGridStyle">
+					<Label Grid.Row="0" Text="Bibliography Entry Tag Order" StyleClass="ControlLabel"/>
+					<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
+						x:Name="NameRemappingEntry"
+						Placeholder="Bibliography Entry Tag Order"
+						Text="{Binding NameRemappingFile.Value}">
+						<Entry.Behaviors>
+							<mct:EventToCommandBehavior
+								x:TypeArguments="system:EventArgs"
+								Command="{Binding ValidateNameRemappingFileCommand}"
+								BindingContext="{Binding Path=BindingContext, Source={x:Reference NameRemappingEntry}, x:DataType=Entry}"
+								EventName="TextChanged"/>
+						</Entry.Behaviors>
+					</Entry>
+					<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle"
+						Text="{Binding NameRemappingFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
 					<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
 						Text="Browse" SemanticProperties.Hint="Browse for the input file."
 						Clicked="OnBrowseForInputFile"/>

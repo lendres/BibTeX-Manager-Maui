@@ -131,7 +131,10 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	public bool ValidateSubmittable() => IsSubmittable =
 		Settings.Modified &&
-		BibliographyFile.IsValid;
+		BibliographyFile.IsValid &&
+		TagOrderFile.IsValid &&
+		TagQualityFile.IsValid &&
+		NameRemappingFile.IsValid;
 
 	#endregion
 
