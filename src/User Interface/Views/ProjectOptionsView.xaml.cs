@@ -19,4 +19,9 @@ public partial class ProjectOptionsView : PopupView
 	{
 		BibliographyFileEntry.Text = await _filePicker.BrowseForBibliographyFile();
 	}
+
+	async void OnBrowseTagOrderFile(object sender, EventArgs eventArgs)
+	{
+		TagOrderEntry.Text = await _filePicker.BrowseForTagOrderFile();
+	}
 }

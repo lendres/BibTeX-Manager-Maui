@@ -2,8 +2,9 @@
 
 public interface IBibTexFilePicker
 {
-	Task<string> BrowseForBibliographyFile();
 	Task<string> BrowseForProjectFile();
+	Task<string> BrowseForBibliographyFile();
+	Task<string> BrowseForTagOrderFile();
 
 	FilePickerFileType CreateBibliographyProjectFileType();
 }

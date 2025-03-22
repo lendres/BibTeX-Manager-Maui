@@ -2,6 +2,13 @@
 
 class BibTexFilePicker : IBibTexFilePicker
 {
+	#region File Browsing
+
+	public async Task<string> BrowseForProjectFile()
+	{
+		PickOptions pickOptions = new() { PickerTitle="Select a Bibliography File", FileTypes=CreateBibliographyProjectFileType() };
+		return await BrowseForFile(pickOptions);
+	}
 
 	public async Task<string> BrowseForBibliographyFile()
 	{
@@ -9,11 +16,49 @@ class BibTexFilePicker : IBibTexFilePicker
 		return await BrowseForFile(pickOptions);
 	}
 
-	public async Task<string> BrowseForProjectFile()
+	public async Task<string> BrowseForTagOrderFile()
 	{
-		PickOptions pickOptions = new() { PickerTitle="Select a Bibliography File", FileTypes=CreateBibliographyProjectFileType() };
+		PickOptions pickOptions = new() { PickerTitle="Select a Tag Order File", FileTypes=CreateTagOrderFilePickerFileType() };
 		return await BrowseForFile(pickOptions);
 	}
+
+	#endregion
+
+	#region Creating File Types
+
+	public FilePickerFileType CreateBibliographyProjectFileType()
+	{
+		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+		{
+			{ DevicePlatform.WinUI, new[] { ".bibproj" } }
+		});
+	}
+
+	private static FilePickerFileType CreateBibliographyFilePickerFileType()
+	{
+		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+		{
+			{ DevicePlatform.iOS, new[] { "public.plain-text", "public.text" }	},
+			{ DevicePlatform.macOS, new[] { "public.plain-text", "public.text" } },
+			{ DevicePlatform.Android, new[] { "text/plain" } },
+			{ DevicePlatform.WinUI, new[] { ".bib", ".txt", ".text" } },
+		});
+	}
+
+	private static FilePickerFileType CreateTagOrderFilePickerFileType()
+	{
+		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+		{
+			{ DevicePlatform.iOS, new[] { "public.xml", "public.plain-text", "public.text" } },
+			{ DevicePlatform.macOS, new[] { "public.xml", "public.plain-text", "public.text" } },
+			{ DevicePlatform.Android, new[] { "text/xml", "text/plain" } },
+			{ DevicePlatform.WinUI, new[] { ".tagord", ".xml", ".txt", ".text" } },
+		});
+	}
+
+	#endregion
+
+	#region Helper Methods
 
 	private async Task<string> BrowseForFile(PickOptions options)
 	{
@@ -33,23 +78,5 @@ class BibTexFilePicker : IBibTexFilePicker
 		}
 	}
 
-	private static FilePickerFileType CreateBibliographyFilePickerFileType()
-	{
-		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
-		{
-			{ DevicePlatform.iOS, new[] { "public.plain-text", "public.text" }	},
-			{ DevicePlatform.macOS, new[] { "public.plain-text", "public.text" } },
-			{ DevicePlatform.Android, new[] { "text/plain" } },
-			{ DevicePlatform.WinUI, new[] { ".bib", ".txt", ".text" } },
-		});
-	}
-
-	public FilePickerFileType CreateBibliographyProjectFileType()
-	{
-		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
-		{
-			{ DevicePlatform.WinUI, new[] { ".bibproj" } }
-		});
-	}
-
+	#endregion
 }

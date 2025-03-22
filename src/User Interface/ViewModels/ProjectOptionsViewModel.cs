@@ -73,10 +73,12 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	private void Initialize()
 	{
-		BibliographyFile.Value  = Settings.BibliographyFile;
-		WhiteSpace              = Settings.WriteSettings.WhiteSpace;
-		AlignTagValues          = Settings.WriteSettings.AlignTagValues;
-		SortBibliographyEntries = Settings.SortBibliography;
+		BibliographyFile.Value	= Settings.BibliographyFile;
+		UseTagOrder				= Settings.UseBibEntryInitialization;
+		TagOrderFile.Value		= Settings.BibEntryInitializationFile;
+		WhiteSpace				= Settings.WriteSettings.WhiteSpace;
+		AlignTagValues			= Settings.WriteSettings.AlignTagValues;
+		SortBibliographyEntries	= Settings.SortBibliography;
 	}
 
 	#endregion
@@ -146,9 +148,9 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	public bool ValidateSubmittable() => IsSubmittable =
 		Settings.Modified &&
 		BibliographyFile.IsValid &&
-		TagOrderFile.IsValid &&
-		TagQualityFile.IsValid &&
-		NameRemappingFile.IsValid;
+		(!UseTagOrder || TagOrderFile.IsValid) &&
+		(!UseTagQuality || TagQualityFile.IsValid) &&
+		(!UseNameRemapping || NameRemappingFile.IsValid);
 
 	#endregion
 
@@ -162,31 +164,37 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	partial void OnUseTagOrderChanged(bool value)
 	{
 		Settings.UseBibEntryInitialization = value;
+		ValidateSubmittable();
 	}
 
 	partial void OnUseTagQualityChanged(bool value)
 	{
 		Settings.UseTagQualityProcessing = value;
+		ValidateSubmittable();
 	}
 
 	partial void OnUseNameRemappingChanged(bool value)
 	{
 		Settings.UseBibEntryRemapping = value;
+		ValidateSubmittable();
 	}
 
 	partial void OnWhiteSpaceChanged(WhiteSpace value)
 	{
 		Settings.WriteSettings.WhiteSpace = value;
+		ValidateSubmittable();
 	}
 
 	partial void OnAlignTagValuesChanged(bool value)
 	{
 		Settings.WriteSettings.AlignTagValues = value;
+		ValidateSubmittable();
 	}
 
 	partial void OnSortBibliographyEntriesChanged(bool value)
 	{
 		Settings.SortBibliography = value;
+		ValidateSubmittable();
 	}
 
 	#endregion

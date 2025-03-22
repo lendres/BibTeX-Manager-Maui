@@ -62,11 +62,9 @@
 						</Entry.Behaviors>
 					</Entry>
 					<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle"
-						Text="{Binding BibliographyFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
-						IsEnabled="{Binding UseRelativePaths}"/>
+						Text="{Binding BibliographyFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
 					<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
-						Text="Browse" SemanticProperties.Hint="Browse for the input file."
-						Clicked="OnBrowseForInputFile" IsEnabled="{Binding UseRelativePaths}"/>
+						Text="Browse" Clicked="OnBrowseForInputFile" SemanticProperties.Hint="Browse for the input file."/>
 				</Grid>
 			</VerticalStackLayout>
 
@@ -96,7 +94,7 @@
 						Text="{Binding TagOrderFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
 					<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
 						Text="Browse" SemanticProperties.Hint="Browse for the input file."
-						Clicked="OnBrowseForInputFile" IsEnabled="{Binding UseTagOrder}"/>
+						Clicked="OnBrowseTagOrderFile" IsEnabled="{Binding UseTagOrder}"/>
 				</Grid>
 			</VerticalStackLayout>
 
