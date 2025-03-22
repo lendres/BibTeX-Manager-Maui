@@ -5,6 +5,7 @@ using DigitalProduction.Maui.Validation;
 using CommunityToolkit.Mvvm.Input;
 using BibTeXLibrary;
 using BibtexManager;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace BibTexManager.ViewModels;
 
@@ -35,10 +36,19 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	public partial ValidatableObject<string>	BibliographyFile { get; set; }				= new();
 
 	[ObservableProperty]
+	public partial bool							UseTagOrder { get; set; }
+
+	[ObservableProperty]
 	public partial ValidatableObject<string>	TagOrderFile { get; set; }					= new();
 
 	[ObservableProperty]
+	public partial bool							UseTagQuality { get; set; }
+
+	[ObservableProperty]
 	public partial ValidatableObject<string>	TagQualityFile { get; set; }				= new();
+
+	[ObservableProperty]
+	public partial bool							UseNameRemapping { get; set; }
 
 	[ObservableProperty]
 	public partial ValidatableObject<string>	NameRemappingFile { get; set; }				= new();
@@ -59,6 +69,8 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	#endregion
 
+	#region Initialization
+
 	private void Initialize()
 	{
 		BibliographyFile.Value  = Settings.BibliographyFile;
@@ -66,6 +78,8 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		AlignTagValues          = Settings.WriteSettings.AlignTagValues;
 		SortBibliographyEntries = Settings.SortBibliography;
 	}
+
+	#endregion
 
 	#region Validation
 
@@ -143,6 +157,21 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	private void OnSettingsModifiedChanged(object sender, bool modified)
 	{
 		ValidateSubmittable();
+	}
+
+	partial void OnUseTagOrderChanged(bool value)
+	{
+		Settings.UseBibEntryInitialization = value;
+	}
+
+	partial void OnUseTagQualityChanged(bool value)
+	{
+		Settings.UseTagQualityProcessing = value;
+	}
+
+	partial void OnUseNameRemappingChanged(bool value)
+	{
+		Settings.UseBibEntryRemapping = value;
 	}
 
 	partial void OnWhiteSpaceChanged(WhiteSpace value)
