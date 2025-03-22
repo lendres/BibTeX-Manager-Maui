@@ -25,6 +25,7 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
+		DigitalProduction.Maui.UI.LifecycleEventsInstaller.ConfigureLifecycleEvents(builder);
 		#if WINDOWS
 			builder.ConfigureLifecycleEvents(lifecycle =>  
 			{
@@ -32,7 +33,7 @@ public static class MauiProgram
 				{  
 					builder.OnWindowCreated(del =>  
 					{  
-						del.Title = "XSLT Processor";
+						del.Title = "BibTex Manager";
 					});  
 				});  
 			});
