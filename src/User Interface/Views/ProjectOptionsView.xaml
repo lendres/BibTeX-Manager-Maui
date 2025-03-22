@@ -45,7 +45,7 @@
 			</Border>
 			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
 				<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
-					<Switch Grid.Column="0"  Grid.Row="0"/>
+					<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding UseRelativePaths}"/>
 					<Label Grid.Column="1" Grid.Row="0"	Text="Use paths relative to the project file" StyleClass="SwitchLabel"/>
 				</Grid>
 				<Grid StyleClass="FileBrowsingGridStyle">
@@ -124,7 +124,7 @@
 						Text="{Binding TagQualityFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
 					<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
 						Text="Browse" SemanticProperties.Hint="Browse for the input file."
-						Clicked="OnBrowseForInputFile" IsEnabled="{Binding UseTagQuality}"/>
+						Clicked="OnBrowseTagQualityFile" IsEnabled="{Binding UseTagQuality}"/>
 				</Grid>
 			</VerticalStackLayout>
 
@@ -154,7 +154,7 @@
 						Text="{Binding NameRemappingFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}" IsEnabled="{Binding UseNameRemapping}"/>
 					<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
 						Text="Browse" SemanticProperties.Hint="Browse for the input file."
-						Clicked="OnBrowseForInputFile" IsEnabled="{Binding UseNameRemapping}"/>
+						Clicked="OnBrowseNameRemappingFile" IsEnabled="{Binding UseNameRemapping}"/>
 				</Grid>
 			</VerticalStackLayout>
 

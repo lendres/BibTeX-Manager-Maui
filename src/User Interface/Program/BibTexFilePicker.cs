@@ -22,6 +22,18 @@ class BibTexFilePicker : IBibTexFilePicker
 		return await BrowseForFile(pickOptions);
 	}
 
+	public async Task<string> BrowseForTagQualityFile()
+	{
+		PickOptions pickOptions = new() { PickerTitle="Select a Tag Quality File", FileTypes=CreateTagQualityFilePickerFileType() };
+		return await BrowseForFile(pickOptions);
+	}
+
+	public async Task<string> BrowseForNameRemappingFile()
+	{
+		PickOptions pickOptions = new() { PickerTitle="Select a Name Remapping File", FileTypes=CreateNameRemappingFilePickerFileType() };
+		return await BrowseForFile(pickOptions);
+	}
+
 	#endregion
 
 	#region Creating File Types
@@ -53,6 +65,28 @@ class BibTexFilePicker : IBibTexFilePicker
 			{ DevicePlatform.macOS, new[] { "public.xml", "public.plain-text", "public.text" } },
 			{ DevicePlatform.Android, new[] { "text/xml", "text/plain" } },
 			{ DevicePlatform.WinUI, new[] { ".tagord", ".xml", ".txt", ".text" } },
+		});
+	}
+
+	private static FilePickerFileType CreateTagQualityFilePickerFileType()
+	{
+		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+		{
+			{ DevicePlatform.iOS, new[] { "public.xml", "public.plain-text", "public.text" } },
+			{ DevicePlatform.macOS, new[] { "public.xml", "public.plain-text", "public.text" } },
+			{ DevicePlatform.Android, new[] { "text/xml", "text/plain" } },
+			{ DevicePlatform.WinUI, new[] { ".qlty", ".xml", ".txt", ".text" } },
+		});
+	}
+
+	private static FilePickerFileType CreateNameRemappingFilePickerFileType()
+	{
+		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+		{
+			{ DevicePlatform.iOS, new[] { "public.xml", "public.plain-text", "public.text" } },
+			{ DevicePlatform.macOS, new[] { "public.xml", "public.plain-text", "public.text" } },
+			{ DevicePlatform.Android, new[] { "text/xml", "text/plain" } },
+			{ DevicePlatform.WinUI, new[] { ".bibmap", ".xml", ".txt", ".text" } },
 		});
 	}
 

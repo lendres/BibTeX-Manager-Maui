@@ -21,8 +21,9 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		Settings = new ProjectSettings(projectSettings);
 		Initialize();
 		AddValidations();
-		ValidateSubmittable();
 		Settings.ModifiedChanged += OnSettingsModifiedChanged;
+		Settings.PropertyChanged += OnSettingsPropertyChanged;
+		;
 	}
 
 	#endregion
@@ -31,6 +32,9 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	[ObservableProperty]
 	public partial ProjectSettings				Settings { get; set; }
+
+	[ObservableProperty]
+	public partial bool							UseRelativePaths { get; set; }
 
 	[ObservableProperty]
 	public partial ValidatableObject<string>	BibliographyFile { get; set; }				= new();
@@ -73,9 +77,14 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	private void Initialize()
 	{
+		UseRelativePaths		= Settings.UsePathsRelativeToBibFile;
 		BibliographyFile.Value	= Settings.BibliographyFile;
 		UseTagOrder				= Settings.UseBibEntryInitialization;
 		TagOrderFile.Value		= Settings.BibEntryInitializationFile;
+		UseTagQuality			= Settings.UseBibEntryInitialization;
+		TagQualityFile.Value	= Settings.TagQualityProcessingFile;
+		UseNameRemapping        = Settings.UseBibEntryRemapping;
+		NameRemappingFile.Value	= Settings.BibEntryRemappingFile;
 		WhiteSpace				= Settings.WriteSettings.WhiteSpace;
 		AlignTagValues			= Settings.WriteSettings.AlignTagValues;
 		SortBibliographyEntries	= Settings.SortBibliography;
@@ -161,40 +170,44 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		ValidateSubmittable();
 	}
 
+	private void OnSettingsPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+	{
+		ValidateSubmittable();
+	}
+
+	partial void OnUseRelativePathsChanged(bool value)
+	{
+		Settings.UsePathsRelativeToBibFile = value;
+	}
+
 	partial void OnUseTagOrderChanged(bool value)
 	{
 		Settings.UseBibEntryInitialization = value;
-		ValidateSubmittable();
 	}
 
 	partial void OnUseTagQualityChanged(bool value)
 	{
 		Settings.UseTagQualityProcessing = value;
-		ValidateSubmittable();
 	}
 
 	partial void OnUseNameRemappingChanged(bool value)
 	{
 		Settings.UseBibEntryRemapping = value;
-		ValidateSubmittable();
 	}
 
 	partial void OnWhiteSpaceChanged(WhiteSpace value)
 	{
 		Settings.WriteSettings.WhiteSpace = value;
-		ValidateSubmittable();
 	}
 
 	partial void OnAlignTagValuesChanged(bool value)
 	{
 		Settings.WriteSettings.AlignTagValues = value;
-		ValidateSubmittable();
 	}
 
 	partial void OnSortBibliographyEntriesChanged(bool value)
 	{
 		Settings.SortBibliography = value;
-		ValidateSubmittable();
 	}
 
 	#endregion

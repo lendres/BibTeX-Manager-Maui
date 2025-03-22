@@ -5,14 +5,14 @@
     bibentrymap="">
     <settings
         userelativepaths="true"
-        usebibentryinitialization="false"
-        bibentryinitializationfile=""
+        usebibentryinitialization="true"
+        bibentryinitializationfile="N:\Storage\Programming\BibTex Manager Maui\Test Files\Bib Entry Initialization.tagord"
         bibfile="N:\Storage\Programming\BibTex Manager Maui\Test Files\le-short.bib"
-        usestringconstants="false"
-        usetagqualityprocessing="false"
-        qualityprocessorfile=""
-        usebibentryremapping="false"
-        nameremappingfile=""
+        usestringconstants="true"
+        usetagqualityprocessing="true"
+        qualityprocessorfile="N:\Storage\Programming\BibTex Manager Maui\Test Files\Tag Quality Processing.qlty"
+        usebibentryremapping="true"
+        nameremappingfile="N:\Storage\Programming\BibTex Manager Maui\Test Files\Bib Entry Remap.bibmap"
         autogenerateekeys="true"
         copycitekeyonadd="true"
         sortbibliography="true"
@@ -23,7 +23,7 @@
             spacespertab="4"
             alignatequals="true"
             alignatcolumn="24"
-            alignattabstop="5"
+            alignattabstop="4"
             removelastcomma="true" />
     </settings>
 </bibtexproject>
