@@ -8,7 +8,6 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 {
 	#region Fields
 
-	private List<string>				_assessoryFiles					= [];
 	private WriteSettings				_writeSettings					= new();
 
 	#endregion
@@ -23,12 +22,13 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 
 	public ProjectSettings(ProjectSettings projectSettings)
 	{
-		AssessoryFiles				= [.. projectSettings._assessoryFiles];
 		WriteSettings				= new WriteSettings(projectSettings.WriteSettings);
 		UsePathsRelativeToBibFile	= projectSettings.UsePathsRelativeToBibFile;
 		UseBibEntryInitialization	= projectSettings.UseBibEntryInitialization;
 		BibEntryInitializationFile	= projectSettings.BibEntryInitializationFile;
 		BibliographyFile			= projectSettings.BibliographyFile;
+		UseAuxiliaryFile			= projectSettings.UseAuxiliaryFile;
+		AuxiliaryFile				= projectSettings.AuxiliaryFile;
 		UseStringConstants			= projectSettings.UseStringConstants;
 		UseTagQualityProcessing		= projectSettings.UseTagQualityProcessing;
 		TagQualityProcessingFile	= projectSettings.TagQualityProcessingFile;
@@ -86,22 +86,23 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	}
 
 	/// <summary>
+	/// Replace tag values with string constants.
+	/// </summary>
+	[XmlAttribute("useauxiliaryfile")]
+	public bool UseAuxiliaryFile
+	{
+		get => GetValueOrDefault<bool>(false);
+		set => SetValue(value);
+	}
+
+	/// <summary>
 	/// Assessory files that contain things like strings.
 	/// </summary>
-	[XmlArray("assessoryfiles"), XmlArrayItem("file")]
-	public List<string> AssessoryFiles
+	[XmlAttribute("auxiliaryfile")]
+	public string AuxiliaryFile
 	{
-		get => _assessoryFiles;
-
-		set
-		{
-			if (!_assessoryFiles.SequenceEqual(value))
-			{
-				_assessoryFiles = value;
-				Modified = true;
-				OnPropertyChanged();
-			}
-		}
+		get => GetValueOrDefault<string>(string.Empty);
+		set => SetValue(value);
 	}
 
 	/// <summary>

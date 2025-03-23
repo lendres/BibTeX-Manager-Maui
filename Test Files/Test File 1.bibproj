@@ -8,6 +8,8 @@
         usebibentryinitialization="true"
         bibentryinitializationfile="N:\Storage\Programming\BibTex Manager Maui\Test Files\Bib Entry Initialization.tagord"
         bibfile="N:\Storage\Programming\BibTex Manager Maui\Test Files\le-short.bib"
+        useauxiliaryfile="true"
+        auxiliaryfile="N:\Storage\Programming\BibTex Manager Maui\Test Files\strings.bib"
         usestringconstants="true"
         usetagqualityprocessing="true"
         qualityprocessorfile="N:\Storage\Programming\BibTex Manager Maui\Test Files\Tag Quality Processing.qlty"
@@ -17,7 +19,6 @@
         copycitekeyonadd="true"
         sortbibliography="true"
         bibliographysortmethod="Key">
-        <assessoryfiles />
         <writesettings
             whitespace="Tab"
             spacespertab="4"

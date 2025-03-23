@@ -23,7 +23,6 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		AddValidations();
 		Settings.ModifiedChanged += OnSettingsModifiedChanged;
 		Settings.PropertyChanged += OnSettingsPropertyChanged;
-		;
 	}
 
 	#endregion
@@ -38,6 +37,12 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	[ObservableProperty]
 	public partial ValidatableObject<string>	BibliographyFile { get; set; }				= new();
+
+	[ObservableProperty]
+	public partial bool							UseAuxiliaryFile { get; set; }
+
+	[ObservableProperty]
+	public partial ValidatableObject<string>	AuxiliaryFile { get; set; }				= new();
 
 	[ObservableProperty]
 	public partial bool							UseTagOrder { get; set; }
@@ -79,6 +84,8 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	{
 		UseRelativePaths		= Settings.UsePathsRelativeToBibFile;
 		BibliographyFile.Value	= Settings.BibliographyFile;
+		UseAuxiliaryFile		= Settings.UseAuxiliaryFile;
+		AuxiliaryFile.Value		= Settings.AuxiliaryFile;
 		UseTagOrder				= Settings.UseBibEntryInitialization;
 		TagOrderFile.Value		= Settings.BibEntryInitializationFile;
 		UseTagQuality			= Settings.UseBibEntryInitialization;
@@ -98,6 +105,10 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	{
 		BibliographyFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
 		BibliographyFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		ValidateBibliographyFile();
+
+		AuxiliaryFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
+		AuxiliaryFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateBibliographyFile();
 
 		TagOrderFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
@@ -124,6 +135,16 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	}
 
 	[RelayCommand]
+	private void ValidateAuxiliaryFile()
+	{
+		if (AuxiliaryFile.Validate())
+		{
+			Settings.AuxiliaryFile = AuxiliaryFile.Value!;
+		}
+		ValidateSubmittable();
+	}
+
+	[RelayCommand]
 	private void ValidateTagOrderFile()
 	{
 		if (TagOrderFile.Validate())
@@ -132,7 +153,6 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		}
 		ValidateSubmittable();
 	}
-
 
 	[RelayCommand]
 	private void ValidateTagQualityFile()
@@ -157,6 +177,7 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	public bool ValidateSubmittable() => IsSubmittable =
 		Settings.Modified &&
 		BibliographyFile.IsValid &&
+		(!UseAuxiliaryFile || AuxiliaryFile.IsValid) &&
 		(!UseTagOrder || TagOrderFile.IsValid) &&
 		(!UseTagQuality || TagQualityFile.IsValid) &&
 		(!UseNameRemapping || NameRemappingFile.IsValid);
@@ -178,6 +199,11 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	partial void OnUseRelativePathsChanged(bool value)
 	{
 		Settings.UsePathsRelativeToBibFile = value;
+	}
+
+	partial void OnUseAuxiliaryFileChanged(bool value)
+	{
+		Settings.UseAuxiliaryFile = value;
 	}
 
 	partial void OnUseTagOrderChanged(bool value)

@@ -94,7 +94,7 @@ class BibTexFilePicker : IBibTexFilePicker
 
 	#region Helper Methods
 
-	private async Task<string> BrowseForFile(PickOptions options)
+	private static async Task<string> BrowseForFile(PickOptions options)
 	{
 		try
 		{
