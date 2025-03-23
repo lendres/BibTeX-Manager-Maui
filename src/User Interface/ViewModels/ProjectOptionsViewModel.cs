@@ -186,55 +186,25 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	#region Events
 
-	private void OnSettingsModifiedChanged(object sender, bool modified)
-	{
-		ValidateSubmittable();
-	}
+	private void OnSettingsModifiedChanged(object sender, bool modified) => ValidateSubmittable();
 
-	private void OnSettingsPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-	{
-		ValidateSubmittable();
-	}
+	private void OnSettingsPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) => ValidateSubmittable();
 
-	partial void OnUseRelativePathsChanged(bool value)
-	{
-		Settings.UsePathsRelativeToBibFile = value;
-	}
+	partial void OnUseRelativePathsChanged(bool value) => Settings.UsePathsRelativeToBibFile = value;
 
-	partial void OnUseAuxiliaryFileChanged(bool value)
-	{
-		Settings.UseAuxiliaryFile = value;
-	}
+	partial void OnUseAuxiliaryFileChanged(bool value) => Settings.UseAuxiliaryFile = value;
 
-	partial void OnUseTagOrderChanged(bool value)
-	{
-		Settings.UseBibEntryInitialization = value;
-	}
+	partial void OnUseTagOrderChanged(bool value) => Settings.UseBibEntryInitialization = value;
 
-	partial void OnUseTagQualityChanged(bool value)
-	{
-		Settings.UseTagQualityProcessing = value;
-	}
+	partial void OnUseTagQualityChanged(bool value) => Settings.UseTagQualityProcessing = value;
 
-	partial void OnUseNameRemappingChanged(bool value)
-	{
-		Settings.UseBibEntryRemapping = value;
-	}
+	partial void OnUseNameRemappingChanged(bool value) => Settings.UseBibEntryRemapping = value;
 
-	partial void OnWhiteSpaceChanged(WhiteSpace value)
-	{
-		Settings.WriteSettings.WhiteSpace = value;
-	}
+	partial void OnWhiteSpaceChanged(WhiteSpace value) => Settings.WriteSettings.WhiteSpace = value;
 
-	partial void OnAlignTagValuesChanged(bool value)
-	{
-		Settings.WriteSettings.AlignTagValues = value;
-	}
+	partial void OnAlignTagValuesChanged(bool value) => Settings.WriteSettings.AlignTagValues = value;
 
-	partial void OnSortBibliographyEntriesChanged(bool value)
-	{
-		Settings.SortBibliography = value;
-	}
+	partial void OnSortBibliographyEntriesChanged(bool value) => Settings.SortBibliography = value;
 
 	#endregion
 }
