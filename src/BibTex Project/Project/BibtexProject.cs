@@ -42,7 +42,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 
 	private readonly Bibliography               _bibliography                   = new();
 
-	private readonly List<BibliographyDOM>		_assessoryFilesDOMs				= [];
+	private readonly List<BibliographyDOM>		_accessoryFilesDOMs				= [];
 
 	private readonly StringConstantProcessor	_stringConstantProcessor		= new();
 
@@ -202,15 +202,12 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	/// </summary>
 	private void ReadAccessoryFiles()
 	{
-		_assessoryFilesDOMs.Clear();
+		_accessoryFilesDOMs.Clear();
 
-		foreach (string file in _settings.AssessoryFiles)
+		string absolutePath = ConvertToAbsolutePath(_settings.AuxiliaryFile);
+		if (System.IO.File.Exists(absolutePath))
 		{
-			string absolutePath = ConvertToAbsolutePath(file);
-			if (System.IO.File.Exists(absolutePath))
-			{
-				_assessoryFilesDOMs.Add(BibParser.Parse(absolutePath));
-			}
+			_accessoryFilesDOMs.Add(BibParser.Parse(absolutePath));
 		}
 	}
 
@@ -234,7 +231,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	{
 		_stringConstantProcessor.Clear();
 		_stringConstantProcessor.AddStringConstantsToMap(_bibliography);
-		_stringConstantProcessor.AddStringConstantsToMap(_assessoryFilesDOMs);
+		_stringConstantProcessor.AddStringConstantsToMap(_accessoryFilesDOMs);
 	}
 
 	#endregion
@@ -270,7 +267,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 				BuildStringConstantMap();
 				break;
 
-			case nameof(Settings.AssessoryFiles):
+			case nameof(Settings.AuxiliaryFile):
 				ReadAccessoryFiles();
 				BuildStringConstantMap();
 				break;

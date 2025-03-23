@@ -5,8 +5,8 @@ namespace BibTexManager.Views;
 
 public partial class ProjectOptionsView : PopupView
 {
-	ProjectOptionsViewModel _viewModel;
-	IBibTexFilePicker       _filePicker     = DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTexFilePicker>();
+	readonly ProjectOptionsViewModel	_viewModel;
+	readonly IBibTexFilePicker			_filePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTexFilePicker>();
 
 	public ProjectOptionsView(ProjectOptionsViewModel viewModel)
 	{
@@ -18,6 +18,11 @@ public partial class ProjectOptionsView : PopupView
 	async void OnBrowseForInputFile(object sender, EventArgs eventArgs)
 	{
 		BibliographyFileEntry.Text = await _filePicker.BrowseForBibliographyFile();
+	}
+
+	async void OnBrowseForAuxiliaryFileFile(object sender, EventArgs eventArgs)
+	{
+		AuxiliaryFileEntry.Text = await _filePicker.BrowseForBibliographyFile();
 	}
 
 	async void OnBrowseTagOrderFile(object sender, EventArgs eventArgs)

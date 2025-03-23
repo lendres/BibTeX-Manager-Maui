@@ -30,17 +30,12 @@
 		</Style>
 	</mct:Popup.Resources>
 
-	<Border StyleClass="PopupFrameStyle" WidthRequest="800" HeightRequest="960">
+	<Border StyleClass="PopupFrameStyle" WidthRequest="800" HeightRequest="1054">
 
 		<VerticalStackLayout>
 			<Label Text="Project Options" StyleClass="Title" HorizontalOptions="Start"/>
-
-			<!--<Border StyleClass="SmallTitleBorderStyle">
-				<Label Text="Paths" StyleClass="SmallTitleLabelStyle"/>
-			</Border>-->
-
-			<!-- Bibliography file. -->
-			<Border StyleClass="SmallTitleBorderStyle" Margin="0,10,0,0">
+		<!-- Bibliography file. -->
+			<Border StyleClass="SmallTitleBorderStyle">
 				<Label Text="Bibliography File" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
 			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
@@ -67,9 +62,34 @@
 						Text="Browse" Clicked="OnBrowseForInputFile" SemanticProperties.Hint="Browse for the input file."/>
 				</Grid>
 			</VerticalStackLayout>
+			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+				<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding UseAuxiliaryFile}"/>
+					<Label Grid.Column="1" Grid.Row="0"	Text="Use an auxiliary file" StyleClass="SwitchLabel"/>
+				</Grid>
+				<Grid StyleClass="FileBrowsingGridStyle">
+					<Label Grid.Row="0" Text="Auxiliary File" StyleClass="ControlLabel" IsEnabled="{Binding UseAuxiliaryFile}"/>
+					<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
+						x:Name="AuxiliaryFileEntry" Placeholder="Auxiliary File"
+						Text="{Binding AuxiliaryFile.Value}" IsEnabled="{Binding UseAuxiliaryFile}">
+						<Entry.Behaviors>
+							<mct:EventToCommandBehavior
+								x:TypeArguments="system:EventArgs"
+								Command="{Binding ValidateAuxiliaryFileCommand}"
+								BindingContext="{Binding Path=BindingContext, Source={x:Reference AuxiliaryFileEntry}, x:DataType=Entry}"
+								EventName="TextChanged"/>
+						</Entry.Behaviors>
+					</Entry>
+					<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding UseAuxiliaryFile}"
+						Text="{Binding AuxiliaryFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
+					<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
+						Text="Browse"  SemanticProperties.Hint="Browse for the input file."
+						Clicked="OnBrowseForAuxiliaryFileFile" IsEnabled="{Binding UseAuxiliaryFile}"/>
+				</Grid>
+			</VerticalStackLayout>
 
 			<!-- Bibliography entry tag file. -->
-			<Border StyleClass="SmallTitleBorderStyle" Margin="0,10,0,0">
+			<Border StyleClass="SmallTitleBorderStyle">
 				<Label Text="Bibliography Entry Tag Order" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
 			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
@@ -78,7 +98,7 @@
 					<Label Grid.Column="1" Grid.Row="0"	Text="Keep tags in a specified order" StyleClass="SwitchLabel"/>
 				</Grid>
 				<Grid StyleClass="FileBrowsingGridStyle">
-					<Label Grid.Row="0" Text="Bibliography Entry Tag Order" StyleClass="ControlLabel" IsEnabled="{Binding UseTagOrder}"/>
+					<Label Grid.Row="0" Text="Bibliography Entry Tag Order File" StyleClass="ControlLabel" IsEnabled="{Binding UseTagOrder}"/>
 					<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
 						x:Name="TagOrderEntry" Placeholder="Bibliography Entry Tag Order"
 						Text="{Binding TagOrderFile.Value}" IsEnabled="{Binding UseTagOrder}">
@@ -99,7 +119,7 @@
 			</VerticalStackLayout>
 
 			<!-- Bibliography entry tag quality. -->
-			<Border StyleClass="SmallTitleBorderStyle" Margin="0,10,0,0">
+			<Border StyleClass="SmallTitleBorderStyle">
 				<Label Text="Bibliography Entry Tag Quality" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
 			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
@@ -108,7 +128,7 @@
 					<Label Grid.Column="1" Grid.Row="0"	Text="Keep tags in a specified order" StyleClass="SwitchLabel"/>
 				</Grid>
 				<Grid StyleClass="FileBrowsingGridStyle">
-					<Label Grid.Row="0" Text="Bibliography Entry Tag Quality" StyleClass="ControlLabel" IsEnabled="{Binding UseTagQuality}"/>
+					<Label Grid.Row="0" Text="Bibliography Entry Tag Quality File" StyleClass="ControlLabel" IsEnabled="{Binding UseTagQuality}"/>
 					<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
 						x:Name="TagQualityEntry" Placeholder="Bibliography Entry Tag Quality"
 						Text="{Binding TagQualityFile.Value}" IsEnabled="{Binding UseTagQuality}">
@@ -129,7 +149,7 @@
 			</VerticalStackLayout>
 
 			<!-- Bibliography entry name remapping. -->
-			<Border StyleClass="SmallTitleBorderStyle" Margin="0,10,0,0">
+			<Border StyleClass="SmallTitleBorderStyle">
 				<Label Text="Remap Names of Bibliography Entries" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
 			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
@@ -138,7 +158,7 @@
 					<Label Grid.Column="1" Grid.Row="0"	Text="Keep tags in a specified order" StyleClass="SwitchLabel"/>
 				</Grid>
 				<Grid StyleClass="FileBrowsingGridStyle">
-					<Label Grid.Row="0" Text="Bibliography Entry Tag Order" StyleClass="ControlLabel" IsEnabled="{Binding UseNameRemapping}"/>
+					<Label Grid.Row="0" Text="Name Remapping File" StyleClass="ControlLabel" IsEnabled="{Binding UseNameRemapping}"/>
 					<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
 						x:Name="NameRemappingEntry" Placeholder="Bibliography Entry Tag Order"
 						Text="{Binding NameRemappingFile.Value}" IsEnabled="{Binding UseNameRemapping}">
@@ -231,18 +251,18 @@
 			</Grid>
 
 			<!-- Automation -->
-			<Border StyleClass="SmallTitleBorderStyle" Margin="0,22,0,0">
+			<Border StyleClass="SmallTitleBorderStyle">
 				<Label Text="Automation" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
 			<Grid ColumnDefinitions="50,265,50,300" RowDefinitions="30,30,30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
 				<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.AutoGenerateKeys}"/>
-				<Label Grid.Column="1" Grid.Row="0" Text="Automatically generate cite keys." StyleClass="SwitchLabel"/>
+				<Label Grid.Column="1" Grid.Row="0" Text="Automatically generate cite keys" StyleClass="SwitchLabel"/>
 				<Switch Grid.Column="2"  Grid.Row="0" IsToggled="{Binding Settings.UseStringConstants}"/>
-				<Label Grid.Column="3" Grid.Row="0" Text="Replace tag values with constant strings." StyleClass="SwitchLabel"/>
+				<Label Grid.Column="3" Grid.Row="0" Text="Replace tag values with constant strings" StyleClass="SwitchLabel"/>
 				<Switch Grid.Column="0"  Grid.Row="1" IsToggled="{Binding Settings.CopyCiteKeyOnEntryAdd}"/>
-				<Label Grid.Column="1" Grid.Row="1" Text="Copy cite key when entry is added." StyleClass="SwitchLabel"/>
+				<Label Grid.Column="1" Grid.Row="1" Text="Copy cite key when entry is added" StyleClass="SwitchLabel"/>
 				<Switch Grid.Column="2"  Grid.Row="1" IsToggled="{Binding Settings.WriteSettings.RemoveLastComma}"/>
-				<Label Grid.Column="3" Grid.Row="1" Text="Remove comma after last tag." StyleClass="SwitchLabel"/>
+				<Label Grid.Column="3" Grid.Row="1" Text="Remove comma after last tag" StyleClass="SwitchLabel"/>
 			</Grid>
 
 			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
