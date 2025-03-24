@@ -6,6 +6,8 @@ using CommunityToolkit.Mvvm.Input;
 using BibTeXLibrary;
 using BibtexManager;
 using DocumentFormat.OpenXml.Wordprocessing;
+using DigitalProduction.Projects;
+using BibTexManager.Validation;
 
 namespace BibTexManager.ViewModels;
 
@@ -104,23 +106,23 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	private void AddValidations()
 	{
 		BibliographyFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		BibliographyFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		BibliographyFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateBibliographyFile();
 
 		AuxiliaryFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		AuxiliaryFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		AuxiliaryFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateBibliographyFile();
 
 		TagOrderFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		TagOrderFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		TagOrderFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateTagOrderFile();
 
 		TagQualityFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		TagQualityFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		TagQualityFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateTagQualityFile();
 
 		NameRemappingFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		NameRemappingFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		NameRemappingFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateNameRemappingFile();
 	}
 
@@ -137,6 +139,7 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateAuxiliaryFile()
 	{
+		SetValidationData(AuxiliaryFile);
 		if (AuxiliaryFile.Validate())
 		{
 			Settings.AuxiliaryFile = AuxiliaryFile.Value!;
@@ -147,6 +150,7 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateTagOrderFile()
 	{
+		SetValidationData(TagOrderFile);
 		if (TagOrderFile.Validate())
 		{
 			Settings.BibEntryInitializationFile = TagOrderFile.Value!;
@@ -157,6 +161,7 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateTagQualityFile()
 	{
+		SetValidationData(TagQualityFile);
 		if (TagQualityFile.Validate())
 		{
 			Settings.TagQualityProcessingFile = TagQualityFile.Value!;
@@ -167,11 +172,19 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateNameRemappingFile()
 	{
+		SetValidationData(NameRemappingFile);
 		if (NameRemappingFile.Validate())
 		{
 			Settings.BibEntryRemappingFile = NameRemappingFile.Value!;
 		}
 		ValidateSubmittable();
+	}
+
+	private void SetValidationData(ValidatableObject<string> validationObject)
+	{
+		RelativePathExistsRule rule = (RelativePathExistsRule)validationObject.Validations[1];
+		rule.UsingRelativePaths	= UseRelativePaths;
+		rule.MainPath           = BibliographyFile.Value!;
 	}
 
 	public bool ValidateSubmittable() => IsSubmittable =
@@ -190,7 +203,25 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	private void OnSettingsPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) => ValidateSubmittable();
 
-	partial void OnUseRelativePathsChanged(bool value) => Settings.UsePathsRelativeToBibFile = value;
+	partial void OnUseRelativePathsChanged(bool value)
+	{
+		Settings.UsePathsRelativeToBibFile = value;
+		List<ValidatableObject<string>> paths = [ AuxiliaryFile, TagOrderFile, TagQualityFile, NameRemappingFile ];
+		foreach (ValidatableObject<string> path in paths)
+		{
+			if (path.IsValid)
+			{
+				if (value)
+				{
+					path.Value = ConvertToRelativePath(path.Value!);
+				}
+				else
+				{
+					path.Value = ConvertToAbsolutePath(path.Value!);
+				}
+			}
+		}
+	}
 
 	partial void OnUseAuxiliaryFileChanged(bool value) => Settings.UseAuxiliaryFile = value;
 
@@ -207,4 +238,30 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	partial void OnSortBibliographyEntriesChanged(bool value) => Settings.SortBibliography = value;
 
 	#endregion
+
+	/// <summary>
+	/// Converts a path to a relative path if the relative path option is selected.
+	/// </summary>
+	/// <param name="path">Path to convert.</param>
+	public string ConvertToRelativePath(string path)
+	{
+		if (UseRelativePaths)
+		{
+			path = DigitalProduction.IO.Path.ConvertToRelativePath(path, System.IO.Path.GetDirectoryName(BibliographyFile.Value) ?? "");
+		}
+		return path;
+	}
+
+	/// <summary>
+	/// Convert a path to absolute path if the relative path option is in use.
+	/// </summary>
+	/// <param name="path">Path to convert.</param>
+	private string ConvertToAbsolutePath(string path)
+	{
+		if (!UseRelativePaths)
+		{
+			path = DigitalProduction.IO.Path.ConvertToAbsolutePath(path, System.IO.Path.GetDirectoryName(BibliographyFile.Value) ?? "");
+		}
+		return path;
+	}
 }
