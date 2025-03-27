@@ -100,7 +100,7 @@
 				<Grid StyleClass="FileBrowsingGridStyle">
 					<Label Grid.Row="0" Text="Bibliography Entry Tag Order File" StyleClass="ControlLabel" IsEnabled="{Binding UseTagOrder}"/>
 					<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
-						x:Name="TagOrderEntry" Placeholder="Bibliography Entry Tag Order"
+						x:Name="TagOrderEntry" Placeholder="Bibliography Entry Tag Order File"
 						Text="{Binding TagOrderFile.Value}" IsEnabled="{Binding UseTagOrder}">
 						<Entry.Behaviors>
 							<mct:EventToCommandBehavior
@@ -130,7 +130,7 @@
 				<Grid StyleClass="FileBrowsingGridStyle">
 					<Label Grid.Row="0" Text="Bibliography Entry Tag Quality File" StyleClass="ControlLabel" IsEnabled="{Binding UseTagQuality}"/>
 					<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
-						x:Name="TagQualityEntry" Placeholder="Bibliography Entry Tag Quality"
+						x:Name="TagQualityEntry" Placeholder="Bibliography Entry Tag Quality File"
 						Text="{Binding TagQualityFile.Value}" IsEnabled="{Binding UseTagQuality}">
 						<Entry.Behaviors>
 							<mct:EventToCommandBehavior
@@ -160,7 +160,7 @@
 				<Grid StyleClass="FileBrowsingGridStyle">
 					<Label Grid.Row="0" Text="Name Remapping File" StyleClass="ControlLabel" IsEnabled="{Binding UseNameRemapping}"/>
 					<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
-						x:Name="NameRemappingEntry" Placeholder="Name Remapping"
+						x:Name="NameRemappingEntry" Placeholder="Name Remapping File"
 						Text="{Binding NameRemappingFile.Value}" IsEnabled="{Binding UseNameRemapping}">
 						<Entry.Behaviors>
 							<mct:EventToCommandBehavior
