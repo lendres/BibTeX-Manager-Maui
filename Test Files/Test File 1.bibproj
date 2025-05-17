@@ -18,7 +18,7 @@
         autogenerateekeys="true"
         copycitekeyonadd="true"
         sortbibliography="true"
-        bibliographysortmethod="Key">
+        bibliographysortmethod="FirstAuthorLastName">
         <writesettings
             whitespace="Tab"
             spacespertab="4"
