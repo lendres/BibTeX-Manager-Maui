@@ -254,7 +254,7 @@
 			<Border StyleClass="SmallTitleBorderStyle">
 				<Label Text="Automation" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
-			<Grid ColumnDefinitions="50,265,50,300" RowDefinitions="30,30,30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+			<Grid ColumnDefinitions="50,265,50,300" RowDefinitions="30,30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
 				<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.AutoGenerateKeys}"/>
 				<Label Grid.Column="1" Grid.Row="0" Text="Automatically generate cite keys" StyleClass="SwitchLabel"/>
 				<Switch Grid.Column="2"  Grid.Row="0" IsToggled="{Binding Settings.UseStringConstants}"/>
@@ -265,7 +265,7 @@
 				<Label Grid.Column="3" Grid.Row="1" Text="Remove comma after last tag" StyleClass="SwitchLabel"/>
 			</Grid>
 
-			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle" Padding="0,5,0,0">
 				<Button 
 					Text="OK"
 					HorizontalOptions="End"
