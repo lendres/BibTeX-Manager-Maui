@@ -45,6 +45,7 @@
 	<PropertyGroup>
 		<LangVersion>preview</LangVersion>
 		<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<!-- Import Properties -->
@@ -72,7 +73,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="DigitalProduction.Maui" Version="0.8.3" />
-		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.11.4" />
+		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.11.6" />
 		<PackageReference Include="DigitalProduction.Maui.Images" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2" />
 	</ItemGroup>
@@ -97,7 +98,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
 	</ItemGroup>
 
 	<ItemGroup>
