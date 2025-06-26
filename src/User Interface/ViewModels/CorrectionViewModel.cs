@@ -9,7 +9,7 @@ using Microsoft.Maui.Controls;
 
 namespace BibTexManager.ViewModels;
 
-public partial class CorrectionViewModel(TagProcessingData tagProcessingData, string title) : ObservableObject
+public partial class CorrectionViewModel : ObservableObject
 {
 
 	#region Construction
@@ -19,10 +19,10 @@ public partial class CorrectionViewModel(TagProcessingData tagProcessingData, st
 	#region Properties
 
 	[ObservableProperty]
-	public partial string				Title { get; set; }					= title;
+	public partial string				Title { get; set; }
 
 	[ObservableProperty]
-	public partial TagProcessingData	TagProcessingData { get; set; }		= tagProcessingData;
+	public partial TagProcessingData	TagProcessingData { get; set; }
 
 	//[ObservableProperty]
 	//public partial string				TageName { get; set; }				= "";
@@ -40,6 +40,12 @@ public partial class CorrectionViewModel(TagProcessingData tagProcessingData, st
 	{
 		get => TagProcessingData.Correction.ReplaceText;
 		set => TagProcessingData.Correction.ReplaceText = value;
+	}
+
+	public CorrectionViewModel(TagProcessingData tagProcessingData, string title)
+	{
+		Title = title;
+		TagProcessingData = tagProcessingData;
 	}
 
 
