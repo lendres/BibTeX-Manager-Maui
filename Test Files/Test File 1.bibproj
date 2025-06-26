@@ -7,7 +7,7 @@
         userelativepaths="true"
         usebibentryinitialization="true"
         bibentryinitializationfile=".\Bib Entry Initialization.tagord"
-        bibfile="N:\Storage\Programming\BibTex Manager Maui\Test Files\le-short.bib"
+        bibfile="C:\Programming\BibTex Manager Maui\Test Files\le-short.bib"
         useauxiliaryfile="true"
         auxiliaryfile=".\strings.bib"
         usestringconstants="true"
@@ -18,13 +18,13 @@
         autogenerateekeys="true"
         copycitekeyonadd="true"
         sortbibliography="true"
-        bibliographysortmethod="FirstAuthorLastName">
+        bibliographysortmethod="Key">
         <writesettings
             whitespace="Tab"
             spacespertab="4"
             alignatequals="true"
             alignatcolumn="24"
-            alignattabstop="4"
+            alignattabstop="5"
             removelastcomma="true" />
     </settings>
 </bibtexproject>
