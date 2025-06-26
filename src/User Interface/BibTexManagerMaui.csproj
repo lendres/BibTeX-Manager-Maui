@@ -84,6 +84,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="Views\WebSearchSettingsView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\EditRawBibEntryForm.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -110,6 +113,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\WebSearchSettingsView.xaml.cs">
+		  <DependentUpon>WebSearchSettingsView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\CorrectionView.xaml.cs">
 		  <DependentUpon>CorrectionView.xaml</DependentUpon>
 		</Compile>

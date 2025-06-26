@@ -1,16 +1,18 @@
 ﻿using BibTexManager.ViewModels;
-using DigitalProduction.Maui.Views;
 using DigitalProduction.Maui.Controls;
-using System.Threading;
-using BibtexManager;
+using DigitalProduction.Maui.Views;
 
 namespace BibTexManager.Views;
 
 public partial class CorrectionView : PopupView
 {
+	#region Fields
+
 	private readonly CorrectionViewModel _viewModel;
-	
-#region Construction
+
+	#endregion
+
+	#region Construction
 
 	public CorrectionView(CorrectionViewModel viewModel)
 	{
