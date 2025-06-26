@@ -125,7 +125,7 @@
 			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
 				<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
 					<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding UseTagQuality}"/>
-					<Label Grid.Column="1" Grid.Row="0"	Text="Keep tags in a specified order" StyleClass="SwitchLabel"/>
+					<Label Grid.Column="1" Grid.Row="0"	Text="Perform quality checking on the tag values of bibliography enties" StyleClass="SwitchLabel"/>
 				</Grid>
 				<Grid StyleClass="FileBrowsingGridStyle">
 					<Label Grid.Row="0" Text="Bibliography Entry Tag Quality File" StyleClass="ControlLabel" IsEnabled="{Binding UseTagQuality}"/>
@@ -155,7 +155,7 @@
 			<VerticalStackLayout StyleClass="VerticalLayoutStyle">
 				<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
 					<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding UseNameRemapping}"/>
-					<Label Grid.Column="1" Grid.Row="0"	Text="Use name remapping" StyleClass="SwitchLabel"/>
+					<Label Grid.Column="1" Grid.Row="0"	Text="Remap the type and tag names of bibliography entries" StyleClass="SwitchLabel"/>
 				</Grid>
 				<Grid StyleClass="FileBrowsingGridStyle">
 					<Label Grid.Row="0" Text="Name Remapping File" StyleClass="ControlLabel" IsEnabled="{Binding UseNameRemapping}"/>
