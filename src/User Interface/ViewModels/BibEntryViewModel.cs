@@ -18,6 +18,7 @@ public partial class BibEntryViewModel : ObservableObject
 	private string                      _originalKey            = string.Empty;
 	private WriteSettings				_writeSettings			= new();
 	private bool                        _modified               = false;
+	private bool                        _tryProcessing          = true;
 
 	// Clipboard timer.  It is require to periodically check if there is valid data, there is no automated way of knowing what is in the clipboard.
 	private readonly Timer              _timer;
@@ -179,30 +180,41 @@ public partial class BibEntryViewModel : ObservableObject
 	/// </summary>
 	public IEnumerable<TagProcessingData> CheckQuality()
 	{
+		if (_bibEntry == null)
+		{
+			yield break;
+		}
+
+		// Displaying the Popup causes the test in the Entry box to change for some reason (and only in some cases).  That,
+		// in turn, triggers the attempt at parsing.
+		// This hack is to prevent parsing and getting a new BibEntry in the middle of trying to clean the current one.
+		_tryProcessing = false;
+
 		// Mapping.
-		BibtexProject.Instance!.RemapEntryNames(BibEntry);
+		BibtexProject.Instance!.RemapEntryNames(_bibEntry);
 
 		// Cleaning.
 
-		foreach (TagProcessingData tagProcessingData in BibtexProject.Instance.CleanEntry(BibEntry))
+		foreach (TagProcessingData tagProcessingData in BibtexProject.Instance.CleanEntry(_bibEntry))
 		{
 			yield return tagProcessingData;
 		}
 
 		// String constants replacement.
-		BibtexProject.Instance.ApplyStringConstants(BibEntry);
+		BibtexProject.Instance.ApplyStringConstants(_bibEntry);
 
 		// Key.
 		if (_addMode)
 		{
-			BibtexProject.Instance.GenerateNewKey(BibEntry);
+			BibtexProject.Instance.GenerateNewKey(_bibEntry);
 		}
 		else
 		{
-			BibtexProject.Instance.ValidateKey(BibEntry);
+			BibtexProject.Instance.ValidateKey(_bibEntry);
 		}
 
-		RawBibEntry = BibEntry.ToString(BibtexProject.Instance.Settings.WriteSettings);
+		_tryProcessing = true;
+		RawBibEntry = _bibEntry.ToString(BibtexProject.Instance.Settings.WriteSettings);
 	}
 
 	#endregion
@@ -221,7 +233,10 @@ public partial class BibEntryViewModel : ObservableObject
 	{
 		try
 		{
-			_bibEntry = BibtexProject.Instance!.ParseSingleEntryText(RawBibEntry);
+			if (_tryProcessing)
+			{
+				_bibEntry = BibtexProject.Instance!.ParseSingleEntryText(RawBibEntry);
+			}
 		}
 		catch
 		{

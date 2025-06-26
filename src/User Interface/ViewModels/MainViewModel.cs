@@ -93,6 +93,11 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		ValidateHasTemplates();
 	}
 
+	private void OnProjectPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+	{
+		ValidateHasTemplates();
+	}
+
 	partial void OnProjectOpenChanged(bool value)
 	{
 		ValidateCanSave();
@@ -135,6 +140,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	void ProjectInitialization()
 	{
 		BibtexProject.Instance!.ModifiedChanged += OnProjectModifiedChanged;
+		BibtexProject.Instance!.PropertyChanged += OnProjectPropertyChanged;
 		ProjectOpen = true;
 	}
 

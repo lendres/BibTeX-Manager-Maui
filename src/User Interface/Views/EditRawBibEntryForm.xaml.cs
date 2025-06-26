@@ -119,4 +119,15 @@ public partial class EditRawBibEntryForm : ContentPage
 			}
 		}
 	}
+
+	private async Task CheckQuality3()
+	{
+		CorrectionViewModel	viewModel = new(new TagProcessingData());
+
+		CorrectionView		view		= new(viewModel);
+		object?				result		= await Shell.Current.ShowPopupAsync(view);
+
+		int nothing = 1;
+
+	}
 }

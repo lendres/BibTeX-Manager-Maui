@@ -1,11 +1,6 @@
-﻿using BibTeXLibrary;
-using BibtexManager;
+﻿using BibtexManager;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Controls;
-using DigitalProduction.Maui.Validation;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Maui.Controls;
 
 namespace BibTexManager.ViewModels;
 
@@ -29,15 +24,6 @@ public partial class CorrectionViewModel : ObservableObject
 	[ObservableProperty]
 	public partial TagProcessingData	TagProcessingData { get; set; }
 
-	//[ObservableProperty]
-	//public partial string				TageName { get; set; }				= "";
-
-	//[ObservableProperty]
-	//public partial string				Context  { get; set; }				= "";
-
-	//[ObservableProperty]
-	//public partial string				ExistingText  { get; set; }			= "";
-
 	[ObservableProperty]
 	public partial string				ReplacementText  { get; set; }		= "";
 
@@ -46,10 +32,6 @@ public partial class CorrectionViewModel : ObservableObject
 		get => TagProcessingData.Correction.ReplaceText;
 		set => TagProcessingData.Correction.ReplaceText = value;
 	}
-
-	#endregion
-
-	#region Initialize and Validation
 
 	#endregion
 
@@ -65,9 +47,6 @@ public partial class CorrectionViewModel : ObservableObject
 		ReplacementText = value.Correction.ReplacementText;
 	}
 
-	#endregion
-
-	#region Commands
 	#endregion
 
 	#region Methods
