@@ -6,3 +6,4 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:BibTexManager")]
+[assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "Primary constructor prevents CommunityToolkit generator code from functioning properly.", Scope = "member", Target = "~M:BibTexManager.ViewModels.CorrectionViewModel.#ctor(BibtexManager.TagProcessingData)")]

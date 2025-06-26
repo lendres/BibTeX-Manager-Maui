@@ -214,10 +214,6 @@ public partial class BibEntryViewModel : ObservableObject
 		CanPaste = Clipboard.Default.HasText;
     }
 
-	#endregion
-
-	#region
-
 	/// <summary>
 	/// Parse the text in the text box.  Returns true if successful and false otherwise.
 	/// </summary>

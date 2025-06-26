@@ -101,7 +101,7 @@ public partial class EditRawBibEntryForm : ContentPage
 				break;
 			}
 
-			CorrectionViewModel	viewModel = new(tagProcessingData, "Replace Text?");
+			CorrectionViewModel	viewModel = new(tagProcessingData);
 
 			if (lastDialogResult == MessageBoxYesNoToAllResult.YesToAll)
 			{

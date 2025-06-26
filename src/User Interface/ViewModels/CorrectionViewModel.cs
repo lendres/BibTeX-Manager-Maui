@@ -14,12 +14,17 @@ public partial class CorrectionViewModel : ObservableObject
 
 	#region Construction
 
+	public CorrectionViewModel(TagProcessingData tagProcessingData)
+	{
+		TagProcessingData = tagProcessingData;
+	}
+
 	#endregion
 
 	#region Properties
 
 	[ObservableProperty]
-	public partial string				Title { get; set; }
+	public partial string				Title { get; set; }					= "Replace Text?";
 
 	[ObservableProperty]
 	public partial TagProcessingData	TagProcessingData { get; set; }
@@ -41,13 +46,6 @@ public partial class CorrectionViewModel : ObservableObject
 		get => TagProcessingData.Correction.ReplaceText;
 		set => TagProcessingData.Correction.ReplaceText = value;
 	}
-
-	public CorrectionViewModel(TagProcessingData tagProcessingData, string title)
-	{
-		Title = title;
-		TagProcessingData = tagProcessingData;
-	}
-
 
 	#endregion
 
