@@ -23,7 +23,7 @@
 				<Switch Grid.Column="0"  Grid.Row="0" VerticalOptions="Center" HorizontalOptions="End"
 					IsToggled="{Binding OpenLastProjectAtStartUp}"/>
 				<Label Grid.Column="1" Grid.Row="0" VerticalOptions="Center" VerticalTextAlignment="Center"
-					Text="Open the last project at start up."/>
+					Text="Open the last project at start up"/>
 			</Grid>
 
 			<Border StyleClass="SmallTitleBorderStyle" Margin="0,20,0,0">
@@ -36,21 +36,21 @@
 				<Switch Grid.Column="0"  Grid.Row="0" VerticalOptions="Center" HorizontalOptions="End"
 					IsToggled="{Binding RemoveNotFoundPaths}"/>
 				<Label Grid.Column="1" Grid.Row="0" VerticalOptions="Center" VerticalTextAlignment="Center"
-					Text="Remove paths that do not exist."/>
+					Text="Remove paths that do not exist"/>
 
 				<dpcontrols:Stepper Grid.Column="0" Grid.Row="1" HorizontalOptions="End" VerticalOptions="Center"
 					Minimum="5"	
 					Maximum="{Binding NumberOfItemsToStore}"
 					Value="{Binding NumberOfItemsShown}"/>
 				<Label Grid.Column="1" Grid.Row="1"
-					Text="Number of items to show." VerticalOptions="Center" Margin="0" VerticalTextAlignment="Center" Padding="0"/>
+					Text="Number of items to show" VerticalOptions="Center" Margin="0" VerticalTextAlignment="Center" Padding="0"/>
 
 				<dpcontrols:Stepper Grid.Column="0" Grid.Row="2" HorizontalOptions="End" VerticalOptions="Center"
 					Minimum="10"
 					Maximum="20"
 					Value="{Binding NumberOfItemsToStore}"/>
 				<Label Grid.Column="1" Grid.Row="2"
-					Text="Number of items to show." VerticalOptions="Center" Margin="0" VerticalTextAlignment="Center" Padding="0"/>
+					Text="Number of items to remember" VerticalOptions="Center" Margin="0" VerticalTextAlignment="Center" Padding="0"/>
 			</Grid>
 
 			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">

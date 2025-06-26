@@ -18,6 +18,7 @@ public partial class BibEntryViewModel : ObservableObject
 	private string                      _originalKey            = string.Empty;
 	private WriteSettings				_writeSettings			= new();
 	private bool                        _modified               = false;
+	private bool                        _tryProcessing          = true;
 
 	// Clipboard timer.  It is require to periodically check if there is valid data, there is no automated way of knowing what is in the clipboard.
 	private readonly Timer              _timer;
@@ -124,13 +125,7 @@ public partial class BibEntryViewModel : ObservableObject
 
 		// To be a valid key, we first need to be able to copy it (same requirements).  We also need to check if it is in use.  It
 		// is allowed to be 
-		if (!CanCopyKey)
-		{
-			IsKeyValid = false;
-			return;
-		}
-
-		if (_bibEntry == null)
+		if (!CanCopyKey || _bibEntry == null)
 		{
 			IsKeyValid = false;
 			return;
@@ -180,6 +175,48 @@ public partial class BibEntryViewModel : ObservableObject
 		Clipboard.Default.SetTextAsync(_bibEntry.Key);
 	}
 
+	/// <summary>
+	/// Check the quality of the text in the text box.
+	/// </summary>
+	public IEnumerable<TagProcessingData> CheckQuality()
+	{
+		if (_bibEntry == null)
+		{
+			yield break;
+		}
+
+		// Displaying the Popup causes the test in the Entry box to change for some reason (and only in some cases).  That,
+		// in turn, triggers the attempt at parsing.
+		// This hack is to prevent parsing and getting a new BibEntry in the middle of trying to clean the current one.
+		_tryProcessing = false;
+
+		// Mapping.
+		BibtexProject.Instance!.RemapEntryNames(_bibEntry);
+
+		// Cleaning.
+
+		foreach (TagProcessingData tagProcessingData in BibtexProject.Instance.CleanEntry(_bibEntry))
+		{
+			yield return tagProcessingData;
+		}
+
+		// String constants replacement.
+		BibtexProject.Instance.ApplyStringConstants(_bibEntry);
+
+		// Key.
+		if (_addMode)
+		{
+			BibtexProject.Instance.GenerateNewKey(_bibEntry);
+		}
+		else
+		{
+			BibtexProject.Instance.ValidateKey(_bibEntry);
+		}
+
+		_tryProcessing = true;
+		RawBibEntry = _bibEntry.ToString(BibtexProject.Instance.Settings.WriteSettings);
+	}
+
 	#endregion
 
 	#region Methods
@@ -189,51 +226,6 @@ public partial class BibEntryViewModel : ObservableObject
 		CanPaste = Clipboard.Default.HasText;
     }
 
-	#endregion
-
-	#region
-
-	/// <summary>
-	/// Check the quality of the text in the text box.
-	/// </summary>
-	private void CheckQuality()
-	{
-		// Mapping.
-		BibtexProject.Instance!.RemapEntryNames(BibEntry);
-
-		// Cleaning.
-		bool breakNext = false;
-		foreach (TagProcessingData tagProcessingData in BibtexProject.Instance.CleanEntry(BibEntry))
-		{
-			// If the processing was cancelled, we break.  We have to loop back around here to give the
-			// processing a chance to finish (it was yielded).  Now exit before processing another entry.
-			if (breakNext)
-			{
-				break;
-			}
-
-			//CorrectionForm correctionForm	= new CorrectionForm(tagProcessingData);
-			//DialogResult dialogResult		= correctionForm.Show(this);
-
-			//breakNext = dialogResult == DialogResult.Cancel;
-		}
-
-		// String constants replacement.
-		BibtexProject.Instance.ApplyStringConstants(BibEntry);
-
-		// Key.
-		if (_addMode)
-		{
-			BibtexProject.Instance.GenerateNewKey(BibEntry);
-		}
-		else
-		{
-			BibtexProject.Instance.ValidateKey(BibEntry);
-		}
-
-		RawBibEntry = BibEntry.ToString(BibtexProject.Instance.Settings.WriteSettings);
-	}
-
 	/// <summary>
 	/// Parse the text in the text box.  Returns true if successful and false otherwise.
 	/// </summary>
@@ -241,7 +233,10 @@ public partial class BibEntryViewModel : ObservableObject
 	{
 		try
 		{
-			_bibEntry = BibtexProject.Instance!.ParseSingleEntryText(RawBibEntry);
+			if (_tryProcessing)
+			{
+				_bibEntry = BibtexProject.Instance!.ParseSingleEntryText(RawBibEntry);
+			}
 		}
 		catch
 		{

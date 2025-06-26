@@ -1,6 +1,7 @@
 ﻿using BibTeXLibrary;
 using DigitalProduction.Projects;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace BibtexManager;
@@ -95,6 +96,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 			if (_settings != value)
 			{
 				_settings = value;
+				ReadAccessoaryFiles();
 				Modified = true;
 				OnPropertyChanged();
 			}
