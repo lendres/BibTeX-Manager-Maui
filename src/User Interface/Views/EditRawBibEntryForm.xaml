@@ -30,6 +30,18 @@
 					StyleClass="SquareButton"
 					IsEnabled="{Binding CanPaste}"/>
 
+				<Button
+					Text="Paste &amp; Check"
+					Clicked="OnPasteAndCheck"
+					StyleClass="SquareButton"
+					IsEnabled="{Binding CanPaste}"/>
+
+				<Button
+					Text="Check"
+					Clicked="OnCheckQuality"
+					StyleClass="SquareButton"
+					IsEnabled="True"/>
+
 				<Button 
 					Text="Copy Key"
 					Command="{Binding CopyCiteKeyToClipboardCommand}"

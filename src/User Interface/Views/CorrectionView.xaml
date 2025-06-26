@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView 
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
+	x:Class="BibTexManager.Views.CorrectionView"
+	x:DataType="viewmodel:CorrectionViewModel"
+	x:Name="self"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="380">
+
+		<Border.Resources>
+			<ResourceDictionary>
+				<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+			</ResourceDictionary>
+		</Border.Resources>
+
+		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+			<Label Text="{Binding Title}" StyleClass="Title" HorizontalOptions="Start"/>
+
+			<Grid RowDefinitions="Auto" ColumnDefinitions="150,*">
+				<Label Grid.Column="0" Text="Tage Name"/>
+				<Label Grid.Column="1" Text="{Binding TagProcessingData.Correction.TagName}" HorizontalTextAlignment="Start"/>
+			</Grid>
+
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="Context" StyleClass="ControlLabel"/>
+				<Entry
+					Placeholder="Context"
+					Text="{Binding TagProcessingData.Correction.Context}"
+					HorizontalOptions="Fill">
+				</Entry>
+			</VerticalStackLayout>
+
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="ExistingText" StyleClass="ControlLabel"/>
+				<Entry
+					Placeholder="ExistingText"
+					Text="{Binding TagProcessingData.Correction.MatchedText}"
+					HorizontalOptions="Fill">
+				</Entry>
+			</VerticalStackLayout>
+
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="ReplacementText" StyleClass="ControlLabel"/>
+				<Entry
+					x:Name="ReplacementTextEntry"
+					Placeholder="Replacement Text"
+					Text="{Binding ReplacementText}"
+					HorizontalOptions="Fill">
+					<!--<Entry.Behaviors>
+						<toolkit:EventToCommandBehavior
+                            x:TypeArguments="system:EventArgs"
+                            Command="{Binding ValidateReplacementTextCommand}"
+                            BindingContext="{Binding Path=BindingContext, Source={x:Reference ReplacementTextEntry}, x:DataType=Entry}"
+                            EventName="TextChanged"/>
+					</Entry.Behaviors>-->
+				</Entry>
+				<!--<Label Text="{Binding ReplacementText.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>-->
+			</VerticalStackLayout>
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+					Text="Yes"
+					HorizontalOptions="End"
+					StyleClass="StandardSizeButtonStyle"
+					Clicked="OnYesButtonClicked"/>
+				<Button 
+					Text="Yes to All"
+					HorizontalOptions="End"
+					StyleClass="StandardSizeButtonStyle"
+					Clicked="OnYesToAllButtonClicked"/>
+				<Button 
+					Text="No"
+					HorizontalOptions="End"
+					StyleClass="StandardSizeButtonStyle"
+					Clicked="OnNoButtonClicked"/>
+				<Button 
+					Text="Cancel"
+					StyleClass="StandardSizeButtonStyle"
+					HorizontalOptions="End"
+					Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+
+		</VerticalStackLayout>
+	</Border>
+
+</dpviews:PopupView>

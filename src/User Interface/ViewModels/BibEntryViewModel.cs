@@ -124,13 +124,7 @@ public partial class BibEntryViewModel : ObservableObject
 
 		// To be a valid key, we first need to be able to copy it (same requirements).  We also need to check if it is in use.  It
 		// is allowed to be 
-		if (!CanCopyKey)
-		{
-			IsKeyValid = false;
-			return;
-		}
-
-		if (_bibEntry == null)
+		if (!CanCopyKey || _bibEntry == null)
 		{
 			IsKeyValid = false;
 			return;
@@ -180,42 +174,19 @@ public partial class BibEntryViewModel : ObservableObject
 		Clipboard.Default.SetTextAsync(_bibEntry.Key);
 	}
 
-	#endregion
-
-	#region Methods
-
-    private void CheckClipboard()
-    {
-		CanPaste = Clipboard.Default.HasText;
-    }
-
-	#endregion
-
-	#region
-
 	/// <summary>
 	/// Check the quality of the text in the text box.
 	/// </summary>
-	private void CheckQuality()
+	public IEnumerable<TagProcessingData> CheckQuality()
 	{
 		// Mapping.
 		BibtexProject.Instance!.RemapEntryNames(BibEntry);
 
 		// Cleaning.
-		bool breakNext = false;
+
 		foreach (TagProcessingData tagProcessingData in BibtexProject.Instance.CleanEntry(BibEntry))
 		{
-			// If the processing was cancelled, we break.  We have to loop back around here to give the
-			// processing a chance to finish (it was yielded).  Now exit before processing another entry.
-			if (breakNext)
-			{
-				break;
-			}
-
-			//CorrectionForm correctionForm	= new CorrectionForm(tagProcessingData);
-			//DialogResult dialogResult		= correctionForm.Show(this);
-
-			//breakNext = dialogResult == DialogResult.Cancel;
+			yield return tagProcessingData;
 		}
 
 		// String constants replacement.
@@ -233,6 +204,19 @@ public partial class BibEntryViewModel : ObservableObject
 
 		RawBibEntry = BibEntry.ToString(BibtexProject.Instance.Settings.WriteSettings);
 	}
+
+	#endregion
+
+	#region Methods
+
+    private void CheckClipboard()
+    {
+		CanPaste = Clipboard.Default.HasText;
+    }
+
+	#endregion
+
+	#region
 
 	/// <summary>
 	/// Parse the text in the text box.  Returns true if successful and false otherwise.

@@ -1,11 +1,14 @@
 using BibTeXLibrary;
+using BibtexManager;
 using BibTexManager.ViewModels;
+using CommunityToolkit.Maui.Views;
+using DigitalProduction.Maui.Controls;
 
 namespace BibTexManager.Views;
 
 public partial class EditRawBibEntryForm : ContentPage
 {
-	private BibEntryViewModel _viewModel;
+	private readonly BibEntryViewModel _viewModel;
 
 	public EditRawBibEntryForm(BibEntryViewModel viewModel)
 	{
@@ -38,7 +41,23 @@ public partial class EditRawBibEntryForm : ContentPage
 
 	async void OnPaste(object sender, EventArgs eventArgs)
 	{
-		string? pastedText	= await Clipboard.Default.GetTextAsync();
+		await Paste();
+	}
+
+	async void OnPasteAndCheck(object sender, EventArgs eventArgs)
+	{
+		await Paste();
+		await CheckQuality();
+	}
+
+	async void OnCheckQuality(object sender, EventArgs eventArgs)
+	{
+		await CheckQuality();
+	}
+
+	private async Task Paste()
+	{
+		string? pastedText  = await Clipboard.Default.GetTextAsync();
 		if (pastedText == null)
 		{
 			return;
@@ -65,5 +84,39 @@ public partial class EditRawBibEntryForm : ContentPage
 		// Move cursor to the end of inserted text.
 		BibEntryEditor.CursorPosition = start + pastedText.Length;
 		BibEntryEditor.SelectionLength = 0;
+	}
+
+	private async Task CheckQuality()
+	{
+		bool breakNext = false;
+
+		MessageBoxYesNoToAllResult lastDialogResult = MessageBoxYesNoToAllResult.Cancel;
+
+		foreach (TagProcessingData tagProcessingData in _viewModel.CheckQuality())
+		{
+			// If the processing was cancelled, we break.  We have to loop back around here to give the
+			// processing a chance to finish (it was yielded).  Now exit before processing another entry.
+			if (breakNext)
+			{
+				break;
+			}
+
+			CorrectionViewModel	viewModel = new(tagProcessingData, "Replace Text?");
+
+			if (lastDialogResult == MessageBoxYesNoToAllResult.YesToAll)
+			{
+				viewModel.SetResult(MessageBoxYesNoToAllResult.YesToAll);
+				continue;
+			}
+
+			CorrectionView		view		= new(viewModel);
+			object?				result		= await Shell.Current.ShowPopupAsync(view);
+
+			if (result is MessageBoxYesNoToAllResult messageBoxResult)
+			{
+				lastDialogResult	= messageBoxResult;
+				breakNext			= messageBoxResult == MessageBoxYesNoToAllResult.Cancel;
+			}
+		}
 	}
 }
