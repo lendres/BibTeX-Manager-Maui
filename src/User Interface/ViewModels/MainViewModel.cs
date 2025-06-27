@@ -1,5 +1,6 @@
 ﻿using BibTeXLibrary;
 using BibtexManager;
+using BibtexManager.Project;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
@@ -171,7 +172,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	/// <summary>
 	/// Check the quality of the text in the text box.
 	/// </summary>
-	public IEnumerable<TagProcessingData> CheckQuality()
+	public static IEnumerable<TagProcessingData> CheckQuality()
 	{
 		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
 
@@ -179,6 +180,36 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		foreach (TagProcessingData tagProcessingData in BibtexProject.Instance.CleanAllEntries())
 		{
 			yield return tagProcessingData;
+		}
+	}
+
+	/// <summary>
+	/// Do bulk importing of BibTeX entries using the specified importer.
+	/// </summary>
+	public IEnumerable<ImportResult> BulkImport(IBulkImporter importer)
+	{
+		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
+
+		importer.SetBibliographyInitialization(BibtexProject.Instance.Settings.UseBibEntryInitialization, BibtexProject.Instance.BibEntryInitialization);
+
+		foreach (ImportResult importResult in importer.BulkImport())
+		{
+			switch (importResult.Result)
+			{
+				case ResultType.Successful:
+					BibtexProject.Instance.ApplyAllCleaning(importResult.BibEntry);
+					int index = BibtexProject.Instance.GetEntryInsertIndex(importResult.BibEntry, 0);
+					Insert(importResult.BibEntry, index);
+					break;
+
+				case ResultType.NotFound:
+					yield return importResult;
+					break;
+
+				case ResultType.Error:
+					yield return importResult;
+					break;
+			}
 		}
 	}
 

@@ -31,8 +31,6 @@
 				Text="{Binding Message}"
 			/>
 
-
-
 			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
 				<Button 
 					Text="Try Again"
