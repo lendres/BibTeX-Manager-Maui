@@ -180,7 +180,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		BibtexProject.Instance.SortBibliographyEntries();
 	}
 
-
 	/// <summary>
 	/// Check the quality of the text in the text box.
 	/// </summary>

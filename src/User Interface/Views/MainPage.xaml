@@ -42,6 +42,8 @@
 				<MenuFlyoutItem Text="Check Tag Quality" Clicked="OnCheckTagQuality" IsEnabled="{Binding ProjectOpen}"/>
 			</MenuFlyoutSubItem>
 			<MenuFlyoutSubItem Text="Import">
+				<MenuFlyoutItem Text="Bulk SPE" Clicked="OnBulkSpeImport" IsEnabled="{Binding ProjectOpen}"/>
+				<MenuFlyoutItem Text="SPE Conference" Clicked="OnSpeConferenceImport" IsEnabled="{Binding ProjectOpen}"/>
 			</MenuFlyoutSubItem>
 		</MenuBarItem>
 		<MenuBarItem Text="Help">

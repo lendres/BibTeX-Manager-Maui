@@ -158,6 +158,16 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 	}
 
+	async void OnBulkSpeImport(object sender, EventArgs eventArgs)
+	{
+		string? file = await BrowseForInputFile();
+	}
+
+	async void OnSpeConferenceImport(object sender, EventArgs eventArgs)
+	{
+		string? file = await BrowseForInputFile();
+	}
+
 	async void OnHelp(object sender, EventArgs eventArgs)
 	{
 		System.Reflection.Assembly? entryAssembly = System.Reflection.Assembly.GetEntryAssembly();
@@ -253,6 +263,43 @@ public partial class MainPage : DigitalProductionMainPage
 		{
 			_viewModel.OpenProject(paths[0]);
 		}
+	}
+
+	private async Task<string?> BrowseForInputFile()
+	{
+		MainViewModel? viewModel = BindingContext as MainViewModel;
+		System.Diagnostics.Debug.Assert(viewModel != null);
+
+		try
+		{
+			PickOptions pickOptions = new() { PickerTitle="Select an Input File" }; //, FileTypes=viewModel.GetInputFileTypes() };
+			FileResult? result      = await BrowseForFile(pickOptions);
+
+			if (result != null)
+			{
+				return result.FullPath;
+			}
+		}
+		catch (Exception exception)
+		{
+			await DisplayAlert("Error", "An exception occured:"+Environment.NewLine+exception.Message, "OK");
+		}
+
+		return null;
+	}
+
+	public static async Task<FileResult?> BrowseForFile(PickOptions options)
+	{
+		try
+		{
+			return await FilePicker.PickAsync(options);
+		}
+		catch
+		{
+			// The user canceled or something went wrong.
+		}
+
+		return null;
 	}
 
 	#endregion
