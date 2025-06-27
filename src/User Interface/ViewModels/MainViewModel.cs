@@ -173,6 +173,28 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		ProjectOpen = false;
 	}
 
+	[RelayCommand]
+	public void SortBibliographyEntries()
+	{
+		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
+		BibtexProject.Instance.SortBibliographyEntries();
+	}
+
+
+	/// <summary>
+	/// Check the quality of the text in the text box.
+	/// </summary>
+	public IEnumerable<TagProcessingData> CheckQuality()
+	{
+		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
+
+		// Cleaning.
+		foreach (TagProcessingData tagProcessingData in BibtexProject.Instance.CleanAllEntries())
+		{
+			yield return tagProcessingData;
+		}
+	}
+
 	#endregion
 
 } // End class.

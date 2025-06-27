@@ -37,6 +37,12 @@
 		<MenuBarItem Text="Tools">
 			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>
 			<MenuFlyoutItem Text="Web Search Settings..." Clicked="OnWebSearchSettings"/>
+			<MenuFlyoutSubItem Text="Quality">
+				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding ProjectOpen}"/>
+				<MenuFlyoutItem Text="Check Tag Quality" Clicked="OnCheckTagQuality" IsEnabled="{Binding ProjectOpen}"/>
+			</MenuFlyoutSubItem>
+			<MenuFlyoutSubItem Text="Import">
+			</MenuFlyoutSubItem>
 		</MenuBarItem>
 		<MenuBarItem Text="Help">
 			<MenuFlyoutItem Text="Help" Clicked="OnHelp"/>

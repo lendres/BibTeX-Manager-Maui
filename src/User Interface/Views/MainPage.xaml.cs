@@ -124,6 +124,40 @@ public partial class MainPage : DigitalProductionMainPage
 		object?					result		= await Shell.Current.ShowPopupAsync(view);
 	}
 
+	async void OnCheckTagQuality(object sender, EventArgs eventArgs)
+	{
+		bool breakNext = false;
+
+		MessageBoxYesNoToAllResult lastDialogResult = MessageBoxYesNoToAllResult.Cancel;
+
+		foreach (TagProcessingData tagProcessingData in _viewModel.CheckQuality())
+		{
+			// If the processing was cancelled, we break.  We have to loop back around here to give the
+			// processing a chance to finish (it was yielded).  Now exit before processing another entry.
+			if (breakNext)
+			{
+				break;
+			}
+
+			CorrectionViewModel	viewModel = new(tagProcessingData);
+
+			if (lastDialogResult == MessageBoxYesNoToAllResult.YesToAll)
+			{
+				viewModel.SetResult(MessageBoxYesNoToAllResult.YesToAll);
+				continue;
+			}
+
+			CorrectionView		view		= new(viewModel);
+			object?				result		= await Shell.Current.ShowPopupAsync(view);
+
+			if (result is MessageBoxYesNoToAllResult messageBoxResult)
+			{
+				lastDialogResult	= messageBoxResult;
+				breakNext			= messageBoxResult == MessageBoxYesNoToAllResult.Cancel;
+			}
+		}
+	}
+
 	async void OnHelp(object sender, EventArgs eventArgs)
 	{
 		System.Reflection.Assembly? entryAssembly = System.Reflection.Assembly.GetEntryAssembly();
