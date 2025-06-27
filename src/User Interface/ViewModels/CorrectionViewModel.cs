@@ -6,7 +6,6 @@ namespace BibTexManager.ViewModels;
 
 public partial class CorrectionViewModel : ObservableObject
 {
-
 	#region Construction
 
 	public CorrectionViewModel(TagProcessingData tagProcessingData)

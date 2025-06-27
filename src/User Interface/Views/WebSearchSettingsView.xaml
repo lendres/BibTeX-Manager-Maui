@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView 
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
+	x:Class="BibTexManager.Views.WebSearchSettingsView"
+	x:DataType="viewmodel:WebSettingsViewModel"
+	x:Name="self"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="300">
+
+		<Border.Resources>
+			<ResourceDictionary>
+				<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+			</ResourceDictionary>
+		</Border.Resources>
+
+		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+			<Label Text="Custom Web Search Settings" StyleClass="Title" HorizontalOptions="Start"/>
+
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="Search Engine Identifier (cx)" StyleClass="ControlLabel"/>
+				<Entry
+                    x:Name="IdentifierEntry"
+					Placeholder="cx"
+					Loaded="OnLoadedSetFocus"
+					Text="{Binding Identifier.Value}"
+					HorizontalOptions="Fill">
+					<Entry.Behaviors>
+						<toolkit:EventToCommandBehavior
+                            x:TypeArguments="system:EventArgs"
+                            Command="{Binding ValidateIdentifierCommand}"
+                            BindingContext="{Binding Path=BindingContext, Source={x:Reference IdentifierEntry}, x:DataType=Entry}"
+                            EventName="TextChanged"/>
+					</Entry.Behaviors>
+				</Entry>
+				<Label Text="{Binding Identifier.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+			</VerticalStackLayout>
+
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="Search Engine API Key" StyleClass="ControlLabel"/>
+				<Entry
+                    x:Name="ApiKeyEntry"
+					Placeholder="API Key"
+					Text="{Binding ApiKey.Value}"
+					HorizontalOptions="Fill">
+					<Entry.Behaviors>
+						<toolkit:EventToCommandBehavior
+                            x:TypeArguments="system:EventArgs"
+                            Command="{Binding ValidateApiKeyCommand}"
+                            BindingContext="{Binding Path=BindingContext, Source={x:Reference ApiKeyEntry}, x:DataType=Entry}"
+                            EventName="TextChanged"/>
+					</Entry.Behaviors>
+				</Entry>
+				<Label Text="{Binding ApiKey.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+			</VerticalStackLayout>
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+					Text="OK"
+					HorizontalOptions="End"
+					StyleClass="StandardSizeButtonStyle"
+					IsEnabled="{Binding IsSubmittable}"
+					Clicked="OnSaveButtonClicked"/>
+				<Button 
+					Text="Cancel"
+					StyleClass="StandardSizeButtonStyle"
+					HorizontalOptions="End"
+					Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+
+		</VerticalStackLayout>
+	</Border>
+
+</dpviews:PopupView>

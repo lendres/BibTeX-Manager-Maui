@@ -36,6 +36,7 @@
 		</MenuBarItem>
 		<MenuBarItem Text="Tools">
 			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>
+			<MenuFlyoutItem Text="Web Search Settings..." Clicked="OnWebSearchSettings"/>
 		</MenuBarItem>
 		<MenuBarItem Text="Help">
 			<MenuFlyoutItem Text="Help" Clicked="OnHelp"/>

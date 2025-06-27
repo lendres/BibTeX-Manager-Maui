@@ -22,8 +22,8 @@ public partial class EditRawBibEntryForm : ContentPage
 		// Navigate back with a result.
 		Dictionary<string, object> navigationParameter = new()
 		{
-			{ "NavigationCommand", _viewModel.SaveCommand },
-			{ "NavigationObject", _viewModel.BibEntry! }
+			{ "NavigationCommand",	_viewModel.SaveCommand },
+			{ "NavigationObject",	_viewModel.BibEntry! }
 		};
 		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
@@ -33,8 +33,8 @@ public partial class EditRawBibEntryForm : ContentPage
 		// Navigate back with a result.
 		Dictionary<string, object> navigationParameter = new()
 		{
-			{ "NavigationCommand", "Cancel" },
-			{ "Result", _viewModel.BibEntry! }
+			{ "NavigationCommand",	"Cancel" },
+			{ "Result",				_viewModel.BibEntry! }
 		};
 		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
@@ -118,16 +118,5 @@ public partial class EditRawBibEntryForm : ContentPage
 				breakNext			= messageBoxResult == MessageBoxYesNoToAllResult.Cancel;
 			}
 		}
-	}
-
-	private async Task CheckQuality3()
-	{
-		CorrectionViewModel	viewModel = new(new TagProcessingData());
-
-		CorrectionView		view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
-
-		int nothing = 1;
-
 	}
 }
