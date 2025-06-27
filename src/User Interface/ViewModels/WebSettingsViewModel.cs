@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DigitalProduction.Http;
 using DigitalProduction.Maui.Validation;
 
 namespace BibTexManager.ViewModels;
@@ -72,6 +73,8 @@ public partial class WebSettingsViewModel : ObservableObject
 	{
 		Preferences.CustomSearchEngineIdentifier	= Identifier.Value!;
 		Preferences.SearchEngineApiKey				= ApiKey.Value!;
+
+		CustomSearch.SetCxAndKey(Preferences.CustomSearchEngineIdentifier, Preferences.SearchEngineApiKey);
 	}
 
 	#endregion
