@@ -31,12 +31,12 @@
 				RecentPathsManagerService="{Binding RecentPathsManagerService}"/>
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
 		</MenuBarItem>
-		<MenuBarItem Text="Project">
+		<MenuBarItem Text="Settings">
 			<MenuFlyoutItem Text="Project Settings..." Clicked="OnProjectOptions" IsEnabled="{Binding ProjectOpen}"/>
-		</MenuBarItem>
-		<MenuBarItem Text="Tools">
 			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>
 			<MenuFlyoutItem Text="Web Search Settings..." Clicked="OnWebSearchSettings"/>
+		</MenuBarItem>
+		<MenuBarItem Text="Tools">
 			<MenuFlyoutSubItem Text="Quality">
 				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding ProjectOpen}"/>
 				<MenuFlyoutItem Text="Check Tag Quality" Clicked="OnCheckTagQuality" IsEnabled="{Binding ProjectOpen}"/>
@@ -92,6 +92,7 @@
 				Text="Save"
 				IsEnabled="{Binding CanSave}"
 				Clicked="OnSave"
+				WidthRequest="75"
 				HorizontalOptions="End"/>
 		</Grid>
 

@@ -12,7 +12,7 @@
 	x:Name="self"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
-	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="300">
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="310">
 
 		<Border.Resources>
 			<ResourceDictionary>
