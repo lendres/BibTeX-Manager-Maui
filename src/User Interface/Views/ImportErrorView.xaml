@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView 
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
+	x:Class="BibTexManager.Views.ImportErrorView"
+	x:DataType="viewmodel:ImportErrorViewModel"
+	x:Name="self"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="380">
+
+		<Border.Resources>
+			<ResourceDictionary>
+				<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+			</ResourceDictionary>
+		</Border.Resources>
+
+		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+			<Label Text="{Binding Title}" StyleClass="Title" HorizontalOptions="Start"/>
+
+			<Editor 
+				Grid.Row="1"
+				x:Name="BibEntryEditor"
+				VerticalOptions="Fill"
+				FontFamily="IBMPlexMono-Regular"
+				Text="{Binding Message}"
+			/>
+
+
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+					Text="Try Again"
+					HorizontalOptions="End"
+					StyleClass="StandardSizeButtonStyle"
+					Clicked="OnTryAgainButtonClicked"/>
+				<Button 
+					Text="Skip"
+					HorizontalOptions="End"
+					StyleClass="StandardSizeButtonStyle"
+					Clicked="OnSkipButtonClicked"/>
+				<Button 
+					Text="Cancel"
+					StyleClass="StandardSizeButtonStyle"
+					HorizontalOptions="End"
+					Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+
+		</VerticalStackLayout>
+	</Border>
+
+</dpviews:PopupView>
