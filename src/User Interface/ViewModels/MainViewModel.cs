@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
-using DigitalProduction.Projects;
 
 namespace BibTexManager.ViewModels;
 
@@ -60,17 +59,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	#endregion
 
 	#region Validation
-
-	//[RelayCommand]
-	//private void ValidatePostprocessor()
-	//{
-	//	Postprocessor.Validate();
- //       ValidateSubmittable();
-	//}
-
-	//public bool ValidateSubmittable() => IsSubmittable =
-	//	XmlInputFile.IsValid &&
-	//	XsltFile.IsValid;
 
 	private void ValidateCanSave()
 	{
