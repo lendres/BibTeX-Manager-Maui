@@ -28,10 +28,6 @@ public partial class WebSettingsViewModel : ObservableObject
 
 	#endregion
 
-	#region Events
-
-	#endregion
-
 	#region Methods
 
 	private void Initialize()
@@ -59,18 +55,14 @@ public partial class WebSettingsViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateIdentifier()
 	{
-		if (Identifier.Validate())
-		{
-		}
+		Identifier.Validate();
 		ValidateSubmittable();
 	}
 
 	[RelayCommand]
 	private void ValidateApiKey()
 	{
-		if (ApiKey.Validate())
-		{
-		}
+		ApiKey.Validate();
 		ValidateSubmittable();
 	}
 
