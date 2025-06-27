@@ -22,18 +22,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
     {
 		RecentPathsManagerService	= recentPathsManagerService;
 		_dialogService				= dialogService;
-
-		InitializeValues();
-		AddValidations();
-		//ValidateSubmittable();
-	}
-
-	private void InitializeValues()
-	{
-	}
-
-	private void AddValidations()
-	{
 	}
 
 	#endregion
@@ -128,8 +116,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	void ProjectInitialization()
 	{
-		BibtexProject.Instance!.ModifiedChanged += OnProjectModifiedChanged;
-		BibtexProject.Instance!.PropertyChanged += OnProjectPropertyChanged;
+		Project.ModifiedChanged += OnProjectModifiedChanged;
+		Project.PropertyChanged += OnProjectPropertyChanged;
 		ProjectOpen = true;
 	}
 
@@ -141,22 +129,19 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	public void Save(string path)
 	{
-		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
 		RecentPathsManagerService.PushTop(path);
-		BibtexProject.Instance.Serialize(path);
+		Project.Serialize(path);
 	}
 
 	[RelayCommand]
 	public void Save()
 	{
-		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
-		BibtexProject.Instance.Serialize();
+		Project.Serialize();
 	}
 
 	public void CloseProject()
 	{
-		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
-		BibtexProject.Instance.Close();
+		Project.Close();
 		Items?.Clear();
 		Items = null;
 		ProjectOpen = false;
@@ -165,19 +150,16 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	[RelayCommand]
 	public void SortBibliographyEntries()
 	{
-		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
-		BibtexProject.Instance.SortBibliographyEntries();
+		Project.SortBibliographyEntries();
 	}
 
 	/// <summary>
 	/// Check the quality of the text in the text box.
 	/// </summary>
-	public static IEnumerable<TagProcessingData> CheckQuality()
+	public IEnumerable<TagProcessingData> CheckQuality()
 	{
-		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
-
 		// Cleaning.
-		foreach (TagProcessingData tagProcessingData in BibtexProject.Instance.CleanAllEntries())
+		foreach (TagProcessingData tagProcessingData in Project.CleanAllEntries())
 		{
 			yield return tagProcessingData;
 		}
@@ -188,17 +170,17 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	/// </summary>
 	public IEnumerable<ImportResult> BulkImport(IBulkImporter importer)
 	{
-		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
-
-		importer.SetBibliographyInitialization(BibtexProject.Instance.Settings.UseBibEntryInitialization, BibtexProject.Instance.BibEntryInitialization);
+		importer.SetBibliographyInitialization(Project.Settings.UseBibEntryInitialization, Project.BibEntryInitialization);
 
 		foreach (ImportResult importResult in importer.BulkImport())
 		{
+			System.Diagnostics.Debug.Assert(importResult.BibEntry != null);
+
 			switch (importResult.Result)
 			{
 				case ResultType.Successful:
-					BibtexProject.Instance.ApplyAllCleaning(importResult.BibEntry);
-					int index = BibtexProject.Instance.GetEntryInsertIndex(importResult.BibEntry, 0);
+					Project.ApplyAllCleaning(importResult.BibEntry);
+					int index = Project.GetEntryInsertIndex(importResult.BibEntry, 0);
 					Insert(importResult.BibEntry, index);
 					break;
 
