@@ -49,6 +49,8 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Menu Events
 
+	#region File
+
 	async void OnNew(object sender, EventArgs eventArgs)
 	{
 		string file = await _filePicker.BrowseForBibliographyFile();
@@ -97,6 +99,10 @@ public partial class MainPage : DigitalProductionMainPage
 		_viewModel.CloseProject();
 	}
 
+	#endregion
+
+	#region Project
+
 	async void OnProjectOptions(object sender, EventArgs eventArgs)
 	{
 		ProjectOptionsViewModel viewModel = new(BibtexProject.Instance!.Settings);
@@ -123,6 +129,10 @@ public partial class MainPage : DigitalProductionMainPage
 		WebSearchSettingsView	view		= new(viewModel);
 		object?					result		= await Shell.Current.ShowPopupAsync(view);
 	}
+
+	#endregion
+
+	#region Tools
 
 	async void OnCheckTagQuality(object sender, EventArgs eventArgs)
 	{
@@ -168,6 +178,10 @@ public partial class MainPage : DigitalProductionMainPage
 		string? file = await BrowseForInputFile();
 	}
 
+	#endregion
+
+	#region Help
+
 	async void OnHelp(object sender, EventArgs eventArgs)
 	{
 		System.Reflection.Assembly? entryAssembly = System.Reflection.Assembly.GetEntryAssembly();
@@ -181,6 +195,8 @@ public partial class MainPage : DigitalProductionMainPage
 		AboutView1 view = new(new AboutViewModel(true));
 		_ = await Shell.Current.ShowPopupAsync(view);
 	}
+
+	#endregion
 
 	#endregion
 
