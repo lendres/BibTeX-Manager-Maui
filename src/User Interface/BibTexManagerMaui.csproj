@@ -87,6 +87,9 @@
 		<MauiXaml Update="Views\ImportErrorView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\SearchTermsView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\WebSearchSettingsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -118,6 +121,9 @@
 	<ItemGroup>
 		<Compile Update="Views\ImportErrorView.xaml.cs">
 		  <DependentUpon>ImportErrorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\SearchTermsView.xaml.cs">
+		  <DependentUpon>SearchTermsView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\WebSearchSettingsView.xaml.cs">
 		  <DependentUpon>WebSearchSettingsView.xaml</DependentUpon>

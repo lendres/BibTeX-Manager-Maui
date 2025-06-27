@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
+using DigitalProduction.Http;
 
 namespace BibTexManager.ViewModels;
 
@@ -22,6 +23,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
     {
 		RecentPathsManagerService	= recentPathsManagerService;
 		_dialogService				= dialogService;
+
+		CustomSearch.SetCxAndKey(Preferences.CustomSearchEngineIdentifier, Preferences.SearchEngineApiKey);
 	}
 
 	#endregion
@@ -85,6 +88,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Methods and Commands
 
+	#region File Menu
+
 	public void NewProject(string bibliographyFile)
 	{
 		BibtexProject.New(bibliographyFile);
@@ -147,6 +152,10 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		ProjectOpen = false;
 	}
 
+	#endregion
+
+	#region Tools Menu
+
 	[RelayCommand]
 	public void SortBibliographyEntries()
 	{
@@ -194,6 +203,16 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 			}
 		}
 	}
+
+	/// <summary>
+	/// Do bulk importing of BibTeX entries using the specified importer.
+	/// </summary>
+	public BibEntry? SingleImport(ISingleImporter importer, string searchTerms)
+	{
+		return importer.Import(searchTerms);
+	}
+
+	#endregion
 
 	#endregion
 

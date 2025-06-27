@@ -100,7 +100,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#endregion
 
-	#region Project
+	#region Settings
 
 	async void OnProjectOptions(object sender, EventArgs eventArgs)
 	{
@@ -163,6 +163,39 @@ public partial class MainPage : DigitalProductionMainPage
 			{
 				lastDialogResult	= messageBoxResult;
 				breakNext			= messageBoxResult == MessageBoxYesNoToAllResult.Cancel;
+			}
+		}
+	}
+
+	async void OnSingleSpeTitleSearch(object sender, EventArgs eventArgs)
+	{
+		SearchTermsViewModel	viewModel	= new();
+		SearchTermsView			view		= new(viewModel);
+		object?					result		= await Shell.Current.ShowPopupAsync(view);
+
+		if (result is bool boolResut && boolResut)
+		{
+			try
+			{
+				BibEntry? bibEntry = _viewModel.SingleImport(new SpeTitleImporter(), viewModel.SearchTermsString);
+
+				if (bibEntry != null)
+				{
+					await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
+					{
+						{ "AddMode",	false },
+						{ "BibEntry",	bibEntry }
+					});
+				}
+				else
+				{
+					await DisplayAlert("Entry Not Found", "A bibliography entry was not found.", "OK");
+				}
+
+			}
+			catch (Exception exception)
+			{
+				await DisplayAlert("Search Error", "An error occured during the search.\nError: "+exception.Message, "OK");
 			}
 		}
 	}
