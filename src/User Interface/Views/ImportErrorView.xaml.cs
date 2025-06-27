@@ -15,7 +15,7 @@ public partial class ImportErrorView : PopupView
 
 	#region Construction
 
-	public ImportErrorViewModel(CorrectionViewModel viewModel)
+	public ImportErrorView(ImportErrorViewModel viewModel)
 	{
 		BindingContext	= viewModel;
 		_viewModel		= viewModel;
