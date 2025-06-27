@@ -21,13 +21,13 @@ public partial class WebSettingsViewModel : ObservableObject
 	#region Properties
 
 	[ObservableProperty]
-	public partial ValidatableObject<string>			Identifier { get; set; }		= "";
+	public partial ValidatableObject<string>		Identifier { get; set; }		= new();
 
 	[ObservableProperty]
-	public partial  ValidatableObject<string>			ApiKey  { get; set; }			= "";
+	public partial  ValidatableObject<string>		ApiKey  { get; set; }			= new();
 
 	[ObservableProperty]
-	public partial bool							IsSubmittable { get; set; }
+	public partial bool								IsSubmittable { get; set; }
 
 	#endregion
 
@@ -78,6 +78,12 @@ public partial class WebSettingsViewModel : ObservableObject
 	}
 
 	public bool ValidateSubmittable() => IsSubmittable = Identifier.IsValid && ApiKey.IsValid;
+
+	public void Save()
+	{
+		Preferences.CustomSearchEngineIdentifier	= Identifier.Value!;
+		Preferences.SearchEngineApiKey				= ApiKey.Value!;
+	}
 
 	#endregion
 }

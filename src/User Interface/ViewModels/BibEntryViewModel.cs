@@ -2,8 +2,6 @@
 using BibtexManager;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DigitalProduction.Maui.Validation;
-using Microsoft.Maui.Controls;
 
 namespace BibTexManager.ViewModels;
 

@@ -112,14 +112,16 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnProgramOptions(object sender, EventArgs eventArgs)
 	{
-		ProgramOptionsViewModel viewModel = new();
+		ProgramOptionsViewModel	viewModel	= new();
+		ProgramOptionsView		view		= new(viewModel);
+		object?					result		= await Shell.Current.ShowPopupAsync(view);
+	}
 
-		ProgramOptionsView	view	= new(viewModel);
-		object?				result	= await Shell.Current.ShowPopupAsync(view);
-
-		//if (result is bool boolResult && boolResult)
-		//{
-		//}
+	async void OnWebSearchSettings(object sender, EventArgs eventArgs)
+	{
+		WebSettingsViewModel	viewModel	= new();
+		WebSearchSettingsView	view		= new(viewModel);
+		object?					result		= await Shell.Current.ShowPopupAsync(view);
 	}
 
 	async void OnHelp(object sender, EventArgs eventArgs)
