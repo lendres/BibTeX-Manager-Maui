@@ -1,7 +1,6 @@
 ﻿using BibTeXLibrary;
 using DigitalProduction.Projects;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace BibtexManager;
@@ -52,6 +51,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	private QualityProcessor					_tagQualityProcessor			= new();
 
 	private string								_currentBibEntryMap				= "";
+
 	private BibEntryRemapper					_nameRemapper					= new();
 
 	#endregion

@@ -1,13 +1,12 @@
 ﻿using BibTeXLibrary;
 using BibtexManager;
+using BibtexManager.Project;
 using BibTexManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
-using DigitalProduction.Projects;
-using Google.Apis.CustomSearchAPI.v1.Data;
 
 namespace BibTexManager.Views;
 
@@ -17,9 +16,9 @@ public partial class MainPage : DigitalProductionMainPage
 {
 	#region Fields
 
-	private MainViewModel		_viewModel;
-	private IBibTexFilePicker	_filePicker			= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTexFilePicker>();
-	private ISaveFilePicker		_saveFilePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveFilePicker>();
+	private readonly MainViewModel		_viewModel;
+	private readonly IBibTexFilePicker	_filePicker			= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTexFilePicker>();
+	private readonly ISaveFilePicker	_saveFilePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveFilePicker>();
 
 	#endregion
 
@@ -48,6 +47,8 @@ public partial class MainPage : DigitalProductionMainPage
 	#endregion
 
 	#region Menu Events
+
+	#region File
 
 	async void OnNew(object sender, EventArgs eventArgs)
 	{
@@ -97,6 +98,10 @@ public partial class MainPage : DigitalProductionMainPage
 		_viewModel.CloseProject();
 	}
 
+	#endregion
+
+	#region Settings
+
 	async void OnProjectOptions(object sender, EventArgs eventArgs)
 	{
 		ProjectOptionsViewModel viewModel = new(BibtexProject.Instance!.Settings);
@@ -114,15 +119,132 @@ public partial class MainPage : DigitalProductionMainPage
 	{
 		ProgramOptionsViewModel	viewModel	= new();
 		ProgramOptionsView		view		= new(viewModel);
-		object?					result		= await Shell.Current.ShowPopupAsync(view);
+		_									= await Shell.Current.ShowPopupAsync(view);
 	}
 
 	async void OnWebSearchSettings(object sender, EventArgs eventArgs)
 	{
 		WebSettingsViewModel	viewModel	= new();
 		WebSearchSettingsView	view		= new(viewModel);
-		object?					result		= await Shell.Current.ShowPopupAsync(view);
+		_									= await Shell.Current.ShowPopupAsync(view);
 	}
+
+	#endregion
+
+	#region Tools
+
+	async void OnCheckTagQuality(object sender, EventArgs eventArgs)
+	{
+		bool breakNext = false;
+
+		MessageBoxYesNoToAllResult lastDialogResult = MessageBoxYesNoToAllResult.Cancel;
+
+		foreach (TagProcessingData tagProcessingData in _viewModel.CheckQuality())
+		{
+			// If the processing was cancelled, we break.  We have to loop back around here to give the
+			// processing a chance to finish (it was yielded).  Now exit before processing another entry.
+			if (breakNext)
+			{
+				break;
+			}
+
+			CorrectionViewModel	viewModel = new(tagProcessingData);
+
+			if (lastDialogResult == MessageBoxYesNoToAllResult.YesToAll)
+			{
+				viewModel.SetResult(MessageBoxYesNoToAllResult.YesToAll);
+				continue;
+			}
+
+			CorrectionView		view		= new(viewModel);
+			object?				result		= await Shell.Current.ShowPopupAsync(view);
+
+			if (result is MessageBoxYesNoToAllResult messageBoxResult)
+			{
+				lastDialogResult	= messageBoxResult;
+				breakNext			= messageBoxResult == MessageBoxYesNoToAllResult.Cancel;
+			}
+		}
+	}
+
+	async void OnSingleSpeTitleSearch(object sender, EventArgs eventArgs)
+	{
+		SearchTermsViewModel	viewModel	= new();
+		SearchTermsView			view		= new(viewModel);
+		object?					result		= await Shell.Current.ShowPopupAsync(view);
+
+		if (result is bool boolResut && boolResut)
+		{
+			try
+			{
+				BibEntry? bibEntry = _viewModel.SingleImport(new SpeTitleImporter(), viewModel.SearchTermsString);
+
+				if (bibEntry != null)
+				{
+					await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
+					{
+						{ "AddMode",	false },
+						{ "BibEntry",	bibEntry }
+					});
+				}
+				else
+				{
+					await DisplayAlert("Entry Not Found", "A bibliography entry was not found.", "OK");
+				}
+
+			}
+			catch (Exception exception)
+			{
+				await DisplayAlert("Search Error", "An error occured during the search.\nError: "+exception.Message, "OK");
+			}
+		}
+	}
+
+	async void OnBulkSpeImport(object sender, EventArgs eventArgs)
+	{
+		string? file = await BrowseForInputFile();
+
+		if (file != null)
+		{
+			BulkImport(new SpeBulkTitleImporter(file));
+		}
+	}
+
+	async void OnSpeConferenceImport(object sender, EventArgs eventArgs)
+	{
+		string? file = await BrowseForInputFile();
+
+		if (file != null)
+		{
+			BulkImport(new SpeConferenceImporter(file));
+		}
+	}
+
+	private async void BulkImport(IBulkImporter importer)
+	{
+		ImportErrorViewModel viewModel;
+		ImportErrorView		 view;
+
+		foreach (ImportResult importResult in _viewModel.BulkImport(importer))
+		{
+			switch (importResult.Result)
+			{
+				case ResultType.Successful:
+					break;
+
+				case ResultType.NotFound:
+				case ResultType.Error:
+					viewModel	= new(importer, importResult);
+					view		= new ImportErrorView(viewModel);
+					_			= await Shell.Current.ShowPopupAsync(view);
+					break;
+			}
+		}
+	}
+
+	#endregion
+
+	#region Help
 
 	async void OnHelp(object sender, EventArgs eventArgs)
 	{
@@ -137,6 +259,8 @@ public partial class MainPage : DigitalProductionMainPage
 		AboutView1 view = new(new AboutViewModel(true));
 		_ = await Shell.Current.ShowPopupAsync(view);
 	}
+
+	#endregion
 
 	#endregion
 
@@ -171,10 +295,10 @@ public partial class MainPage : DigitalProductionMainPage
 	/// <summary>
 	/// Navigation back from the bibliography edit page.  The NavigationCommand and NavigationObject get set and this gets called.
 	/// </summary>
-	/// <param name="args"></param>
-	protected override void OnNavigatedTo(NavigatedToEventArgs args)
+	/// <param name="eventArgs"></param>
+	protected override void OnNavigatedTo(NavigatedToEventArgs eventArgs)
 	{
-		base.OnNavigatedTo(args);
+		base.OnNavigatedTo(eventArgs);
 
 		switch (NavigationCommand)
 		{
@@ -219,6 +343,43 @@ public partial class MainPage : DigitalProductionMainPage
 		{
 			_viewModel.OpenProject(paths[0]);
 		}
+	}
+
+	private async Task<string?> BrowseForInputFile()
+	{
+		MainViewModel? viewModel = BindingContext as MainViewModel;
+		System.Diagnostics.Debug.Assert(viewModel != null);
+
+		try
+		{
+			PickOptions pickOptions = new() { PickerTitle="Select an Input File" }; //, FileTypes=viewModel.GetInputFileTypes() };
+			FileResult? result      = await BrowseForFile(pickOptions);
+
+			if (result != null)
+			{
+				return result.FullPath;
+			}
+		}
+		catch (Exception exception)
+		{
+			await DisplayAlert("Error", "An exception occured:"+Environment.NewLine+exception.Message, "OK");
+		}
+
+		return null;
+	}
+
+	public static async Task<FileResult?> BrowseForFile(PickOptions options)
+	{
+		try
+		{
+			return await FilePicker.PickAsync(options);
+		}
+		catch
+		{
+			// The user canceled or something went wrong.
+		}
+
+		return null;
 	}
 
 	#endregion

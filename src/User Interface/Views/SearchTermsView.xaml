@@ -7,12 +7,12 @@
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
-	x:Class="BibTexManager.Views.WebSearchSettingsView"
-	x:DataType="viewmodel:WebSettingsViewModel"
+	x:Class="BibTexManager.Views.SearchTermsView"
+	x:DataType="viewmodel:SearchTermsViewModel"
 	x:Name="self"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
-	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="310">
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="850" MinimumHeightRequest="220">
 
 		<Border.Resources>
 			<ResourceDictionary>
@@ -21,43 +21,25 @@
 		</Border.Resources>
 
 		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
-			<Label Text="Custom Web Search Settings" StyleClass="Title" HorizontalOptions="Start"/>
+			<Label Text="BibTeX Search" StyleClass="Title" HorizontalOptions="Start"/>
 
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
-				<Label Text="Search Engine Identifier (cx)" StyleClass="ControlLabel"/>
+				<Label Text="Search Terms" StyleClass="ControlLabel"/>
 				<Entry
-                    x:Name="IdentifierEntry"
-					Placeholder="cx"
+                    x:Name="SearchTermsEntry"
+					Placeholder="Search Terms"
 					Loaded="OnLoadedSetFocus"
-					Text="{Binding Identifier.Value}"
+					Text="{Binding SearchTerms.Value}"
 					HorizontalOptions="Fill">
 					<Entry.Behaviors>
 						<toolkit:EventToCommandBehavior
                             x:TypeArguments="system:EventArgs"
-                            Command="{Binding ValidateIdentifierCommand}"
-                            BindingContext="{Binding Path=BindingContext, Source={x:Reference IdentifierEntry}, x:DataType=Entry}"
+                            Command="{Binding ValidateSearchTermsCommand}"
+                            BindingContext="{Binding Path=BindingContext, Source={x:Reference SearchTermsEntry}, x:DataType=Entry}"
                             EventName="TextChanged"/>
 					</Entry.Behaviors>
 				</Entry>
-				<Label Text="{Binding Identifier.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
-			</VerticalStackLayout>
-
-			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
-				<Label Text="Search Engine API Key" StyleClass="ControlLabel"/>
-				<Entry
-                    x:Name="ApiKeyEntry"
-					Placeholder="API Key"
-					Text="{Binding ApiKey.Value}"
-					HorizontalOptions="Fill">
-					<Entry.Behaviors>
-						<toolkit:EventToCommandBehavior
-                            x:TypeArguments="system:EventArgs"
-                            Command="{Binding ValidateApiKeyCommand}"
-                            BindingContext="{Binding Path=BindingContext, Source={x:Reference ApiKeyEntry}, x:DataType=Entry}"
-                            EventName="TextChanged"/>
-					</Entry.Behaviors>
-				</Entry>
-				<Label Text="{Binding ApiKey.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+				<Label Text="{Binding SearchTerms.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
 			</VerticalStackLayout>
 
 			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">

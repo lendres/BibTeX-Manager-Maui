@@ -1,9 +1,7 @@
-﻿using BibtexManager;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DigitalProduction.Maui.Controls;
+using DigitalProduction.Http;
 using DigitalProduction.Maui.Validation;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace BibTexManager.ViewModels;
 
@@ -28,10 +26,6 @@ public partial class WebSettingsViewModel : ObservableObject
 
 	[ObservableProperty]
 	public partial bool								IsSubmittable { get; set; }
-
-	#endregion
-
-	#region Events
 
 	#endregion
 
@@ -62,18 +56,14 @@ public partial class WebSettingsViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateIdentifier()
 	{
-		if (Identifier.Validate())
-		{
-		}
+		Identifier.Validate();
 		ValidateSubmittable();
 	}
 
 	[RelayCommand]
 	private void ValidateApiKey()
 	{
-		if (ApiKey.Validate())
-		{
-		}
+		ApiKey.Validate();
 		ValidateSubmittable();
 	}
 
@@ -83,6 +73,8 @@ public partial class WebSettingsViewModel : ObservableObject
 	{
 		Preferences.CustomSearchEngineIdentifier	= Identifier.Value!;
 		Preferences.SearchEngineApiKey				= ApiKey.Value!;
+
+		CustomSearch.SetCxAndKey(Preferences.CustomSearchEngineIdentifier, Preferences.SearchEngineApiKey);
 	}
 
 	#endregion

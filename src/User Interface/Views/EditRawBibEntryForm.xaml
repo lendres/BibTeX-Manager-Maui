@@ -58,12 +58,14 @@
 				<Button 
 					Text="Save"
 					Clicked="OnSave"
+					WidthRequest="75"
 					HorizontalOptions="End"
 					IsEnabled="{Binding IsSubmittable}"/>
 
 				<Button 
 					Text="Cancel"
 					Clicked="OnCancel"
+					WidthRequest="75"
 					HorizontalOptions="End"/>
 			</HorizontalStackLayout>
 

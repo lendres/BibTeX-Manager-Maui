@@ -1,10 +1,11 @@
 ﻿using BibTeXLibrary;
 using BibtexManager;
+using BibtexManager.Project;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
-using DigitalProduction.Projects;
+using DigitalProduction.Http;
 
 namespace BibTexManager.ViewModels;
 
@@ -23,17 +24,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		RecentPathsManagerService	= recentPathsManagerService;
 		_dialogService				= dialogService;
 
-		InitializeValues();
-		AddValidations();
-		//ValidateSubmittable();
-	}
-
-	private void InitializeValues()
-	{
-	}
-
-	private void AddValidations()
-	{
+		CustomSearch.SetCxAndKey(Preferences.CustomSearchEngineIdentifier, Preferences.SearchEngineApiKey);
 	}
 
 	#endregion
@@ -60,17 +51,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	#endregion
 
 	#region Validation
-
-	//[RelayCommand]
-	//private void ValidatePostprocessor()
-	//{
-	//	Postprocessor.Validate();
- //       ValidateSubmittable();
-	//}
-
-	//public bool ValidateSubmittable() => IsSubmittable =
-	//	XmlInputFile.IsValid &&
-	//	XsltFile.IsValid;
 
 	private void ValidateCanSave()
 	{
@@ -108,6 +88,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Methods and Commands
 
+	#region File Menu
+
 	public void NewProject(string bibliographyFile)
 	{
 		BibtexProject.New(bibliographyFile);
@@ -139,8 +121,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	void ProjectInitialization()
 	{
-		BibtexProject.Instance!.ModifiedChanged += OnProjectModifiedChanged;
-		BibtexProject.Instance!.PropertyChanged += OnProjectPropertyChanged;
+		Project.ModifiedChanged += OnProjectModifiedChanged;
+		Project.PropertyChanged += OnProjectPropertyChanged;
 		ProjectOpen = true;
 	}
 
@@ -152,26 +134,85 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	public void Save(string path)
 	{
-		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
 		RecentPathsManagerService.PushTop(path);
-		BibtexProject.Instance.Serialize(path);
+		Project.Serialize(path);
 	}
 
 	[RelayCommand]
 	public void Save()
 	{
-		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
-		BibtexProject.Instance.Serialize();
+		Project.Serialize();
 	}
 
 	public void CloseProject()
 	{
-		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
-		BibtexProject.Instance.Close();
+		Project.Close();
 		Items?.Clear();
 		Items = null;
 		ProjectOpen = false;
 	}
+
+	#endregion
+
+	#region Tools Menu
+
+	[RelayCommand]
+	public void SortBibliographyEntries()
+	{
+		Project.SortBibliographyEntries();
+	}
+
+	/// <summary>
+	/// Check the quality of the text in the text box.
+	/// </summary>
+	public IEnumerable<TagProcessingData> CheckQuality()
+	{
+		// Cleaning.
+		foreach (TagProcessingData tagProcessingData in Project.CleanAllEntries())
+		{
+			yield return tagProcessingData;
+		}
+	}
+
+	/// <summary>
+	/// Do bulk importing of BibTeX entries using the specified importer.
+	/// </summary>
+	public IEnumerable<ImportResult> BulkImport(IBulkImporter importer)
+	{
+		importer.SetBibliographyInitialization(Project.Settings.UseBibEntryInitialization, Project.BibEntryInitialization);
+
+		foreach (ImportResult importResult in importer.BulkImport())
+		{
+			System.Diagnostics.Debug.Assert(importResult.BibEntry != null);
+
+			switch (importResult.Result)
+			{
+				case ResultType.Successful:
+					Project.ApplyAllCleaning(importResult.BibEntry);
+					int index = Project.GetEntryInsertIndex(importResult.BibEntry, 0);
+					Insert(importResult.BibEntry, index);
+					break;
+
+				case ResultType.NotFound:
+					yield return importResult;
+					break;
+
+				case ResultType.Error:
+					yield return importResult;
+					break;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Do bulk importing of BibTeX entries using the specified importer.
+	/// </summary>
+	public BibEntry? SingleImport(ISingleImporter importer, string searchTerms)
+	{
+		return importer.Import(searchTerms);
+	}
+
+	#endregion
 
 	#endregion
 

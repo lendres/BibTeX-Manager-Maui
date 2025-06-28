@@ -245,6 +245,5 @@ public partial class BibEntryViewModel : ObservableObject
 		ValidateSubmittable();
 	}
 
-
 	#endregion
 }
