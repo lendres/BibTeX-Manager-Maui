@@ -36,6 +36,12 @@ public static class SpeImportUtilities
 			//IList<Result> results   = DigitalProduction.Http.CustomSearch.SiteSearch(searchTerms, website);
 			IList<Result> results   = DigitalProduction.Http.CustomSearch.SiteSearch(searchTerms, _website, i*11);
 
+			// No results were returned.
+			if (results == null)
+			{
+				yield break;
+			}
+
 			foreach (Result result in results)
 			{
 				string		webSiteUrl		= result.Link;
