@@ -41,11 +41,11 @@
 				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding ProjectOpen}"/>
 				<MenuFlyoutItem Text="Check Tag Quality" Clicked="OnCheckTagQuality" IsEnabled="{Binding ProjectOpen}"/>
 			</MenuFlyoutSubItem>
-			<!--<MenuFlyoutSubItem Text="Import">
+			<MenuFlyoutSubItem Text="Import">
 				<MenuFlyoutItem Text="Single SPE Title Search" Clicked="OnSingleSpeTitleSearch" IsEnabled="{Binding ProjectOpen}"/>
 				<MenuFlyoutItem Text="Bulk SPE Title Search" Clicked="OnBulkSpeImport" IsEnabled="{Binding ProjectOpen}"/>
 				<MenuFlyoutItem Text="SPE Conference Page Scraper" Clicked="OnSpeConferenceImport" IsEnabled="{Binding ProjectOpen}"/>
-			</MenuFlyoutSubItem>-->
+			</MenuFlyoutSubItem>
 		</MenuBarItem>
 		<MenuBarItem Text="Help">
 			<MenuFlyoutItem Text="Help" Clicked="OnHelp"/>

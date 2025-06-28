@@ -23,9 +23,13 @@ public class SpeHttpTests
 	[Fact]
 	public void SearchTest1()
 	{
+		string searchString;
+		searchString = "Improving Casing Running Efficiency Through A Comprehensive Wellbore Quality Scorecard: A Datadriven Approach";
+		searchString = "A Novel Approach To Borehole Quality Measurement In Unconventional Drilling";
+		searchString = "Advancements in Weight Material Sag Evaluation: A New Perspective with Advanced Laboratory Equipment";
+
 		SpeTitleImporter importer	= new();
-		BibEntry? bibEntry			= importer.Import("A Novel Approach To Borehole Quality Measurement In Unconventional Drilling");
-		//BibEntry bibEntry			= importer.Import("Advancements in Weight Material Sag Evaluation: A New Perspective with Advanced Laboratory Equipment");
+		BibEntry? bibEntry			= importer.Import(searchString);
 		Assert.NotNull(bibEntry);
 	}
 
