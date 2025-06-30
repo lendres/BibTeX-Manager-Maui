@@ -1,4 +1,6 @@
-﻿using Google.Apis.CustomSearchAPI.v1.Data;
+﻿using DocumentFormat.OpenXml.Office2016.Excel;
+using Google.Apis.CustomSearchAPI.v1.Data;
+using System.Net.Http;
 
 namespace BibtexManager;
 
@@ -101,10 +103,18 @@ public static class SpeImportUtilities
 	async public static Task<string> DownloadSpeBibtex(HttpClient client, string articleUrl)
 	{
 		// Extract the last path element.  For an SPE article, this should be the document ID.
-		string docuementID = articleUrl.Split('/').Last();
+		string docuementId = articleUrl.Split('/').Last();
+		string downloadUrl = "https://onepetro.org/Citation/Download?resourceId=" + docuementId + "&resourceType=3&citationFormat=2";
 
 		// Attempt to download the bitex entry.
-		HttpResponseMessage	response		= client.GetAsync("https://onepetro.org/Citation/Download?resourceId="+docuementID+"&resourceType=3&citationFormat=2").Result;
+		HttpResponseMessage	response		= await client.GetAsync(downloadUrl);
+		if (!response.IsSuccessStatusCode)
+		{
+			string message = "Failed to download Bibtex entry from " + _website + ": " + response.ReasonPhrase;
+			//message +=  Environment.NewLine + "Check that you are logged into SPE.";
+			throw new HttpRequestException();
+		}
+
 		HttpContent			content			= response.Content;
 		string				responseString	= await content.ReadAsStringAsync();
 		responseString						= DigitalProduction.Strings.Format.TrimStart(responseString, "\r\n");

@@ -34,7 +34,7 @@
 		<MenuBarItem Text="Settings">
 			<MenuFlyoutItem Text="Project Settings..." Clicked="OnProjectOptions" IsEnabled="{Binding ProjectOpen}"/>
 			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>
-			<MenuFlyoutItem Text="Web Search Settings..." Clicked="OnWebSearchSettings"/>
+			<!--<MenuFlyoutItem Text="Web Search Settings..." Clicked="OnWebSearchSettings"/>-->
 		</MenuBarItem>
 		<MenuBarItem Text="Tools">
 			<MenuFlyoutSubItem Text="Quality">
@@ -116,11 +116,11 @@
 						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
 
 				<!--Description column.-->
-				<dg:DataGridColumn Title="Author(s)" PropertyName="Author" Width="1.0*" SortingEnabled="false"
+				<dg:DataGridColumn Title="Author(s)" PropertyName="Author" Width="1.0*" SortingEnabled="true"
 						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
 
-				<dg:DataGridColumn Title="Title" PropertyName="Title" Width="1.0*" SortingEnabled="false"
-							CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+				<dg:DataGridColumn Title="Title" PropertyName="Title" Width="1.0*" SortingEnabled="true"
+						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
 
 			</dg:DataGrid.Columns>
 		</dg:DataGrid>

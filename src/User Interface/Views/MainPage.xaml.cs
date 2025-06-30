@@ -7,6 +7,7 @@ using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
+using System.Diagnostics;
 
 namespace BibTexManager.Views;
 
