@@ -7,6 +7,7 @@ using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
+using System.Diagnostics;
 
 namespace BibTexManager.Views;
 
@@ -34,6 +35,9 @@ public partial class MainPage : DigitalProductionMainPage
 		{
 			OpenLastProject();
 		}
+
+Trace.Listeners.Add(new TextWriterTraceListener("log.txt"));
+Trace.AutoFlush = true;
 	}
 
 	#endregion
@@ -276,8 +280,11 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnNewBibEntryFromTemplate(object sender, EventArgs eventArgs)
 	{
+Trace.WriteLine("Starting from template.");
 		TemplateSelectionViewModel	viewModel	= new(_viewModel.Project.BibEntryInitialization.TemplateNames);
+Trace.WriteLine("View model created.");
 		TemplateSelectionView		view		= new(viewModel);
+Trace.WriteLine("View created.");
 		object?						result		= await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResult && boolResult)
