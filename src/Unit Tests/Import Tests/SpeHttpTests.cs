@@ -58,6 +58,17 @@ public class SpeHttpTests
 		//Assert.Equal(Statistics.Covariance(xValues, yValues), 2.9167, 0.0001, errorMessage);
 	}
 
+
+	[Fact]
+	public async Task BibTeXDownloadTest()
+	{
+		string articleUrl		= "https://onepetro.org/SPEDC/proceedings-abstract/24DC/24DC/D011S001R002/542925";
+
+		string? bibTexString	= await SpeImportUtilities.DownloadSpeBibtex(new HttpClient(), articleUrl);
+	}
+
+
+
 	private static string GetHtmlResultAsString(Result result)
 	{
 		string resultString = "";
