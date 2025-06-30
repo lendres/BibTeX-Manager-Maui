@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using DigitalProduction.Maui.Services;
-using System.Collections.ObjectModel;
 
 namespace BibTexManager.ViewModels;
 
