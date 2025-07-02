@@ -265,6 +265,10 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#endregion
 
+	#region Keyboard Events
+
+	#endregion
+
 	#region Button Events
 
 	async void OnNewBibEntry(object sender, EventArgs eventArgs)
