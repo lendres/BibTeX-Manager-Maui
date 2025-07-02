@@ -154,6 +154,17 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#endregion
 
+	#region Edit Menu
+
+	private int item = 1;
+	public void Find(string search)
+	{
+		SelectedItem = Items[item++]; // For testing purposes.
+	}
+
+
+	#endregion
+
 	#region Tools Menu
 
 	[RelayCommand]

@@ -101,6 +101,23 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#endregion
 
+	#region Edit
+
+	async void OnFind(object sender, EventArgs eventArgs)
+	{
+		SearchTermsViewModel    viewModel   = new();
+		SearchTermsView         view        = new(viewModel);
+		object?                 result      = await Shell.Current.ShowPopupAsync(view);
+
+		if (result is bool boolResut && boolResut)
+		{
+			string search = viewModel.SearchTermsString;
+			_viewModel.Find(search);
+		}
+	}
+
+	#endregion
+
 	#region Settings
 
 	async void OnProjectOptions(object sender, EventArgs eventArgs)
@@ -262,10 +279,6 @@ public partial class MainPage : DigitalProductionMainPage
 	}
 
 	#endregion
-
-	#endregion
-
-	#region Keyboard Events
 
 	#endregion
 

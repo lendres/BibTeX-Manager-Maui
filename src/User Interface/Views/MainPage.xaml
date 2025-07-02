@@ -46,36 +46,55 @@
 
 		<MenuBarItem Text="Edit">
 			<MenuFlyoutItem
+				Text="Add Entry..."
+				Clicked="OnNewBibEntry"
+				IsEnabled="{Binding ProjectOpen}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="a"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
+				Text="Add Entry from Template..."
+				Clicked="OnNewBibEntryFromTemplate"
+				IsEnabled="{Binding HasTemplates}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="t"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
 				Text="Edit Entry..."
 				Clicked="OnEditBibEntry"
 				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}">
 				<MenuFlyoutItem.KeyboardAccelerators>
-					<KeyboardAccelerator Key="e" Modifiers="Ctrl"/>
+					<KeyboardAccelerator Key="e"/>
 					<KeyboardAccelerator Key="F2"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-
-			<!--<MenuFlyoutItem
-				Text="Find Entry..."
-				Clicked="OnEditBibEntry"
+			<MenuFlyoutItem
+				Text="Delete Entry..."
+				Clicked="OnDeleteBibEntry"
 				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}">
-				<MenuFlyoutItem.KeyboardAccelerators>
-					<KeyboardAccelerator Key="n" Modifiers="Ctrl"/>
-				</MenuFlyoutItem.KeyboardAccelerators>
-			</MenuFlyoutItem>-->
-		</MenuBarItem>
+				<!--<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="d"/>
+				</MenuFlyoutItem.KeyboardAccelerators>-->
+			</MenuFlyoutItem>
 
+			<MenuFlyoutItem
+				Text="Find Entry..."
+				Clicked="OnFind"
+				IsEnabled="{Binding ProjectOpen}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="f" Modifiers="Ctrl"/>
+					<KeyboardAccelerator Key="F3" Modifiers="Ctrl"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+		</MenuBarItem>
 		<MenuBarItem Text="Settings">
 			<MenuFlyoutItem Text="Project Settings..." Clicked="OnProjectOptions" IsEnabled="{Binding ProjectOpen}"/>
 			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>
 			<!--<MenuFlyoutItem Text="Web Search Settings..." Clicked="OnWebSearchSettings"/>-->
 		</MenuBarItem>
 		<MenuBarItem Text="Tools">
-			<!--<MenuFlyoutItem Text="Find..." Clicked="OnFind">
-				<MenuFlyoutItem.KeyboardAccelerators>
-					<KeyboardAccelerator Key="f" Modifiers="Ctrl"/>
-				</MenuFlyoutItem.KeyboardAccelerators>
-			</MenuFlyoutItem>-->
 			<MenuFlyoutSubItem Text="Quality">
 				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding ProjectOpen}"/>
 				<MenuFlyoutItem Text="Check Tag Quality" Clicked="OnCheckTagQuality" IsEnabled="{Binding ProjectOpen}"/>
@@ -107,13 +126,13 @@
 
 			<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
 				<Button
-					Text="New"
+					Text="Add"
 					Clicked="OnNewBibEntry"
 					StyleClass="SquareButtonStyle"
 					IsEnabled="{Binding ProjectOpen}"/>
 
 				<Button
-					Text="New from Template"
+					Text="Add from Template"
 					Clicked="OnNewBibEntryFromTemplate"
 					StyleClass="SquareButtonStyle"
 					IsEnabled="{Binding HasTemplates}"/>
