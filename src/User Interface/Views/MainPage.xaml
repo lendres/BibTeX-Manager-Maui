@@ -19,9 +19,21 @@
 
 	<ContentPage.MenuBarItems>
 		<MenuBarItem Text="File">
-			<MenuFlyoutItem Text="New..." Clicked="OnNew"/>
-			<MenuFlyoutItem Text="Open..." Clicked="OnOpen"/>
-			<MenuFlyoutItem Text="Save" Clicked="OnSave" IsEnabled="{Binding CanSave}"/>
+			<MenuFlyoutItem Text="New..." Clicked="OnNew">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="n" Modifiers="Ctrl"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem Text="Open..." Clicked="OnOpen">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="o" Modifiers="Ctrl"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem Text="Save" Clicked="OnSave" IsEnabled="{Binding CanSave}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="s" Modifiers="Ctrl"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
 			<MenuFlyoutItem Text="Save As..." Clicked="OnSaveAs" IsEnabled="{Binding ProjectOpen}"/>
 			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding ProjectOpen}"/>
 			<dpcontrols:RecentlyUsedMenuFlyout
@@ -31,12 +43,39 @@
 				RecentPathsManagerService="{Binding RecentPathsManagerService}"/>
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
 		</MenuBarItem>
+
+		<MenuBarItem Text="Edit">
+			<MenuFlyoutItem
+				Text="Edit Entry..."
+				Clicked="OnEditBibEntry"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="e" Modifiers="Ctrl"/>
+					<KeyboardAccelerator Key="F2"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+
+			<!--<MenuFlyoutItem
+				Text="Find Entry..."
+				Clicked="OnEditBibEntry"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="n" Modifiers="Ctrl"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>-->
+		</MenuBarItem>
+
 		<MenuBarItem Text="Settings">
 			<MenuFlyoutItem Text="Project Settings..." Clicked="OnProjectOptions" IsEnabled="{Binding ProjectOpen}"/>
 			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>
 			<!--<MenuFlyoutItem Text="Web Search Settings..." Clicked="OnWebSearchSettings"/>-->
 		</MenuBarItem>
 		<MenuBarItem Text="Tools">
+			<!--<MenuFlyoutItem Text="Find..." Clicked="OnFind">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="f" Modifiers="Ctrl"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>-->
 			<MenuFlyoutSubItem Text="Quality">
 				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding ProjectOpen}"/>
 				<MenuFlyoutItem Text="Check Tag Quality" Clicked="OnCheckTagQuality" IsEnabled="{Binding ProjectOpen}"/>
@@ -48,7 +87,11 @@
 			</MenuFlyoutSubItem>-->
 		</MenuBarItem>
 		<MenuBarItem Text="Help">
-			<MenuFlyoutItem Text="Help" Clicked="OnHelp"/>
+			<MenuFlyoutItem Text="Help" Clicked="OnHelp">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F1"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
 			<MenuFlyoutItem Text="About" Clicked="OnAbout"/>
 		</MenuBarItem>
 	</ContentPage.MenuBarItems>
