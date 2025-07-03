@@ -1,6 +1,6 @@
 ﻿using DigitalProduction.Maui.Validation;
 
-namespace BibTexManager.Validation;
+namespace BibTeXManager.Validation;
 
 /// <summary>
 /// File must exist validation rule.

@@ -1,7 +1,7 @@
 ﻿using BibTeXLibrary;
-using BibtexManager;
+using BibTeXManager;
 
-namespace BibtexManagerUnitTests;
+namespace BibTeXManagerUnitTests;
 
 /// <summary>
 /// 

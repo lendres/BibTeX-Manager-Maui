@@ -1,13 +1,13 @@
 ﻿using BibTeXLibrary;
-using BibtexManager;
-using BibtexManager.Project;
+using BibTeXManager;
+using BibTeXManager.Project;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Http;
 
-namespace BibTexManager.ViewModels;
+namespace BibTeXManager.ViewModels;
 
 public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 {
@@ -35,8 +35,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Properties
 
-	public BibtexProject							Project { get => BibtexProject.Instance ?? throw new NullReferenceException("Project is null."); }
-	public bool										SavePathRequired { get => !(BibtexProject.Instance?.IsSaveable) ?? false; }
+	public BibTeXProject							Project { get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
+	public bool										SavePathRequired { get => !(BibTeXProject.Instance?.IsSaveable) ?? false; }
 
 	public IRecentPathsManagerService				RecentPathsManagerService { get; set; }
 
@@ -65,7 +65,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	private void ValidateHasTemplates()
 	{
-		HasTemplates = ProjectOpen && BibtexProject.Instance?.BibEntryInitialization.TemplateNames.Count > 0;
+		HasTemplates = ProjectOpen && BibTeXProject.Instance?.BibEntryInitialization.TemplateNames.Count > 0;
 	}
 
 	#endregion
@@ -98,10 +98,10 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	public void NewProject(string bibliographyFile)
 	{
-		BibtexProject.New(bibliographyFile);
-		if (BibtexProject.Instance != null)
+		BibTeXProject.New(bibliographyFile);
+		if (BibTeXProject.Instance != null)
 		{
-			Items = BibtexProject.Instance.Bibliography.Entries;
+			Items = BibTeXProject.Instance.Bibliography.Entries;
 		}
 		ProjectInitialization();
 		Modified = true;
@@ -117,10 +117,10 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	[RelayCommand]
 	public void OpenProject(string projectFile)
 	{
-		BibtexProject.Deserialize(projectFile);
-		if (BibtexProject.Instance != null)
+		BibTeXProject.Deserialize(projectFile);
+		if (BibTeXProject.Instance != null)
 		{
-			Items = BibtexProject.Instance.Bibliography.Entries;
+			Items = BibTeXProject.Instance.Bibliography.Entries;
 		}
 		ProjectInitialization();
 	}

@@ -1,9 +1,9 @@
-using BibtexManager.Importing;
-using BibtexManager.Project;
-using BibTexManagerUnitTests;
+using BibTeXManager.Importing;
+using BibTeXManager.Project;
+using BibTeXManagerUnitTests;
 using DigitalProduction.Http;
 
-namespace BibtexManagerUnitTests;
+namespace BibTeXManagerUnitTests;
 
 public class BulkImportTests
 {

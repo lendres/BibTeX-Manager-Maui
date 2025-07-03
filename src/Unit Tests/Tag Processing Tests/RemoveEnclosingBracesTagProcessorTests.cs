@@ -1,8 +1,8 @@
 using BibTeXLibrary;
-using BibtexManager;
-using BibtexManager.Quality;
+using BibTeXManager;
+using BibTeXManager.Quality;
 
-namespace BibtexManagerUnitTests;
+namespace BibTeXManagerUnitTests;
 
 public class RemoveEnclosingBracesTagProcessorTests
 {

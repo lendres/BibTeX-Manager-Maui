@@ -3,9 +3,9 @@
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:DataType="viewmodel:BibEntryViewModel"
-	x:Class="BibTexManager.Views.EditRawBibEntryForm">
+	x:Class="BibTeXManager.Views.EditRawBibEntryForm">
 
 	<Shell.BackButtonBehavior>
 		<BackButtonBehavior IsVisible="False" IsEnabled="False" />

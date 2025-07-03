@@ -1,8 +1,8 @@
 ﻿using BibTeXLibrary;
-using BibtexManager;
-using BibtexManager.Project;
+using BibTeXManager;
+using BibTeXManager.Project;
 
-namespace BibTexManagerUnitTests;
+namespace BibTeXManagerUnitTests;
 
 /// <summary>
 /// 

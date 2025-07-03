@@ -1,15 +1,15 @@
-﻿using BibTexManager.ViewModels;
-using BibTexManager.Views;
+﻿using BibTeXManager.ViewModels;
+using BibTeXManager.Views;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Media;
 using CommunityToolkit.Maui.Storage;
 using DigitalProduction.Maui;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
+using DigitalProduction.Maui.UI;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.LifecycleEvents;
 
-namespace BibTexManager;
+namespace BibTeXManager;
 
 public static class MauiProgram
 {
@@ -25,19 +25,14 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
-		DigitalProduction.Maui.UI.LifecycleEventsInstaller.ConfigureLifecycleEvents(builder);
-		#if WINDOWS
-			builder.ConfigureLifecycleEvents(lifecycle =>  
-			{
-				lifecycle.AddWindows((builder) =>  
-				{  
-					builder.OnWindowCreated(del =>  
-					{  
-						del.Title = "BibTeX Manager";
-					});  
-				});  
-			});
-		#endif
+
+		LifecycleOptions lifecycleOptions = new()
+		{
+			EnsureOnScreen          = false,
+			DisableMaximizeButton   = true,
+			WindowTitle             = "BibTeX Manager"
+		};
+		DigitalProduction.Maui.UI.LifecycleEventsInstaller.ConfigureLifecycleEvents(builder, lifecycleOptions);
 
 		RegisterViewsAndViewModels(builder.Services);
 		RegisterEssentials(builder.Services);
@@ -63,7 +58,7 @@ public static class MauiProgram
 
 	private static void CreateServices(IServiceCollection services)
 	{
-		services.AddSingleton<IBibTexFilePicker, BibTexFilePicker>();
+		services.AddSingleton<IBibTeXFilePicker, BibTeXFilePicker>();
 		services.AddSingleton<IDialogService, DialogService>();
 		services.AddSingleton<IRecentPathsManagerService, RecentPathsManagerService>();
 		services.AddSingleton<ISaveFilePicker, SaveFilePicker>();

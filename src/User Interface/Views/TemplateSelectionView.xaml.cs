@@ -1,6 +1,6 @@
-namespace BibTexManager.Views;
+namespace BibTeXManager.Views;
 
-using BibTexManager.ViewModels;
+using BibTeXManager.ViewModels;
 using DigitalProduction.Maui.Views;
 
 public partial class TemplateSelectionView : PopupView

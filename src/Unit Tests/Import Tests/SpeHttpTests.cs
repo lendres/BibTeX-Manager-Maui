@@ -1,9 +1,9 @@
 using BibTeXLibrary;
-using BibtexManager;
+using BibTeXManager;
 using DigitalProduction.Http;
 using Google.Apis.CustomSearchAPI.v1.Data;
 
-namespace BibtexManagerUnitTests;
+namespace BibTeXManagerUnitTests;
 
 public class SpeHttpTests
 {

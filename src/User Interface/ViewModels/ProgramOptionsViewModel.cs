@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace BibTexManager.ViewModels;
+namespace BibTeXManager.ViewModels;
 
 public partial class ProgramOptionsViewModel : ObservableObject
 {

@@ -1,8 +1,8 @@
-﻿using BibtexManager;
+﻿using BibTeXManager;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DigitalProduction.Maui.Controls;
 
-namespace BibTexManager.ViewModels;
+namespace BibTeXManager.ViewModels;
 
 public partial class CorrectionViewModel : ObservableObject
 {

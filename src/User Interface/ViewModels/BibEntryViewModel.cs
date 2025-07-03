@@ -1,9 +1,9 @@
 ﻿using BibTeXLibrary;
-using BibtexManager;
+using BibTeXManager;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace BibTexManager.ViewModels;
+namespace BibTeXManager.ViewModels;
 
 [QueryProperty(nameof(AddMode), "AddMode")]
 [QueryProperty(nameof(BibEntry), "BibEntry")]
@@ -116,7 +116,7 @@ public partial class BibEntryViewModel : ObservableObject
 
 	private void ValidateKey()
 	{
-		System.Diagnostics.Debug.Assert(BibtexProject.Instance != null);
+		System.Diagnostics.Debug.Assert(BibTeXProject.Instance != null);
 
 		// Set our value for if we can copy the key to the clipboard.
 		CanCopyKey = _bibEntry != null && _bibEntry.Key != string.Empty;
@@ -132,7 +132,7 @@ public partial class BibEntryViewModel : ObservableObject
 		if (_addMode == true)
 		{
 			// In add mode, we need to make sure the key is not already in the bibliography.
-			IsKeyValid = !BibtexProject.Instance.Bibliography.IsKeyInUse(_bibEntry!.Key);
+			IsKeyValid = !BibTeXProject.Instance.Bibliography.IsKeyInUse(_bibEntry!.Key);
 			return;
 		}
 
@@ -143,7 +143,7 @@ public partial class BibEntryViewModel : ObservableObject
 		}
 		else
 		{
-			IsKeyValid = !BibtexProject.Instance.Bibliography.IsKeyInUse(_bibEntry!.Key);
+			IsKeyValid = !BibTeXProject.Instance.Bibliography.IsKeyInUse(_bibEntry!.Key);
 		}
 	}
 
@@ -189,30 +189,30 @@ public partial class BibEntryViewModel : ObservableObject
 		_tryProcessing = false;
 
 		// Mapping.
-		BibtexProject.Instance!.RemapEntryNames(_bibEntry);
+		BibTeXProject.Instance!.RemapEntryNames(_bibEntry);
 
 		// Cleaning.
 
-		foreach (TagProcessingData tagProcessingData in BibtexProject.Instance.CleanEntry(_bibEntry))
+		foreach (TagProcessingData tagProcessingData in BibTeXProject.Instance.CleanEntry(_bibEntry))
 		{
 			yield return tagProcessingData;
 		}
 
 		// String constants replacement.
-		BibtexProject.Instance.ApplyStringConstants(_bibEntry);
+		BibTeXProject.Instance.ApplyStringConstants(_bibEntry);
 
 		// Key.
 		if (_addMode)
 		{
-			BibtexProject.Instance.GenerateNewKey(_bibEntry);
+			BibTeXProject.Instance.GenerateNewKey(_bibEntry);
 		}
 		else
 		{
-			BibtexProject.Instance.ValidateKey(_bibEntry);
+			BibTeXProject.Instance.ValidateKey(_bibEntry);
 		}
 
 		_tryProcessing = true;
-		RawBibEntry = _bibEntry.ToString(BibtexProject.Instance.Settings.WriteSettings);
+		RawBibEntry = _bibEntry.ToString(BibTeXProject.Instance.Settings.WriteSettings);
 	}
 
 	#endregion
@@ -233,7 +233,7 @@ public partial class BibEntryViewModel : ObservableObject
 		{
 			if (_tryProcessing)
 			{
-				_bibEntry = BibtexProject.Instance!.ParseSingleEntryText(RawBibEntry);
+				_bibEntry = BibTeXProject.Instance!.ParseSingleEntryText(RawBibEntry);
 			}
 		}
 		catch

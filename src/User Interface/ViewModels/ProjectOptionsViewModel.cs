@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 using DigitalProduction.Maui.Validation;
 using CommunityToolkit.Mvvm.Input;
 using BibTeXLibrary;
-using BibtexManager;
+using BibTeXManager;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DigitalProduction.Projects;
-using BibTexManager.Validation;
+using BibTeXManager.Validation;
 
-namespace BibTexManager.ViewModels;
+namespace BibTeXManager.ViewModels;
 
 public partial class ProjectOptionsViewModel : ObservableObject
 {

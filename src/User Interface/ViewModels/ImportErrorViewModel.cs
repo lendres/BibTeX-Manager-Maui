@@ -1,13 +1,13 @@
-﻿using BibtexManager;
-using BibtexManager.Importing;
-using BibtexManager.Project;
-using BibTexManager.Views;
+﻿using BibTeXManager;
+using BibTeXManager.Importing;
+using BibTeXManager.Project;
+using BibTeXManager.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DigitalProduction.Maui.Controls;
 using DocumentFormat.OpenXml.Bibliography;
 using System.Speech.Recognition;
 
-namespace BibTexManager.ViewModels;
+namespace BibTeXManager.ViewModels;
 
 public partial class ImportErrorViewModel : ObservableObject
 {

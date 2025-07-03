@@ -1,4 +1,4 @@
-﻿namespace BibTexManager;
+﻿namespace BibTeXManager;
 
 public partial class App : Application
 {

@@ -7,9 +7,9 @@
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:DataType="viewmodel:MainViewModel"
-	x:Class="BibTexManager.Views.MainPage">
+	x:Class="BibTeXManager.Views.MainPage">
 
 	<ContentPage.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
@@ -101,10 +101,10 @@
 			<!--<MenuFlyoutItem Text="Web Search Settings..." Clicked="OnWebSearchSettings"/>-->
 		</MenuBarItem>
 		<MenuBarItem Text="Tools">
-			<MenuFlyoutSubItem Text="Quality">
+			<!--<MenuFlyoutSubItem Text="Quality">-->
 				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding ProjectOpen}"/>
 				<MenuFlyoutItem Text="Check Tag Quality" Clicked="OnCheckTagQuality" IsEnabled="{Binding ProjectOpen}"/>
-			</MenuFlyoutSubItem>
+			<!--</MenuFlyoutSubItem>-->
 			<!--<MenuFlyoutSubItem Text="Import">
 				<MenuFlyoutItem Text="Single SPE Title Search" Clicked="OnSingleSpeTitleSearch" IsEnabled="{Binding ProjectOpen}"/>
 				<MenuFlyoutItem Text="Bulk SPE Title Search" Clicked="OnBulkSpeImport" IsEnabled="{Binding ProjectOpen}"/>

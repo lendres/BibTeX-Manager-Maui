@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Http;
 using DigitalProduction.Maui.Validation;
 
-namespace BibTexManager.ViewModels;
+namespace BibTeXManager.ViewModels;
 
 public partial class WebSettingsViewModel : ObservableObject
 {

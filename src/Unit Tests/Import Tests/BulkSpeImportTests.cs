@@ -1,8 +1,8 @@
-using BibtexManager;
-using BibtexManager.Project;
+using BibTeXManager;
+using BibTeXManager.Project;
 using DigitalProduction.Http;
 
-namespace BibtexManagerUnitTests;
+namespace BibTeXManagerUnitTests;
 
 public class BulkSpeImportTests
 {
