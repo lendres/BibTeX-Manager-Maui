@@ -2,7 +2,7 @@
 <Project>
 	<PropertyGroup>
 		<Major Condition=" '$(Major)' == '' ">0</Major>
-		<Minor Condition=" '$(Minor)' == '' ">1</Minor>
+		<Minor Condition=" '$(Minor)' == '' ">2</Minor>
 		<BuildNumber Condition=" '$(BuildNumber)' == '' ">0</BuildNumber>
 		<InformationalVersion></InformationalVersion>
 		
