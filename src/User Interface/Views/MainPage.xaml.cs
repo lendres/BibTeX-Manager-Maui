@@ -153,14 +153,14 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnProjectOptions(object sender, EventArgs eventArgs)
 	{
-		ProjectOptionsViewModel viewModel = new(BibtexProject.Instance!.Settings);
+		ProjectOptionsViewModel viewModel = new(BibTeXProject.Instance!.Settings);
 
 		ProjectOptionsView	view	= new(viewModel);
 		object?				result	= await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResut && boolResut)
 		{
-			BibtexProject.Instance.Settings = viewModel.Settings;
+			BibTeXProject.Instance.Settings = viewModel.Settings;
 		}
 	}
 

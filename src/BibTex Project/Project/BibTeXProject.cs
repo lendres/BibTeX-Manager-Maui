@@ -9,14 +9,14 @@ namespace BibTeXManager;
 /// The model.
 /// </summary>
 [XmlRoot("bibtexproject")]
-public class BibtexProject : DigitalProduction.Projects.Project
+public class BibTeXProject : DigitalProduction.Projects.Project
 {
 	#region Static Interface
 
-	private static BibtexProject? _instance;
+	private static BibTeXProject? _instance;
 
 	[XmlIgnore()]
-	public static BibtexProject? Instance
+	public static BibTeXProject? Instance
 	{
 		get => _instance;
 		set
@@ -29,8 +29,8 @@ public class BibtexProject : DigitalProduction.Projects.Project
 		}
 	}
 
-	public static void New() => Instance = new BibtexProject();
-	public static void New(string bibliographyFile) => Instance = new BibtexProject(bibliographyFile);
+	public static void New() => Instance = new BibTeXProject();
+	public static void New(string bibliographyFile) => Instance = new BibTeXProject(bibliographyFile);
 
 	private static void OnClose() { _instance = null; }
 
@@ -61,7 +61,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	protected BibtexProject() :
+	protected BibTeXProject() :
 		base(CompressionType.Uncompressed)
 	{
 		ModifiedChanged += OnMyModifiedChanged;
@@ -76,7 +76,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	protected BibtexProject(string bibliographyFile) :
+	protected BibTeXProject(string bibliographyFile) :
 		this()
 	{
 		_settings.BibliographyFile = bibliographyFile;
@@ -533,7 +533,7 @@ public class BibtexProject : DigitalProduction.Projects.Project
 
 	public static void Deserialize(string path)
 	{
-		Instance = Deserialize<BibtexProject>(path, CompressionType.Uncompressed);
+		Instance = Deserialize<BibTeXProject>(path, CompressionType.Uncompressed);
 		Instance.ReadAccessoaryFiles();
 		Instance.Modified = false;
 	}
