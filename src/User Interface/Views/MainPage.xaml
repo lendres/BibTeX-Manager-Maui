@@ -101,10 +101,10 @@
 			<!--<MenuFlyoutItem Text="Web Search Settings..." Clicked="OnWebSearchSettings"/>-->
 		</MenuBarItem>
 		<MenuBarItem Text="Tools">
-			<MenuFlyoutSubItem Text="Quality">
+			<!--<MenuFlyoutSubItem Text="Quality">-->
 				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding ProjectOpen}"/>
 				<MenuFlyoutItem Text="Check Tag Quality" Clicked="OnCheckTagQuality" IsEnabled="{Binding ProjectOpen}"/>
-			</MenuFlyoutSubItem>
+			<!--</MenuFlyoutSubItem>-->
 			<!--<MenuFlyoutSubItem Text="Import">
 				<MenuFlyoutItem Text="Single SPE Title Search" Clicked="OnSingleSpeTitleSearch" IsEnabled="{Binding ProjectOpen}"/>
 				<MenuFlyoutItem Text="Bulk SPE Title Search" Clicked="OnBulkSpeImport" IsEnabled="{Binding ProjectOpen}"/>
