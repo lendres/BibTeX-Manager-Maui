@@ -19,23 +19,23 @@
 
 	<ContentPage.MenuBarItems>
 		<MenuBarItem Text="File">
-			<MenuFlyoutItem Text="New..." Clicked="OnNew">
+			<MenuFlyoutItem Text="New Project..." Clicked="OnNew">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="n" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-			<MenuFlyoutItem Text="Open..." Clicked="OnOpen">
+			<MenuFlyoutItem Text="Open Project..." Clicked="OnOpen">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="o" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-			<MenuFlyoutItem Text="Save" Clicked="OnSave" IsEnabled="{Binding CanSave}">
+			<MenuFlyoutItem Text="Save Project" Clicked="OnSave" IsEnabled="{Binding CanSave}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="s" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-			<MenuFlyoutItem Text="Save As..." Clicked="OnSaveAs" IsEnabled="{Binding ProjectOpen}"/>
-			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding ProjectOpen}"/>
+			<MenuFlyoutItem Text="Save Project As..." Clicked="OnSaveAs" IsEnabled="{Binding ProjectOpen}"/>
+			<MenuFlyoutItem Text="Close Project" Clicked="OnClose" IsEnabled="{Binding ProjectOpen}"/>
 			<dpcontrols:RecentlyUsedMenuFlyout
 				Text="Recently Used"
 				PathCommand="{Binding OpenProjectCommand}"
@@ -43,7 +43,6 @@
 				RecentPathsManagerService="{Binding RecentPathsManagerService}"/>
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
 		</MenuBarItem>
-
 		<MenuBarItem Text="Edit">
 			<MenuFlyoutItem
 				Text="Add Entry..."
@@ -117,7 +116,11 @@
 					<KeyboardAccelerator Key="F1"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-			<MenuFlyoutItem Text="About" Clicked="OnAbout"/>
+			<MenuFlyoutItem Text="About" Clicked="OnAbout">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F10"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
 		</MenuBarItem>
 	</ContentPage.MenuBarItems>
 
