@@ -13,6 +13,10 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 {
 	#region Fields
 
+	private string?                     _findString;
+	private int                         _findIndex			= 0;
+	private List<BibEntry>?				_findResults;
+
 	private readonly IDialogService		_dialogService;
 
 	#endregion
@@ -47,6 +51,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	[ObservableProperty]
 	public partial bool								IsSubmittable { get; set; }					= false;
+
+	public bool										RequireSearchString { get => _findString == null; }
 
 	#endregion
 
@@ -156,10 +162,38 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Edit Menu
 
-	private int item = 1;
-	public void Find(string search)
+	public bool Find(string search)
 	{
-		SelectedItem = Items[item++]; // For testing purposes.
+		// Reset index for new search.	
+		_findIndex  = 0;
+		_findString = search;
+
+		List<string> tagNames	= ["author", "title"];
+		_findResults			= Project.Bibliography.SearchBibEntries(tagNames, true, search);
+
+		if (_findResults.Count > 0)
+		{
+			_findString = search;
+			return true;
+		}
+		else
+		{
+			_findString		= null;
+			_findResults	= null;
+			return false;
+		}
+	}
+
+	public void SelectNextFoundItem()
+	{
+		BibEntry searchBibEntry = _findResults![_findIndex++];
+		SelectedItem = searchBibEntry;
+		
+		// Reset index if we reach the end of the list.
+		if (_findIndex >= _findResults.Count)
+		{
+			_findIndex = 0;
+		}
 	}
 
 

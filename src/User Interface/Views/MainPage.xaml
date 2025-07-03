@@ -78,14 +78,20 @@
 					<KeyboardAccelerator Key="d"/>
 				</MenuFlyoutItem.KeyboardAccelerators>-->
 			</MenuFlyoutItem>
-
 			<MenuFlyoutItem
-				Text="Find Entry..."
+				Text="Find..."
 				Clicked="OnFind"
 				IsEnabled="{Binding ProjectOpen}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="f" Modifiers="Ctrl"/>
-					<KeyboardAccelerator Key="F3" Modifiers="Ctrl"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
+			Text="Find Next..."
+			Clicked="OnFindNext"
+			IsEnabled="{Binding ProjectOpen}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F3"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
 		</MenuBarItem>

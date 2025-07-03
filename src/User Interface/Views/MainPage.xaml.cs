@@ -7,6 +7,7 @@ using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
+using Google.Apis.CustomSearchAPI.v1.Data;
 using System.Diagnostics;
 
 namespace BibTexManager.Views;
@@ -18,6 +19,7 @@ public partial class MainPage : DigitalProductionMainPage
 	#region Fields
 
 	private readonly MainViewModel		_viewModel;
+
 	private readonly IBibTexFilePicker	_filePicker			= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTexFilePicker>();
 	private readonly ISaveFilePicker	_saveFilePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveFilePicker>();
 
@@ -103,7 +105,24 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Edit
 
-	async void OnFind(object sender, EventArgs eventArgs)
+	void OnFind(object sender, EventArgs eventArgs)
+	{
+		ShowFindDialogBox();
+	}
+
+	void OnFindNext(object sender, EventArgs eventArgs)
+	{
+		if (_viewModel.RequireSearchString)
+		{
+			ShowFindDialogBox();
+		}
+		else
+		{
+			FindInDataGridView();
+		}
+	}
+
+	private async void ShowFindDialogBox()
 	{
 		SearchTermsViewModel    viewModel   = new();
 		SearchTermsView         view        = new(viewModel);
@@ -111,9 +130,21 @@ public partial class MainPage : DigitalProductionMainPage
 
 		if (result is bool boolResut && boolResut)
 		{
-			string search = viewModel.SearchTermsString;
-			_viewModel.Find(search);
+			bool foundEntries = _viewModel.Find(viewModel.SearchTermsString);
+			if (!foundEntries)
+			{
+				await DisplayAlert("Not Found", "No entries found for the specified search term(s).\nSearch string: "+viewModel.SearchTermsString , "OK");
+			}
+			else
+			{
+				FindInDataGridView();
+			}
 		}
+	}
+
+	private void FindInDataGridView()
+	{
+		_viewModel.SelectNextFoundItem();
 	}
 
 	#endregion
