@@ -162,6 +162,11 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Edit Menu
 
+	/// <summary>
+	/// Searches the bibliography for the specified search string in the author and title fields.
+	/// </summary>
+	/// <param name="search">Search term.</param>
+	/// <returns>True if at least one BibEntry is found, false if no entries are found.</returns>
 	public bool Find(string search)
 	{
 		// Reset index for new search.	
@@ -184,6 +189,9 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		}
 	}
 
+	/// <summary>
+	/// Selects the next found item in the search results.
+	/// </summary>
 	public void SelectNextFoundItem()
 	{
 		BibEntry searchBibEntry = _findResults![_findIndex++];
@@ -195,7 +203,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 			_findIndex = 0;
 		}
 	}
-
 
 	#endregion
 
