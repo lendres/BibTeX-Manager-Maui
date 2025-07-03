@@ -110,25 +110,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	public BibEntryInitialization BibEntryInitialization { get => _bibEntryInitialization; }
 
 	/// <summary>
-	/// The BibEntryMap to use for remapping.
-	/// </summary>
-	[XmlAttribute("bibentrymap")]
-	public string BibEntryMap
-	{
-		get => _currentBibEntryMap;
-
-		set
-		{
-			if (_currentBibEntryMap != value)
-			{
-				_currentBibEntryMap = value;
-				Modified = true;
-				OnPropertyChanged();
-			}
-		}
-	}
-
-	/// <summary>
 	/// Bibliography.
 	/// </summary>
 	[XmlIgnore()]
