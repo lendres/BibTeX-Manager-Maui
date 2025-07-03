@@ -33,7 +33,7 @@ public static class MauiProgram
 				{  
 					builder.OnWindowCreated(del =>  
 					{  
-						del.Title = "BibTex Manager";
+						del.Title = "BibTeX Manager";
 					});  
 				});  
 			});
