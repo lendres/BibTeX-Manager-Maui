@@ -145,6 +145,7 @@ public partial class MainPage : DigitalProductionMainPage
 	private void FindInDataGridView()
 	{
 		_viewModel.SelectNextFoundItem();
+		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
 	}
 
 	#endregion
