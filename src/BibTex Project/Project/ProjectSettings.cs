@@ -2,7 +2,7 @@
 using DigitalProduction.ComponentModel;
 using System.Xml.Serialization;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 public class ProjectSettings : NotifyPropertyModifiedChanged
 {

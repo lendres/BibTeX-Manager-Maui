@@ -1,7 +1,7 @@
 ﻿using BibTeXLibrary;
-using BibtexManager.Project;
+using BibTeXManager.Project;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// 

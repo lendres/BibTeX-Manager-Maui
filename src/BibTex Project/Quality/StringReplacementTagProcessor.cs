@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// Replaces each pattern found with the replacement string.

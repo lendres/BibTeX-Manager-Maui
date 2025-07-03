@@ -1,8 +1,8 @@
-﻿using BibTexManager.ViewModels;
+﻿using BibTeXManager.ViewModels;
 using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.Views;
 
-namespace BibTexManager.Views;
+namespace BibTeXManager.Views;
 
 public partial class CorrectionView : PopupView
 {

@@ -1,9 +1,9 @@
 ﻿using BibTeXLibrary;
-using BibtexManager;
+using BibTeXManager;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace BibTexManager.ViewModels;
+namespace BibTeXManager.ViewModels;
 
 [QueryProperty(nameof(AddMode), "AddMode")]
 [QueryProperty(nameof(BibEntry), "BibEntry")]

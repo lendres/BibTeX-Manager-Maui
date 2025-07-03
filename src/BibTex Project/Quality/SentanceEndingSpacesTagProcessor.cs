@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// Corrects the spacing at the end of a sentance to be consistent.

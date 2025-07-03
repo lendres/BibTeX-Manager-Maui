@@ -3,10 +3,10 @@
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
-	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	x:DataType="viewmodel:ProgramOptionsViewModel"
-	x:Class="BibTexManager.Views.ProgramOptionsView"
+	x:Class="BibTeXManager.Views.ProgramOptionsView"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="360" MinimumHeightRequest="128" MaximumHeightRequest="521">

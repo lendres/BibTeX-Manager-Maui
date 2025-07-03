@@ -7,9 +7,9 @@
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:DataType="viewmodel:MainViewModel"
-	x:Class="BibTexManager.Views.MainPage">
+	x:Class="BibTeXManager.Views.MainPage">
 
 	<ContentPage.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>

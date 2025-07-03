@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Validation;
 
-namespace BibTexManager.ViewModels;
+namespace BibTeXManager.ViewModels;
 
 public partial class SearchTermsViewModel : ObservableObject
 {

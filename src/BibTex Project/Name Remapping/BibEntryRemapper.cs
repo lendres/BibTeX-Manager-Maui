@@ -2,7 +2,7 @@
 using DigitalProduction.Xml.Serialization;
 using System.Xml.Serialization;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// A class to remap the type and tag names of a bibilography entry.

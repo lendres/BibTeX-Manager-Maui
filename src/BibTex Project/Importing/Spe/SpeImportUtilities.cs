@@ -2,7 +2,7 @@
 using Google.Apis.CustomSearchAPI.v1.Data;
 using System.Net.Http;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// 

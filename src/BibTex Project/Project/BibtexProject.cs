@@ -3,7 +3,7 @@ using DigitalProduction.Projects;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// The model.

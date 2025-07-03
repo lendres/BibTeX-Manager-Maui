@@ -1,6 +1,6 @@
 ﻿using BibTeXLibrary;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 public interface ISingleImporter
 {

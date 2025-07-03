@@ -2,7 +2,7 @@
 using DigitalProduction.Xml.Serialization;
 using System.Xml.Serialization;
 
-namespace BibtexManager.Project;
+namespace BibTeXManager.Project;
 
 /// <summary>
 /// 

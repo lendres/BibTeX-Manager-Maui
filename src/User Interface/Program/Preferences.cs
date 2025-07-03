@@ -1,6 +1,6 @@
 ﻿using DigitalProduction.Maui.Services;
 
-namespace BibTexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// Registry access and setting storage.

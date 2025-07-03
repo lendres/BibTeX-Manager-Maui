@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace BibtexManager.Project;
+namespace BibTeXManager.Project;
 
 /// <summary>
 /// Add summary here.

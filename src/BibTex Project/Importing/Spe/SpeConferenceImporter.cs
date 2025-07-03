@@ -1,8 +1,8 @@
 ﻿using BibTeXLibrary;
-using BibtexManager.Project;
+using BibTeXManager.Project;
 using HtmlAgilityPack;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// 

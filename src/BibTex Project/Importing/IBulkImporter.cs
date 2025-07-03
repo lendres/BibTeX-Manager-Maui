@@ -1,8 +1,8 @@
 ﻿using BibTeXLibrary;
-using BibtexManager.Importing;
-using BibtexManager.Project;
+using BibTeXManager.Importing;
+using BibTeXManager.Project;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 public interface IBulkImporter
 {

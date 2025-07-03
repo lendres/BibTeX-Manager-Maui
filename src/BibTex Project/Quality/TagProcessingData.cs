@@ -1,4 +1,4 @@
-﻿namespace BibtexManager;
+﻿namespace BibTeXManager;
 
 /// <summary>
 /// Data used for processing by a single TagProcessor.

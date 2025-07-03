@@ -1,4 +1,4 @@
-﻿namespace BibtexManager;
+﻿namespace BibTeXManager;
 
 /// <summary>
 /// 

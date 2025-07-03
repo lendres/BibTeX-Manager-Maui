@@ -1,7 +1,7 @@
 ﻿using DigitalProduction.Xml.Serialization;
 using System.Xml.Serialization;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// A class for mapping BibEntry data.

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace BibtexManager
+namespace BibTeXManager
 {
 	/// <summary>
 	/// Used to determine what type of webpage a search returned.

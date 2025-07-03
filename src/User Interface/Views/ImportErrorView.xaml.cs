@@ -1,8 +1,8 @@
-﻿using BibtexManager.Importing;
-using BibTexManager.ViewModels;
+﻿using BibTeXManager.Importing;
+using BibTeXManager.ViewModels;
 using DigitalProduction.Maui.Views;
 
-namespace BibTexManager.Views;
+namespace BibTeXManager.Views;
 
 public partial class ImportErrorView : PopupView
 {

@@ -1,7 +1,7 @@
 ﻿using DigitalProduction.Strings;
 using System.Xml.Serialization;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// Changes the case of text.

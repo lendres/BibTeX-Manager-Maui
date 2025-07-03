@@ -1,6 +1,6 @@
-﻿namespace BibTexManager;
+﻿namespace BibTeXManager;
 
-class BibTexFilePicker : IBibTexFilePicker
+class BibTeXFilePicker : IBibTeXFilePicker
 {
 	#region File Browsing
 

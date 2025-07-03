@@ -1,10 +1,10 @@
 ﻿using BibTeXLibrary;
-using BibtexManager.Quality;
+using BibTeXManager.Quality;
 using DigitalProduction.Xml.Serialization;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// 

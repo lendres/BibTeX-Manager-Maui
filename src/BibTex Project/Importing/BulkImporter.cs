@@ -1,9 +1,9 @@
 ﻿using BibTeXLibrary;
-using BibtexManager.Importing;
-using BibtexManager.Project;
+using BibTeXManager.Importing;
+using BibTeXManager.Project;
 using ClosedXML.Excel;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// 

@@ -1,12 +1,12 @@
-using BibTexManager.ViewModels;
+using BibTeXManager.ViewModels;
 using DigitalProduction.Maui.Views;
 
-namespace BibTexManager.Views;
+namespace BibTeXManager.Views;
 
 public partial class ProjectOptionsView : PopupView
 {
 	readonly ProjectOptionsViewModel	_viewModel;
-	readonly IBibTexFilePicker			_filePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTexFilePicker>();
+	readonly IBibTeXFilePicker			_filePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTeXFilePicker>();
 
 	public ProjectOptionsView(ProjectOptionsViewModel viewModel)
 	{

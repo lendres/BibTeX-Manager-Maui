@@ -1,5 +1,5 @@
-﻿using BibTexManager.ViewModels;
-using BibTexManager.Views;
+﻿using BibTeXManager.ViewModels;
+using BibTeXManager.Views;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Media;
 using CommunityToolkit.Maui.Storage;
@@ -9,7 +9,7 @@ using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.UI;
 using Microsoft.Extensions.Logging;
 
-namespace BibTexManager;
+namespace BibTeXManager;
 
 public static class MauiProgram
 {
@@ -58,7 +58,7 @@ public static class MauiProgram
 
 	private static void CreateServices(IServiceCollection services)
 	{
-		services.AddSingleton<IBibTexFilePicker, BibTexFilePicker>();
+		services.AddSingleton<IBibTeXFilePicker, BibTeXFilePicker>();
 		services.AddSingleton<IDialogService, DialogService>();
 		services.AddSingleton<IRecentPathsManagerService, RecentPathsManagerService>();
 		services.AddSingleton<ISaveFilePicker, SaveFilePicker>();

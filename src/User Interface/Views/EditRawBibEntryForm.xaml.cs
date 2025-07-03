@@ -1,10 +1,10 @@
 using BibTeXLibrary;
-using BibtexManager;
-using BibTexManager.ViewModels;
+using BibTeXManager;
+using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
 
-namespace BibTexManager.Views;
+namespace BibTeXManager.Views;
 
 public partial class EditRawBibEntryForm : ContentPage
 {

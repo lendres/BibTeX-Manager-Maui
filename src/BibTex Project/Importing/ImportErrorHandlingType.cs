@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace BibtexManager.Importing;
+namespace BibTeXManager.Importing;
 
 /// <summary>
 /// Add summary here.

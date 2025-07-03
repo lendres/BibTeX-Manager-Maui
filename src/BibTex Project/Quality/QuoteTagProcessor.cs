@@ -1,4 +1,4 @@
-﻿namespace BibtexManager;
+﻿namespace BibTeXManager;
 
 /// <summary>
 /// Changes quotation marks ("...") to LaTeX quotations (``...'').

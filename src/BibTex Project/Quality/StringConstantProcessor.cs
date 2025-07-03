@@ -1,6 +1,6 @@
 ﻿using BibTeXLibrary;
 
-namespace BibtexManager;
+namespace BibTeXManager;
 
 /// <summary>
 /// Processor to handle bibliography constant strings.

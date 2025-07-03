@@ -1,6 +1,6 @@
-﻿namespace BibTexManager;
+﻿namespace BibTeXManager;
 
-public interface IBibTexFilePicker
+public interface IBibTeXFilePicker
 {
 	Task<string> BrowseForProjectFile();
 	Task<string> BrowseForBibliographyFile();

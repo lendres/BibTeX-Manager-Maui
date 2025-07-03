@@ -1,13 +1,13 @@
 ﻿using BibTeXLibrary;
-using BibtexManager;
-using BibtexManager.Project;
+using BibTeXManager;
+using BibTeXManager.Project;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Http;
 
-namespace BibTexManager.ViewModels;
+namespace BibTeXManager.ViewModels;
 
 public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 {

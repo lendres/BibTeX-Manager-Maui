@@ -1,7 +1,7 @@
 ﻿using BibTeXLibrary;
-using BibtexManager;
-using BibtexManager.Project;
-using BibTexManager.ViewModels;
+using BibTeXManager;
+using BibTeXManager.Project;
+using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.Storage;
@@ -10,7 +10,7 @@ using DigitalProduction.Maui.Views;
 using Google.Apis.CustomSearchAPI.v1.Data;
 using System.Diagnostics;
 
-namespace BibTexManager.Views;
+namespace BibTeXManager.Views;
 
 [QueryProperty(nameof(NavigationCommand), "NavigationCommand")]
 [QueryProperty(nameof(NavigationObject), "NavigationObject")]
@@ -20,7 +20,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	private readonly MainViewModel		_viewModel;
 
-	private readonly IBibTexFilePicker	_filePicker			= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTexFilePicker>();
+	private readonly IBibTeXFilePicker	_filePicker			= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTeXFilePicker>();
 	private readonly ISaveFilePicker	_saveFilePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveFilePicker>();
 
 	#endregion

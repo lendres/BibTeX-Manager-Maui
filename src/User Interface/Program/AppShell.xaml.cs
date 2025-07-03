@@ -1,6 +1,6 @@
-﻿using BibTexManager.Views;
+﻿using BibTeXManager.Views;
 
-namespace BibTexManager;
+namespace BibTeXManager;
 
 public partial class AppShell : Shell
 {

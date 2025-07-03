@@ -1,4 +1,4 @@
-﻿namespace BibtexManager;
+﻿namespace BibTeXManager;
 
 /// <summary>
 /// Class for holding information related to an article.

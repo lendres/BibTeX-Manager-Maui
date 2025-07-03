@@ -6,8 +6,8 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
-	xmlns:viewmodel="clr-namespace:BibTexManager.ViewModels"
-	x:Class="BibTexManager.Views.CorrectionView"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
+	x:Class="BibTeXManager.Views.CorrectionView"
 	x:DataType="viewmodel:CorrectionViewModel"
 	x:Name="self"
 	CanBeDismissedByTappingOutsideOfPopup="False">
