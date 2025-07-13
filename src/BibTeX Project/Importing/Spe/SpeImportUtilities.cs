@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office2016.Excel;
-using Google.Apis.CustomSearchAPI.v1.Data;
-using System.Net.Http;
+﻿using Google.Apis.CustomSearchAPI.v1.Data;
 
 namespace BibTeXManager;
 
