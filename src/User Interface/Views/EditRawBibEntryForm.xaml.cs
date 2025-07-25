@@ -19,6 +19,8 @@ public partial class EditRawBibEntryForm : ContentPage
 
 	async public void OnSave(object sender, EventArgs eventArgs)
 	{
+		_viewModel.CopyCiteKeyIfEnabled();
+
 		// Navigate back with a result.
 		Dictionary<string, object> navigationParameter = new()
 		{

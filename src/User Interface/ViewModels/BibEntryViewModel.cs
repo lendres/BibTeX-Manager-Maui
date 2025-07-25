@@ -166,6 +166,14 @@ public partial class BibEntryViewModel : ObservableObject
 
 	#region Commands
 
+	public void CopyCiteKeyIfEnabled()
+	{
+		if (BibTeXProject.Instance!.Settings.CopyCiteKeyOnEntryAdd)
+		{
+			CopyCiteKeyToClipboard();
+		}	
+	}
+
 	[RelayCommand]
 	private void CopyCiteKeyToClipboard()
 	{
