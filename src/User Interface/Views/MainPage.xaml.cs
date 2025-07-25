@@ -1,5 +1,4 @@
 ﻿using BibTeXLibrary;
-using BibTeXManager;
 using BibTeXManager.Project;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
@@ -7,8 +6,6 @@ using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
-using Google.Apis.CustomSearchAPI.v1.Data;
-using System.Diagnostics;
 
 namespace BibTeXManager.Views;
 
