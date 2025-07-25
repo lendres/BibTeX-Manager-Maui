@@ -79,7 +79,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		ValidateHasTemplates();
 	}
 
-	private void OnProjectPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+	private void OnProjectPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs eventArgs)
 	{
 		ValidateHasTemplates();
 	}
@@ -88,6 +88,13 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	{
 		ValidateCanSave();
 		ValidateHasTemplates();
+	}
+
+	[RelayCommand]
+	private void CopyCiteKeyToClipboard()
+	{
+		System.Diagnostics.Debug.Assert(SelectedItem != null);
+		Clipboard.Default.SetTextAsync(SelectedItem.Key);
 	}
 
 	#endregion

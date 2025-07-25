@@ -157,6 +157,13 @@
 					Clicked="OnDeleteBibEntry"
 					StyleClass="SquareButton"
 					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+
+				<Button 
+					Text="Copy Key"
+					Command="{Binding CopyCiteKeyToClipboardCommand}"
+					StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+
 			</HorizontalStackLayout>
 
 			<Button 
