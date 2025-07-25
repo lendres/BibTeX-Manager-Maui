@@ -50,8 +50,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 
 	private QualityProcessor					_tagQualityProcessor			= new();
 
-	private string								_currentBibEntryMap				= "";
-
 	private BibEntryRemapper					_nameRemapper					= new();
 
 	#endregion
