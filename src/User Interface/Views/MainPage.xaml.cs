@@ -149,24 +149,16 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Settings
 
-	async void OnProjectOptions(object sender, EventArgs eventArgs)
+	async void OnProgramOptions(object sender, EventArgs eventArgs)
 	{
-		ProjectOptionsViewModel viewModel = new(BibTeXProject.Instance!.Settings);
-
-		ProjectOptionsView	view	= new(viewModel);
-		object?				result	= await Shell.Current.ShowPopupAsync(view);
+		ProgramOptionsViewModel	viewModel	= new(BibTeXProject.Instance!.Settings);
+		ProgramOptionsView		view		= new(viewModel);
+		object?					result		= await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResut && boolResut)
 		{
 			BibTeXProject.Instance.Settings = viewModel.Settings;
 		}
-	}
-
-	async void OnProgramOptions(object sender, EventArgs eventArgs)
-	{
-		ProgramOptionsViewModel	viewModel	= new();
-		ProgramOptionsView		view		= new(viewModel);
-		_									= await Shell.Current.ShowPopupAsync(view);
 	}
 
 	async void OnWebSearchSettings(object sender, EventArgs eventArgs)

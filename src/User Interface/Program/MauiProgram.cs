@@ -7,7 +7,6 @@ using DigitalProduction.Maui;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.UI;
-using Microsoft.Extensions.Logging;
 
 namespace BibTeXManager;
 
@@ -53,7 +52,6 @@ public static class MauiProgram
 		services.AddTransient<BibEntryViewModel>();
 
 		services.AddTransientPopup<ProgramOptionsView, ProgramOptionsViewModel>();
-		services.AddTransientPopup<ProjectOptionsView, ProjectOptionsViewModel>();
 	}
 
 	private static void CreateServices(IServiceCollection services)

@@ -95,7 +95,6 @@
 			</MenuFlyoutItem>
 		</MenuBarItem>
 		<MenuBarItem Text="Settings">
-			<MenuFlyoutItem Text="Project Settings..." Clicked="OnProjectOptions" IsEnabled="{Binding ProjectOpen}"/>
 			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>
 			<!--<MenuFlyoutItem Text="Web Search Settings..." Clicked="OnWebSearchSettings"/>-->
 		</MenuBarItem>
