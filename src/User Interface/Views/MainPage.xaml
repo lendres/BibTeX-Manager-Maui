@@ -2,6 +2,7 @@
 <dpatkcontrols:DigitalProductionMainPage
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Name="ThisPage"
 	xmlns:dpatkcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
@@ -183,7 +184,7 @@
 			SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
 			RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
 			PaginationEnabled="false"
-			RowTappedCommand="{Binding TappedCommand}"
+			RowTappedCommand="{Binding RowTappedCommand, Source={x:Reference ThisPage}, x:DataType=ContentPage}"
 			IsVisible="{Binding Items, Converter={StaticResource IsNotNullConverter}}"
 			IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
 

@@ -2,10 +2,12 @@
 using BibTeXManager.Project;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
+using System.Diagnostics;
 
 namespace BibTeXManager.Views;
 
@@ -16,6 +18,10 @@ public partial class MainPage : DigitalProductionMainPage
 	#region Fields
 
 	private readonly MainViewModel		_viewModel;
+
+	private DateTime					_lastTapTime		= DateTime.MinValue;
+	private object?						_lastTappedItem		= null;
+	public Command<object>				RowTappedCommand	=> new Command<object>(OnRowTapped);
 
 	private readonly IBibTeXFilePicker	_filePicker			= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTeXFilePicker>();
 	private readonly ISaveFilePicker	_saveFilePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveFilePicker>();
@@ -359,7 +365,12 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 	}
 
-	async void OnEditBibEntry(object sender, EventArgs eventArgs)
+	private void OnEditBibEntry(object sender, EventArgs eventArgs)
+	{
+		Edit();
+	}
+
+	async void Edit()
 	{
 		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
 		{
@@ -376,6 +387,31 @@ public partial class MainPage : DigitalProductionMainPage
 		{
 			_viewModel.Delete();
 		}
+	}
+
+	#endregion
+
+	#region Gesture Events
+
+	public void OnRowTapped(object item)
+	{
+		DateTime now = DateTime.Now;
+		if (item == _lastTappedItem && (now - _lastTapTime).TotalMilliseconds < 999300)
+		{
+			OnRowDoubleTapped(item);
+			_lastTapTime = DateTime.MinValue; // Reset
+			_lastTappedItem = null;
+		}
+		else
+		{
+			_lastTapTime = now;
+			_lastTappedItem = item;
+		}
+	}
+
+	private void OnRowDoubleTapped(object item)
+	{
+		Edit();
 	}
 
 	#endregion
