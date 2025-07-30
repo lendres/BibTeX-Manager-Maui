@@ -73,14 +73,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Models\**" />
-	  <EmbeddedResource Remove="Models\**" />
-	  <MauiCss Remove="Models\**" />
-	  <MauiXaml Remove="Models\**" />
-	  <None Remove="Models\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.1.0" />
 		<PackageReference Include="DigitalProduction.Maui" Version="0.9.0" />
 		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.12.0" />
@@ -139,10 +131,6 @@
 		<Compile Update="Views\TemplateSelectionView.xaml.cs">
 			<DependentUpon>TemplateSelectionView.xaml</DependentUpon>
 		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PRIResource Remove="Models\**" />
 	</ItemGroup>
 
 </Project>
