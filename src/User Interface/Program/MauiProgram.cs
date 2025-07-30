@@ -1,6 +1,7 @@
 ﻿using BibTeXManager.ViewModels;
 using BibTeXManager.Views;
 using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui.Media;
 using CommunityToolkit.Maui.Storage;
 using DigitalProduction.Maui;
