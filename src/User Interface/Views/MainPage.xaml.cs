@@ -357,6 +357,7 @@ public partial class MainPage : DigitalProductionMainPage
 				_viewModel.ReplaceSelected(NavigationObject);
 				break;
 		}
+		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
 	}
 
 	async void OnEditBibEntry(object sender, EventArgs eventArgs)
@@ -375,6 +376,7 @@ public partial class MainPage : DigitalProductionMainPage
 		if (result)
 		{
 			_viewModel.Delete();
+			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
 		}
 	}
 
