@@ -357,6 +357,7 @@ public partial class MainPage : DigitalProductionMainPage
 				_viewModel.ReplaceSelected(NavigationObject);
 				break;
 		}
+
 		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
 	}
 

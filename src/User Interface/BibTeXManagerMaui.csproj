@@ -75,7 +75,7 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.1.0" />
 		<PackageReference Include="DigitalProduction.Maui" Version="0.9.0" />
-		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.12.1" />
+		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.12.3" />
 		<PackageReference Include="DigitalProduction.Maui.Images" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.80" />

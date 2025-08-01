@@ -8,7 +8,6 @@ using DigitalProduction.Maui;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.UI;
-using Microsoft.Extensions.Logging;
 
 namespace BibTeXManager;
 
