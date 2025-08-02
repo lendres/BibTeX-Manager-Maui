@@ -43,13 +43,7 @@ public static class Utilities
 	{
 		foreach (TagProcessor processor in processors)
 		{
-			foreach (Correction correction in processor.Process(entry))
-			{
-				if (correction.PromptUser)
-				{
-					correction.ReplaceText = true;
-				}
-			}
+			RunProcessor(processor, entry);
 		}
 	}
 
