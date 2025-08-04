@@ -30,7 +30,7 @@ public static class MauiProgram
 		LifecycleOptions lifecycleOptions = new()
 		{
 			EnsureOnScreen          = false,
-			DisableMaximizeButton   = true,
+			DisableMaximizeButton   = false,
 			WindowTitle             = "BibTeX Manager"
 		};
 		DigitalProduction.Maui.UI.LifecycleEventsInstaller.ConfigureLifecycleEvents(builder, lifecycleOptions);
