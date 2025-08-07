@@ -75,7 +75,7 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.1.0" />
 		<PackageReference Include="DigitalProduction.Maui" Version="0.9.0" />
-		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.12.1" />
+		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.12.4" />
 		<PackageReference Include="DigitalProduction.Maui.Images" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.80" />
@@ -83,9 +83,6 @@
 
 	<ItemGroup>
 		<MauiXaml Update="Views\ImportErrorView.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="Views\SearchTermsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\WebSearchSettingsView.xaml">
@@ -115,9 +112,6 @@
 	<ItemGroup>
 		<Compile Update="Views\ImportErrorView.xaml.cs">
 		  <DependentUpon>ImportErrorView.xaml</DependentUpon>
-		</Compile>
-		<Compile Update="Views\SearchTermsView.xaml.cs">
-		  <DependentUpon>SearchTermsView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\WebSearchSettingsView.xaml.cs">
 		  <DependentUpon>WebSearchSettingsView.xaml</DependentUpon>

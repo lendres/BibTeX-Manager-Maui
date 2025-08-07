@@ -364,7 +364,11 @@ public partial class MainPage : DigitalProductionMainPage
 			case "Replace":
 				_viewModel.ReplaceSelected(NavigationObject);
 				break;
+			case "Cancel":
+				// Nothing to do.
+				break;
 		}
+
 		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
 	}
 

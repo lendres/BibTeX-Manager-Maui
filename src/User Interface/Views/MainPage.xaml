@@ -98,6 +98,7 @@
 				Clicked="OnScrollToSelection"
 				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}">
 				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="s"/>
 					<KeyboardAccelerator Key="F4"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>

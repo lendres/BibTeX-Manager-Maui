@@ -13,10 +13,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 {
 	#region Fields
 
-	private string?                     _findString;
-	private int                         _findIndex			= 0;
-	private List<BibEntry>?				_findResults;
-
 	private readonly IDialogService		_dialogService;
 
 	#endregion
@@ -51,8 +47,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	[ObservableProperty]
 	public partial bool								IsSubmittable { get; set; }					= false;
-
-	public bool										RequireSearchString { get => _findString == null; }
 
 	#endregion
 
@@ -174,41 +168,12 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	/// </summary>
 	/// <param name="search">Search term.</param>
 	/// <returns>True if at least one BibEntry is found, false if no entries are found.</returns>
-	public bool Find(string search)
+	public override bool Find(string search)
 	{
-		// Reset index for new search.	
-		_findIndex  = 0;
-		_findString = search;
+		List<string> tagNames		= ["author", "title"];
+		List<BibEntry> findResults	= Project.Bibliography.SearchBibEntries(tagNames, true, search);
+		return SetSearchResults(search, findResults);
 
-		List<string> tagNames	= ["author", "title"];
-		_findResults			= Project.Bibliography.SearchBibEntries(tagNames, true, search);
-
-		if (_findResults.Count > 0)
-		{
-			_findString = search;
-			return true;
-		}
-		else
-		{
-			_findString		= null;
-			_findResults	= null;
-			return false;
-		}
-	}
-
-	/// <summary>
-	/// Selects the next found item in the search results.
-	/// </summary>
-	public void SelectNextFoundItem()
-	{
-		BibEntry searchBibEntry = _findResults![_findIndex++];
-		SelectedItem = searchBibEntry;
-		
-		// Reset index if we reach the end of the list.
-		if (_findIndex >= _findResults.Count)
-		{
-			_findIndex = 0;
-		}
 	}
 
 	#endregion

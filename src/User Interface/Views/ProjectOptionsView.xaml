@@ -269,7 +269,6 @@
 				</VerticalStackLayout>
 			</ScrollView>
 
-
 			<HorizontalStackLayout  Grid.Row="2" StyleClass="BottomButtonRowStyle" Padding="0,5,0,0">
 				<Button 
 					Text="OK"
