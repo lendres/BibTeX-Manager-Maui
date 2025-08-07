@@ -145,6 +145,14 @@ public partial class MainPage : DigitalProductionMainPage
 		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
 	}
 
+	private void OnScrollToSelection(object sender, EventArgs eventArgs)
+	{
+		if (_viewModel.SelectedItem != null)
+		{
+			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem, ScrollToPosition.Center, true);
+		}
+	}
+
 	#endregion
 
 	#region Settings
@@ -348,7 +356,12 @@ public partial class MainPage : DigitalProductionMainPage
 			case "Replace":
 				_viewModel.ReplaceSelected(NavigationObject);
 				break;
+			case "Cancel":
+				// Nothing to do.
+				break;
 		}
+
+		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
 	}
 
 	async void OnEditBibEntry(object sender, EventArgs eventArgs)
@@ -367,6 +380,7 @@ public partial class MainPage : DigitalProductionMainPage
 		if (result)
 		{
 			_viewModel.Delete();
+			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
 		}
 	}
 

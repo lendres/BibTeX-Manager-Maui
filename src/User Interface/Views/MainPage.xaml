@@ -86,11 +86,20 @@
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
 			<MenuFlyoutItem
-			Text="Find Next..."
-			Clicked="OnFindNext"
-			IsEnabled="{Binding ProjectOpen}">
+				Text="Find Next"
+				Clicked="OnFindNext"
+				IsEnabled="{Binding ProjectOpen}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F3"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
+				Text="Scroll to Selection"
+				Clicked="OnScrollToSelection"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="s"/>
+					<KeyboardAccelerator Key="F4"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
 		</MenuBarItem>

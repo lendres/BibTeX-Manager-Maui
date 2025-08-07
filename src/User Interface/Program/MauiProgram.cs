@@ -1,6 +1,7 @@
 ﻿using BibTeXManager.ViewModels;
 using BibTeXManager.Views;
 using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui.Media;
 using CommunityToolkit.Maui.Storage;
 using DigitalProduction.Maui;
@@ -28,7 +29,7 @@ public static class MauiProgram
 		LifecycleOptions lifecycleOptions = new()
 		{
 			EnsureOnScreen          = false,
-			DisableMaximizeButton   = true,
+			DisableMaximizeButton   = false,
 			WindowTitle             = "BibTeX Manager"
 		};
 		DigitalProduction.Maui.UI.LifecycleEventsInstaller.ConfigureLifecycleEvents(builder, lifecycleOptions);

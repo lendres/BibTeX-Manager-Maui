@@ -1,13 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using DigitalProduction.Maui.Services;
-using System.Collections.ObjectModel;
-using DigitalProduction.Maui.Validation;
-using CommunityToolkit.Mvvm.Input;
-using BibTeXLibrary;
-using BibTeXManager;
-using DocumentFormat.OpenXml.Wordprocessing;
-using DigitalProduction.Projects;
+﻿using BibTeXLibrary;
 using BibTeXManager.Validation;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using DigitalProduction.Maui.Validation;
 
 namespace BibTeXManager.ViewModels;
 
