@@ -110,7 +110,7 @@ public static class SpeImportUtilities
 		{
 			string message = "Failed to download Bibtex entry from " + _website + ": " + response.ReasonPhrase;
 			//message +=  Environment.NewLine + "Check that you are logged into SPE.";
-			throw new HttpRequestException();
+			throw new HttpRequestException(message);
 		}
 
 		HttpContent			content			= response.Content;
