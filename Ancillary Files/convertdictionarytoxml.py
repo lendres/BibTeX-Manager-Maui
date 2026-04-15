@@ -4,11 +4,13 @@ Created on May 14, 2023
 """
 
 from unicodetolatex import unicode_codes_to_latex
-file = open("LaTeX Tag Quality Processing.qlty", "w")
 
 def WriteLine(line):
     file.write(line+"\n")
 
+
+# Write the LaTex Tag Quality Procesing file.
+file = open('LaTeX Tag Quality Processing.qlty', 'w')
 WriteLine('<?xml version="1.0" encoding="utf-8"?>')
 WriteLine("")
 WriteLine('<!-- Do not directly edit this file.  Edit and run the Python script in the "Ancillary Files" directory to make changes. -->')
@@ -30,4 +32,19 @@ for key, value in unicode_codes_to_latex.items():
 
 WriteLine('\t</tagprocessors>')
 WriteLine('</tagprocessorgroup>')
+file.close()
+
+# Write a test file.
+file = open('LaTeX Values from Unicode.tex', 'w')
+WriteLine('\\documentclass{book}')
+WriteLine('\\usepackage{amsmath}')
+WriteLine('\\usepackage{amssymb}')
+WriteLine('\\usepackage[T1]{fontenc}')
+
+WriteLine("\\begin{document}")
+
+for key, value in unicode_codes_to_latex.items():
+    WriteLine('key=\\u' + key + '\tvalue=' + value .replace('&amp;', '&') + '\n')
+
+WriteLine("\\end{document}")
 file.close()

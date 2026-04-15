@@ -26,7 +26,7 @@
 		</tagprocessor>
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
-			pattern="\s\u0026\s"
+			pattern="\u0026"
 			replacement="\&amp;">
 			<tags>
 				<tag>href</tag>
@@ -37,7 +37,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u002A"
-			replacement="\ast{}">
+			replacement="$\ast{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -67,7 +67,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u007C"
-			replacement="\vert{}">
+			replacement="$\vert{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -197,7 +197,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u00AC"
-			replacement="\lnot{}">
+			replacement="$\lnot{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -247,7 +247,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u00B1"
-			replacement="\pm{}">
+			replacement="$\pm{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -307,7 +307,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u00B7"
-			replacement="\cdot{}">
+			replacement="$\cdot{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -947,7 +947,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u00F7"
-			replacement="\div{}">
+			replacement="$\div{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -1416,26 +1416,6 @@
 		</tagprocessor>
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
-			pattern="\u0126"
-			replacement="{\fontencoding{LELA}\selectfont\char40}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0127"
-			replacement="\Elzxh{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
 			pattern="\u0128"
 			replacement="\~{I}">
 			<tags>
@@ -1596,16 +1576,6 @@
 		</tagprocessor>
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
-			pattern="\u0138"
-			replacement="{\fontencoding{LELA}\selectfont\char91}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
 			pattern="\u0139"
 			replacement="\'{L}">
 			<tags>
@@ -1658,26 +1628,6 @@
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u013E"
 			replacement="\v{l}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u013F"
-			replacement="{\fontencoding{LELA}\selectfont\char201}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0140"
-			replacement="{\fontencoding{LELA}\selectfont\char202}">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -2056,26 +2006,6 @@
 		</tagprocessor>
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
-			pattern="\u0166"
-			replacement="{\fontencoding{LELA}\selectfont\char47}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0167"
-			replacement="{\fontencoding{LELA}\selectfont\char63}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
 			pattern="\u0168"
 			replacement="\~{U}">
 			<tags>
@@ -2306,56 +2236,6 @@
 		</tagprocessor>
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
-			pattern="\u0195"
-			replacement="\texthvlig{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u019E"
-			replacement="\textnrleg{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u01AA"
-			replacement="\eth{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u01BA"
-			replacement="{\fontencoding{LELA}\selectfont\char195}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u01C2"
-			replacement="\textdoublepipe{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
 			pattern="\u01F5"
 			replacement="\'{g}">
 			<tags>
@@ -2366,428 +2246,8 @@
 		</tagprocessor>
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
-			pattern="\u0250"
-			replacement="\Elztrna{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0252"
-			replacement="\Elztrnsa{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0254"
-			replacement="\Elzopeno{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0256"
-			replacement="\Elzrtld{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0258"
-			replacement="{\fontencoding{LEIP}\selectfont\char61}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0259"
-			replacement="\Elzschwa{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
 			pattern="\u025B"
-			replacement="\varepsilon{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0263"
-			replacement="\Elzpgamma{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0264"
-			replacement="\Elzpbgam{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0265"
-			replacement="\Elztrnh{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u026C"
-			replacement="\Elzbtdl{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u026D"
-			replacement="\Elzrtll{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u026F"
-			replacement="\Elztrnm{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0270"
-			replacement="\Elztrnmlr{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0271"
-			replacement="\Elzltlmr{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0272"
-			replacement="\Elzltln{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0273"
-			replacement="\Elzrtln{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0277"
-			replacement="\Elzclomeg{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0278"
-			replacement="\textphi{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0279"
-			replacement="\Elztrnr{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u027A"
-			replacement="\Elztrnrl{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u027B"
-			replacement="\Elzrttrnr{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u027C"
-			replacement="\Elzrl{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u027D"
-			replacement="\Elzrtlr{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u027E"
-			replacement="\Elzfhr{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u027F"
-			replacement="{\fontencoding{LEIP}\selectfont\char202}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0282"
-			replacement="\Elzrtls{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0283"
-			replacement="\Elzesh{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0287"
-			replacement="\Elztrnt{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0288"
-			replacement="\Elzrtlt{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u028A"
-			replacement="\Elzpupsil{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u028B"
-			replacement="\Elzpscrv{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u028C"
-			replacement="\Elzinvv{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u028D"
-			replacement="\Elzinvw{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u028E"
-			replacement="\Elztrny{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0290"
-			replacement="\Elzrtlz{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0292"
-			replacement="\Elzyogh{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0294"
-			replacement="\Elzglst{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0295"
-			replacement="\Elzreglst{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0296"
-			replacement="\Elzinglst{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u029E"
-			replacement="\textturnk{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02A4"
-			replacement="\Elzdyogh{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02A7"
-			replacement="\Elztesh{}">
+			replacement="$\varepsilon{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -2798,86 +2258,6 @@
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u02C7"
 			replacement="\textasciicaron{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02C8"
-			replacement="\Elzverts{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02CC"
-			replacement="\Elzverti{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02D0"
-			replacement="\Elzlmrk{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02D1"
-			replacement="\Elzhlmrk{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02D2"
-			replacement="\Elzsbrhr{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02D3"
-			replacement="\Elzsblhr{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02D4"
-			replacement="\Elzrais{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02D5"
-			replacement="\Elzlow{}">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -2938,56 +2318,6 @@
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u02DD"
 			replacement="\H{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02E5"
-			replacement="\tone{55}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02E6"
-			replacement="\tone{44}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02E7"
-			replacement="\tone{33}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02E8"
-			replacement="\tone{22}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u02E9"
-			replacement="\tone{11}">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -3116,36 +2446,6 @@
 		</tagprocessor>
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
-			pattern="\u0311"
-			replacement="{\fontencoding{LECO}\selectfont\char177}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0318"
-			replacement="{\fontencoding{LECO}\selectfont\char184}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0319"
-			replacement="{\fontencoding{LECO}\selectfont\char185}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
 			pattern="\u0321"
 			replacement="\Elzpalh{}">
 			<tags>
@@ -3196,26 +2496,6 @@
 		</tagprocessor>
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
-			pattern="\u032B"
-			replacement="{\fontencoding{LECO}\selectfont\char203}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u032F"
-			replacement="{\fontencoding{LECO}\selectfont\char207}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
 			pattern="\u0335"
 			replacement="\Elzxl{}">
 			<tags>
@@ -3228,76 +2508,6 @@
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u0336"
 			replacement="\Elzbar{}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0337"
-			replacement="{\fontencoding{LECO}\selectfont\char215}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0338"
-			replacement="{\fontencoding{LECO}\selectfont\char216}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u033A"
-			replacement="{\fontencoding{LECO}\selectfont\char218}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u033B"
-			replacement="{\fontencoding{LECO}\selectfont\char219}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u033C"
-			replacement="{\fontencoding{LECO}\selectfont\char220}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u033D"
-			replacement="{\fontencoding{LECO}\selectfont\char221}">
-			<tags>
-				<tag>href</tag>
-				<tag>url</tag>
-				<tag>doi</tag>
-			</tags>
-		</tagprocessor>
-		<tagprocessor xsi:type="StringReplacementTagProcessor"
-			tagstoprocess="ExcludeSpecified"
-			pattern="\u0361"
-			replacement="{\fontencoding{LECO}\selectfont\char225}">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -3377,7 +2587,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u0390"
-			replacement="\acute{\ddot{\iota}}">
+			replacement="$\acute{\ddot{\iota}}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -3387,7 +2597,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u0391"
-			replacement="A">
+			replacement="$A$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -3397,7 +2607,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u0392"
-			replacement="$\Beta{}$">
+			replacement="$B$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -3427,7 +2637,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u0395"
-			replacement="$\Epsilon{}$">
+			replacement="$E$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -3437,7 +2647,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u0396"
-			replacement="$\Zeta{}$">
+			replacement="$Z$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -3447,7 +2657,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u0397"
-			replacement="$\Eta{}$">
+			replacement="$H$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -6867,7 +6077,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2190"
-			replacement="\leftarrow{}">
+			replacement="$\leftarrow{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -6877,7 +6087,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2191"
-			replacement="\uparrow{}">
+			replacement="$\uparrow{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -6887,7 +6097,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2192"
-			replacement="\rightarrow{}">
+			replacement="$\rightarrow{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -6897,7 +6107,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2193"
-			replacement="\downarrow{}">
+			replacement="$\downarrow{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -6907,7 +6117,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2194"
-			replacement="\leftrightarrow{}">
+			replacement="$\leftrightarrow{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -6917,7 +6127,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2195"
-			replacement="\updownarrow{}">
+			replacement="$\updownarrow{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -6927,7 +6137,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2196"
-			replacement="\nwarrow{}">
+			replacement="$\nwarrow{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -6937,7 +6147,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2197"
-			replacement="\nearrow{}">
+			replacement="$\nearrow{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -6947,7 +6157,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2198"
-			replacement="\searrow{}">
+			replacement="$\searrow{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -6957,7 +6167,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2199"
-			replacement="\swarrow{}">
+			replacement="$\swarrow{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8327,7 +7537,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u225B"
-			replacement="\starequal{}">
+			replacement="$\starequal{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8337,7 +7547,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u225C"
-			replacement="\triangleq{}">
+			replacement="$\triangleq{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8357,7 +7567,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2260"
-			replacement="\not =">
+			replacement="$\not =$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8367,7 +7577,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2261"
-			replacement="\equiv{}">
+			replacement="$\equiv{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8377,7 +7587,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2262"
-			replacement="\not\equiv{}">
+			replacement="$\not\equiv{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8387,7 +7597,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2264"
-			replacement="\leq{}">
+			replacement="$\leq{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8397,7 +7607,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2265"
-			replacement="\geq{}">
+			replacement="$\geq{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8407,7 +7617,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2266"
-			replacement="\leqq{}">
+			replacement="$\leqq{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8417,7 +7627,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2267"
-			replacement="\geqq{}">
+			replacement="$\geqq{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8427,7 +7637,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2268"
-			replacement="\lneqq{}">
+			replacement="$\lneqq{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8437,7 +7647,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2268-0FE00"
-			replacement="\lvertneqq{}">
+			replacement="$\lvertneqq{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8447,7 +7657,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2269"
-			replacement="\gneqq{}">
+			replacement="$\gneqq{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8457,7 +7667,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2269-0FE00"
-			replacement="\gvertneqq{}">
+			replacement="$\gvertneqq{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8467,7 +7677,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u226A"
-			replacement="\ll{}">
+			replacement="$\ll{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8477,7 +7687,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u226A-00338"
-			replacement="\NotLessLess{}">
+			replacement="$\NotLessLess{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8487,7 +7697,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u226B"
-			replacement="\gg{}">
+			replacement="$\gg{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8497,7 +7707,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u226B-00338"
-			replacement="\NotGreaterGreater{}">
+			replacement="$\NotGreaterGreater{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8507,7 +7717,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u226C"
-			replacement="\between{}">
+			replacement="$\between{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8517,7 +7727,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u226D"
-			replacement="\not\kern-0.3em\times{}">
+			replacement="$\not\kern-0.3em\times{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8527,7 +7737,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u226E"
-			replacement="\not&lt;">
+			replacement="$\not&lt;$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8537,7 +7747,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u226F"
-			replacement="\not&gt;">
+			replacement="$\not&gt;$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8547,7 +7757,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2270"
-			replacement="\not\leq{}">
+			replacement="$\not\leq{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8557,7 +7767,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2271"
-			replacement="\not\geq{}">
+			replacement="$\not\geq{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8567,7 +7777,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2272"
-			replacement="\lessequivlnt{}">
+			replacement="$\lessequivlnt{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8577,7 +7787,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2273"
-			replacement="\greaterequivlnt{}">
+			replacement="$\greaterequivlnt{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8607,7 +7817,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2276"
-			replacement="\lessgtr{}">
+			replacement="$\lessgtr{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8617,7 +7827,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2277"
-			replacement="\gtrless{}">
+			replacement="$\gtrless{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8627,7 +7837,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2278"
-			replacement="\notlessgreater{}">
+			replacement="$\notlessgreater{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8637,7 +7847,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u2279"
-			replacement="\notgreaterless{}">
+			replacement="$\notgreaterless{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8647,7 +7857,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u227A"
-			replacement="\prec{}">
+			replacement="$\prec{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
@@ -8657,7 +7867,7 @@
 		<tagprocessor xsi:type="StringReplacementTagProcessor"
 			tagstoprocess="ExcludeSpecified"
 			pattern="\u227B"
-			replacement="\succ{}">
+			replacement="$\succ{}$">
 			<tags>
 				<tag>href</tag>
 				<tag>url</tag>
