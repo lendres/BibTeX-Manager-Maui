@@ -116,7 +116,6 @@ public partial class ProgramOptionsViewModel : ObservableObject
 
 	#endregion
 
-
 	#region Validation
 
 	private void AddValidations()
