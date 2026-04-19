@@ -8,10 +8,13 @@ BibTex Manager is a bib file editor built for individuals who write LaTeX markup
 ## Importing
 Third-party bibliography entries are often structured in odd or inconsistent ways.  They also frequently contain errors and do not use meaningful names for the cite keys.  _BibTeX Manager_ includes error fixing features such as:
 - Converting standard text to LaTeX (e.g., converting "&" to "\&").
+- Convert quotation marks ("...") to LaTeX quotation marks (``...'').
+- Convert unicode characters to LaTeX (e.g., "&AElig;" to "\AE").
 - Renaming tag names.
 - Automatically generating meaningful cite keys.
 - Adding brackets around items that should remain capitalized (e.g., converting "3D" to {3D}).
 - Preserving sentence-ending spacing after a capitalized abbreviation (e.g., converting "NASA." to "NASA\@.").
+- Convert _ALL CAPS_ to _Title Case_.
 - And many more.
 
 This behavior is part of a sophisticated and generalized system.  It is completely customizable, allowing the user to change or remove existing corrections and create their own.
