@@ -85,6 +85,9 @@
 		<MauiXaml Update="Views\ImportErrorView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\ProjectOptionsView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\WebSearchSettingsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
