@@ -23,8 +23,3 @@ _BibTeX Manager_ includes features to keep bibliography entries and files ordere
 # What _BibTex Manager_ Is Not
 It is not a generalized full-feature reference/research manager.  If you are looking for one of those, consider Jabref.  It is a full-featured manager that includes algorithms for common cleanup issues.
 https://www.jabref.org/
-
-# Requirements
-This application relies on the libraries:
-- [lendres/BibTeXLibrary](https://github.com/lendres/BibTeXLibrary)
-- [lendres/C-Sharp-Library](https://github.com/lendres/C-Sharp-Library)
