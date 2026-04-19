@@ -61,7 +61,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnOpen(object sender, EventArgs eventArgs)
 	{
-		string file = await _filePicker.BrowseForProjectFile();
+		string file = await _filePicker.BrowseForBibliographyFile();
 		if (!string.IsNullOrEmpty(file))
 		{
 			_viewModel.OpenProjectWithPathSave(file);
@@ -172,14 +172,9 @@ public partial class MainPage : DigitalProductionMainPage
 
     async void OnProgramOptions(object sender, EventArgs eventArgs)
 	{
-		ProgramOptionsViewModel	viewModel	= new(BibTeXProject.Instance!.Settings);
-		ProgramOptionsView		view		= new(viewModel);
-		object?					result		= await Shell.Current.ShowPopupAsync(view);
-
-		if (result is bool boolResut && boolResut)
-		{
-			BibTeXProject.Instance.Settings = viewModel.Settings;
-		}
+		ProgramOptionsViewModel viewModel = new();
+		ProgramOptionsView view = new(viewModel);
+		_ = await Shell.Current.ShowPopupAsync(view);
 	}
 
 	async void OnWebSearchSettings(object sender, EventArgs eventArgs)

@@ -15,11 +15,6 @@ public partial class ProjectOptionsView : PopupView
 		BindingContext	= viewModel;
 	}
 
-	async void OnBrowseForInputFile(object sender, EventArgs eventArgs)
-	{
-		BibliographyFileEntry.Text = await _filePicker.BrowseForBibliographyFile();
-	}
-
 	async void OnBrowseForAuxiliaryFileFile(object sender, EventArgs eventArgs)
 	{
 		AuxiliaryFileEntry.Text = _viewModel.ConvertToRelativePath(await _filePicker.BrowseForBibliographyFile());
@@ -38,5 +33,11 @@ public partial class ProjectOptionsView : PopupView
 	async void OnBrowseNameRemappingFile(object sender, EventArgs eventArgs)
 	{
 		NameRemappingEntry.Text = _viewModel.ConvertToRelativePath(await _filePicker.BrowseForNameRemappingFile());
+	}
+
+	protected override void OnSaveButtonClicked(object? sender, EventArgs eventArgs)
+	{
+		_viewModel.Save();
+		base.OnSaveButtonClicked(sender, eventArgs);
 	}
 }

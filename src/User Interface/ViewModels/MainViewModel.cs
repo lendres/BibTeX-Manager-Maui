@@ -118,6 +118,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	[RelayCommand]
 	public void OpenProject(string projectFile)
 	{
+		BibTeXProject.Instance = new BibTeXProject();
+		BibTeXProject.Instance.Settings = Preferences.ProjectSettings;
 		BibTeXProject.Deserialize(projectFile);
 		if (BibTeXProject.Instance != null)
 		{

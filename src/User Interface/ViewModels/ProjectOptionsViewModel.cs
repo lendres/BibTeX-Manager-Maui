@@ -80,7 +80,6 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	private void Initialize()
 	{
 		UseRelativePaths		= Settings.UsePathsRelativeToBibFile;
-		BibliographyFile.Value	= Settings.BibliographyFile;
 		UseAuxiliaryFile		= Settings.UseAuxiliaryFile;
 		AuxiliaryFile.Value		= Settings.AuxiliaryFile;
 		UseTagOrder				= Settings.UseBibEntryInitialization;
@@ -94,19 +93,20 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		SortBibliographyEntries	= Settings.SortBibliography;
 	}
 
+	public void Save()
+	{
+		Preferences.ProjectSettings = Settings;
+	}
+
 	#endregion
 
 	#region Validation
 
 	private void AddValidations()
 	{
-		BibliographyFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		BibliographyFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
-		ValidateBibliographyFile();
-
 		AuxiliaryFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
 		AuxiliaryFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
-		ValidateBibliographyFile();
+		ValidateAuxiliaryFile();
 
 		TagOrderFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
 		TagOrderFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
@@ -119,16 +119,6 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		NameRemappingFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
 		NameRemappingFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateNameRemappingFile();
-	}
-
-	[RelayCommand]
-	private void ValidateBibliographyFile()
-	{
-		if (BibliographyFile.Validate())
-		{
-			Settings.BibliographyFile = BibliographyFile.Value!;
-		}
-		ValidateSubmittable();
 	}
 
 	[RelayCommand]
