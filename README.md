@@ -6,7 +6,6 @@ BibTex Manager is a bib file editor built for individuals who write LaTeX markup
 * Organizing the structure and order of bibliography entries and files.
 
 ## Importing
-## Importing
 Third-party bibliography entries are often structured in odd or inconsistent ways.  They also frequently contain errors and do not use meaningful names for the cite keys.  _BibTeX Manager_ includes error fixing features such as:
 - Converting standard text to LaTeX (e.g., converting "&" to "\&").
 - Renaming tag names.
