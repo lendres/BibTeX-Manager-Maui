@@ -53,7 +53,6 @@ public static class MauiProgram
 		services.AddTransient<BibEntryViewModel>();
 
 		services.AddTransientPopup<ProgramOptionsView, ProgramOptionsViewModel>();
-		services.AddTransientPopup<ProjectOptionsView, ProjectOptionsViewModel>();
 	}
 
 	private static void CreateServices(IServiceCollection services)

@@ -1,11 +1,10 @@
 ﻿using BibTeXLibrary;
-using BibTeXManager;
 using BibTeXManager.Project;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DigitalProduction.Http;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
-using DigitalProduction.Http;
 
 namespace BibTeXManager.ViewModels;
 
@@ -23,6 +22,10 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
     {
 		RecentPathsManagerService	= recentPathsManagerService;
 		_dialogService				= dialogService;
+
+		BibTeXProject.New(Preferences.ProjectSettings);
+
+		string loc = FileSystem.Current.AppDataDirectory;
 
 		CustomSearch.SetCxAndKey(Preferences.CustomSearchEngineIdentifier, Preferences.SearchEngineApiKey);
 	}
@@ -97,10 +100,10 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region File Menu
 
-	public void NewProject(string bibliographyFile)
+	public void NewProject()
 	{
-		BibTeXProject.New(bibliographyFile);
-		if (BibTeXProject.Instance != null)
+		BibTeXProject.Instance!.NewBibliographyFile();
+		if (BibTeXProject.Instance.Bibliography != null)
 		{
 			Items = BibTeXProject.Instance.Bibliography.Entries;
 		}
@@ -116,13 +119,13 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	}
 
 	[RelayCommand]
-	public void OpenProject(string projectFile)
+	public void OpenProject(string file)
 	{
-		BibTeXProject.Deserialize(projectFile);
-		if (BibTeXProject.Instance != null)
-		{
-			Items = BibTeXProject.Instance.Bibliography.Entries;
-		}
+		System.Diagnostics.Debug.Assert(BibTeXProject.Instance != null);
+		Items?.Clear();
+		BibTeXProject.Instance.ReadBibliographyFile(file);
+		Items = BibTeXProject.Instance.Bibliography.Entries;
+
 		ProjectInitialization();
 	}
 
@@ -142,13 +145,13 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	public void Save(string path)
 	{
 		RecentPathsManagerService.PushTop(path);
-		Project.Serialize(path);
+		Project.WriteBibliographyFile(path);
 	}
 
 	[RelayCommand]
 	public void Save()
 	{
-		Project.Serialize();
+		Project.WriteBibliographyFile();
 	}
 
 	public void CloseProject()

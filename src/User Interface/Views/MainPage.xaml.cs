@@ -52,16 +52,12 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnNew(object sender, EventArgs eventArgs)
 	{
-		string file = await _filePicker.BrowseForBibliographyFile();
-		if (!string.IsNullOrEmpty(file))
-		{
-			_viewModel.NewProject(file);
-		}
+		_viewModel.NewProject();
 	}
 
 	async void OnOpen(object sender, EventArgs eventArgs)
 	{
-		string file = await _filePicker.BrowseForProjectFile();
+		string file = await _filePicker.BrowseForBibliographyFile();
 		if (!string.IsNullOrEmpty(file))
 		{
 			_viewModel.OpenProjectWithPathSave(file);
@@ -72,7 +68,7 @@ public partial class MainPage : DigitalProductionMainPage
 	{
 		if (_viewModel.SavePathRequired)
 		{
-			string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyProjectFileType() } );
+			string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyFilePickerFileType() } );
 			if (!string.IsNullOrEmpty(file))
 			{
 				_viewModel.Save(file);
@@ -86,7 +82,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnSaveAs(object sender, EventArgs eventArgs)
 	{
-		string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyProjectFileType() } );
+		string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyFilePickerFileType() } );
 		if (!string.IsNullOrEmpty(file))
 		{
 			_viewModel.Save(file);
@@ -153,28 +149,28 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 	}
 
-	#endregion
+    #endregion
 
-	#region Settings
+    #region Settings
 
-	async void OnProjectOptions(object sender, EventArgs eventArgs)
+    async void OnProjectOptions(object sender, EventArgs eventArgs)
+    {
+        ProjectOptionsViewModel viewModel = new(BibTeXProject.Instance!.Settings);
+
+        ProjectOptionsView view = new(viewModel);
+        object? result = await Shell.Current.ShowPopupAsync(view);
+
+        if (result is bool boolResut && boolResut)
+        {
+            BibTeXProject.Instance.Settings = viewModel.Settings;
+        }
+    }
+
+    async void OnProgramOptions(object sender, EventArgs eventArgs)
 	{
-		ProjectOptionsViewModel viewModel = new(BibTeXProject.Instance!.Settings);
-
-		ProjectOptionsView	view	= new(viewModel);
-		object?				result	= await Shell.Current.ShowPopupAsync(view);
-
-		if (result is bool boolResut && boolResut)
-		{
-			BibTeXProject.Instance.Settings = viewModel.Settings;
-		}
-	}
-
-	async void OnProgramOptions(object sender, EventArgs eventArgs)
-	{
-		ProgramOptionsViewModel	viewModel	= new();
-		ProgramOptionsView		view		= new(viewModel);
-		_									= await Shell.Current.ShowPopupAsync(view);
+		ProgramOptionsViewModel viewModel = new();
+		ProgramOptionsView view = new(viewModel);
+		_ = await Shell.Current.ShowPopupAsync(view);
 	}
 
 	async void OnWebSearchSettings(object sender, EventArgs eventArgs)

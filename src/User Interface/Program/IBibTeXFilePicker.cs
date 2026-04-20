@@ -9,4 +9,8 @@ public interface IBibTeXFilePicker
 	Task<string> BrowseForNameRemappingFile();
 
 	FilePickerFileType CreateBibliographyProjectFileType();
+	FilePickerFileType CreateBibliographyFilePickerFileType();
+	FilePickerFileType CreateTagOrderFilePickerFileType();
+	FilePickerFileType CreateTagQualityFilePickerFileType();
+	FilePickerFileType CreateNameRemappingFilePickerFileType();
 }
