@@ -46,7 +46,7 @@ class BibTeXFilePicker : IBibTeXFilePicker
 		});
 	}
 
-	private static FilePickerFileType CreateBibliographyFilePickerFileType()
+	public FilePickerFileType CreateBibliographyFilePickerFileType()
 	{
 		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
 		{
@@ -57,7 +57,7 @@ class BibTeXFilePicker : IBibTeXFilePicker
 		});
 	}
 
-	private static FilePickerFileType CreateTagOrderFilePickerFileType()
+	public FilePickerFileType CreateTagOrderFilePickerFileType()
 	{
 		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
 		{
@@ -68,7 +68,7 @@ class BibTeXFilePicker : IBibTeXFilePicker
 		});
 	}
 
-	private static FilePickerFileType CreateTagQualityFilePickerFileType()
+	public FilePickerFileType CreateTagQualityFilePickerFileType()
 	{
 		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
 		{
@@ -79,7 +79,7 @@ class BibTeXFilePicker : IBibTeXFilePicker
 		});
 	}
 
-	private static FilePickerFileType CreateNameRemappingFilePickerFileType()
+	public FilePickerFileType CreateNameRemappingFilePickerFileType()
 	{
 		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
 		{
