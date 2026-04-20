@@ -129,9 +129,10 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 
 	public void NewBibliographyFile()
 	{
-		_bibliography					= new();
+		_bibliography					=  new();
 		_bibliography.ModifiedChanged	+= OnChildModifiedChanged;
 		_bibliography.PropertyChanged	+= OnPropertyChanged;
+		Path                            =  "";
 	}
 
 	/// <summary>
@@ -164,6 +165,16 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		}
 
 		BuildStringConstantMap();
+	}
+
+	/// <summary>
+	/// Writes the bibliography file from memory.  The bibliography file must be set and represent a valid path
+	/// or this method will throw an exception.
+	/// </summary>
+	public void WriteBibliographyFile(string path)
+	{
+		Path = path;
+		WriteBibliographyFile();
 	}
 
 	/// <summary>
