@@ -52,11 +52,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnNew(object sender, EventArgs eventArgs)
 	{
-		string file = await _filePicker.BrowseForBibliographyFile();
-		if (!string.IsNullOrEmpty(file))
-		{
-			_viewModel.NewProject(file);
-		}
+		_viewModel.NewProject();
 	}
 
 	async void OnOpen(object sender, EventArgs eventArgs)
