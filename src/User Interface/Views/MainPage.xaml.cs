@@ -68,7 +68,7 @@ public partial class MainPage : DigitalProductionMainPage
 	{
 		if (_viewModel.SavePathRequired)
 		{
-			string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyProjectFileType() } );
+			string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyFilePickerFileType() } );
 			if (!string.IsNullOrEmpty(file))
 			{
 				_viewModel.Save(file);
@@ -82,7 +82,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnSaveAs(object sender, EventArgs eventArgs)
 	{
-		string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyProjectFileType() } );
+		string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyFilePickerFileType() } );
 		if (!string.IsNullOrEmpty(file))
 		{
 			_viewModel.Save(file);
