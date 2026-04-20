@@ -84,7 +84,7 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		AuxiliaryFile.Value		= Settings.AuxiliaryFile;
 		UseTagOrder				= Settings.UseBibEntryInitialization;
 		TagOrderFile.Value		= Settings.BibEntryInitializationFile;
-		UseTagQuality			= Settings.UseBibEntryInitialization;
+		UseTagQuality			= Settings.UseTagQualityProcessing;
 		TagQualityFile.Value	= Settings.TagQualityProcessingFile;
 		UseNameRemapping        = Settings.UseBibEntryRemapping;
 		NameRemappingFile.Value	= Settings.BibEntryRemappingFile;
