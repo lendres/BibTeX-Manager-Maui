@@ -145,7 +145,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	public void Save(string path)
 	{
 		RecentPathsManagerService.PushTop(path);
-		Project.Serialize(path);
+		Project.WriteBibliographyFile(path);
 	}
 
 	[RelayCommand]
