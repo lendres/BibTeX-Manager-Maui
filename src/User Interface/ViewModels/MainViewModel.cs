@@ -1,7 +1,6 @@
 ﻿using BibTeXLibrary;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DigitalProduction.Http;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
 
@@ -24,8 +23,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 		BibTeXProject.New(Preferences.ProjectSettings);
 		ProjectInitialization();
-
-		CustomSearch.SetCxAndKey(Preferences.CustomSearchEngineIdentifier, Preferences.SearchEngineApiKey);
 	}
 
 	#endregion
