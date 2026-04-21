@@ -262,7 +262,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		ReadBibEntryInitializationFiles();
 		ReadTagQualityProcessingFile();
 		ReadNameMappingFile();
-		ReadBibliographyFile();
 		ReadAccessoryFiles();
 		BuildStringConstantMap();
 	}
