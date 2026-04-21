@@ -52,7 +52,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnNew(object sender, EventArgs eventArgs)
 	{
-		_viewModel.NewProject();
+		_viewModel.New();
 	}
 
 	async void OnOpen(object sender, EventArgs eventArgs)
@@ -60,7 +60,7 @@ public partial class MainPage : DigitalProductionMainPage
 		string file = await _filePicker.BrowseForBibliographyFile();
 		if (!string.IsNullOrEmpty(file))
 		{
-			_viewModel.OpenProjectWithPathSave(file);
+			_viewModel.OpenWithPathSave(file);
 		}
 	}
 
@@ -398,7 +398,7 @@ public partial class MainPage : DigitalProductionMainPage
 		List<string> paths = Preferences.RecentPathsManagerService.GetRecentPaths();
 		if (paths.Count > 0)
 		{
-			_viewModel.OpenProject(paths[0]);
+			_viewModel.Open(paths[0]);
 		}
 	}
 
