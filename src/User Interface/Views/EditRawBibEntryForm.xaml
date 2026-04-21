@@ -56,7 +56,7 @@
 
 			<HorizontalStackLayout Grid.Column="1" StyleClass="TopButtonRowStyle" HorizontalOptions="End">
 				<Button 
-					Text="Save"
+					Text="OK"
 					Clicked="OnSave"
 					WidthRequest="75"
 					HorizontalOptions="End"
