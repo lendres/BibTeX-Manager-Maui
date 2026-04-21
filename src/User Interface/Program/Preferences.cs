@@ -69,13 +69,13 @@ public static class Preferences
 
     #endregion
 
-    private static void SetValue<T>(T? value, [CallerMemberName] string propertyName = "")
-    {
-        Microsoft.Maui.Storage.Preferences.Default.Set(propertyName, value);
-    }
-
     private static T GetValueOrDefault<T>(T defaultValue, [CallerMemberName] string propertyName = "")
     {
         return Microsoft.Maui.Storage.Preferences.Default.Get(propertyName, defaultValue);
+    }
+
+    private static void SetValue<T>(T? value, [CallerMemberName] string propertyName = "")
+    {
+        Microsoft.Maui.Storage.Preferences.Default.Set(propertyName, value);
     }
 }
