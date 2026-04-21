@@ -188,26 +188,6 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	private void OnSettingsPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) => ValidateSubmittable();
 
-	partial void OnUseRelativePathsChanged(bool value)
-	{
-		Settings.UsePathsRelativeToBibFile = value;
-		List<ValidatableObject<string>> paths = [ AuxiliaryFile, TagOrderFile, TagQualityFile, NameRemappingFile ];
-		foreach (ValidatableObject<string> path in paths)
-		{
-			if (path.IsValid)
-			{
-				if (value)
-				{
-					path.Value = ConvertToRelativePath(path.Value!);
-				}
-				else
-				{
-					path.Value = ConvertToAbsolutePath(path.Value!);
-				}
-			}
-		}
-	}
-
 	partial void OnUseAuxiliaryFileChanged(bool value) => Settings.UseAuxiliaryFile = value;
 
 	partial void OnUseTagOrderChanged(bool value) => Settings.UseBibEntryInitialization = value;
@@ -223,30 +203,4 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	partial void OnSortBibliographyEntriesChanged(bool value) => Settings.SortBibliography = value;
 
 	#endregion
-
-	/// <summary>
-	/// Converts a path to a relative path if the relative path option is selected.
-	/// </summary>
-	/// <param name="path">Path to convert.</param>
-	public string ConvertToRelativePath(string path)
-	{
-		if (UseRelativePaths)
-		{
-			path = DigitalProduction.IO.Path.ConvertToRelativePath(path, System.IO.Path.GetDirectoryName(BibliographyFile.Value) ?? "");
-		}
-		return path;
-	}
-
-	/// <summary>
-	/// Convert a path to absolute path if the relative path option is in use.
-	/// </summary>
-	/// <param name="path">Path to convert.</param>
-	private string ConvertToAbsolutePath(string path)
-	{
-		if (!UseRelativePaths)
-		{
-			path = DigitalProduction.IO.Path.ConvertToAbsolutePath(path, System.IO.Path.GetDirectoryName(BibliographyFile.Value) ?? "");
-		}
-		return path;
-	}
 }

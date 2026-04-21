@@ -30,6 +30,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	#region Properties
 
 	public BibTeXProject							Project { get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
+
 	public bool										SavePathRequired { get => !(BibTeXProject.Instance?.IsSaveable) ?? false; }
 
 	public IRecentPathsManagerService				RecentPathsManagerService { get; set; }
