@@ -121,7 +121,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	{
 		System.Diagnostics.Debug.Assert(BibTeXProject.Instance != null);
 		Items?.Clear();
-		//Project.NewBibliographyFile();
+		Project.NewBibliographyFile();
 		Project.ReadBibliographyFile(file);
 		Items = Project.Bibliography.Entries;
 	}
