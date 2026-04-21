@@ -1,5 +1,4 @@
 ﻿using BibTeXLibrary;
-using BibTeXManager.Project;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Http;
@@ -196,44 +195,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		{
 			yield return tagProcessingData;
 		}
-	}
-
-	/// <summary>
-	/// Do bulk importing of BibTeX entries using the specified importer.
-	/// </summary>
-	public IEnumerable<ImportResult> BulkImport(IBulkImporter importer)
-	{
-		importer.SetBibliographyInitialization(Project.Settings.UseBibEntryInitialization, Project.BibEntryInitialization);
-
-		foreach (ImportResult importResult in importer.BulkImport())
-		{
-			System.Diagnostics.Debug.Assert(importResult.BibEntry != null);
-
-			switch (importResult.Result)
-			{
-				case ResultType.Successful:
-					Project.ApplyAllCleaning(importResult.BibEntry);
-					int index = Project.GetEntryInsertIndex(importResult.BibEntry, 0);
-					Insert(importResult.BibEntry, index);
-					break;
-
-				case ResultType.NotFound:
-					yield return importResult;
-					break;
-
-				case ResultType.Error:
-					yield return importResult;
-					break;
-			}
-		}
-	}
-
-	/// <summary>
-	/// Do bulk importing of BibTeX entries using the specified importer.
-	/// </summary>
-	public BibEntry? SingleImport(ISingleImporter importer, string searchTerms)
-	{
-		return importer.Import(searchTerms);
 	}
 
 	#endregion
