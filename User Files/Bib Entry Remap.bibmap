@@ -14,7 +14,7 @@
 			</value>
 		</item>
 		<item key="article">
-			<value name="Article to Article" totype="article">
+			<value name="Article" totype="article">
 				<tagmaps>
 					<item key="publisher">
 						<value>organization</value>
