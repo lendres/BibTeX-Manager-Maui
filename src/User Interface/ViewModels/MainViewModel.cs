@@ -24,8 +24,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		_dialogService				= dialogService;
 
 		BibTeXProject.New(Preferences.ProjectSettings);
-
-		string loc = FileSystem.Current.AppDataDirectory;
+		ProjectInitialization();
 
 		CustomSearch.SetCxAndKey(Preferences.CustomSearchEngineIdentifier, Preferences.SearchEngineApiKey);
 	}
@@ -100,33 +99,31 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region File Menu
 
-	public void NewProject()
+	public void New()
 	{
-		BibTeXProject.Instance!.NewBibliographyFile();
-		if (BibTeXProject.Instance.Bibliography != null)
+		Project.NewBibliographyFile();
+		if (Project.Bibliography != null)
 		{
-			Items = BibTeXProject.Instance.Bibliography.Entries;
+			Items = Project.Bibliography.Entries;
 		}
-		ProjectInitialization();
 		Modified = true;
 		ValidateCanSave();
 	}
 
-	public void OpenProjectWithPathSave(string projectFile)
+	public void OpenWithPathSave(string projectFile)
 	{
 		RecentPathsManagerService.PushTop(projectFile);
-		OpenProject(projectFile);
+		Open(projectFile);
 	}
 
 	[RelayCommand]
-	public void OpenProject(string file)
+	public void Open(string file)
 	{
 		System.Diagnostics.Debug.Assert(BibTeXProject.Instance != null);
 		Items?.Clear();
-		BibTeXProject.Instance.ReadBibliographyFile(file);
-		Items = BibTeXProject.Instance.Bibliography.Entries;
-
-		ProjectInitialization();
+		//Project.NewBibliographyFile();
+		Project.ReadBibliographyFile(file);
+		Items = Project.Bibliography.Entries;
 	}
 
 	void ProjectInitialization()

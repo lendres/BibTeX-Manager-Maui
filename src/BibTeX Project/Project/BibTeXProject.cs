@@ -124,7 +124,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	{
 		Path = file;
 		NewBibliographyFile();
-		
 	}
 
 	public void NewBibliographyFile()
