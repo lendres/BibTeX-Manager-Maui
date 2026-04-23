@@ -13,8 +13,6 @@
 
 	<ContentPage.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
-		<!--<mct:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
-		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>-->
 	</ContentPage.Resources>
 
 	<ContentPage.MenuBarItems>
