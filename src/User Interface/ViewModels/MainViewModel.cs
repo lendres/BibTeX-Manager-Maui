@@ -21,6 +21,10 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		RecentPathsManagerService	= recentPathsManagerService;
 		_dialogService				= dialogService;
 
+		ISaveService saveBeforeExitService			= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveService>();
+		saveBeforeExitService.IsModifiedFunction	= IsModified;
+		saveBeforeExitService.SaveFunction			= SaveAsync;
+
 		BibTeXProject.New(Preferences.ProjectSettings);
 		ProjectInitialization();
 	}
@@ -193,6 +197,30 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		{
 			yield return tagProcessingData;
 		}
+	}
+
+	#endregion
+
+	#region Save Before Exit
+
+	/// <summary>
+	/// Interface function for the save before exit service to check if the project is modified and needs to be saved before exiting.
+	/// </summary>
+	/// <returns>True if the project is modified, false otherwise.</returns>
+	public bool IsModified()=> Modified;
+
+	/// <summary>
+	/// Interface function for the save before exit service to.  Asynchronously saves the current state or changes to the underlying data store.
+	/// </summary>
+	/// <remarks>
+	/// If the operation is canceled via the provided cancellation token, the returned task will be in a canceled state.
+	/// </remarks>
+	/// <param name="cancellationToken">A cancellation token that can be used to cancel the save operation.</param>
+	/// <returns>A task that represents the asynchronous save operation.</returns>
+	async Task<bool> SaveAsync(CancellationToken cancellationToken = default)
+	{
+		Save();
+		return true;
 	}
 
 	#endregion

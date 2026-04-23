@@ -2,6 +2,8 @@
 using DigitalProduction.Xml.Serialization;
 using System.Runtime.CompilerServices;
 
+using DpmPreferences =  DigitalProduction.Maui.Storage.Preferences;
+
 namespace BibTeXManager;
 
 /// <summary>
@@ -23,8 +25,8 @@ public static class Preferences
 	/// </summary>
 	public static ProjectSettings ProjectSettings
 	{
-		get => GetInstanceOrDefault<ProjectSettings>();
-		set => SetInstance<ProjectSettings>(value);
+		get => DpmPreferences.GetInstance<ProjectSettings>();
+		set => DpmPreferences.SetInstance<ProjectSettings>(value);
 	}
 
     #endregion
@@ -32,7 +34,7 @@ public static class Preferences
     #region Program Settings
 
     /// <summary>
-    /// Load last project as start up.
+    /// Recent paths.
     /// </summary>
     public static IRecentPathsManagerService RecentPathsManagerService
 	{
@@ -44,59 +46,10 @@ public static class Preferences
 	/// </summary>
 	public static bool LoadLastProjectAtStartUp
 	{
-		get => GetValueOrDefault(false);
-		set => SetValue(value);
+		get => DpmPreferences.Get(false);
+		set => DpmPreferences.Set(value);
 	}
 
     #endregion
 
-    private static T GetInstanceOrDefault<T>([CallerMemberName] string propertyName = "") where T : new()
-
-	{
-		string serializedSettings = GetValueOrDefault("", propertyName);
-		if (string.IsNullOrEmpty(serializedSettings))
-		{
-			return new T();
-		}
-		else
-		{
-			return Serialization.DeserializeObjectFromString<T>(serializedSettings)!;
-		}
-    }
-
-    private static void SetInstance<T>(T? value, [CallerMemberName] string propertyName = "")
-    {
-        string serializedSettings = Serialization.SerializeObjectToString(value);
-		SetValue(serializedSettings, propertyName);
-    }
-
-    private static string GetValueOrDefault(string defaultValue, [CallerMemberName] string propertyName = "")
-    {
-        return GetValueOrDefault<string>(defaultValue, propertyName);
-    }
-
-    private static void SetValue(string value, [CallerMemberName] string propertyName = "")
-    {
-        SetValue<string>(value, propertyName);
-    }
-
-    private static bool GetValueOrDefault(bool defaultValue, [CallerMemberName] string propertyName = "")
-    {
-        return GetValueOrDefault<bool>(defaultValue, propertyName);
-    }
-
-    private static void SetValue(bool value, [CallerMemberName] string propertyName = "")
-    {
-        SetValue<bool>(value, propertyName);
-    }
-
-    private static T GetValueOrDefault<T>(T defaultValue, string propertyName)
-    {
-        return Microsoft.Maui.Storage.Preferences.Default.Get(propertyName, defaultValue);
-    }
-
-    private static void SetValue<T>(T? value, string propertyName)
-    {
-        Microsoft.Maui.Storage.Preferences.Default.Set(propertyName, value);
-    }
 }
