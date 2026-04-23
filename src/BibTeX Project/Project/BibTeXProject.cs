@@ -64,10 +64,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		base(CompressionType.Uncompressed)
 	{
 		ModifiedChanged += OnMyModifiedChanged;
-
-		_settings.ModifiedChanged += OnChildModifiedChanged;
-		_settings.PropertyChanged += OnSettingsPropertyChanged;
-
 		NewBibliographyFile();
 	}
 
@@ -95,8 +91,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 			{
 				_settings = value;
 				ReadAccessoaryFiles();
-				Modified = true;
-				OnPropertyChanged();
 			}
 		}
 	}
