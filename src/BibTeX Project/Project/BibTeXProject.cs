@@ -132,6 +132,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		_bibliography.ModifiedChanged	+= OnChildModifiedChanged;
 		_bibliography.PropertyChanged	+= OnPropertyChanged;
 		Path                            =  "";
+		Modified                        = false;
 	}
 
 	/// <summary>
@@ -164,6 +165,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		}
 
 		BuildStringConstantMap();
+		Modified = false;
 	}
 
 	/// <summary>
@@ -186,6 +188,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		{
 			_bibliography.Write(Path, _settings.WriteSettings);
 		}
+		Modified = false;
 	}
 
 	/// <summary>
@@ -361,17 +364,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		}
 
 		return result.Entries;
-	}
-
-	/// <summary>
-	/// Clean up.
-	/// </summary>
-	public override void Close()
-	{
-		// Must call base first.  This calls the OnClose event which should clear all forms (unbind) and
-		// make it safe to close the Bibliography.
-		base.Close();
-		Instance = null;
 	}
 
 	#endregion
