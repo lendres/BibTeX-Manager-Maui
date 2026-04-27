@@ -140,6 +140,16 @@
 
 				<tagprocessor xsi:type="StringReplacementTagProcessor"
 					tagstoprocess="OnlySpecified"
+					pattern="\\&amp;amp;"
+					replacement="\&amp;">
+					<tags>
+						<tag>title</tag>
+						<tag>abstract</tag>
+					</tags>
+				</tagprocessor>
+
+				<tagprocessor xsi:type="StringReplacementTagProcessor"
+					tagstoprocess="OnlySpecified"
 					pattern="\\\\$"
 					replacement="\$">
 					<tags>
