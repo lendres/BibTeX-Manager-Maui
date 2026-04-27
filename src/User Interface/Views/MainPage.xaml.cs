@@ -26,8 +26,10 @@ public partial class MainPage : DigitalProductionMainPage
 	public MainPage(MainViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext = viewModel;
-		_viewModel = viewModel;
+
+		BindingContext				= viewModel;
+		_viewModel					= viewModel;
+		_viewModel.MenuHostingPage	= this;
 
 		if (Preferences.LoadLastProjectAtStartUp)
 		{

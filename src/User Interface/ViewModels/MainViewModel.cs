@@ -39,6 +39,12 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	public IRecentPathsManagerService				RecentPathsManagerService { get; set; }
 
+	public Page? MenuHostingPage
+	{
+		get => _dialogService.HostingPage;
+		set => _dialogService.HostingPage = value;
+	}
+
 	[ObservableProperty]
 	public partial bool								ProjectOpen { get; set; }					= false;
 
