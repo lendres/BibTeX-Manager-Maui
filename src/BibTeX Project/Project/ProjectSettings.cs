@@ -26,7 +26,6 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 		UsePathsRelativeToBibFile	= projectSettings.UsePathsRelativeToBibFile;
 		UseBibEntryInitialization	= projectSettings.UseBibEntryInitialization;
 		BibEntryInitializationFile	= projectSettings.BibEntryInitializationFile;
-		BibliographyFile			= projectSettings.BibliographyFile;
 		UseAuxiliaryFile			= projectSettings.UseAuxiliaryFile;
 		AuxiliaryFile				= projectSettings.AuxiliaryFile;
 		UseStringConstants			= projectSettings.UseStringConstants;
@@ -70,16 +69,6 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	/// </summary>
 	[XmlAttribute("bibentryinitializationfile")]
 	public string BibEntryInitializationFile
-	{
-		get => GetValueOrDefault<string>(string.Empty);
-		set => SetValue(value);
-	}
-
-	/// <summary>
-	/// The path to the bibiography file.
-	/// </summary>
-	[XmlAttribute("bibfile")]
-	public string BibliographyFile
 	{
 		get => GetValueOrDefault<string>(string.Empty);
 		set => SetValue(value);

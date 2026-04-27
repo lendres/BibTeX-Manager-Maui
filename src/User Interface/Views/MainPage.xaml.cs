@@ -1,5 +1,4 @@
 ﻿using BibTeXLibrary;
-using BibTeXManager.Project;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
@@ -52,19 +51,15 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnNew(object sender, EventArgs eventArgs)
 	{
-		string file = await _filePicker.BrowseForBibliographyFile();
-		if (!string.IsNullOrEmpty(file))
-		{
-			_viewModel.NewProject(file);
-		}
+		_viewModel.New();
 	}
 
 	async void OnOpen(object sender, EventArgs eventArgs)
 	{
-		string file = await _filePicker.BrowseForProjectFile();
+		string file = await _filePicker.BrowseForBibliographyFile();
 		if (!string.IsNullOrEmpty(file))
 		{
-			_viewModel.OpenProjectWithPathSave(file);
+			_viewModel.OpenWithPathSave(file);
 		}
 	}
 
@@ -72,7 +67,7 @@ public partial class MainPage : DigitalProductionMainPage
 	{
 		if (_viewModel.SavePathRequired)
 		{
-			string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyProjectFileType() } );
+			string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyFilePickerFileType() } );
 			if (!string.IsNullOrEmpty(file))
 			{
 				_viewModel.Save(file);
@@ -86,7 +81,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnSaveAs(object sender, EventArgs eventArgs)
 	{
-		string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyProjectFileType() } );
+		string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyFilePickerFileType() } );
 		if (!string.IsNullOrEmpty(file))
 		{
 			_viewModel.Save(file);
@@ -153,35 +148,28 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 	}
 
-	#endregion
+    #endregion
 
-	#region Settings
+    #region Settings
 
-	async void OnProjectOptions(object sender, EventArgs eventArgs)
+    async void OnProjectOptions(object sender, EventArgs eventArgs)
+    {
+        ProjectOptionsViewModel viewModel = new(BibTeXProject.Instance!.Settings);
+
+        ProjectOptionsView view = new(viewModel);
+        object? result = await Shell.Current.ShowPopupAsync(view);
+
+        if (result is bool boolResut && boolResut)
+        {
+            BibTeXProject.Instance.Settings = viewModel.Settings;
+        }
+    }
+
+    async void OnProgramOptions(object sender, EventArgs eventArgs)
 	{
-		ProjectOptionsViewModel viewModel = new(BibTeXProject.Instance!.Settings);
-
-		ProjectOptionsView	view	= new(viewModel);
-		object?				result	= await Shell.Current.ShowPopupAsync(view);
-
-		if (result is bool boolResut && boolResut)
-		{
-			BibTeXProject.Instance.Settings = viewModel.Settings;
-		}
-	}
-
-	async void OnProgramOptions(object sender, EventArgs eventArgs)
-	{
-		ProgramOptionsViewModel	viewModel	= new();
-		ProgramOptionsView		view		= new(viewModel);
-		_									= await Shell.Current.ShowPopupAsync(view);
-	}
-
-	async void OnWebSearchSettings(object sender, EventArgs eventArgs)
-	{
-		WebSettingsViewModel	viewModel	= new();
-		WebSearchSettingsView	view		= new(viewModel);
-		_									= await Shell.Current.ShowPopupAsync(view);
+		ProgramOptionsViewModel viewModel = new();
+		ProgramOptionsView view = new(viewModel);
+		_ = await Shell.Current.ShowPopupAsync(view);
 	}
 
 	#endregion
@@ -218,81 +206,6 @@ public partial class MainPage : DigitalProductionMainPage
 			{
 				lastDialogResult	= messageBoxResult;
 				breakNext			= messageBoxResult == MessageBoxYesNoToAllResult.Cancel;
-			}
-		}
-	}
-
-	async void OnSingleSpeTitleSearch(object sender, EventArgs eventArgs)
-	{
-		SearchTermsViewModel	viewModel	= new();
-		SearchTermsView			view		= new(viewModel);
-		object?					result		= await Shell.Current.ShowPopupAsync(view);
-
-		if (result is bool boolResut && boolResut)
-		{
-			try
-			{
-				BibEntry? bibEntry = _viewModel.SingleImport(new SpeTitleImporter(), viewModel.SearchTermsString);
-
-				if (bibEntry != null)
-				{
-					await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
-					{
-						{ "AddMode",	false },
-						{ "BibEntry",	bibEntry }
-					});
-				}
-				else
-				{
-					await DisplayAlert("Entry Not Found", "A bibliography entry was not found.", "OK");
-				}
-
-			}
-			catch (Exception exception)
-			{
-				await DisplayAlert("Search Error", "An error occured during the search.\nError: "+exception.Message, "OK");
-			}
-		}
-	}
-
-	async void OnBulkSpeImport(object sender, EventArgs eventArgs)
-	{
-		string? file = await BrowseForInputFile();
-
-		if (file != null)
-		{
-			BulkImport(new SpeBulkTitleImporter(file));
-		}
-	}
-
-	async void OnSpeConferenceImport(object sender, EventArgs eventArgs)
-	{
-		string? file = await BrowseForInputFile();
-
-		if (file != null)
-		{
-			BulkImport(new SpeConferenceImporter(file));
-		}
-	}
-
-	private async void BulkImport(IBulkImporter importer)
-	{
-		ImportErrorViewModel viewModel;
-		ImportErrorView		 view;
-
-		foreach (ImportResult importResult in _viewModel.BulkImport(importer))
-		{
-			switch (importResult.Result)
-			{
-				case ResultType.Successful:
-					break;
-
-				case ResultType.NotFound:
-				case ResultType.Error:
-					viewModel	= new(importer, importResult);
-					view		= new ImportErrorView(viewModel);
-					_			= await Shell.Current.ShowPopupAsync(view);
-					break;
 			}
 		}
 	}
@@ -402,7 +315,7 @@ public partial class MainPage : DigitalProductionMainPage
 		List<string> paths = Preferences.RecentPathsManagerService.GetRecentPaths();
 		if (paths.Count > 0)
 		{
-			_viewModel.OpenProject(paths[0]);
+			_viewModel.Open(paths[0]);
 		}
 	}
 

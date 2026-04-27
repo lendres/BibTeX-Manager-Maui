@@ -1,11 +1,8 @@
 ﻿using BibTeXLibrary;
-using BibTeXManager;
-using BibTeXManager.Project;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
-using DigitalProduction.Http;
 
 namespace BibTeXManager.ViewModels;
 
@@ -24,7 +21,12 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		RecentPathsManagerService	= recentPathsManagerService;
 		_dialogService				= dialogService;
 
-		CustomSearch.SetCxAndKey(Preferences.CustomSearchEngineIdentifier, Preferences.SearchEngineApiKey);
+		ISaveService saveBeforeExitService			= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveService>();
+		saveBeforeExitService.IsModifiedFunction	= IsModified;
+		saveBeforeExitService.SaveFunction			= SaveAsync;
+
+		BibTeXProject.New(Preferences.ProjectSettings);
+		ProjectInitialization();
 	}
 
 	#endregion
@@ -32,6 +34,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	#region Properties
 
 	public BibTeXProject							Project { get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
+
 	public bool										SavePathRequired { get => !(BibTeXProject.Instance?.IsSaveable) ?? false; }
 
 	public IRecentPathsManagerService				RecentPathsManagerService { get; set; }
@@ -97,33 +100,31 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region File Menu
 
-	public void NewProject(string bibliographyFile)
+	public void New()
 	{
-		BibTeXProject.New(bibliographyFile);
-		if (BibTeXProject.Instance != null)
+		Project.NewBibliographyFile();
+		if (Project.Bibliography != null)
 		{
-			Items = BibTeXProject.Instance.Bibliography.Entries;
+			Items = Project.Bibliography.Entries;
 		}
-		ProjectInitialization();
 		Modified = true;
 		ValidateCanSave();
 	}
 
-	public void OpenProjectWithPathSave(string projectFile)
+	public void OpenWithPathSave(string projectFile)
 	{
 		RecentPathsManagerService.PushTop(projectFile);
-		OpenProject(projectFile);
+		Open(projectFile);
 	}
 
 	[RelayCommand]
-	public void OpenProject(string projectFile)
+	public void Open(string file)
 	{
-		BibTeXProject.Deserialize(projectFile);
-		if (BibTeXProject.Instance != null)
-		{
-			Items = BibTeXProject.Instance.Bibliography.Entries;
-		}
-		ProjectInitialization();
+		System.Diagnostics.Debug.Assert(BibTeXProject.Instance != null);
+		Items?.Clear();
+		Project.NewBibliographyFile();
+		Project.ReadBibliographyFile(file);
+		Items = Project.Bibliography.Entries;
 	}
 
 	void ProjectInitialization()
@@ -142,13 +143,13 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	public void Save(string path)
 	{
 		RecentPathsManagerService.PushTop(path);
-		Project.Serialize(path);
+		Project.WriteBibliographyFile(path);
 	}
 
 	[RelayCommand]
 	public void Save()
 	{
-		Project.Serialize();
+		Project.WriteBibliographyFile();
 	}
 
 	public void CloseProject()
@@ -198,42 +199,28 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		}
 	}
 
-	/// <summary>
-	/// Do bulk importing of BibTeX entries using the specified importer.
-	/// </summary>
-	public IEnumerable<ImportResult> BulkImport(IBulkImporter importer)
-	{
-		importer.SetBibliographyInitialization(Project.Settings.UseBibEntryInitialization, Project.BibEntryInitialization);
+	#endregion
 
-		foreach (ImportResult importResult in importer.BulkImport())
-		{
-			System.Diagnostics.Debug.Assert(importResult.BibEntry != null);
-
-			switch (importResult.Result)
-			{
-				case ResultType.Successful:
-					Project.ApplyAllCleaning(importResult.BibEntry);
-					int index = Project.GetEntryInsertIndex(importResult.BibEntry, 0);
-					Insert(importResult.BibEntry, index);
-					break;
-
-				case ResultType.NotFound:
-					yield return importResult;
-					break;
-
-				case ResultType.Error:
-					yield return importResult;
-					break;
-			}
-		}
-	}
+	#region Save Before Exit
 
 	/// <summary>
-	/// Do bulk importing of BibTeX entries using the specified importer.
+	/// Interface function for the save before exit service to check if the project is modified and needs to be saved before exiting.
 	/// </summary>
-	public BibEntry? SingleImport(ISingleImporter importer, string searchTerms)
+	/// <returns>True if the project is modified, false otherwise.</returns>
+	public bool IsModified()=> Modified;
+
+	/// <summary>
+	/// Interface function for the save before exit service to.  Asynchronously saves the current state or changes to the underlying data store.
+	/// </summary>
+	/// <remarks>
+	/// If the operation is canceled via the provided cancellation token, the returned task will be in a canceled state.
+	/// </remarks>
+	/// <param name="cancellationToken">A cancellation token that can be used to cancel the save operation.</param>
+	/// <returns>A task that represents the asynchronous save operation.</returns>
+	async Task<bool> SaveAsync(CancellationToken cancellationToken = default)
 	{
-		return importer.Import(searchTerms);
+		Save();
+		return true;
 	}
 
 	#endregion

@@ -30,13 +30,14 @@ public static class MauiProgram
 		{
 			EnsureOnScreen          = false,
 			DisableMaximizeButton   = false,
-			WindowTitle             = "BibTeX Manager"
+			WindowTitle             = "BibTeX Manager",
+			PromptToSaveBeforeClose	= true
 		};
 		DigitalProduction.Maui.UI.LifecycleEventsInstaller.ConfigureLifecycleEvents(builder, lifecycleOptions);
 
 		RegisterViewsAndViewModels(builder.Services);
+		RegisterServices(builder.Services);
 		RegisterEssentials(builder.Services);
-		CreateServices(builder.Services);
 		#if DEBUG
 			builder.Logging.AddDebug();
 		#endif
@@ -53,15 +54,15 @@ public static class MauiProgram
 		services.AddTransient<BibEntryViewModel>();
 
 		services.AddTransientPopup<ProgramOptionsView, ProgramOptionsViewModel>();
-		services.AddTransientPopup<ProjectOptionsView, ProjectOptionsViewModel>();
 	}
 
-	private static void CreateServices(IServiceCollection services)
+	private static void RegisterServices(IServiceCollection services)
 	{
 		services.AddSingleton<IBibTeXFilePicker, BibTeXFilePicker>();
 		services.AddSingleton<IDialogService, DialogService>();
 		services.AddSingleton<IRecentPathsManagerService, RecentPathsManagerService>();
 		services.AddSingleton<ISaveFilePicker, SaveFilePicker>();
+		services.AddSingleton<ISaveService>(new SaveService());
 	}
 
 	static void RegisterEssentials(in IServiceCollection services)

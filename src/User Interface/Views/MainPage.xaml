@@ -13,32 +13,30 @@
 
 	<ContentPage.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
-		<!--<mct:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
-		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>-->
 	</ContentPage.Resources>
 
 	<ContentPage.MenuBarItems>
 		<MenuBarItem Text="File">
-			<MenuFlyoutItem Text="New Project..." Clicked="OnNew">
+			<MenuFlyoutItem Text="New..." Clicked="OnNew">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="n" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-			<MenuFlyoutItem Text="Open Project..." Clicked="OnOpen">
+			<MenuFlyoutItem Text="Open..." Clicked="OnOpen">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="o" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-			<MenuFlyoutItem Text="Save Project" Clicked="OnSave" IsEnabled="{Binding CanSave}">
+			<MenuFlyoutItem Text="Save" Clicked="OnSave" IsEnabled="{Binding CanSave}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="s" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-			<MenuFlyoutItem Text="Save Project As..." Clicked="OnSaveAs" IsEnabled="{Binding ProjectOpen}"/>
-			<MenuFlyoutItem Text="Close Project" Clicked="OnClose" IsEnabled="{Binding ProjectOpen}"/>
+			<MenuFlyoutItem Text="Save As..." Clicked="OnSaveAs" IsEnabled="{Binding ProjectOpen}"/>
+			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding ProjectOpen}"/>
 			<dpcontrols:RecentlyUsedMenuFlyout
 				Text="Recently Used"
-				PathCommand="{Binding OpenProjectCommand}"
+				PathCommand="{Binding OpenCommand}"
 				PathNotFoundCommand="{Binding ShowRemovedMessageCommand}"
 				RecentPathsManagerService="{Binding RecentPathsManagerService}"/>
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
@@ -104,20 +102,14 @@
 			</MenuFlyoutItem>
 		</MenuBarItem>
 		<MenuBarItem Text="Settings">
-			<MenuFlyoutItem Text="Project Settings..." Clicked="OnProjectOptions" IsEnabled="{Binding ProjectOpen}"/>
+            <MenuFlyoutItem Text="Bibliography Settings..." Clicked="OnProjectOptions"/>
 			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>
-			<!--<MenuFlyoutItem Text="Web Search Settings..." Clicked="OnWebSearchSettings"/>-->
 		</MenuBarItem>
 		<MenuBarItem Text="Tools">
 			<!--<MenuFlyoutSubItem Text="Quality">-->
 				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding ProjectOpen}"/>
 				<MenuFlyoutItem Text="Check Tag Quality" Clicked="OnCheckTagQuality" IsEnabled="{Binding ProjectOpen}"/>
 			<!--</MenuFlyoutSubItem>-->
-			<!--<MenuFlyoutSubItem Text="Import">
-				<MenuFlyoutItem Text="Single SPE Title Search" Clicked="OnSingleSpeTitleSearch" IsEnabled="{Binding ProjectOpen}"/>
-				<MenuFlyoutItem Text="Bulk SPE Title Search" Clicked="OnBulkSpeImport" IsEnabled="{Binding ProjectOpen}"/>
-				<MenuFlyoutItem Text="SPE Conference Page Scraper" Clicked="OnSpeConferenceImport" IsEnabled="{Binding ProjectOpen}"/>
-			</MenuFlyoutSubItem>-->
 		</MenuBarItem>
 		<MenuBarItem Text="Help">
 			<MenuFlyoutItem Text="Help" Clicked="OnHelp">

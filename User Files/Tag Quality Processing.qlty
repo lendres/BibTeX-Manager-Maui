@@ -116,7 +116,7 @@
 
 		<tagprocessorgroup name="Special Screw Ups by SPE">
 			<tagprocessors>
-
+				
 				<!-- Both how and why?  You suck SPE. -->
 				<tagprocessor xsi:type="StringReplacementTagProcessor"
 					tagstoprocess="OnlySpecified"
@@ -131,6 +131,16 @@
 				<tagprocessor xsi:type="StringReplacementTagProcessor"
 					tagstoprocess="OnlySpecified"
 					pattern="\\\\&amp;amp;"
+					replacement="\&amp;">
+					<tags>
+						<tag>title</tag>
+						<tag>abstract</tag>
+					</tags>
+				</tagprocessor>
+
+				<tagprocessor xsi:type="StringReplacementTagProcessor"
+					tagstoprocess="OnlySpecified"
+					pattern="\\&amp;amp;"
 					replacement="\&amp;">
 					<tags>
 						<tag>title</tag>
@@ -156,8 +166,8 @@
 						<tag>title</tag>
 						<tag>abstract</tag>
 					</tags>
-				</tagprocessor>
-
+				</tagprocessor>				
+				
 				<tagprocessor xsi:type="StringReplacementTagProcessor"
 					tagstoprocess="OnlySpecified"
 					pattern="\\\\&amp;gt;"
@@ -170,7 +180,7 @@
 
 			</tagprocessors>
 		</tagprocessorgroup>
-		
+	
 		<tagprocessorgroup name="HTML Characters">
 			<tagprocessors>
 				
@@ -188,16 +198,6 @@
 		<tagprocessorgroup name="Capitol Letters and Acronyms">
 			<tagprocessors>
 				
-				<tagprocessor xsi:type="StringReplacementTagProcessor"
-					tagstoprocess="OnlySpecified"
-					pattern="PDC"
-					replacement="{PDC}">
-					<tags>
-						<tag>title</tag>
-						<tag>abstract</tag>
-					</tags>
-				</tagprocessor>
-
 				<tagprocessor xsi:type="StringReplacementTagProcessor"
 					tagstoprocess="OnlySpecified"
 					pattern="3D"
@@ -220,8 +220,68 @@
 
 				<tagprocessor xsi:type="StringReplacementTagProcessor"
 					tagstoprocess="OnlySpecified"
+					pattern="FEM"
+					replacement="{FEM}">
+					<tags>
+						<tag>title</tag>
+						<tag>abstract</tag>
+					</tags>
+				</tagprocessor>
+
+				<tagprocessor xsi:type="StringReplacementTagProcessor"
+					tagstoprocess="OnlySpecified"
 					pattern="CFD"
 					replacement="{CFD}">
+					<tags>
+						<tag>title</tag>
+						<tag>abstract</tag>
+					</tags>
+				</tagprocessor>
+
+				<tagprocessor xsi:type="StringReplacementTagProcessor"
+					tagstoprocess="OnlySpecified"
+					pattern="FPSO"
+					replacement="{FPSO}">
+					<tags>
+						<tag>title</tag>
+						<tag>abstract</tag>
+					</tags>
+				</tagprocessor>
+
+				<tagprocessor xsi:type="StringReplacementTagProcessor"
+					tagstoprocess="OnlySpecified"
+					pattern="BHA"
+					replacement="{BHA}">
+					<tags>
+						<tag>title</tag>
+						<tag>abstract</tag>
+					</tags>
+				</tagprocessor>
+
+				<tagprocessor xsi:type="StringReplacementTagProcessor"
+					tagstoprocess="OnlySpecified"
+					pattern="PDC"
+					replacement="{PDC}">
+					<tags>
+						<tag>title</tag>
+						<tag>abstract</tag>
+					</tags>
+				</tagprocessor>
+
+				<tagprocessor xsi:type="StringReplacementTagProcessor"
+					tagstoprocess="OnlySpecified"
+					pattern="RSS"
+					replacement="{RSS}">
+					<tags>
+						<tag>title</tag>
+						<tag>abstract</tag>
+					</tags>
+				</tagprocessor>
+
+				<tagprocessor xsi:type="StringReplacementTagProcessor"
+					tagstoprocess="OnlySpecified"
+					pattern="RWD"
+					replacement="{RWD}">
 					<tags>
 						<tag>title</tag>
 						<tag>abstract</tag>
@@ -268,7 +328,7 @@
 				</tagprocessor>
 
 				<!-- Change quotes to LaTeX quotes. -->
-				<tagprocessor xsi:type="QuoteTagProcessor" tagstoprocess="All" pattern="&quot;.*&quot;">
+				<tagprocessor xsi:type="QuoteTagProcessor" tagstoprocess="All" pattern="&quot;[^&quot;]*&quot;">
 					<tags></tags>
 				</tagprocessor>
 				

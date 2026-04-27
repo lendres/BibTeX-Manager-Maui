@@ -15,28 +15,29 @@ public partial class ProjectOptionsView : PopupView
 		BindingContext	= viewModel;
 	}
 
-	async void OnBrowseForInputFile(object sender, EventArgs eventArgs)
-	{
-		BibliographyFileEntry.Text = await _filePicker.BrowseForBibliographyFile();
-	}
-
 	async void OnBrowseForAuxiliaryFileFile(object sender, EventArgs eventArgs)
 	{
-		AuxiliaryFileEntry.Text = _viewModel.ConvertToRelativePath(await _filePicker.BrowseForBibliographyFile());
+		AuxiliaryFileEntry.Text = await _filePicker.BrowseForBibliographyFile();
 	}
 
 	async void OnBrowseTagOrderFile(object sender, EventArgs eventArgs)
 	{
-		TagOrderEntry.Text = _viewModel.ConvertToRelativePath(await _filePicker.BrowseForTagOrderFile());
+		TagOrderEntry.Text = await _filePicker.BrowseForTagOrderFile();
 	}
 
 	async void OnBrowseTagQualityFile(object sender, EventArgs eventArgs)
 	{
-		TagQualityEntry.Text = _viewModel.ConvertToRelativePath(await _filePicker.BrowseForTagQualityFile());
+		TagQualityEntry.Text = await _filePicker.BrowseForTagQualityFile();
 	}
 
 	async void OnBrowseNameRemappingFile(object sender, EventArgs eventArgs)
 	{
-		NameRemappingEntry.Text = _viewModel.ConvertToRelativePath(await _filePicker.BrowseForNameRemappingFile());
+		NameRemappingEntry.Text = await _filePicker.BrowseForNameRemappingFile();
+	}
+
+	protected override void OnSaveButtonClicked(object? sender, EventArgs eventArgs)
+	{
+		_viewModel.Save();
+		base.OnSaveButtonClicked(sender, eventArgs);
 	}
 }

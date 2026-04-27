@@ -1,4 +1,8 @@
 ﻿using DigitalProduction.Maui.Services;
+using DigitalProduction.Xml.Serialization;
+using System.Runtime.CompilerServices;
+
+using DpmPreferences =  DigitalProduction.Maui.Storage.Preferences;
 
 namespace BibTeXManager;
 
@@ -7,13 +11,32 @@ namespace BibTeXManager;
 /// </summary>
 public static class Preferences
 {
-	private static readonly IRecentPathsManagerService      _recentPathsManagerService = 
+    #region Fields
+
+    private static readonly IRecentPathsManagerService _recentPathsManagerService = 
 		DigitalProduction.Maui.Services.ServiceProvider.GetService<IRecentPathsManagerService>();
 
+    #endregion
+
+    #region Bibliography Settings
+
 	/// <summary>
-	/// Load last project as start up.
+	/// The settings for writing the bibliography file.
 	/// </summary>
-	public static IRecentPathsManagerService RecentPathsManagerService
+	public static ProjectSettings ProjectSettings
+	{
+		get => DpmPreferences.GetInstance<ProjectSettings>();
+		set => DpmPreferences.SetInstance<ProjectSettings>(value);
+	}
+
+    #endregion
+
+    #region Program Settings
+
+    /// <summary>
+    /// Recent paths.
+    /// </summary>
+    public static IRecentPathsManagerService RecentPathsManagerService
 	{
 		get => _recentPathsManagerService;
 	}
@@ -23,25 +46,10 @@ public static class Preferences
 	/// </summary>
 	public static bool LoadLastProjectAtStartUp
 	{
-		get => Microsoft.Maui.Storage.Preferences.Default.Get("Load Last Project At Start Up", false);
-		set => Microsoft.Maui.Storage.Preferences.Default.Set("Load Last Project At Start Up", value);
+		get => DpmPreferences.Get(false);
+		set => DpmPreferences.Set(value);
 	}
 
-	/// <summary>
-	/// Google search endige cx identifier.
-	/// </summary>
-	public static string CustomSearchEngineIdentifier
-	{
-		get => Microsoft.Maui.Storage.Preferences.Default.Get("Custom Search Engine Identifier", "");
-		set => Microsoft.Maui.Storage.Preferences.Default.Set("Custom Search Engine Identifier", value);
-	}
+    #endregion
 
-	/// <summary>
-	/// Google search engine API key.
-	/// </summary>
-	public static string SearchEngineApiKey
-	{
-		get => Microsoft.Maui.Storage.Preferences.Default.Get("Search Engine Api Key", "");
-		set => Microsoft.Maui.Storage.Preferences.Default.Set("Search Engine Api Key", value);
-	}
 }

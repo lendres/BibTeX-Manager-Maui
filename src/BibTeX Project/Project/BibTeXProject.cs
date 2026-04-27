@@ -30,7 +30,8 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	}
 
 	public static void New() => Instance = new BibTeXProject();
-	public static void New(string bibliographyFile) => Instance = new BibTeXProject(bibliographyFile);
+
+	public static void New(ProjectSettings settings) => Instance = new BibTeXProject(settings);
 
 	private static void OnClose() { _instance = null; }
 
@@ -40,7 +41,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 
 	private ProjectSettings                     _settings                       = new();
 
-	private readonly Bibliography               _bibliography                   = new();
+	private Bibliography						_bibliography					= new();
 
 	private readonly List<BibliographyDOM>		_accessoryFilesDOMs				= [];
 
@@ -59,25 +60,20 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	protected BibTeXProject() :
+	public BibTeXProject() :
 		base(CompressionType.Uncompressed)
 	{
 		ModifiedChanged += OnMyModifiedChanged;
-
-		_settings.ModifiedChanged += OnChildModifiedChanged;
-		_settings.PropertyChanged += OnSettingsPropertyChanged;
-
-		_bibliography.ModifiedChanged += OnChildModifiedChanged;
-		_bibliography.PropertyChanged += OnPropertyChanged;
+		NewBibliographyFile();
 	}
 
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	protected BibTeXProject(string bibliographyFile) :
+	protected BibTeXProject(ProjectSettings settings) :
 		this()
 	{
-		_settings.BibliographyFile = bibliographyFile;
+		Settings = settings;
 	}
 
 	#endregion
@@ -95,8 +91,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 			{
 				_settings = value;
 				ReadAccessoaryFiles();
-				Modified = true;
-				OnPropertyChanged();
 			}
 		}
 	}
@@ -120,10 +114,36 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// <summary>
 	/// Read the bibliography file.
 	/// </summary>
-	private void ReadBibliographyFile()
+	public void NewBibliographyFile(string file)
 	{
-		string bibFile = ConvertToAbsolutePath(_settings.BibliographyFile);
-		if (!File.Exists(bibFile))
+		Path = file;
+		NewBibliographyFile();
+	}
+
+	public void NewBibliographyFile()
+	{
+		_bibliography					=  new();
+		_bibliography.ModifiedChanged	+= OnChildModifiedChanged;
+		_bibliography.PropertyChanged	+= OnPropertyChanged;
+		Path                            =  "";
+		Modified                        = false;
+	}
+
+	/// <summary>
+	/// Read the bibliography file.
+	/// </summary>
+	public void ReadBibliographyFile(string file)
+	{
+		Path = file;
+		ReadBibliographyFile();
+	}
+
+	/// <summary>
+	/// Read the bibliography file.
+	/// </summary>
+	public void ReadBibliographyFile()
+	{
+		if (!File.Exists(Path))
 		{
 			return;
 		}
@@ -131,12 +151,38 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		string bibEntryInitializaitonFile = ConvertToAbsolutePath(_settings.BibEntryInitializationFile);
 		if (_settings.UseBibEntryInitialization && File.Exists(bibEntryInitializaitonFile))
 		{
-			_bibliography.Read(bibFile, bibEntryInitializaitonFile);
+			_bibliography.Read(Path, bibEntryInitializaitonFile);
 		}
 		else
 		{
-			_bibliography.Read(bibFile);
+			_bibliography.Read(Path);
 		}
+
+		BuildStringConstantMap();
+		Modified = false;
+	}
+
+	/// <summary>
+	/// Writes the bibliography file from memory.  The bibliography file must be set and represent a valid path
+	/// or this method will throw an exception.
+	/// </summary>
+	public void WriteBibliographyFile(string path)
+	{
+		Path = path;
+		WriteBibliographyFile();
+	}
+
+	/// <summary>
+	/// Writes the bibliography file from memory.  The bibliography file must be set and represent a valid path
+	/// or this method will throw an exception.
+	/// </summary>
+	public void WriteBibliographyFile()
+	{
+		if (!string.IsNullOrEmpty(Path))
+		{
+			_bibliography.Write(Path, _settings.WriteSettings);
+		}
+		Modified = false;
 	}
 
 	/// <summary>
@@ -206,6 +252,18 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	}
 
 	/// <summary>
+	/// Initialize references.
+	/// </summary>
+	public void ReadAccessoaryFiles()
+	{
+		ReadBibEntryInitializationFiles();
+		ReadTagQualityProcessingFile();
+		ReadNameMappingFile();
+		ReadAccessoryFiles();
+		BuildStringConstantMap();
+	}
+
+	/// <summary>
 	/// Build the string constants map.
 	/// </summary>
 	private void BuildStringConstantMap()
@@ -239,11 +297,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		{
 			case nameof(Settings.BibEntryInitializationFile):
 				ReadBibEntryInitializationFiles();
-				ReadBibliographyFile();
-				BuildStringConstantMap();
-				break;
-
-			case nameof(Settings.BibliographyFile):
 				ReadBibliographyFile();
 				BuildStringConstantMap();
 				break;
@@ -305,17 +358,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		}
 
 		return result.Entries;
-	}
-
-	/// <summary>
-	/// Clean up.
-	/// </summary>
-	public override void Close()
-	{
-		// Must call base first.  This calls the OnClose event which should clear all forms (unbind) and
-		// make it safe to close the Bibliography.
-		base.Close();
-		Instance = null;
 	}
 
 	#endregion
@@ -486,49 +528,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	}
 
 	#endregion
-
-	#endregion
-
-	#region XML
-
-	/// <summary>
-	/// Writes a Project file (compressed file containing all the project's files).  Uses a ProjectCompressor to zip all files.  An
-	/// event of RaiseOnSavingEvent fires allowing other files to be added to the project.
-	///
-	/// The Path must be set and represent a valid path or this method will throw an exception.
-	/// </summary>
-	/// <exception cref="InvalidOperationException">Thrown when the projects path is not set or not valid.</exception>
-	public override void Serialize()
-	{
-		// Save the bibliography file from memory.
-		if (!string.IsNullOrEmpty(_settings.BibliographyFile))
-		{
-			string file = DigitalProduction.IO.Path.ConvertToAbsolutePath(_settings.BibliographyFile, System.IO.Path.GetDirectoryName(Path)!);
-			//file += ".output.bib";
-			_bibliography.Write(file, _settings.WriteSettings);
-		}
-		base.Serialize();
-	}
-
-	public static void Deserialize(string path)
-	{
-		Instance = Deserialize<BibTeXProject>(path, CompressionType.Uncompressed);
-		Instance.ReadAccessoaryFiles();
-		Instance.Modified = false;
-	}
-
-	/// <summary>
-	/// Initialize references.
-	/// </summary>
-	public void ReadAccessoaryFiles()
-	{
-		ReadBibEntryInitializationFiles();
-		ReadTagQualityProcessingFile();
-		ReadNameMappingFile();
-		ReadBibliographyFile();
-		ReadAccessoryFiles();
-		BuildStringConstantMap();
-	}
 
 	#endregion
 
