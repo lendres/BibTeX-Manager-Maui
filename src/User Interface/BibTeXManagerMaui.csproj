@@ -81,10 +81,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="Views\EditStringsView.xaml">
+		<MauiXaml Update="Views\StringsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\StringView.xaml">
+		<MauiXaml Update="Views\StringConstantView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\ProjectOptionsView.xaml">
@@ -112,11 +112,11 @@
 		<Compile Update="Views\CorrectionView.xaml.cs">
 		  <DependentUpon>CorrectionView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\EditStringsView.xaml.cs">
-		  <DependentUpon>EditStringsView.xaml</DependentUpon>
+		<Compile Update="Views\StringsView.xaml.cs">
+		  <DependentUpon>StringsView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\StringView.xaml.cs">
-		  <DependentUpon>StringView.xaml</DependentUpon>
+		<Compile Update="Views\StringConstantView.xaml.cs">
+		  <DependentUpon>StringConstantView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\TemplateSelectionView.xaml.cs">
 			<DependentUpon>TemplateSelectionView.xaml</DependentUpon>

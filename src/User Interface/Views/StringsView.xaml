@@ -9,7 +9,7 @@
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:DataType="viewmodel:StringsViewModel"
-	x:Class="BibTeXManager.Views.EditStringsView">
+	x:Class="BibTeXManager.Views.StringConstantsView">
 
 	<Shell.BackButtonBehavior>
 		<BackButtonBehavior IsVisible="False" IsEnabled="False" />

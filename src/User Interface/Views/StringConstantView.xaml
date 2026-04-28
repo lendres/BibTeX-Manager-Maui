@@ -7,7 +7,7 @@
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
-	x:Class="Data.Translation.Pages.StringView"
+	x:Class="BibTeXManager.Views.StringConstantView"
 	x:DataType="viewmodel:StringViewModel"
 	x:Name="self"
 	CanBeDismissedByTappingOutsideOfPopup="False">

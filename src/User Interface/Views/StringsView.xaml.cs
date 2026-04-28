@@ -8,7 +8,7 @@ using DigitalProduction.Maui.Views;
 
 namespace BibTeXManager.Views;
 
-public partial class EditStringsView : ContentPage
+public partial class StringConstantsView : ContentPage
 {
 	#region Fields
 
@@ -18,7 +18,7 @@ public partial class EditStringsView : ContentPage
 
 	#region Construction
 
-	public EditStringsView(StringsViewModel viewModel)
+	public StringConstantsView(StringsViewModel viewModel)
 	{
 		InitializeComponent();
 

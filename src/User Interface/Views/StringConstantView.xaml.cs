@@ -1,13 +1,13 @@
 ﻿using BibTeXManager.ViewModels;
 using DigitalProduction.Maui.Views;
 
-namespace Data.Translation.Pages;
+namespace BibTeXManager.Views;
 
-public partial class StringView : PopupView
+public partial class StringConstantView : PopupView
 {
 	#region Construction
 
-	public StringView(StringViewModel viewModel)
+	public StringConstantView(StringViewModel viewModel)
 	{
 		BindingContext = viewModel;
 		InitializeComponent();

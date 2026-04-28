@@ -154,7 +154,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	async void OnEditStringConstants(object sender, EventArgs eventArgs)
 	{
-		await Shell.Current.GoToAsync(nameof(EditStringsView), true);
+		await Shell.Current.GoToAsync(nameof(StringConstantsView), true);
 	}
 
 	#endregion
