@@ -155,11 +155,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		Items?.Clear();
 		Project.NewBibliographyFile();
 		Project.ReadBibliographyFile(file);
-		ObservableCollection<BibEntry> entries = Project.Bibliography.Entries;
-		Items = entries;
-		ProjectOpen = true;
-		Modified = false;
-		ValidateCanSave();
+		Items		=  Project.Bibliography.Entries;
+		ProjectOpen	= true;
 	}
 
 	void ProjectInitialization()
