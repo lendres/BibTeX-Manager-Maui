@@ -74,7 +74,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
-		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.12.7" />
+		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.12.8" />
 		<PackageReference Include="DigitalProduction.Maui.Images" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
@@ -82,6 +82,9 @@
 
 	<ItemGroup>
 		<MauiXaml Update="Views\EditStringsView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\StringView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\ProjectOptionsView.xaml">
@@ -111,6 +114,9 @@
 		</Compile>
 		<Compile Update="Views\EditStringsView.xaml.cs">
 		  <DependentUpon>EditStringsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\StringView.xaml.cs">
+		  <DependentUpon>StringView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\TemplateSelectionView.xaml.cs">
 			<DependentUpon>TemplateSelectionView.xaml</DependentUpon>
