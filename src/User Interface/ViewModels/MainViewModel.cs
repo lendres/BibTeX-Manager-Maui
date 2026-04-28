@@ -4,6 +4,8 @@ using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
 
+using System.Collections.ObjectModel;
+
 namespace BibTeXManager.ViewModels;
 
 public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
@@ -102,13 +104,24 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	public override void Insert(BibEntry item, int position = 0, bool select = true)
 	{
-		if (position == 0 && Project.Settings.SortBibliography)
+		if (Project.Settings.SortBibliography)
 		{
+			// If sorting, ignore the position and add based on the sort method.
 			Project.Bibliography.Insert(item, Project.Settings.BibliographySortMethod);
 		}
 		else
 		{
-			Project.Bibliography.Add(item);
+
+			if (position == 0)
+			{
+				// If we are adding new (position == 0) and not sorting, add to the end of the list.
+				Project.Bibliography.Add(item);
+			}
+			else
+			{
+				// If we are not sorting, then add at the specified position.
+				Project.Bibliography.Insert(item, position);
+			}
 		}
 
 		FinalizeInsert(item, select);
@@ -142,14 +155,17 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		Items?.Clear();
 		Project.NewBibliographyFile();
 		Project.ReadBibliographyFile(file);
-		Items = Project.Bibliography.Entries;
+		ObservableCollection<BibEntry> entries = Project.Bibliography.Entries;
+		Items = entries;
+		ProjectOpen = true;
+		Modified = false;
+		ValidateCanSave();
 	}
 
 	void ProjectInitialization()
 	{
 		Project.ModifiedChanged += OnProjectModifiedChanged;
 		Project.PropertyChanged += OnProjectPropertyChanged;
-		ProjectOpen = true;
 	}
 
 	[RelayCommand]
