@@ -16,6 +16,7 @@ public partial class StringsViewModel : DataGridBaseViewModel<StringConstant>
 
 	public StringsViewModel()
     {
+		Items = Project.Bibliography.StringConstants;
 	}
 
 	#endregion

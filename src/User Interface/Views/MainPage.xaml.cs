@@ -150,6 +150,15 @@ public partial class MainPage : DigitalProductionMainPage
 
     #endregion
 
+	#region Configuration
+
+	async void OnEditStringConstants(object sender, EventArgs eventArgs)
+	{
+		await Shell.Current.GoToAsync(nameof(EditStringsView), true);
+	}
+
+	#endregion
+
     #region Settings
 
     async void OnProjectOptions(object sender, EventArgs eventArgs)
@@ -317,43 +326,6 @@ public partial class MainPage : DigitalProductionMainPage
 		{
 			_viewModel.Open(paths[0]);
 		}
-	}
-
-	private async Task<string?> BrowseForInputFile()
-	{
-		MainViewModel? viewModel = BindingContext as MainViewModel;
-		System.Diagnostics.Debug.Assert(viewModel != null);
-
-		try
-		{
-			PickOptions pickOptions = new() { PickerTitle="Select an Input File" }; //, FileTypes=viewModel.GetInputFileTypes() };
-			FileResult? result      = await BrowseForFile(pickOptions);
-
-			if (result != null)
-			{
-				return result.FullPath;
-			}
-		}
-		catch (Exception exception)
-		{
-			await DisplayAlert("Error", "An exception occured:"+Environment.NewLine+exception.Message, "OK");
-		}
-
-		return null;
-	}
-
-	public static async Task<FileResult?> BrowseForFile(PickOptions options)
-	{
-		try
-		{
-			return await FilePicker.PickAsync(options);
-		}
-		catch
-		{
-			// The user canceled or something went wrong.
-		}
-
-		return null;
 	}
 
 	#endregion

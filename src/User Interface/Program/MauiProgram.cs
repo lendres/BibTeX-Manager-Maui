@@ -47,11 +47,14 @@ public static class MauiProgram
 
 	static void RegisterViewsAndViewModels(IServiceCollection services)
 	{
-		services.AddSingleton<MainViewModel>();
 		services.AddSingleton<MainPage>();
+		services.AddSingleton<MainViewModel>();
 
 		services.AddTransient<EditRawBibEntryForm>();
 		services.AddTransient<BibEntryViewModel>();
+
+		services.AddTransient<EditStringsView>();
+		services.AddTransient<StringsViewModel>();
 
 		services.AddTransientPopup<ProgramOptionsView, ProgramOptionsViewModel>();
 	}
