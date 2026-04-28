@@ -12,13 +12,13 @@ public partial class StringConstantsView : ContentPage
 {
 	#region Fields
 
-	private readonly StringsViewModel		_viewModel;
+	private readonly StringConstantsViewModel		_viewModel;
 
 	#endregion
 
 	#region Construction
 
-	public StringConstantsView(StringsViewModel viewModel)
+	public StringConstantsView(StringConstantsViewModel viewModel)
 	{
 		InitializeComponent();
 

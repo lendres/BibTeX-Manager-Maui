@@ -5,7 +5,7 @@ using DigitalProduction.Maui.Validation;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class StringViewModel : ObservableObject
+public partial class StringConstantViewModel : ObservableObject
 {
 	#region Fields
 
@@ -13,14 +13,14 @@ public partial class StringViewModel : ObservableObject
 
 	#region Construction
 
-	public StringViewModel()
+	public StringConstantViewModel()
 	{
 		StringConstant				= new();
 		Title						= "Add String";
 		Initialize(null);
 	}
 
-	public StringViewModel(StringConstant stringConstant)
+	public StringConstantViewModel(StringConstant stringConstant)
     {
 		StringConstant				= stringConstant;
 		Title						= "Edit String";

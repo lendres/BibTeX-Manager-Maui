@@ -7,7 +7,7 @@ public partial class StringConstantView : PopupView
 {
 	#region Construction
 
-	public StringConstantView(StringViewModel viewModel)
+	public StringConstantView(StringConstantViewModel viewModel)
 	{
 		BindingContext = viewModel;
 		InitializeComponent();

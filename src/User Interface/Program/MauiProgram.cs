@@ -54,7 +54,7 @@ public static class MauiProgram
 		services.AddTransient<BibEntryViewModel>();
 
 		services.AddTransient<StringConstantsView>();
-		services.AddTransient<StringsViewModel>();
+		services.AddTransient<StringConstantsViewModel>();
 
 		services.AddTransientPopup<ProgramOptionsView, ProgramOptionsViewModel>();
 	}

@@ -81,7 +81,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="Views\StringsView.xaml">
+		<MauiXaml Update="Views\StringConstantsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\StringConstantView.xaml">
@@ -112,8 +112,8 @@
 		<Compile Update="Views\CorrectionView.xaml.cs">
 		  <DependentUpon>CorrectionView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\StringsView.xaml.cs">
-		  <DependentUpon>StringsView.xaml</DependentUpon>
+		<Compile Update="Views\StringConstantsView.xaml.cs">
+		  <DependentUpon>StringConstantsView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\StringConstantView.xaml.cs">
 		  <DependentUpon>StringConstantView.xaml</DependentUpon>

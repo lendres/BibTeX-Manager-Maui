@@ -8,7 +8,7 @@
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:Class="BibTeXManager.Views.StringConstantView"
-	x:DataType="viewmodel:StringViewModel"
+	x:DataType="viewmodel:StringConstantViewModel"
 	x:Name="self"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
