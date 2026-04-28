@@ -98,6 +98,24 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Methods and Commands
 
+	#region DataGridBaseViewModel Overrides
+
+	public override void Insert(BibEntry item, int position = 0, bool select = true)
+	{
+		if (position == 0 && Project.Settings.SortBibliography)
+		{
+			Project.Bibliography.Insert(item, Project.Settings.BibliographySortMethod);
+		}
+		else
+		{
+			Project.Bibliography.Add(item);
+		}
+
+		FinalizeInsert(item, select);
+	}
+
+	#endregion
+
 	#region File Menu
 
 	public void New()
