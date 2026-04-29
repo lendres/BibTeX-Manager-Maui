@@ -148,21 +148,22 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		ValidateCanSave();
 	}
 
-	public void OpenWithPathSave(string projectFile)
+	public async Task OpenWithPathSave(string projectFile)
 	{
 		RecentPathsManagerService.PushTop(projectFile);
-		Open(projectFile);
+		await Open(projectFile);
 	}
 
-	public void Open(string file)
+	[RelayCommand]
+	public async Task Open(string file)
 	{
-		//SaveChoice closeChoice = await SaveBeforeExitService.PromptSaveChangesAsync();
+		SaveChoice closeChoice = await SaveBeforeExitService.PromptSaveChangesAsync();
 
-		//switch (closeChoice)
-		//{
-		//	case SaveChoice.Cancel:
-		//		return;
-		//}
+		switch (closeChoice)
+		{
+			case SaveChoice.Cancel:
+				return;
+		}
 
 		System.Diagnostics.Debug.Assert(BibTeXProject.Instance != null);
 		Items?.Clear();

@@ -36,7 +36,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 		if (Preferences.LoadLastProjectAtStartUp)
 		{
-			OpenLastProject();
+			_ = OpenLastProject();
 		}
 	}
 
@@ -64,7 +64,7 @@ public partial class MainPage : DigitalProductionMainPage
 		string file = await _filePicker.BrowseForBibliographyFile();
 		if (!string.IsNullOrEmpty(file))
 		{
-			_viewModel.OpenWithPathSave(file);
+			await _viewModel.OpenWithPathSave(file);
 		}
 	}
 
@@ -314,14 +314,14 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Methods
 
-	private void OpenLastProject()
+	private async Task OpenLastProject()
 	{
 		// TODO: Update to GetTop() method.
 		//_viewModel.OpenProjectWithPathSave(Preferences.RecentPathsManagerService.TopPath);
 		List<string> paths = Preferences.RecentPathsManagerService.GetRecentPaths();
 		if (paths.Count > 0)
 		{
-			_viewModel.Open(paths[0]);
+			await _viewModel.Open(paths[0]);
 		}
 	}
 
