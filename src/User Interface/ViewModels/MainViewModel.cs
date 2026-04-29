@@ -4,8 +4,6 @@ using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
 
-using System.Collections.ObjectModel;
-
 namespace BibTeXManager.ViewModels;
 
 public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
@@ -156,9 +154,16 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		Open(projectFile);
 	}
 
-	[RelayCommand]
 	public void Open(string file)
 	{
+		//SaveChoice closeChoice = await SaveBeforeExitService.PromptSaveChangesAsync();
+
+		//switch (closeChoice)
+		//{
+		//	case SaveChoice.Cancel:
+		//		return;
+		//}
+
 		System.Diagnostics.Debug.Assert(BibTeXProject.Instance != null);
 		Items?.Clear();
 		Project.NewBibliographyFile();

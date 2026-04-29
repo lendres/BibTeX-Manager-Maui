@@ -316,6 +316,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	private void OpenLastProject()
 	{
+		// TODO: Update to GetTop() method.
 		//_viewModel.OpenProjectWithPathSave(Preferences.RecentPathsManagerService.TopPath);
 		List<string> paths = Preferences.RecentPathsManagerService.GetRecentPaths();
 		if (paths.Count > 0)
