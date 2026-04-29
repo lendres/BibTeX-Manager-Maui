@@ -2,6 +2,7 @@
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
+using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
@@ -23,9 +24,11 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Construction
 
-	public MainPage(MainViewModel viewModel)
+	public MainPage(MainViewModel viewModel, IPageProvider pageProvider)
 	{
 		InitializeComponent();
+
+		pageProvider.CurrentPage	= this;
 
 		BindingContext				= viewModel;
 		_viewModel					= viewModel;

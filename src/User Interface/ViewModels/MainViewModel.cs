@@ -18,14 +18,14 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Construction
 
-	public MainViewModel(IRecentPathsManagerService recentPathsManagerService, IDialogService dialogService)
+	public MainViewModel(IRecentPathsManagerService recentPathsManagerService, IDialogService dialogService, ISaveService saveBeforeExitService)
     {
 		RecentPathsManagerService	= recentPathsManagerService;
 		_dialogService				= dialogService;
 
-		ISaveService saveBeforeExitService			= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveService>();
-		saveBeforeExitService.IsModifiedFunction	= IsModified;
-		saveBeforeExitService.SaveFunction			= SaveAsync;
+		SaveBeforeExitService						= saveBeforeExitService;
+		SaveBeforeExitService.IsModifiedFunction	= IsModified;
+		SaveBeforeExitService.SaveFunction			= SaveAsync;
 
 		BibTeXProject.New(Preferences.ProjectSettings);
 		ProjectInitialization();
@@ -40,6 +40,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	public bool										SavePathRequired { get => !(BibTeXProject.Instance?.IsSaveable) ?? false; }
 
 	public IRecentPathsManagerService				RecentPathsManagerService { get; set; }
+
+	public ISaveService								SaveBeforeExitService { get; private set; }
 
 	public Page? MenuHostingPage
 	{
