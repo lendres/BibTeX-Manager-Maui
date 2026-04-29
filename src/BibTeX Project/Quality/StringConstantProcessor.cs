@@ -56,7 +56,7 @@ public class StringConstantProcessor
 	/// <param name="bibliographyDOMs">BibliographyDOM.</param>
 	public void AddStringConstantsToMap(BibliographyDOM bibliographyDOM)
 	{
-		foreach (StringConstantPart entry in bibliographyDOM.StringConstants)
+		foreach (StringConstant entry in bibliographyDOM.StringConstants)
 		{
 			_map.Add(entry.Name, entry.Value);
 		}

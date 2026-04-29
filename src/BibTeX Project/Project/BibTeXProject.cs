@@ -33,7 +33,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 
 	public static void New(ProjectSettings settings) => Instance = new BibTeXProject(settings);
 
-	private static void OnClose() { _instance = null; }
+	private static void OnClose() { _instance!.Modified = false; }
 
 	#endregion
 
@@ -122,6 +122,11 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 
 	public void NewBibliographyFile()
 	{
+		if (_bibliography != null)
+		{
+			_bibliography.ModifiedChanged	-= OnChildModifiedChanged;
+			_bibliography.PropertyChanged	-= OnPropertyChanged;
+		}
 		_bibliography					=  new();
 		_bibliography.ModifiedChanged	+= OnChildModifiedChanged;
 		_bibliography.PropertyChanged	+= OnPropertyChanged;
@@ -490,41 +495,37 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 
 	/// <summary>
 	/// Sort the bibliography entries.
+	/// Note, it is assumed this method is called deliberately.  It does not check to see if sorting is enabled in the settings.
 	/// </summary>
 	public void SortBibliographyEntries()
 	{
-		if (_settings.SortBibliography)
-		{
-			_bibliography.SortBibEntries(_settings.BibliographySortMethod);
-		}
+		_bibliography.SortBibEntries(_settings.BibliographySortMethod);
 	}
 
 	/// <summary>
-	/// Sort the bibliography entries.
+	/// Clean the entries.
+	/// Note, it is assumed this method is called deliberately.  It does not check to see if quality processing is enabled in the settings.
 	/// </summary>
 	public IEnumerable<TagProcessingData> CleanAllEntries()
 	{
-		if (_settings.UseTagQualityProcessing)
+		bool modified = false;
+
+		foreach (BibEntry entry in _bibliography.Entries)
 		{
-			bool modified = false;
-
-			foreach (BibEntry entry in _bibliography.Entries)
+			foreach (TagProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
 			{
-				foreach (TagProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
+				if (tagProcessingData.Correction.ReplaceText)
 				{
-					if (tagProcessingData.Correction.ReplaceText)
-					{
-						modified = true;
-					}
-					yield return tagProcessingData;
+					modified = true;
 				}
-			}
-
-			if (modified)
-			{
-				Modified = true;
+				yield return tagProcessingData;
 			}
 		}
+
+		//if (modified)
+		//{
+		//	Modified = true;
+		//}
 	}
 
 	#endregion

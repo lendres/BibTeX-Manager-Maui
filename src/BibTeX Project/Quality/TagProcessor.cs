@@ -82,10 +82,10 @@ public abstract class TagProcessor
 		{
 			bool processTags = _tagsToProcess switch
 			{
-				TagsToProcess.All => true,
-				TagsToProcess.ExcludeSpecified => !_tagNames.Contains(tagName.ToLower()),
-				TagsToProcess.OnlySpecified => _tagNames.Contains(tagName.ToLower()),
-				_ => throw new System.Exception("The value for TagsToProcess is out of range."),
+				TagsToProcess.All				=> true,
+				TagsToProcess.ExcludeSpecified	=> !_tagNames.Contains(tagName.ToLower()),
+				TagsToProcess.OnlySpecified		=> _tagNames.Contains(tagName.ToLower()),
+				_								=> throw new System.Exception("The value for TagsToProcess is out of range."),
 			};
 
 			// If we are processing all tags or if the current tag name was specified as one to process.
