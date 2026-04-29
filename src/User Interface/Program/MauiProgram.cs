@@ -65,7 +65,8 @@ public static class MauiProgram
 		services.AddSingleton<IDialogService, DialogService>();
 		services.AddSingleton<IRecentPathsManagerService, RecentPathsManagerService>();
 		services.AddSingleton<ISaveFilePicker, SaveFilePicker>();
-		services.AddSingleton<ISaveService>(new SaveService());
+		services.AddSingleton<ISaveService, SaveService>();
+		services.AddSingleton<IPageProvider, PageProvider>();
 	}
 
 	static void RegisterEssentials(in IServiceCollection services)

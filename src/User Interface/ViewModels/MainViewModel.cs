@@ -16,14 +16,14 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Construction
 
-	public MainViewModel(IRecentPathsManagerService recentPathsManagerService, IDialogService dialogService)
+	public MainViewModel(IRecentPathsManagerService recentPathsManagerService, IDialogService dialogService, ISaveService saveBeforeExitService)
     {
 		RecentPathsManagerService	= recentPathsManagerService;
 		_dialogService				= dialogService;
 
-		ISaveService saveBeforeExitService			= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveService>();
-		saveBeforeExitService.IsModifiedFunction	= IsModified;
-		saveBeforeExitService.SaveFunction			= SaveAsync;
+		SaveBeforeExitService						= saveBeforeExitService;
+		SaveBeforeExitService.IsModifiedFunction	= IsModified;
+		SaveBeforeExitService.SaveFunction			= SaveAsync;
 
 		BibTeXProject.New(Preferences.ProjectSettings);
 		ProjectInitialization();
@@ -38,6 +38,14 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	public bool										SavePathRequired { get => !(BibTeXProject.Instance?.IsSaveable) ?? false; }
 
 	public IRecentPathsManagerService				RecentPathsManagerService { get; set; }
+
+	public ISaveService								SaveBeforeExitService { get; private set; }
+
+	public Page? MenuHostingPage
+	{
+		get => _dialogService.HostingPage;
+		set => _dialogService.HostingPage = value;
+	}
 
 	[ObservableProperty]
 	public partial bool								ProjectOpen { get; set; }					= false;
@@ -98,6 +106,35 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Methods and Commands
 
+	#region DataGridBaseViewModel Overrides
+
+	public override void Insert(BibEntry item, int position = 0, bool select = true)
+	{
+		if (Project.Settings.SortBibliography)
+		{
+			// If sorting, ignore the position and add based on the sort method.
+			Project.Bibliography.Insert(item, Project.Settings.BibliographySortMethod);
+		}
+		else
+		{
+
+			if (position == 0)
+			{
+				// If we are adding new (position == 0) and not sorting, add to the end of the list.
+				Project.Bibliography.Add(item);
+			}
+			else
+			{
+				// If we are not sorting, then add at the specified position.
+				Project.Bibliography.Insert(item, position);
+			}
+		}
+
+		FinalizeInsert(item, select);
+	}
+
+	#endregion
+
 	#region File Menu
 
 	public void New()
@@ -111,27 +148,35 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		ValidateCanSave();
 	}
 
-	public void OpenWithPathSave(string projectFile)
+	public async Task OpenWithPathSave(string projectFile)
 	{
 		RecentPathsManagerService.PushTop(projectFile);
-		Open(projectFile);
+		await Open(projectFile);
 	}
 
 	[RelayCommand]
-	public void Open(string file)
+	public async Task Open(string file)
 	{
+		SaveChoice closeChoice = await SaveBeforeExitService.PromptSaveChangesAsync();
+
+		switch (closeChoice)
+		{
+			case SaveChoice.Cancel:
+				return;
+		}
+
 		System.Diagnostics.Debug.Assert(BibTeXProject.Instance != null);
 		Items?.Clear();
 		Project.NewBibliographyFile();
 		Project.ReadBibliographyFile(file);
-		Items = Project.Bibliography.Entries;
+		Items		=  Project.Bibliography.Entries;
+		ProjectOpen	= true;
 	}
 
 	void ProjectInitialization()
 	{
 		Project.ModifiedChanged += OnProjectModifiedChanged;
 		Project.PropertyChanged += OnProjectPropertyChanged;
-		ProjectOpen = true;
 	}
 
 	[RelayCommand]

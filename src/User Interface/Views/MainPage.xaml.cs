@@ -2,6 +2,7 @@
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
+using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
@@ -16,22 +17,28 @@ public partial class MainPage : DigitalProductionMainPage
 
 	private readonly MainViewModel		_viewModel;
 
-	private readonly IBibTeXFilePicker	_filePicker			= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTeXFilePicker>();
-	private readonly ISaveFilePicker	_saveFilePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveFilePicker>();
+	private readonly IBibTeXFilePicker	_filePicker;
+	private readonly ISaveFilePicker	_saveFilePicker;
 
 	#endregion
 
 	#region Construction
 
-	public MainPage(MainViewModel viewModel)
+	public MainPage(MainViewModel viewModel, IPageProvider pageProvider, IBibTeXFilePicker filePicker, ISaveFilePicker saveFilePicker)
 	{
 		InitializeComponent();
-		BindingContext = viewModel;
-		_viewModel = viewModel;
+
+		pageProvider.CurrentPage	= this;
+		_filePicker					= filePicker;
+		_saveFilePicker				= saveFilePicker;
+
+		BindingContext				= viewModel;
+		_viewModel					= viewModel;
+		_viewModel.MenuHostingPage	= this;
 
 		if (Preferences.LoadLastProjectAtStartUp)
 		{
-			OpenLastProject();
+			_ = OpenLastProject();
 		}
 	}
 
@@ -59,7 +66,7 @@ public partial class MainPage : DigitalProductionMainPage
 		string file = await _filePicker.BrowseForBibliographyFile();
 		if (!string.IsNullOrEmpty(file))
 		{
-			_viewModel.OpenWithPathSave(file);
+			await _viewModel.OpenWithPathSave(file);
 		}
 	}
 
@@ -318,13 +325,12 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Methods
 
-	private void OpenLastProject()
+	private async Task OpenLastProject()
 	{
-		//_viewModel.OpenProjectWithPathSave(Preferences.RecentPathsManagerService.TopPath);
-		List<string> paths = Preferences.RecentPathsManagerService.GetRecentPaths();
-		if (paths.Count > 0)
+		string path = Preferences.RecentPathsManagerService.GetTop();
+		if (System.IO.Path.Exists(path))
 		{
-			_viewModel.Open(paths[0]);
+			await _viewModel.Open(path);
 		}
 	}
 
