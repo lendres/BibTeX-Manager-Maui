@@ -6,7 +6,8 @@ namespace BibTeXManager.Views;
 public partial class ProjectOptionsView : PopupView
 {
 	readonly ProjectOptionsViewModel	_viewModel;
-	readonly IBibTeXFilePicker			_filePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTeXFilePicker>();
+
+	readonly IBibTeXFilePicker			_filePicker		= IPlatformApplication.Current!.Services.GetRequiredService<IBibTeXFilePicker>();
 
 	public ProjectOptionsView(ProjectOptionsViewModel viewModel)
 	{

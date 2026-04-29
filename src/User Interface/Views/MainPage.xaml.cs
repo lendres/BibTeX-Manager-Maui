@@ -17,18 +17,20 @@ public partial class MainPage : DigitalProductionMainPage
 
 	private readonly MainViewModel		_viewModel;
 
-	private readonly IBibTeXFilePicker	_filePicker			= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTeXFilePicker>();
-	private readonly ISaveFilePicker	_saveFilePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveFilePicker>();
+	private readonly IBibTeXFilePicker	_filePicker;
+	private readonly ISaveFilePicker	_saveFilePicker;
 
 	#endregion
 
 	#region Construction
 
-	public MainPage(MainViewModel viewModel, IPageProvider pageProvider)
+	public MainPage(MainViewModel viewModel, IPageProvider pageProvider, IBibTeXFilePicker filePicker, ISaveFilePicker saveFilePicker)
 	{
 		InitializeComponent();
 
 		pageProvider.CurrentPage	= this;
+		_filePicker					= filePicker;
+		_saveFilePicker				= saveFilePicker;
 
 		BindingContext				= viewModel;
 		_viewModel					= viewModel;
@@ -316,12 +318,10 @@ public partial class MainPage : DigitalProductionMainPage
 
 	private async Task OpenLastProject()
 	{
-		// TODO: Update to GetTop() method.
-		//_viewModel.OpenProjectWithPathSave(Preferences.RecentPathsManagerService.TopPath);
-		List<string> paths = Preferences.RecentPathsManagerService.GetRecentPaths();
-		if (paths.Count > 0)
+		string path = Preferences.RecentPathsManagerService.GetTop();
+		if (System.IO.Path.Exists(path))
 		{
-			await _viewModel.Open(paths[0]);
+			await _viewModel.Open(path);
 		}
 	}
 
