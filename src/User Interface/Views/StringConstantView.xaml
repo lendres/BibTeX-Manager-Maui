@@ -29,7 +29,7 @@
                     x:Name="NameEntry"
 					Placeholder="Name"
 					Loaded="OnLoadedSetFocus"
-					Text="{Binding Name.Value}"
+					Text="{Binding EnteredName.Value}"
 					HorizontalOptions="Fill">
 					<Entry.Behaviors>
 						<toolkit:EventToCommandBehavior
@@ -39,32 +39,32 @@
                             EventName="TextChanged"/>
 					</Entry.Behaviors>
 				</Entry>
-				<Label Text="{Binding Name.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+				<Label Text="{Binding EnteredName.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
 			</VerticalStackLayout>
 
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
 				<Label Text="Output Name" StyleClass="ControlLabel"/>
 				<Entry
-                    x:Name="OutputNameEntry"
-					Placeholder="Output Name"
-					Text="{Binding OutputName.Value}"
+                    x:Name="ValueEntry"
+					Placeholder="Value"
+					Text="{Binding EnteredValue.Value}"
 					HorizontalOptions="Fill">
 					<Entry.Behaviors>
 						<toolkit:EventToCommandBehavior
                             x:TypeArguments="system:EventArgs"
-                            Command="{Binding ValidateOutputNameCommand}"
-                            BindingContext="{Binding Path=BindingContext, Source={x:Reference OutputNameEntry}, x:DataType=Entry}"
+                            Command="{Binding ValidateValueCommand}"
+                            BindingContext="{Binding Path=BindingContext, Source={x:Reference ValueEntry}, x:DataType=Entry}"
                             EventName="TextChanged"/>
 					</Entry.Behaviors>
 				</Entry>
-				<Label Text="{Binding OutputName.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+				<Label Text="{Binding EnteredValue.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
 			</VerticalStackLayout>
 
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
 				<Label Text="Description" StyleClass="ControlLabel"/>
 				<Entry
 				    Placeholder="Description"
-				    Text="{Binding Field.Description}"
+				    Text="{Binding Description}"
 				    HorizontalOptions="Fill"/>
 			</VerticalStackLayout>
 

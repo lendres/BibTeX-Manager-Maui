@@ -37,10 +37,13 @@ public partial class StringConstantViewModel : ObservableObject
 	public partial string						Title { get; set; }
 
 	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
-	public partial ValidatableObject<string>	EnteredName { get; set; }						= new();
+	public partial ValidatableObject<string>	EnteredName { get; set; }				= new();
 
 	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
 	public partial ValidatableObject<string>	EnteredValue { get; set; }				= new();
+
+	[ObservableProperty]
+	public partial string						Description { get; set; }
 
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
@@ -82,7 +85,7 @@ public partial class StringConstantViewModel : ObservableObject
 			Values					= Project.Bibliography.GetStringValues(),
 			ExcludeValue			= excludeStringConstant?.Value
 		});
-		ValidateOutputName();
+		ValidateValue();
 	}
 
 	[RelayCommand]
@@ -96,7 +99,7 @@ public partial class StringConstantViewModel : ObservableObject
 	}
 
 	[RelayCommand]
-	private void ValidateOutputName()
+	private void ValidateValue()
 	{
 		if (EnteredValue.Validate())
 		{
