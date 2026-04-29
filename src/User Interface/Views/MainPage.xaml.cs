@@ -20,6 +20,8 @@ public partial class MainPage : DigitalProductionMainPage
 	private readonly IBibTeXFilePicker	_filePicker;
 	private readonly ISaveFilePicker	_saveFilePicker;
 
+	private readonly bool				_animateScrollToSelection		= false;
+
 	#endregion
 
 	#region Construction
@@ -144,14 +146,14 @@ public partial class MainPage : DigitalProductionMainPage
 	private void FindInDataGridView()
 	{
 		_viewModel.SelectNextFoundItem();
-		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
+		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
 	}
 
 	private void OnScrollToSelection(object sender, EventArgs eventArgs)
 	{
 		if (_viewModel.SelectedItem != null)
 		{
-			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem, ScrollToPosition.Center, true);
+			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem, ScrollToPosition.Center, _animateScrollToSelection);
 		}
 	}
 
@@ -298,7 +300,7 @@ public partial class MainPage : DigitalProductionMainPage
 				break;
 		}
 
-		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
+		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
 	}
 
 	async void OnEditBibEntry(object sender, EventArgs eventArgs)
@@ -317,7 +319,7 @@ public partial class MainPage : DigitalProductionMainPage
 		if (result)
 		{
 			_viewModel.Delete();
-			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
+			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
 		}
 	}
 

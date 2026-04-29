@@ -14,6 +14,7 @@ public partial class StringConstantsView : ContentPage
 	#region Fields
 
 	private readonly StringConstantsViewModel		_viewModel;
+	private readonly bool							_animateScrollToSelection		= false;
 
 	#endregion
 
@@ -73,7 +74,7 @@ public partial class StringConstantsView : ContentPage
 		if (result)
 		{
 			_viewModel.Delete();
-			StringsDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
+			StringsDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
 		}
 	}
 
