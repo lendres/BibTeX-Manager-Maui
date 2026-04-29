@@ -201,8 +201,9 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	{
 		Project.Close();
 		Items?.Clear();
-		Items = null;
-		ProjectOpen = false;
+		Items		= null;
+		ProjectOpen	= false;
+		Modified	= false;
 	}
 
 	#endregion
@@ -252,7 +253,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	/// Interface function for the save before exit service to check if the project is modified and needs to be saved before exiting.
 	/// </summary>
 	/// <returns>True if the project is modified, false otherwise.</returns>
-	public bool IsModified()=> Modified;
+	public bool IsModified() => CanSave;
 
 	/// <summary>
 	/// Interface function for the save before exit service to.  Asynchronously saves the current state or changes to the underlying data store.
