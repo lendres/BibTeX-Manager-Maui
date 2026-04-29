@@ -5,6 +5,7 @@ using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
+using static System.Net.WebRequestMethods;
 
 namespace BibTeXManager.Views;
 
@@ -42,12 +43,27 @@ public partial class StringConstantsView : ContentPage
 
 	async void OnNewString(object sender, EventArgs eventArgs)
 	{
+		StringConstantViewModel	viewModel	= new();
+		StringConstantView		view		= new(viewModel);
+		object?			result				= await Shell.Current.ShowPopupAsync(view);
 
+		if (result is bool boolResult && boolResult)
+		{
+			_viewModel.Insert(viewModel.StringConstant);
+		}
 	}
 
 	async void OnEditString(object sender, EventArgs eventArgs)
 	{
+		StringConstant			stringConstant	= new(_viewModel.SelectedItem!);
+		StringConstantViewModel	viewModel		= new(stringConstant);
+		StringConstantView		view			= new(viewModel);
+		object?					result			= await Shell.Current.ShowPopupAsync(view);
 
+		if (result is bool boolResult && boolResult)
+		{
+			_viewModel.ReplaceSelected(viewModel.StringConstant);
+		}
 	}
 
 	async void OnDeleteString(object sender, EventArgs eventArgs)
