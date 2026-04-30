@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="us-ascii"?>
-<qualityprocessor xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xmlns:xi="http://www.w3.org/2001/XInclude">
+<qualityprocessor xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">
 	<tagprocessorgroups>
 
 		<xi:include href="LaTeX Tag Quality Processing.qlty" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
@@ -117,7 +117,7 @@
 		<tagprocessorgroup name="Special Screw Ups by SPE">
 			<tagprocessors>
 				
-				<!-- Both how and why?  You suck SPE. -->
+				<!-- Both how and why? You suck SPE. -->
 				<tagprocessor xsi:type="StringReplacementTagProcessor"
 					tagstoprocess="OnlySpecified"
 					pattern="\\\\%"
@@ -192,6 +192,20 @@
 					<tags></tags>
 				</tagprocessor>
 				
+			</tagprocessors>
+		</tagprocessorgroup>
+
+		<tagprocessorgroup name="Spacing">
+			<tagprocessors>
+				<tagprocessor xsi:type="StringReplacementTagProcessor"
+					tagstoprocess="All"
+					pattern="  "
+					replacement=" ">
+					<tags>
+						<tag>title</tag>
+						<tag>abstract</tag>
+					</tags>
+				</tagprocessor>
 			</tagprocessors>
 		</tagprocessorgroup>
 
@@ -291,14 +305,14 @@
 			</tagprocessors>
 		</tagprocessorgroup>
 
-		<tagprocessorgroup name="Sepcialized Processors">
+		<tagprocessorgroup name="Specialized Processors">
 			<tagprocessors>
 				
 				<!-- Do not modify the pattern unless you really know what you are doing. -->
-				<tagprocessor xsi:type="SentanceEndingSpacesTagProcessor"
+				<tagprocessor xsi:type="SentenceEndingSpacesTagProcessor"
 					tagstoprocess="OnlySpecified"
 					pattern="\.+[a-zA-Z]+"
-					frenchspacing="false">
+					frenchspacing="true">
 					<tags>
 						<tag>abstract</tag>
 					</tags>

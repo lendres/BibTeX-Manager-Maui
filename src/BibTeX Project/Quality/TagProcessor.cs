@@ -12,7 +12,7 @@ namespace BibTeXManager;
 /// </summary>
 [XmlInclude(typeof(QuoteTagProcessor))]
 [XmlInclude(typeof(RemoveEnclosingBracesTagProcessor))]
-[XmlInclude(typeof(SentanceEndingSpacesTagProcessor))]
+[XmlInclude(typeof(SentenceEndingSpacesTagProcessor))]
 [XmlInclude(typeof(StringCaseTagProcessor))]
 [XmlInclude(typeof(StringReplacementTagProcessor))]
 public abstract class TagProcessor

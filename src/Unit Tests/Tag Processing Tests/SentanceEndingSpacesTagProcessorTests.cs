@@ -23,7 +23,7 @@ public class SentanceEndingSpacesTagProcessorTests
 		string input	= @"The quick brown fox jumped.It was over the lazy dog.";
 
 		BibEntry entry			= new BibEntry() { Abstract = input };
-		TagProcessor processor	= new SentanceEndingSpacesTagProcessor() { TagsToProcess = TagsToProcess.All };
+		TagProcessor processor	= new SentenceEndingSpacesTagProcessor() { TagsToProcess = TagsToProcess.All };
 		processor.Pattern		= _pattern;
 
 		Utilities.RunProcessor(processor, entry);
@@ -39,7 +39,7 @@ public class SentanceEndingSpacesTagProcessorTests
 		//string input = @"The fox went to D.C.I.e., the capital of the U.S.";
 
 		BibEntry entry								= new BibEntry() { Abstract = input };
-		SentanceEndingSpacesTagProcessor processor	= new SentanceEndingSpacesTagProcessor() { TagsToProcess = TagsToProcess.All };
+		SentenceEndingSpacesTagProcessor processor	= new SentenceEndingSpacesTagProcessor() { TagsToProcess = TagsToProcess.All };
 		processor.Pattern							= _pattern;
 		processor.ExcludePatterns					= _excludePatterns;
 
