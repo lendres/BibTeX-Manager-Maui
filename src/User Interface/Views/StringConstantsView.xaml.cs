@@ -80,8 +80,12 @@ public partial class StringConstantsView : ContentPage
 
 	async public void OnOK(object sender, EventArgs eventArgs)
 	{
-		// TODO: Save strings.
-		await Shell.Current.GoToAsync("../", true);
+		Dictionary<string, object?> navigationParameter = new()
+		{
+			{ "NavigationCommand",	"Do Nothing" },
+			{ "NavigationObject",	null }
+		};
+		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
 
 	async public void OnCancel(object sender, EventArgs eventArgs)

@@ -50,7 +50,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	public string NavigationCommand { get; set; } = string.Empty;
 
-	public BibEntry NavigationObject { get; set; } = new();
+	public BibEntry? NavigationObject { get; set; } = null;
 
 	#endregion
 
@@ -278,31 +278,6 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 	}
 
-	/// <summary>
-	/// Navigation back from the bibliography edit page.  The NavigationCommand and NavigationObject get set and this gets called.
-	/// </summary>
-	/// <param name="eventArgs"></param>
-	protected override void OnNavigatedTo(NavigatedToEventArgs eventArgs)
-	{
-		base.OnNavigatedTo(eventArgs);
-
-		switch (NavigationCommand)
-		{
-			case "Save":
-				_viewModel.Insert(NavigationObject);
-				break;
-
-			case "Replace":
-				_viewModel.ReplaceSelected(NavigationObject);
-				break;
-			case "Cancel":
-				// Nothing to do.
-				break;
-		}
-
-		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
-	}
-
 	async void OnEditBibEntry(object sender, EventArgs eventArgs)
 	{
 		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
@@ -320,6 +295,38 @@ public partial class MainPage : DigitalProductionMainPage
 		{
 			_viewModel.Delete();
 			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
+		}
+	}
+
+	#endregion
+
+	#region Navigation
+
+	/// <summary>
+	/// Navigation back from the bibliography edit page.  The NavigationCommand and NavigationObject get set and this gets called.
+	/// </summary>
+	/// <param name="eventArgs"></param>
+	protected override void OnNavigatedTo(NavigatedToEventArgs eventArgs)
+	{
+		base.OnNavigatedTo(eventArgs);
+
+		switch (NavigationCommand)
+		{
+			case "Save":
+				System.Diagnostics.Debug.Assert(NavigationObject != null);
+				_viewModel.Insert(NavigationObject);
+				BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
+				break;
+
+			case "Replace":
+				System.Diagnostics.Debug.Assert(NavigationObject != null);
+				_viewModel.ReplaceSelected(NavigationObject);
+				BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
+				break;
+			case "Cancel":
+			default:
+				// Nothing to do.
+				break;
 		}
 	}
 
