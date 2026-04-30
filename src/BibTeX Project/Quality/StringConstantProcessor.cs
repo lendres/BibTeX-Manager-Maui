@@ -58,7 +58,11 @@ public class StringConstantProcessor
 	{
 		foreach (StringConstant entry in bibliographyDOM.StringConstants)
 		{
-			_map.Add(entry.Name, entry.Value);
+			// Avoid duplicats. The first one will be used, the rest will be ignored.
+			if (!_map.ContainsKey(entry.Name))
+			{
+				_map.Add(entry.Name, entry.Value);
+			}
 		}
 	}
 

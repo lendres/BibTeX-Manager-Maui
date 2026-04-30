@@ -47,11 +47,14 @@ public static class MauiProgram
 
 	static void RegisterViewsAndViewModels(IServiceCollection services)
 	{
-		services.AddSingleton<MainViewModel>();
 		services.AddSingleton<MainPage>();
+		services.AddSingleton<MainViewModel>();
 
 		services.AddTransient<EditRawBibEntryForm>();
 		services.AddTransient<BibEntryViewModel>();
+
+		services.AddTransient<StringConstantsView>();
+		services.AddTransient<StringConstantsViewModel>();
 
 		services.AddTransientPopup<ProgramOptionsView, ProgramOptionsViewModel>();
 	}
@@ -62,7 +65,8 @@ public static class MauiProgram
 		services.AddSingleton<IDialogService, DialogService>();
 		services.AddSingleton<IRecentPathsManagerService, RecentPathsManagerService>();
 		services.AddSingleton<ISaveFilePicker, SaveFilePicker>();
-		services.AddSingleton<ISaveService>(new SaveService());
+		services.AddSingleton<ISaveService, SaveService>();
+		services.AddSingleton<IPageProvider, PageProvider>();
 	}
 
 	static void RegisterEssentials(in IServiceCollection services)

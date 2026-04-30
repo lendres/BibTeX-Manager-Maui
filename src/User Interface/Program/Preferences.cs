@@ -1,8 +1,6 @@
 ﻿using DigitalProduction.Maui.Services;
-using DigitalProduction.Xml.Serialization;
-using System.Runtime.CompilerServices;
 
-using DpmPreferences =  DigitalProduction.Maui.Storage.Preferences;
+using DpmPreferences = DigitalProduction.Maui.Storage.Preferences;
 
 namespace BibTeXManager;
 
@@ -14,7 +12,7 @@ public static class Preferences
     #region Fields
 
     private static readonly IRecentPathsManagerService _recentPathsManagerService = 
-		DigitalProduction.Maui.Services.ServiceProvider.GetService<IRecentPathsManagerService>();
+		IPlatformApplication.Current!.Services.GetRequiredService<IRecentPathsManagerService>();
 
     #endregion
 

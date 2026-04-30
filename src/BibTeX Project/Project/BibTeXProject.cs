@@ -508,24 +508,13 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// </summary>
 	public IEnumerable<TagProcessingData> CleanAllEntries()
 	{
-		bool modified = false;
-
 		foreach (BibEntry entry in _bibliography.Entries)
 		{
 			foreach (TagProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
 			{
-				if (tagProcessingData.Correction.ReplaceText)
-				{
-					modified = true;
-				}
 				yield return tagProcessingData;
 			}
 		}
-
-		//if (modified)
-		//{
-		//	Modified = true;
-		//}
 	}
 
 	#endregion

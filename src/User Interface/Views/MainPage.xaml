@@ -101,6 +101,15 @@
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
 		</MenuBarItem>
+
+		<MenuBarItem Text="Configuration">
+			<MenuFlyoutItem
+				Text="Edit Strings..."
+				Clicked="OnEditStringConstants"
+				IsEnabled="{Binding ProjectOpen}">
+			</MenuFlyoutItem>
+		</MenuBarItem>
+
 		<MenuBarItem Text="Settings">
             <MenuFlyoutItem Text="Bibliography Settings..." Clicked="OnProjectOptions"/>
 			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>

@@ -2,6 +2,7 @@
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
+using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
@@ -16,16 +17,22 @@ public partial class MainPage : DigitalProductionMainPage
 
 	private readonly MainViewModel		_viewModel;
 
-	private readonly IBibTeXFilePicker	_filePicker			= DigitalProduction.Maui.Services.ServiceProvider.GetService<IBibTeXFilePicker>();
-	private readonly ISaveFilePicker	_saveFilePicker		= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveFilePicker>();
+	private readonly IBibTeXFilePicker	_filePicker;
+	private readonly ISaveFilePicker	_saveFilePicker;
+
+	private readonly bool				_animateScrollToSelection		= false;
 
 	#endregion
 
 	#region Construction
 
-	public MainPage(MainViewModel viewModel)
+	public MainPage(MainViewModel viewModel, IPageProvider pageProvider, IBibTeXFilePicker filePicker, ISaveFilePicker saveFilePicker)
 	{
 		InitializeComponent();
+
+		pageProvider.CurrentPage	= this;
+		_filePicker					= filePicker;
+		_saveFilePicker				= saveFilePicker;
 
 		BindingContext				= viewModel;
 		_viewModel					= viewModel;
@@ -33,7 +40,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 		if (Preferences.LoadLastProjectAtStartUp)
 		{
-			OpenLastProject();
+			_ = OpenLastProject();
 		}
 	}
 
@@ -61,7 +68,7 @@ public partial class MainPage : DigitalProductionMainPage
 		string file = await _filePicker.BrowseForBibliographyFile();
 		if (!string.IsNullOrEmpty(file))
 		{
-			_viewModel.OpenWithPathSave(file);
+			await _viewModel.OpenWithPathSave(file);
 		}
 	}
 
@@ -139,18 +146,27 @@ public partial class MainPage : DigitalProductionMainPage
 	private void FindInDataGridView()
 	{
 		_viewModel.SelectNextFoundItem();
-		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
+		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
 	}
 
 	private void OnScrollToSelection(object sender, EventArgs eventArgs)
 	{
 		if (_viewModel.SelectedItem != null)
 		{
-			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem, ScrollToPosition.Center, true);
+			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem, ScrollToPosition.Center, _animateScrollToSelection);
 		}
 	}
 
     #endregion
+
+	#region Configuration
+
+	async void OnEditStringConstants(object sender, EventArgs eventArgs)
+	{
+		await Shell.Current.GoToAsync(nameof(StringConstantsView), true);
+	}
+
+	#endregion
 
     #region Settings
 
@@ -284,7 +300,7 @@ public partial class MainPage : DigitalProductionMainPage
 				break;
 		}
 
-		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
+		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
 	}
 
 	async void OnEditBibEntry(object sender, EventArgs eventArgs)
@@ -303,7 +319,7 @@ public partial class MainPage : DigitalProductionMainPage
 		if (result)
 		{
 			_viewModel.Delete();
-			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, true);
+			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
 		}
 	}
 
@@ -311,51 +327,13 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Methods
 
-	private void OpenLastProject()
+	private async Task OpenLastProject()
 	{
-		//_viewModel.OpenProjectWithPathSave(Preferences.RecentPathsManagerService.TopPath);
-		List<string> paths = Preferences.RecentPathsManagerService.GetRecentPaths();
-		if (paths.Count > 0)
+		string path = Preferences.RecentPathsManagerService.GetTop();
+		if (System.IO.Path.Exists(path))
 		{
-			_viewModel.Open(paths[0]);
+			await _viewModel.Open(path);
 		}
-	}
-
-	private async Task<string?> BrowseForInputFile()
-	{
-		MainViewModel? viewModel = BindingContext as MainViewModel;
-		System.Diagnostics.Debug.Assert(viewModel != null);
-
-		try
-		{
-			PickOptions pickOptions = new() { PickerTitle="Select an Input File" }; //, FileTypes=viewModel.GetInputFileTypes() };
-			FileResult? result      = await BrowseForFile(pickOptions);
-
-			if (result != null)
-			{
-				return result.FullPath;
-			}
-		}
-		catch (Exception exception)
-		{
-			await DisplayAlert("Error", "An exception occured:"+Environment.NewLine+exception.Message, "OK");
-		}
-
-		return null;
-	}
-
-	public static async Task<FileResult?> BrowseForFile(PickOptions options)
-	{
-		try
-		{
-			return await FilePicker.PickAsync(options);
-		}
-		catch
-		{
-			// The user canceled or something went wrong.
-		}
-
-		return null;
 	}
 
 	#endregion

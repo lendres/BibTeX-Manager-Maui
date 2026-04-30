@@ -4,8 +4,6 @@ using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
 
-using System.Collections.ObjectModel;
-
 namespace BibTeXManager.ViewModels;
 
 public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
@@ -18,14 +16,14 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Construction
 
-	public MainViewModel(IRecentPathsManagerService recentPathsManagerService, IDialogService dialogService)
+	public MainViewModel(IRecentPathsManagerService recentPathsManagerService, IDialogService dialogService, ISaveService saveBeforeExitService)
     {
 		RecentPathsManagerService	= recentPathsManagerService;
 		_dialogService				= dialogService;
 
-		ISaveService saveBeforeExitService			= DigitalProduction.Maui.Services.ServiceProvider.GetService<ISaveService>();
-		saveBeforeExitService.IsModifiedFunction	= IsModified;
-		saveBeforeExitService.SaveFunction			= SaveAsync;
+		SaveBeforeExitService						= saveBeforeExitService;
+		SaveBeforeExitService.IsModifiedFunction	= IsModified;
+		SaveBeforeExitService.SaveFunction			= SaveAsync;
 
 		BibTeXProject.New(Preferences.ProjectSettings);
 		ProjectInitialization();
@@ -40,6 +38,8 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	public bool										SavePathRequired { get => !(BibTeXProject.Instance?.IsSaveable) ?? false; }
 
 	public IRecentPathsManagerService				RecentPathsManagerService { get; set; }
+
+	public ISaveService								SaveBeforeExitService { get; private set; }
 
 	public Page? MenuHostingPage
 	{
@@ -148,15 +148,23 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		ValidateCanSave();
 	}
 
-	public void OpenWithPathSave(string projectFile)
+	public async Task OpenWithPathSave(string projectFile)
 	{
 		RecentPathsManagerService.PushTop(projectFile);
-		Open(projectFile);
+		await Open(projectFile);
 	}
 
 	[RelayCommand]
-	public void Open(string file)
+	public async Task Open(string file)
 	{
+		SaveChoice closeChoice = await SaveBeforeExitService.PromptSaveChangesAsync();
+
+		switch (closeChoice)
+		{
+			case SaveChoice.Cancel:
+				return;
+		}
+
 		System.Diagnostics.Debug.Assert(BibTeXProject.Instance != null);
 		Items?.Clear();
 		Project.NewBibliographyFile();
@@ -193,8 +201,9 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	{
 		Project.Close();
 		Items?.Clear();
-		Items = null;
-		ProjectOpen = false;
+		Items		= null;
+		ProjectOpen	= false;
+		Modified	= false;
 	}
 
 	#endregion
@@ -244,7 +253,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	/// Interface function for the save before exit service to check if the project is modified and needs to be saved before exiting.
 	/// </summary>
 	/// <returns>True if the project is modified, false otherwise.</returns>
-	public bool IsModified()=> Modified;
+	public bool IsModified() => CanSave;
 
 	/// <summary>
 	/// Interface function for the save before exit service to.  Asynchronously saves the current state or changes to the underlying data store.

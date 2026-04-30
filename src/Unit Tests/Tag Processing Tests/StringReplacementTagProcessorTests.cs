@@ -59,14 +59,37 @@ public class StringReplacementTagProcessorTests
 	[Fact]
 	public void ReplaceAllStringsAtEnd()
 	{
-		string solution	= @"The quick brown fox \& quicker red squirrel jumped over the fence lazy dog.\&";
-		string input	= @"The quick brown fox &amp; quicker red squirrel jumped over the fence lazy dog.&amp;";
+		string solution	= @"The quick brown fox \& quicker red squirrel jumped over the fence \& lazy dog.\&";
+		string input	= @"The quick brown fox &amp; quicker red squirrel jumped over the fence &amp; lazy dog.&amp;";
 
 		BibEntry entry								= new() { Title = input, Abstract = input };
 		StringReplacementTagProcessor processor		= new()
 		{
 			TagsToProcess = TagsToProcess.All,
 			Pattern     = "&amp;",
+			Replacement = @"\&"
+		};
+
+		Utilities.RunProcessor(processor, entry);
+
+		Assert.Equal(solution, entry.Title);
+		Assert.Equal(solution, entry.Abstract);
+	}
+
+	/// <summary>
+	/// Tests that all tags are processed and that strings at the end of a line are replaced.
+	/// </summary>
+	[Fact]
+	public void DontReplaceCorrectStrings()
+	{
+		string solution	= @"The quick brown fox \& quicker red squirrel jumped over the fence \& lazy dog.";
+		string input	= @"The quick brown fox & quicker red squirrel jumped over the fence \& lazy dog.";
+
+		BibEntry entry								= new() { Title = input, Abstract = input };
+		StringReplacementTagProcessor processor		= new()
+		{
+			TagsToProcess = TagsToProcess.All,
+			Pattern     = "&",
 			Replacement = @"\&"
 		};
 
