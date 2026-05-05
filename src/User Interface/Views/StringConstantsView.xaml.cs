@@ -50,20 +50,20 @@ public partial class StringConstantsView : ContentPage
 
 		if (result is bool boolResult && boolResult)
 		{
-			_viewModel.Insert(viewModel.StringConstant);
+			_viewModel.Insert(viewModel.StringEntry);
 		}
 	}
 
 	async void OnEditString(object sender, EventArgs eventArgs)
 	{
-		StringConstant			stringConstant	= new(_viewModel.SelectedItem!);
-		StringConstantViewModel	viewModel		= new(stringConstant);
+		StringEntry				stringEntry	= new(_viewModel.SelectedItem!);
+		StringConstantViewModel	viewModel		= new(stringEntry);
 		StringConstantView		view			= new(viewModel);
 		object?					result			= await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResult && boolResult)
 		{
-			_viewModel.ReplaceSelected(viewModel.StringConstant);
+			_viewModel.ReplaceSelected(viewModel.StringEntry);
 		}
 	}
 

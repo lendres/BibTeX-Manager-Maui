@@ -6,7 +6,7 @@ using DigitalProduction.Maui.ViewModels;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class StringConstantsViewModel : DataGridBaseViewModel<StringConstant>
+public partial class StringConstantsViewModel : DataGridBaseViewModel<StringEntry>
 {
 	#region Fields
 
@@ -54,7 +54,7 @@ public partial class StringConstantsViewModel : DataGridBaseViewModel<StringCons
 	/// <returns>True if at least one BibEntry is found, false if no entries are found.</returns>
 	public override bool Find(string search)
 	{
-		List<StringConstant> findResults = Project.Bibliography.SearchStringConstants(true, search);
+		List<StringEntry> findResults = Project.Bibliography.SearchStringConstants(true, search);
 		return SetSearchResults(search, findResults);
 	}
 

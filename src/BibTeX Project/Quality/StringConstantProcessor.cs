@@ -56,7 +56,7 @@ public class StringConstantProcessor
 	/// <param name="bibliographyDOMs">BibliographyDOM.</param>
 	public void AddStringConstantsToMap(BibliographyDOM bibliographyDOM)
 	{
-		foreach (StringConstant entry in bibliographyDOM.StringConstants)
+		foreach (StringEntry entry in bibliographyDOM.StringConstants)
 		{
 			// Avoid duplicats. The first one will be used, the rest will be ignored.
 			if (!_map.ContainsKey(entry.Name))
@@ -77,7 +77,7 @@ public class StringConstantProcessor
 			string key = entry.FindTagValue(pair.Value);
 			if (key != "")
 			{
-				entry.SetTagValue(key, pair.Key, TagValueType.StringConstant);
+				entry.SetTagValue(key, pair.Key, FieldValueType.StringConstant);
 			}
 		}
 	}
