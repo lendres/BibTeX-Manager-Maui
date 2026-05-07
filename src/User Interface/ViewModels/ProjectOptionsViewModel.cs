@@ -1,5 +1,4 @@
 ﻿using BibTeXLibrary;
-using BibTeXManager.Validation;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Validation;
@@ -28,12 +27,6 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	[ObservableProperty]
 	public partial ProjectSettings				Settings { get; set; }
-
-	[ObservableProperty]
-	public partial bool							UseRelativePaths { get; set; }
-
-	[ObservableProperty]
-	public partial ValidatableObject<string>	BibliographyFile { get; set; }				= new();
 
 	[ObservableProperty]
 	public partial bool							UseAuxiliaryFile { get; set; }
@@ -79,7 +72,6 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	private void Initialize()
 	{
-		UseRelativePaths		= Settings.UsePathsRelativeToBibFile;
 		UseAuxiliaryFile		= Settings.UseAuxiliaryFile;
 		AuxiliaryFile.Value		= Settings.AuxiliaryFile;
 		UseFieldOrder			= Settings.UseBibEntryInitialization;
@@ -105,26 +97,25 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	private void AddValidations()
 	{
 		AuxiliaryFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		AuxiliaryFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
+		AuxiliaryFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateAuxiliaryFile();
 
 		FieldOrderFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		FieldOrderFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
+		FieldOrderFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateFieldOrderFile();
 
 		FieldQualityFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		FieldQualityFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
+		FieldQualityFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateFieldQualityFile();
 
 		NameRemappingFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		NameRemappingFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
+		NameRemappingFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateNameRemappingFile();
 	}
 
 	[RelayCommand]
 	private void ValidateAuxiliaryFile()
 	{
-		SetValidationData(AuxiliaryFile);
 		if (AuxiliaryFile.Validate())
 		{
 			Settings.AuxiliaryFile = AuxiliaryFile.Value!;
@@ -135,7 +126,6 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateFieldOrderFile()
 	{
-		SetValidationData(FieldOrderFile);
 		if (FieldOrderFile.Validate())
 		{
 			Settings.BibEntryInitializationFile = FieldOrderFile.Value!;
@@ -146,7 +136,6 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateFieldQualityFile()
 	{
-		SetValidationData(FieldQualityFile);
 		if (FieldQualityFile.Validate())
 		{
 			Settings.FieldQualityProcessingFile = FieldQualityFile.Value!;
@@ -157,7 +146,6 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateNameRemappingFile()
 	{
-		SetValidationData(NameRemappingFile);
 		if (NameRemappingFile.Validate())
 		{
 			Settings.BibEntryRemappingFile = NameRemappingFile.Value!;
@@ -165,16 +153,8 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		ValidateSubmittable();
 	}
 
-	private void SetValidationData(ValidatableObject<string> validationObject)
-	{
-		RelativePathExistsRule rule = (RelativePathExistsRule)validationObject.Validations[1];
-		rule.UsingRelativePaths	= UseRelativePaths;
-		rule.MainPath           = BibliographyFile.Value!;
-	}
-
 	public bool ValidateSubmittable() => IsSubmittable =
 		Settings.Modified &&
-		BibliographyFile.IsValid &&
 		(!UseAuxiliaryFile || AuxiliaryFile.IsValid) &&
 		(!UseFieldOrder || FieldOrderFile.IsValid) &&
 		(!UseFieldQuality || FieldQualityFile.IsValid) &&
