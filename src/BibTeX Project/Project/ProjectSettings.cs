@@ -214,7 +214,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 		// If this instance is saved, then consider the write settings saved, too.
 		if (!modified)
 		{
-			_writeSettings.MarkSaved();
+			_writeSettings.Save();
 		}
 	}
 

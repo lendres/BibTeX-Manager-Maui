@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalProduction.BibTeXLibrary" Version="0.8.7" />
+    <PackageReference Include="DigitalProduction.BibTeXLibrary" Version="0.8.8" />
   </ItemGroup>
 
 </Project>
