@@ -25,8 +25,17 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	#region Properties
 
+	#region General
+
 	[ObservableProperty]
 	public partial ProjectSettings				Settings { get; set; }
+
+	[ObservableProperty]
+	public partial bool							IsSubmittable { get; set; }
+
+	#endregion
+
+	#region Bibliography Entries
 
 	[ObservableProperty]
 	public partial bool							UseAuxiliaryFile { get; set; }
@@ -53,18 +62,22 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	public partial ValidatableObject<string>	NameRemappingFile { get; set; }				= new();
 
 	[ObservableProperty]
+	public partial bool							SortBibliographyEntries { get; set; }
+
+	public IReadOnlyList<string>				SorByItems { get; set; }					= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBibliographyBy>();
+
+
+	#endregion
+
+	#region Write Settings
+
+	[ObservableProperty]
 	public partial WhiteSpace					WhiteSpace { get; set; }					= WhiteSpace.Tab;
 
 	[ObservableProperty]
 	public partial bool							AlignFieldValues { get; set; }
 
-	[ObservableProperty]
-	public partial bool							SortBibliographyEntries { get; set; }
-
-	[ObservableProperty]
-	public partial bool							IsSubmittable { get; set; }
-
-	public IReadOnlyList<string>				SorByItems { get; set; }					= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBibliographyBy>();
+	#endregion
 
 	#endregion
 
