@@ -8,19 +8,19 @@ using System.Xml.Serialization;
 namespace BibTeXManager;
 
 /// <summary>
-/// Base class for tag processors.
+/// Base class for field processors.
 /// </summary>
 [XmlInclude(typeof(QuoteFieldProcessor))]
 [XmlInclude(typeof(RemoveEnclosingBracesFieldProcessor))]
 [XmlInclude(typeof(SentenceEndingSpacesFieldProcessor))]
-[XmlInclude(typeof(StringCaseTagProcessor))]
+[XmlInclude(typeof(StringCaseFieldProcessor))]
 [XmlInclude(typeof(StringReplacementFieldProcessor))]
 public abstract class FieldProcessor
 {
 	#region Fields
 
 	private FieldsToProcess					_fieldsToProcess	= FieldsToProcess.All;
-	private	readonly BindingList<string>	_tagNames			= [];
+	private	readonly BindingList<string>	_fieldNames			= [];
 	protected string						_pattern			= string.Empty;
 
 	#endregion
@@ -39,28 +39,28 @@ public abstract class FieldProcessor
 	#region Properties
 
 	/// <summary>
-	/// Process any tag or just those specified.
+	/// Process any field or just those specified.
 	/// </summary>
-	[XmlAttribute("tagstoprocess")]
-	public FieldsToProcess TagsToProcess { get => _fieldsToProcess; set => _fieldsToProcess = value; }
+	[XmlAttribute("fieldstoprocess")]
+	public FieldsToProcess FieldsToProcess { get => _fieldsToProcess; set => _fieldsToProcess = value; }
 
 	/// <summary>
-	/// Tag names to process.
+	/// Field names to process.
 	/// </summary>
-	[XmlArray("tags"), XmlArrayItem("tag")]
-	public BindingList<string> TagNames
+	[XmlArray("fields"), XmlArrayItem("field")]
+	public BindingList<string> FieldNames
 	{
 		get
 		{
-			return _tagNames;
+			return _fieldNames;
 		}
 
 		set
 		{
-			_tagNames.Clear();
-			foreach (string tagName in value)
+			_fieldNames.Clear();
+			foreach (string fieldName in value)
 			{
-				_tagNames.Add(tagName.ToLower());
+				_fieldNames.Add(fieldName.ToLower());
 			}
 		}
 	}
@@ -80,22 +80,22 @@ public abstract class FieldProcessor
 	{
 		foreach (string fieldName in entry.FieldNames)
 		{
-			bool processTags = _fieldsToProcess switch
+			bool processFields = _fieldsToProcess switch
 			{
 				FieldsToProcess.All					=> true,
-				FieldsToProcess.ExcludeSpecified	=> !_tagNames.Contains(fieldName.ToLower()),
-				FieldsToProcess.OnlySpecified		=> _tagNames.Contains(fieldName.ToLower()),
-				_									=> throw new System.Exception("The value for TagsToProcess is out of range."),
+				FieldsToProcess.ExcludeSpecified	=> !_fieldNames.Contains(fieldName.ToLower()),
+				FieldsToProcess.OnlySpecified		=> _fieldNames.Contains(fieldName.ToLower()),
+				_									=> throw new System.Exception("The value for FieldsToProcess is out of range."),
 			};
 
-			// If we are processing all tags or if the current tag name was specified as one to process.
-			// We do a case insensitive comparison of tag names.  See this.TagNames set for where this objects
-			// tag names are set to lower case.
-			if (processTags)
+			// If we are processing all fields or if the current field name was specified as one to process.
+			// We do a case insensitive comparison of field names. See FieldNames.set for where this objects
+			// field names are set to lower case.
+			if (processFields)
 			{
 				foreach (Correction correction in ProcessField(entry, fieldName))
 				{
-					correction.TagName = fieldName;
+					correction.FieldName = fieldName;
 					yield return correction;
 				}
 			}
@@ -103,23 +103,23 @@ public abstract class FieldProcessor
 	}
 
 	/// <summary>
-	/// Process a single tag.
+	/// Process a single field.
 	/// </summary>
 	/// <param name="entry">BibEntry.</param>
-	/// <param name="fieldName">Name of the tag to process.</param>
+	/// <param name="fieldName">Name of the field to process.</param>
 	private IEnumerable<Correction> ProcessField(BibEntry entry, string fieldName)
 	{
 		StringBuilder output	= new();
-		string tagValue			= entry[fieldName];
+		string fieldValue		= entry[fieldName];
 		int lastIndex			= 0;
 
-		foreach (Match match in Regex.Matches(tagValue, _pattern))
+		foreach (Match match in Regex.Matches(fieldValue, _pattern))
 		{
 			if (match.Success && match.Groups.Count > 0)
 			{
-				Correction correction = new() { FullText = tagValue, MatchedText = match.Value, MatchStartIndex = match.Index };
+				Correction correction = new() { FullText = fieldValue, MatchedText = match.Value, MatchStartIndex = match.Index };
 
-				// When processing a matched pattern, the TagProcessor can reject the match (Replace=false) and/or specify that the user
+				// When processing a matched pattern, the FieldProcessor can reject the match (Replace=false) and/or specify that the user
 				// does not need to be prompted for this particular match.
 				ProcessPatternMatch(correction);
 
@@ -133,9 +133,9 @@ public abstract class FieldProcessor
 		}
 
 		// Add the remaining part of the string.
-		if (lastIndex < tagValue.Length)
+		if (lastIndex < fieldValue.Length)
 		{
-			output.Append(tagValue.AsSpan(lastIndex));
+			output.Append(fieldValue.AsSpan(lastIndex));
 		}
 
 		entry[fieldName] = output.ToString();

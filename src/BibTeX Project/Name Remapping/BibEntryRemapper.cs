@@ -40,7 +40,7 @@ public class BibEntryRemapper
 	#region Methods
 
 	/// <summary>
-	/// Remap the type and tag names in a BibEntry.
+	/// Remap the type and field names in a BibEntry.
 	/// </summary>
 	/// <param name="entry">BibEntry.</param>
 	/// <param name="mapName">Name of the map to use.</param>
@@ -51,7 +51,7 @@ public class BibEntryRemapper
 			BibEntryMap map = _maps[entry.Type.ToLower()];
 			entry.Type		= map.ToType;
 
-			// Getting the tag names is a little expensive, so just do it once, outside of the loop.
+			// Getting the field names is a little expensive, so just do it once, outside of the loop.
 			List<string> fieldNames = entry.FieldNames;
 
 			foreach (KeyValuePair<string, string> nameMap in map.FieldNameMaps)

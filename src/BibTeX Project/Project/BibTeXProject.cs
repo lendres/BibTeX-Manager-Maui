@@ -49,7 +49,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 
 	private BibEntryInitialization				_bibEntryInitialization			= new();
 
-	private QualityProcessor					_tagQualityProcessor			= new();
+	private QualityProcessor					_fieldQualityProcessor			= new();
 
 	private BibEntryRemapper					_nameRemapper					= new();
 
@@ -204,15 +204,15 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	}
 
 	/// <summary>
-	/// Read tag quality processing file.
+	/// Read field quality processing file.
 	/// </summary>
-	private void ReadTagQualityProcessingFile()
+	private void ReadFieldQualityProcessingFile()
 	{
-		string absolutePath = ConvertToAbsolutePath(_settings.TagQualityProcessingFile);
+		string absolutePath = ConvertToAbsolutePath(_settings.FieldQualityProcessingFile);
 		if (System.IO.File.Exists(absolutePath))
 		{
-			_tagQualityProcessor = QualityProcessor.Deserialize(absolutePath) ??
-				throw new Exception("Tag quality initialization failed.");
+			_fieldQualityProcessor = QualityProcessor.Deserialize(absolutePath) ??
+				throw new Exception("Field quality initialization failed.");
 		}
 	}
 
@@ -262,7 +262,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	public void ReadAccessoaryFiles()
 	{
 		ReadBibEntryInitializationFiles();
-		ReadTagQualityProcessingFile();
+		ReadFieldQualityProcessingFile();
 		ReadNameMappingFile();
 		ReadAccessoryFiles();
 		BuildStringConstantMap();
@@ -311,8 +311,8 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 				BuildStringConstantMap();
 				break;
 
-			case nameof(Settings.TagQualityProcessingFile):
-				ReadTagQualityProcessingFile();
+			case nameof(Settings.FieldQualityProcessingFile):
+				ReadFieldQualityProcessingFile();
 				break;
 
 			case nameof(Settings.BibEntryRemappingFile):
@@ -404,11 +404,11 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// <param name="entry">BibEntry.</param>
 	public IEnumerable<FieldProcessingData> CleanEntry(BibEntry entry)
 	{
-		if (_settings.UseTagQualityProcessing)
+		if (_settings.UseFieldQualityProcessing)
 		{
-			foreach (FieldProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
+			foreach (FieldProcessingData fieldProcessingData in _fieldQualityProcessor.Process(entry))
 			{
-				yield return tagProcessingData;
+				yield return fieldProcessingData;
 			}
 		}
 	}
@@ -419,18 +419,18 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// <param name="entry">BibEntry.</param>
 	public void AutoCleanEntry(BibEntry entry)
 	{
-		if (_settings.UseTagQualityProcessing)
+		if (_settings.UseFieldQualityProcessing)
 		{
-			foreach (FieldProcessingData tagProcessingData in CleanEntry(entry))
+			foreach (FieldProcessingData fieldProcessingData in CleanEntry(entry))
 			{
-				tagProcessingData.Correction.ReplaceText    = true;
-				tagProcessingData.AcceptAll                 = true;
+				fieldProcessingData.Correction.ReplaceText    = true;
+				fieldProcessingData.AcceptAll                 = true;
 			}
 		}
 	}
 
 	/// <summary>
-	/// Remaps the Key and Tag Keys to new names.
+	/// Remaps the Key and Field Keys to new names.
 	/// </summary>
 	/// <param name="entry">BibEntry.</param>
 	public void RemapEntryNames(BibEntry entry)
@@ -510,9 +510,9 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	{
 		foreach (BibEntry entry in _bibliography.Entries)
 		{
-			foreach (FieldProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
+			foreach (FieldProcessingData fieldProcessingData in _fieldQualityProcessor.Process(entry))
 			{
-				yield return tagProcessingData;
+				yield return fieldProcessingData;
 			}
 		}
 	}

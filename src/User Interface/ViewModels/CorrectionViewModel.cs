@@ -10,7 +10,7 @@ public partial class CorrectionViewModel : ObservableObject
 
 	public CorrectionViewModel(FieldProcessingData tagProcessingData)
 	{
-		TagProcessingData = tagProcessingData;
+		FieldProcessingData = tagProcessingData;
 	}
 
 	#endregion
@@ -21,15 +21,15 @@ public partial class CorrectionViewModel : ObservableObject
 	public partial string				Title { get; set; }					= "Replace Text?";
 
 	[ObservableProperty]
-	public partial FieldProcessingData	TagProcessingData { get; set; }
+	public partial FieldProcessingData	FieldProcessingData { get; set; }
 
 	[ObservableProperty]
 	public partial string				ReplacementText  { get; set; }		= "";
 
 	public bool							ReplaceText
 	{
-		get => TagProcessingData.Correction.ReplaceText;
-		set => TagProcessingData.Correction.ReplaceText = value;
+		get => FieldProcessingData.Correction.ReplaceText;
+		set => FieldProcessingData.Correction.ReplaceText = value;
 	}
 
 	#endregion
@@ -41,7 +41,7 @@ public partial class CorrectionViewModel : ObservableObject
 		ReplacementText = value;
 	}
 	
-	partial void OnTagProcessingDataChanged(FieldProcessingData value)
+	partial void OnFieldProcessingDataChanged(FieldProcessingData value)
 	{
 		ReplacementText = value.Correction.ReplacementText;
 	}
@@ -55,18 +55,18 @@ public partial class CorrectionViewModel : ObservableObject
 		switch (dialogResult)
 		{
 			case MessageBoxYesNoToAllResult.YesToAll:
-				TagProcessingData.AcceptAll = true;
-				TagProcessingData.Correction.ReplaceText        = true;
-				TagProcessingData.Correction.ReplacementText	= ReplacementText;
+				FieldProcessingData.AcceptAll = true;
+				FieldProcessingData.Correction.ReplaceText        = true;
+				FieldProcessingData.Correction.ReplacementText	= ReplacementText;
 				break;
 
 			case MessageBoxYesNoToAllResult.Yes:
-				TagProcessingData.Correction.ReplaceText		= true;
-				TagProcessingData.Correction.ReplacementText	= ReplacementText;
+				FieldProcessingData.Correction.ReplaceText		= true;
+				FieldProcessingData.Correction.ReplacementText	= ReplacementText;
 				break;
 
 			case MessageBoxYesNoToAllResult.No:
-				TagProcessingData.Correction.ReplaceText		= false;
+				FieldProcessingData.Correction.ReplaceText		= false;
 				break;
 
 			case MessageBoxYesNoToAllResult.Cancel:

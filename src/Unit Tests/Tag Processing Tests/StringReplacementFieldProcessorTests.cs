@@ -3,13 +3,13 @@ using BibTeXManager;
 
 namespace BibTeXManagerUnitTests;
 
-public class StringReplacementTagProcessorTests
+public class StringReplacementFieldProcessorTests
 {
 	/// <summary>
 	/// Base line test to replace text.
 	/// </summary>
 	[Fact]
-	public void ReplaceOnlyInSpecifiedTag()
+	public void ReplaceOnlyInSpecifiedField()
 	{
 		string solution = @"The quick brown fox \& quicker red squirrel jumped over the fence \& lazy dog.";
 		string input	= @"The quick brown fox &amp; quicker red squirrel jumped over the fence &amp; lazy dog.";
@@ -17,11 +17,11 @@ public class StringReplacementTagProcessorTests
 		BibEntry entry								= new() { Title = input, Abstract = input };
 		StringReplacementFieldProcessor processor		= new()
 		{
-			TagsToProcess = FieldsToProcess.OnlySpecified,
+			FieldsToProcess = FieldsToProcess.OnlySpecified,
 			Pattern     = "&amp;",
 			Replacement = @"\&"
 		};
-		processor.TagNames.Add("abstract");
+		processor.FieldNames.Add("abstract");
 
 		Utilities.RunProcessor(processor, entry);
 
@@ -33,7 +33,7 @@ public class StringReplacementTagProcessorTests
 	/// Base line test to replace text.
 	/// </summary>
 	[Fact]
-	public void ExcludeTheSpecifiedTag()
+	public void ExcludeTheSpecifiedField()
 	{
 		string solution = @"The quick brown fox \& quicker red squirrel jumped over the fence \& lazy dog.";
 		string input    = @"The quick brown fox &amp; quicker red squirrel jumped over the fence &amp; lazy dog.";
@@ -41,11 +41,11 @@ public class StringReplacementTagProcessorTests
 		BibEntry entry                              = new() { Title = input, Abstract = input };
 		StringReplacementFieldProcessor processor		= new()
 		{
-			TagsToProcess = FieldsToProcess.ExcludeSpecified,
+			FieldsToProcess = FieldsToProcess.ExcludeSpecified,
 			Pattern       = "&amp;",
 			Replacement   = @"\&"
 		};
-		processor.TagNames.Add("abstract");
+		processor.FieldNames.Add("abstract");
 
 		Utilities.RunProcessor(processor, entry);
 
@@ -54,7 +54,7 @@ public class StringReplacementTagProcessorTests
 	}
 
 	/// <summary>
-	/// Tests that all tags are processed and that strings at the end of a line are replaced.
+	/// Tests that all fields are processed and that strings at the end of a line are replaced.
 	/// </summary>
 	[Fact]
 	public void ReplaceAllStringsAtEnd()
@@ -65,7 +65,7 @@ public class StringReplacementTagProcessorTests
 		BibEntry entry								= new() { Title = input, Abstract = input };
 		StringReplacementFieldProcessor processor		= new()
 		{
-			TagsToProcess = FieldsToProcess.All,
+			FieldsToProcess = FieldsToProcess.All,
 			Pattern     = "&amp;",
 			Replacement = @"\&"
 		};
@@ -77,7 +77,7 @@ public class StringReplacementTagProcessorTests
 	}
 
 	/// <summary>
-	/// Tests that all tags are processed and that strings at the end of a line are replaced.
+	/// Tests that all fields are processed and that strings at the end of a line are replaced.
 	/// </summary>
 	[Fact]
 	public void DontReplaceCorrectStrings()
@@ -88,7 +88,7 @@ public class StringReplacementTagProcessorTests
 		BibEntry entry								= new() { Title = input, Abstract = input };
 		StringReplacementFieldProcessor processor		= new()
 		{
-			TagsToProcess = FieldsToProcess.All,
+			FieldsToProcess = FieldsToProcess.All,
 			Pattern     = "&",
 			Replacement = @"\&"
 		};
@@ -111,19 +111,19 @@ public class StringReplacementTagProcessorTests
 		BibEntry entry							= new() { Title = input};
 		StringReplacementFieldProcessor processor	= new()
 		{
-			TagsToProcess = FieldsToProcess.All,
+			FieldsToProcess = FieldsToProcess.All,
 			Pattern     = "Red",
 			Replacement = "{Red}"
 		};
-		processor.TagNames.Add("title");
+		processor.FieldNames.Add("title");
 
-		// Test lower case tag name.
+		// Test lower case field name.
 		Utilities.RunProcessor(processor, entry);
 		Assert.Equal(solution, entry.Title);
 
 		// Test upper case tage name.
-		processor.TagNames.Clear();
-		processor.TagNames.Add("Title");
+		processor.FieldNames.Clear();
+		processor.FieldNames.Add("Title");
 		Utilities.RunProcessor(processor, entry);
 		Assert.Equal(solution, entry.Title);
 	}
@@ -141,13 +141,13 @@ public class StringReplacementTagProcessorTests
 		BibEntry entry							= new() { Title = input };
 		StringReplacementFieldProcessor processor = new()
 		{
-			TagsToProcess = FieldsToProcess.All,
+			FieldsToProcess = FieldsToProcess.All,
 			Pattern = "^{",
 			Replacement = ""
 		};
-		processor.TagNames.Add("title");
+		processor.FieldNames.Add("title");
 
-		// Test lower case tag name.
+		// Test lower case field name.
 		Utilities.RunProcessor(processor, entry);
 		Assert.Equal(solution1, entry.Title);
 
@@ -167,16 +167,16 @@ public class StringReplacementTagProcessorTests
 		string solution = @"The q{\o}ick.";
 		string input = @"The qøick.";
 
-		BibEntry entry							= new() { Title = input };
-		StringReplacementFieldProcessor processor = new()
+		BibEntry entry								= new() { Title = input };
+		StringReplacementFieldProcessor processor	= new()
 		{
-			TagsToProcess = FieldsToProcess.All,
+			FieldsToProcess = FieldsToProcess.All,
 			Pattern = "ø",
 			Replacement = @"{\o}"
 		};
-		processor.TagNames.Add("title");
+		processor.FieldNames.Add("title");
 
-		// Test lower case tag name.
+		// Test lower case field name.
 		Utilities.RunProcessor(processor, entry);
 		Assert.Equal(solution, entry.Title);
 	}

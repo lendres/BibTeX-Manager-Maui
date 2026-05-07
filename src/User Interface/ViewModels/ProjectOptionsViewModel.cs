@@ -42,16 +42,16 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	public partial ValidatableObject<string>	AuxiliaryFile { get; set; }					= new();
 
 	[ObservableProperty]
-	public partial bool							UseTagOrder { get; set; }
+	public partial bool							UseFieldOrder { get; set; }
 
 	[ObservableProperty]
-	public partial ValidatableObject<string>	TagOrderFile { get; set; }					= new();
+	public partial ValidatableObject<string>	FieldOrderFile { get; set; }					= new();
 
 	[ObservableProperty]
-	public partial bool							UseTagQuality { get; set; }
+	public partial bool							UseFieldQuality { get; set; }
 
 	[ObservableProperty]
-	public partial ValidatableObject<string>	TagQualityFile { get; set; }				= new();
+	public partial ValidatableObject<string>	FieldQualityFile { get; set; }				= new();
 
 	[ObservableProperty]
 	public partial bool							UseNameRemapping { get; set; }
@@ -63,7 +63,7 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	public partial WhiteSpace					WhiteSpace { get; set; }					= WhiteSpace.Tab;
 
 	[ObservableProperty]
-	public partial bool							AlignTagValues { get; set; }
+	public partial bool							AlignFieldValues { get; set; }
 
 	[ObservableProperty]
 	public partial bool							SortBibliographyEntries { get; set; }
@@ -82,14 +82,14 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		UseRelativePaths		= Settings.UsePathsRelativeToBibFile;
 		UseAuxiliaryFile		= Settings.UseAuxiliaryFile;
 		AuxiliaryFile.Value		= Settings.AuxiliaryFile;
-		UseTagOrder				= Settings.UseBibEntryInitialization;
-		TagOrderFile.Value		= Settings.BibEntryInitializationFile;
-		UseTagQuality			= Settings.UseTagQualityProcessing;
-		TagQualityFile.Value	= Settings.TagQualityProcessingFile;
+		UseFieldOrder				= Settings.UseBibEntryInitialization;
+		FieldOrderFile.Value		= Settings.BibEntryInitializationFile;
+		UseFieldQuality			= Settings.UseFieldQualityProcessing;
+		FieldQualityFile.Value	= Settings.FieldQualityProcessingFile;
 		UseNameRemapping        = Settings.UseBibEntryRemapping;
 		NameRemappingFile.Value	= Settings.BibEntryRemappingFile;
 		WhiteSpace				= Settings.WriteSettings.WhiteSpace;
-		AlignTagValues			= Settings.WriteSettings.AlignTagValues;
+		AlignFieldValues			= Settings.WriteSettings.AlignFieldValues;
 		SortBibliographyEntries	= Settings.SortBibliography;
 	}
 
@@ -108,13 +108,13 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		AuxiliaryFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
 		ValidateAuxiliaryFile();
 
-		TagOrderFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		TagOrderFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
-		ValidateTagOrderFile();
+		FieldOrderFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
+		FieldOrderFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
+		ValidateFieldOrderFile();
 
-		TagQualityFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		TagQualityFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
-		ValidateTagQualityFile();
+		FieldQualityFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
+		FieldQualityFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
+		ValidateFieldQualityFile();
 
 		NameRemappingFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
 		NameRemappingFile.Validations.Add(new RelativePathExistsRule { ValidationMessage = "The file does not exist." });
@@ -133,23 +133,23 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	}
 
 	[RelayCommand]
-	private void ValidateTagOrderFile()
+	private void ValidateFieldOrderFile()
 	{
-		SetValidationData(TagOrderFile);
-		if (TagOrderFile.Validate())
+		SetValidationData(FieldOrderFile);
+		if (FieldOrderFile.Validate())
 		{
-			Settings.BibEntryInitializationFile = TagOrderFile.Value!;
+			Settings.BibEntryInitializationFile = FieldOrderFile.Value!;
 		}
 		ValidateSubmittable();
 	}
 
 	[RelayCommand]
-	private void ValidateTagQualityFile()
+	private void ValidateFieldQualityFile()
 	{
-		SetValidationData(TagQualityFile);
-		if (TagQualityFile.Validate())
+		SetValidationData(FieldQualityFile);
+		if (FieldQualityFile.Validate())
 		{
-			Settings.TagQualityProcessingFile = TagQualityFile.Value!;
+			Settings.FieldQualityProcessingFile = FieldQualityFile.Value!;
 		}
 		ValidateSubmittable();
 	}
@@ -176,8 +176,8 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		Settings.Modified &&
 		BibliographyFile.IsValid &&
 		(!UseAuxiliaryFile || AuxiliaryFile.IsValid) &&
-		(!UseTagOrder || TagOrderFile.IsValid) &&
-		(!UseTagQuality || TagQualityFile.IsValid) &&
+		(!UseFieldOrder || FieldOrderFile.IsValid) &&
+		(!UseFieldQuality || FieldQualityFile.IsValid) &&
 		(!UseNameRemapping || NameRemappingFile.IsValid);
 
 	#endregion
@@ -190,15 +190,15 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	partial void OnUseAuxiliaryFileChanged(bool value) => Settings.UseAuxiliaryFile = value;
 
-	partial void OnUseTagOrderChanged(bool value) => Settings.UseBibEntryInitialization = value;
+	partial void OnUseFieldOrderChanged(bool value) => Settings.UseBibEntryInitialization = value;
 
-	partial void OnUseTagQualityChanged(bool value) => Settings.UseTagQualityProcessing = value;
+	partial void OnUseFieldQualityChanged(bool value) => Settings.UseFieldQualityProcessing = value;
 
 	partial void OnUseNameRemappingChanged(bool value) => Settings.UseBibEntryRemapping = value;
 
 	partial void OnWhiteSpaceChanged(WhiteSpace value) => Settings.WriteSettings.WhiteSpace = value;
 
-	partial void OnAlignTagValuesChanged(bool value) => Settings.WriteSettings.AlignTagValues = value;
+	partial void OnAlignFieldValuesChanged(bool value) => Settings.WriteSettings.AlignFieldValues = value;
 
 	partial void OnSortBibliographyEntriesChanged(bool value) => Settings.SortBibliography = value;
 

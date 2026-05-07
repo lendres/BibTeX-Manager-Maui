@@ -17,11 +17,11 @@ public class QuoteProcessorTests
 		BibEntry entry = new() { Title = input };
 		QuoteFieldProcessor processor = new()
 		{
-			TagsToProcess = FieldsToProcess.All,
+			FieldsToProcess = FieldsToProcess.All,
 			Pattern = "\"[^\"]*\""
 		};
 
-		// Test lower case tag name.
+		// Test lower case field name.
 		Utilities.RunProcessor(processor, entry);
 		Assert.Equal(solution, entry.Title);
 	}
@@ -38,11 +38,11 @@ public class QuoteProcessorTests
 		BibEntry entry = new() { Title = input };
 		QuoteFieldProcessor processor = new()
 		{
-			TagsToProcess = FieldsToProcess.All,
+			FieldsToProcess = FieldsToProcess.All,
 			Pattern = "\"[^\"]*\""
 		};
 
-		// Test lower case tag name.
+		// Test lower case field name.
 		Utilities.RunProcessor(processor, entry);
 		Assert.Equal(solution, entry.Title);
 	}
@@ -59,11 +59,11 @@ public class QuoteProcessorTests
 		BibEntry entry = new() { Title = input };
 		QuoteFieldProcessor processor = new()
 		{
-			TagsToProcess = FieldsToProcess.All,
+			FieldsToProcess = FieldsToProcess.All,
 			Pattern = "\"[^\"]*\""
 		};
 
-		// Test lower case tag name.
+		// Test lower case field name.
 		Utilities.RunProcessor(processor, entry);
 		Assert.Equal(solution, entry.Title);
 	}

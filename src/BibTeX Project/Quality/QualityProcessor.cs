@@ -32,7 +32,7 @@ public class QualityProcessor
 	#region Properties
 
 	[XmlArray("tagprocessorgroups"), XmlArrayItem("tagprocessorgroup")]
-	public BindingList<FieldProcessorGroup> TagProcessorGroups { get => _tagProcessorGroups; set => _tagProcessorGroups = value; }
+	public BindingList<FieldProcessorGroup> FieldProcessorGroups { get => _tagProcessorGroups; set => _tagProcessorGroups = value; }
 
 	#endregion
 
@@ -44,21 +44,21 @@ public class QualityProcessor
 	/// <param name="entry">BibEntry to process and clean.</param>
 	public IEnumerable<FieldProcessingData> Process(BibEntry entry)
 	{
-		FieldProcessingData tagProcessingData = new();
-		foreach (FieldProcessorGroup tagProcessorGroup in _tagProcessorGroups)
+		FieldProcessingData fieldProcessingData = new();
+		foreach (FieldProcessorGroup fieldProcessorGroup in _tagProcessorGroups)
 		{
-			foreach (FieldProcessor processor in tagProcessorGroup.FieldProcessors)
+			foreach (FieldProcessor processor in fieldProcessorGroup.FieldProcessors)
 			{
 				foreach (Correction correction in processor.Process(entry))
 				{
-					tagProcessingData.Correction = correction;
-					if (tagProcessingData.AcceptAll)
+					fieldProcessingData.Correction = correction;
+					if (fieldProcessingData.AcceptAll)
 					{
 						correction.ReplaceText = true;
 					}
 					else
 					{
-						yield return tagProcessingData;
+						yield return fieldProcessingData;
 					}
 				}
 			}
@@ -78,7 +78,7 @@ public class QualityProcessor
 	{
 		if (!DigitalProduction.IO.Path.PathIsWritable(path))
 		{
-			throw new InvalidOperationException("The file cannot be saved.  A valid path must be specified.");
+			throw new InvalidOperationException("The file cannot be saved. A valid path must be specified.");
 		}
 		Serialization.SerializeObject(this, path);
 	}

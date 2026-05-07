@@ -66,63 +66,63 @@
 						</Grid>
 					</VerticalStackLayout>
 
-					<!-- Bibliography entry tag file. -->
+					<!-- Bibliography entry field file. -->
 					<Border StyleClass="SmallTitleBorderStyle">
-						<Label Text="Bibliography Entry Tag Order" StyleClass="SmallTitleLabelStyle"/>
+						<Label Text="Bibliography Entry Field Order" StyleClass="SmallTitleLabelStyle"/>
 					</Border>
 					<VerticalStackLayout StyleClass="VerticalLayoutStyle">
 						<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
-							<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding UseTagOrder}"/>
-							<Label Grid.Column="1" Grid.Row="0"	Text="Keep tags in a specified order" StyleClass="SwitchLabel"/>
+							<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding UseFieldOrder}"/>
+							<Label Grid.Column="1" Grid.Row="0"	Text="Keep fields in a specified order" StyleClass="SwitchLabel"/>
 						</Grid>
 						<Grid StyleClass="FileBrowsingGridStyle">
-							<Label Grid.Row="0" Text="Bibliography Entry Tag Order File" StyleClass="ControlLabel" IsEnabled="{Binding UseTagOrder}"/>
+							<Label Grid.Row="0" Text="Bibliography Entry Field Order File" StyleClass="ControlLabel" IsEnabled="{Binding UseFieldOrder}"/>
 							<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
-							x:Name="TagOrderEntry" Placeholder="Bibliography Entry Tag Order File"
-							Text="{Binding TagOrderFile.Value}" IsEnabled="{Binding UseTagOrder}">
+							x:Name="FieldOrderEntry" Placeholder="Bibliography Entry Field Order File"
+							Text="{Binding FieldOrderFile.Value}" IsEnabled="{Binding UseFieldOrder}">
 								<Entry.Behaviors>
 									<mct:EventToCommandBehavior
 									x:TypeArguments="system:EventArgs"
-									Command="{Binding ValidateTagOrderFileCommand}"
-									BindingContext="{Binding Path=BindingContext, Source={x:Reference TagOrderEntry}, x:DataType=Entry}"
+									Command="{Binding ValidateFieldOrderFileCommand}"
+									BindingContext="{Binding Path=BindingContext, Source={x:Reference FieldOrderEntry}, x:DataType=Entry}"
 									EventName="TextChanged"/>
 								</Entry.Behaviors>
 							</Entry>
-							<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding UseTagOrder}"
-							Text="{Binding TagOrderFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
+							<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding UseFieldOrder}"
+							Text="{Binding FieldOrderFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
 							<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
 							Text="Browse" SemanticProperties.Hint="Browse for the input file."
-							Clicked="OnBrowseTagOrderFile" IsEnabled="{Binding UseTagOrder}"/>
+							Clicked="OnBrowseFieldOrderFile" IsEnabled="{Binding UseFieldOrder}"/>
 						</Grid>
 					</VerticalStackLayout>
 
-					<!-- Bibliography entry tag quality. -->
+					<!-- Bibliography entry field quality. -->
 					<Border StyleClass="SmallTitleBorderStyle">
-						<Label Text="Bibliography Entry Tag Quality" StyleClass="SmallTitleLabelStyle"/>
+						<Label Text="Bibliography Entry Field Quality" StyleClass="SmallTitleLabelStyle"/>
 					</Border>
 					<VerticalStackLayout StyleClass="VerticalLayoutStyle">
 						<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
-							<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding UseTagQuality}"/>
-							<Label Grid.Column="1" Grid.Row="0"	Text="Perform quality checking on the tag values of bibliography enties" StyleClass="SwitchLabel"/>
+							<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding UseFieldQuality}"/>
+							<Label Grid.Column="1" Grid.Row="0"	Text="Perform quality checking on the field values of bibliography enties" StyleClass="SwitchLabel"/>
 						</Grid>
 						<Grid StyleClass="FileBrowsingGridStyle">
-							<Label Grid.Row="0" Text="Bibliography Entry Tag Quality File" StyleClass="ControlLabel" IsEnabled="{Binding UseTagQuality}"/>
+							<Label Grid.Row="0" Text="Bibliography Entry Field Quality File" StyleClass="ControlLabel" IsEnabled="{Binding UseFieldQuality}"/>
 							<Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
-							x:Name="TagQualityEntry" Placeholder="Bibliography Entry Tag Quality File"
-							Text="{Binding TagQualityFile.Value}" IsEnabled="{Binding UseTagQuality}">
+							x:Name="FieldQualityEntry" Placeholder="Bibliography Entry Field Quality File"
+							Text="{Binding FieldQualityFile.Value}" IsEnabled="{Binding UseFieldQuality}">
 								<Entry.Behaviors>
 									<mct:EventToCommandBehavior
 									x:TypeArguments="system:EventArgs"
-									Command="{Binding ValidateTagQualityFileCommand}"
-									BindingContext="{Binding Path=BindingContext, Source={x:Reference TagQualityEntry}, x:DataType=Entry}"
+									Command="{Binding ValidateFieldQualityFileCommand}"
+									BindingContext="{Binding Path=BindingContext, Source={x:Reference FieldQualityEntry}, x:DataType=Entry}"
 									EventName="TextChanged"/>
 								</Entry.Behaviors>
 							</Entry>
-							<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding UseTagQuality}"
-							Text="{Binding TagQualityFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
+							<Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding UseFieldQuality}"
+							Text="{Binding FieldQualityFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
 							<Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
 							Text="Browse" SemanticProperties.Hint="Browse for the input file."
-							Clicked="OnBrowseTagQualityFile" IsEnabled="{Binding UseTagQuality}"/>
+							Clicked="OnBrowseFieldQualityFile" IsEnabled="{Binding UseFieldQuality}"/>
 						</Grid>
 					</VerticalStackLayout>
 
@@ -133,7 +133,7 @@
 					<VerticalStackLayout StyleClass="VerticalLayoutStyle">
 						<Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
 							<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding UseNameRemapping}"/>
-							<Label Grid.Column="1" Grid.Row="0"	Text="Remap the type and tag names of bibliography entries" StyleClass="SwitchLabel"/>
+							<Label Grid.Column="1" Grid.Row="0"	Text="Remap the type and field names of bibliography entries" StyleClass="SwitchLabel"/>
 						</Grid>
 						<Grid StyleClass="FileBrowsingGridStyle">
 							<Label Grid.Row="0" Text="Name Remapping File" StyleClass="ControlLabel" IsEnabled="{Binding UseNameRemapping}"/>
@@ -191,23 +191,23 @@
 							<Label Text="Alignment" StyleClass="SmallTitleLabelStyle"/>
 						</Border>
 						<Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
-							<Switch Grid.Row="1" Grid.Column="0" IsToggled="{Binding AlignTagValues}"/>
-							<Label Grid.Row="1" Grid.Column="1"	Text="Align tag value" StyleClass="SwitchLabel"/>
+							<Switch Grid.Row="1" Grid.Column="0" IsToggled="{Binding AlignFieldValues}"/>
+							<Label Grid.Row="1" Grid.Column="1"	Text="Align field value" StyleClass="SwitchLabel"/>
 						</Grid>
 						<Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="90,*" RowDefinitions="40,40">
 							<dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="40"
 							Value="{Binding Settings.WriteSettings.BibEntryAlignAtColumn}"
-							IsEnabled="{Binding AlignTagValues}"
+							IsEnabled="{Binding AlignFieldValues}"
 							IsVisible="{Binding WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
 							<Label Grid.Column="1" Text="Alignment Column" Margin="0" VerticalTextAlignment="Center"
-							IsEnabled="{Binding AlignTagValues}"
+							IsEnabled="{Binding AlignFieldValues}"
 							IsVisible="{Binding WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
 							<dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="10"
 							Value="{Binding Settings.WriteSettings.BibEntryAlignAtTabStop}"
-							IsEnabled="{Binding AlignTagValues}"
+							IsEnabled="{Binding AlignFieldValues}"
 							IsVisible="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
 							<Label Grid.Column="1" Text="Alignment Tab Stop" Margin="0" VerticalTextAlignment="Center"
-							IsEnabled="{Binding AlignTagValues}"
+							IsEnabled="{Binding AlignFieldValues}"
 							IsVisible="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
 						</Grid>
 
@@ -236,11 +236,11 @@
 						<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.AutoGenerateKeys}"/>
 						<Label Grid.Column="1" Grid.Row="0" Text="Automatically generate cite keys" StyleClass="SwitchLabel"/>
 						<Switch Grid.Column="2"  Grid.Row="0" IsToggled="{Binding Settings.UseStringConstants}"/>
-						<Label Grid.Column="3" Grid.Row="0" Text="Replace tag values with constant strings" StyleClass="SwitchLabel"/>
+						<Label Grid.Column="3" Grid.Row="0" Text="Replace field values with constant strings" StyleClass="SwitchLabel"/>
 						<Switch Grid.Column="0"  Grid.Row="1" IsToggled="{Binding Settings.CopyCiteKeyOnEntryAdd}"/>
 						<Label Grid.Column="1" Grid.Row="1" Text="Copy cite key when entry is added" StyleClass="SwitchLabel"/>
 						<Switch Grid.Column="2"  Grid.Row="1" IsToggled="{Binding Settings.WriteSettings.RemoveLastComma}"/>
-						<Label Grid.Column="3" Grid.Row="1" Text="Remove comma after last tag" StyleClass="SwitchLabel"/>
+						<Label Grid.Column="3" Grid.Row="1" Text="Remove comma after last field" StyleClass="SwitchLabel"/>
 					</Grid>
 				</VerticalStackLayout>
 			</ScrollView>

@@ -7,13 +7,13 @@ namespace BibTeXManager.Quality;
 /// <summary>
 /// 
 /// </summary>
-[XmlRoot("tagprocessorgroup")]
+[XmlRoot("fieldprocessorgroup")]
 public class FieldProcessorGroup
 {
 	#region Fields
 
-	private string                                  _name					= string.Empty;
-	private BindingList<FieldProcessor>               _tagProcessors          = [];
+	private string								_name					= string.Empty;
+	private BindingList<FieldProcessor>			_fieldProcessors		= [];
 
 	#endregion
 
@@ -37,10 +37,10 @@ public class FieldProcessorGroup
 	public string Name { get => _name; set => _name = value; }
 
 	/// <summary>
-	/// Tag processing groups.
+	/// Field processing groups.
 	/// </summary>
-	[XmlArray("tagprocessors"), XmlArrayItem("tagprocessor")]
-	public BindingList<FieldProcessor> FieldProcessors { get => _tagProcessors; set => _tagProcessors = value; }
+	[XmlArray("fieldprocessors"), XmlArrayItem("fieldprocessor")]
+	public BindingList<FieldProcessor> FieldProcessors { get => _fieldProcessors; set => _fieldProcessors = value; }
 
 	#endregion
 

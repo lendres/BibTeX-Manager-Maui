@@ -29,8 +29,8 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 		UseAuxiliaryFile			= projectSettings.UseAuxiliaryFile;
 		AuxiliaryFile				= projectSettings.AuxiliaryFile;
 		UseStringConstants			= projectSettings.UseStringConstants;
-		UseTagQualityProcessing		= projectSettings.UseTagQualityProcessing;
-		TagQualityProcessingFile	= projectSettings.TagQualityProcessingFile;
+		UseFieldQualityProcessing		= projectSettings.UseFieldQualityProcessing;
+		FieldQualityProcessingFile	= projectSettings.FieldQualityProcessingFile;
 		UseBibEntryRemapping		= projectSettings.UseBibEntryRemapping;
 		BibEntryRemappingFile		= projectSettings.BibEntryRemappingFile;
 		AutoGenerateKeys			= projectSettings.AutoGenerateKeys;
@@ -75,7 +75,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	}
 
 	/// <summary>
-	/// Replace tag values with string constants.
+	/// Specifies if an accessory file should be used to provide additional information for the bibliography, such as strings.
 	/// </summary>
 	[XmlAttribute("useauxiliaryfile")]
 	public bool UseAuxiliaryFile
@@ -95,7 +95,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	}
 
 	/// <summary>
-	/// Replace tag values with string constants.
+	/// Replace field values with string constants.
 	/// </summary>
 	[XmlAttribute("usestringconstants")]
 	public bool UseStringConstants
@@ -105,10 +105,10 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	}
 
 	/// <summary>
-	/// Specifies if the tags should be processed to ensure their quality.
+	/// Specifies if the fields should be processed to ensure their quality.
 	/// </summary>
-	[XmlAttribute("usetagqualityprocessing")]
-	public bool UseTagQualityProcessing
+	[XmlAttribute("usefieldqualityprocessing")]
+	public bool UseFieldQualityProcessing
 	{
 		get => GetValueOrDefault(false);
 		set => SetValue(value);
@@ -118,7 +118,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	/// The path to the quality processor file.
 	/// </summary>
 	[XmlAttribute("qualityprocessorfile")]
-	public string TagQualityProcessingFile
+	public string FieldQualityProcessingFile
 	{
 		get => GetValueOrDefault(string.Empty);
 		set => SetValue(value);

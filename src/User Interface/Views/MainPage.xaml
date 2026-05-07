@@ -117,7 +117,7 @@
 		<MenuBarItem Text="Tools">
 			<!--<MenuFlyoutSubItem Text="Quality">-->
 				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding ProjectOpen}"/>
-				<MenuFlyoutItem Text="Check Tag Quality" Clicked="OnCheckTagQuality" IsEnabled="{Binding ProjectOpen}"/>
+				<MenuFlyoutItem Text="Check Field Quality" Clicked="OnCheckFieldQuality" IsEnabled="{Binding ProjectOpen}"/>
 			<!--</MenuFlyoutSubItem>-->
 		</MenuBarItem>
 		<MenuBarItem Text="Help">

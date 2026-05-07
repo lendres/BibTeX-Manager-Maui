@@ -194,7 +194,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Tools
 
-	async void OnCheckTagQuality(object sender, EventArgs eventArgs)
+	async void OnCheckFieldQuality(object sender, EventArgs eventArgs)
 	{
 		bool breakNext = false;
 

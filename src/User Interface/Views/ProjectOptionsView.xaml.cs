@@ -21,14 +21,14 @@ public partial class ProjectOptionsView : PopupView
 		AuxiliaryFileEntry.Text = await _filePicker.BrowseForBibliographyFile();
 	}
 
-	async void OnBrowseTagOrderFile(object sender, EventArgs eventArgs)
+	async void OnBrowseFieldOrderFile(object sender, EventArgs eventArgs)
 	{
-		TagOrderEntry.Text = await _filePicker.BrowseForTagOrderFile();
+		FieldOrderEntry.Text = await _filePicker.BrowseForFieldOrderFile();
 	}
 
-	async void OnBrowseTagQualityFile(object sender, EventArgs eventArgs)
+	async void OnBrowseFieldQualityFile(object sender, EventArgs eventArgs)
 	{
-		TagQualityEntry.Text = await _filePicker.BrowseForTagQualityFile();
+		FieldQualityEntry.Text = await _filePicker.BrowseForFieldQualityFile();
 	}
 
 	async void OnBrowseNameRemappingFile(object sender, EventArgs eventArgs)

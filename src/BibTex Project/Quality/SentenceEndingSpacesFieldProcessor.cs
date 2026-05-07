@@ -82,8 +82,8 @@ public class SentenceEndingSpacesFieldProcessor : FieldProcessor
 					extractionStart = correction.FullText.Length - excludeString.Length;
 				}
 
-				string extractedTagSection = correction.FullText.Substring(extractionStart, excludeString.Length);
-				if (extractedTagSection == excludeString)
+				string extractedFieldSection = correction.FullText.Substring(extractionStart, excludeString.Length);
+				if (extractedFieldSection == excludeString)
 				{
 					correction.ReplaceText	= false;
 					correction.PromptUser	= false;

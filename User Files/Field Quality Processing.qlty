@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<qualityprocessor xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">
+	<fieldprocessorgroups>
+
+		<xi:include href="LaTeX Field Quality Processing.qlty" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+
+		<fieldprocessorgroup name="Convert Month Numbers to Text">
+			<fieldprocessors>
+				<!-- Change month numbers to strings. -->
+				<!-- The regular expression [0]* matches leading zeros. -->
+				<!-- The ^ and $ characters are used to match the entire string. -->
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*1$" replacement="January">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+		
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*2$" replacement="February">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+		
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*3$" replacement="March">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*4$" replacement="April">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*5$" replacement="May">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*6$" replacement="June">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*7$" replacement="July">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*8$" replacement="August">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*9$" replacement="September">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*10$" replacement="October">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+		
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*11$" replacement="November">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+		
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*12$" replacement="December">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+				
+			</fieldprocessors>
+		</fieldprocessorgroup>
+
+		<fieldprocessorgroup name="Convert Month Numbers to Text">
+			<fieldprocessors>
+				<!-- Change month abbreviations to full names. -->
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="jan" replacement="January">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="feb" replacement="February">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="mar" replacement="March">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="apr" replacement="April">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="may" replacement="May">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="jun" replacement="June">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="jul" replacement="July">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="aug" replacement="August">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="sep" replacement="September">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="oct" replacement="October">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="nov" replacement="November">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="dec" replacement="December">
+					<fields><field>month</field></fields>
+				</fieldprocessor>
+				
+			</fieldprocessors>
+		</fieldprocessorgroup>
+
+		<fieldprocessorgroup name="Special Screw Ups by SPE">
+			<fieldprocessors>
+				
+				<!-- Both how and why? You suck SPE. -->
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="\\\\%"
+					replacement="\%">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="\\\\&amp;amp;"
+					replacement="\&amp;">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="\\&amp;amp;"
+					replacement="\&amp;">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="\\\\$"
+					replacement="\$">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="\\\\&amp;lt;"
+					replacement="\textless{}">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>				
+				
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="\\\\&amp;gt;"
+					replacement="\textgreater{}">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+			</fieldprocessors>
+		</fieldprocessorgroup>
+	
+		<fieldprocessorgroup name="HTML Characters">
+			<fieldprocessors>
+				
+				<!-- HTML characters. -->
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="All"
+					pattern="&amp;amp;"
+					replacement="\&amp;">
+					<fields></fields>
+				</fieldprocessor>
+				
+			</fieldprocessors>
+		</fieldprocessorgroup>
+
+		<fieldprocessorgroup name="Spacing">
+			<fieldprocessors>
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="All"
+					pattern="  "
+					replacement=" ">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+			</fieldprocessors>
+		</fieldprocessorgroup>
+
+		<fieldprocessorgroup name="Capitol Letters and Acronyms">
+			<fieldprocessors>
+				
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="3D"
+					replacement="{3D}">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="FEA"
+					replacement="{FEA}">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="FEM"
+					replacement="{FEM}">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="CFD"
+					replacement="{CFD}">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="FPSO"
+					replacement="{FPSO}">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="BHA"
+					replacement="{BHA}">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="PDC"
+					replacement="{PDC}">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="RSS"
+					replacement="{RSS}">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="RWD"
+					replacement="{RWD}">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+			</fieldprocessors>
+		</fieldprocessorgroup>
+
+		<fieldprocessorgroup name="Specialized Processors">
+			<fieldprocessors>
+				
+				<!-- Do not modify the pattern unless you really know what you are doing. -->
+				<fieldprocessor xsi:type="SentenceEndingSpacesFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="\.+[a-zA-Z]+"
+					frenchspacing="true">
+					<fields>
+						<field>abstract</field>
+					</fields>
+					<exceptions>
+						<exception>A.K.A.</exception>
+						<exception>D.C.</exception>
+						<exception>E.g.</exception>
+						<exception>e.g.</exception>
+						<exception>I.e.</exception>
+						<exception>i.e.</exception>
+						<exception>Ph.D.</exception>
+						<exception>U.S.</exception>
+						<exception>U.S.A.</exception>
+					</exceptions>
+				</fieldprocessor>
+
+				<!-- Remove enclosing brackets. -->
+				<fieldprocessor xsi:type="RemoveEnclosingBracesFieldProcessor"
+					fieldstoprocess="All"
+					pattern="^{[\s\S]*}$">
+					<fields></fields>
+				</fieldprocessor>
+
+				<!-- Change titles from UPPPER CASE to Title Case. -->
+				<fieldprocessor xsi:type="StringCaseFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[A-Z\s\p{P}]*$" tocase="TitleCase">
+					<fields><field>title</field></fields>
+				</fieldprocessor>
+
+				<!-- Change quotes to LaTeX quotes. -->
+				<fieldprocessor xsi:type="QuoteFieldProcessor" fieldstoprocess="All" pattern="&quot;[^&quot;]*&quot;">
+					<fields></fields>
+				</fieldprocessor>
+				
+			</fieldprocessors>
+		</fieldprocessorgroup>
+		
+	</fieldprocessorgroups>
+</qualityprocessor>

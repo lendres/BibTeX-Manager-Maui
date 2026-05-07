@@ -13,16 +13,16 @@ namespace BibTeXManager;
 /// </summary>
 public enum FieldsToProcess
 {
-	/// <summary>Process all tags.</summary>
+	/// <summary>Process all fields.</summary>
 	[Description("All")]
 	All,
 
-	/// <summary>Exclude the specified tags.</summary>
-	[Description("Exclude the Specified Tags")]
+	/// <summary>Exclude the specified fields.</summary>
+	[Description("Exclude the Specified Fields")]
 	ExcludeSpecified,
 
-	/// <summary>Only the specified tags.</summary>
-	[Description("Only the Specified Tags")]
+	/// <summary>Only the specified fields.</summary>
+	[Description("Only the Specified Fields")]
 	OnlySpecified,
 
 
