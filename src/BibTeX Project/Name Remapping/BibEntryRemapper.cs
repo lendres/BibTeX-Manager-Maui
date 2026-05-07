@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace BibTeXManager;
 
 /// <summary>
-/// A class to remap the type and tag names of a bibilography entry.
+/// A class to remap the type and field names of a bibilography entry.
 /// </summary>
 [XmlRoot("bibentryremapping")]
 public class BibEntryRemapper
@@ -52,14 +52,14 @@ public class BibEntryRemapper
 			entry.Type		= map.ToType;
 
 			// Getting the tag names is a little expensive, so just do it once, outside of the loop.
-			List<string> tagNames = entry.TagNames;
+			List<string> fieldNames = entry.FieldNames;
 
-			foreach (KeyValuePair<string, string> tagMap in map.TagMaps)
+			foreach (KeyValuePair<string, string> nameMap in map.FieldNameMaps)
 			{
 				// Only remap when the key exists.
-				if (tagNames.Contains(tagMap.Key))
+				if (fieldNames.Contains(nameMap.Key))
 				{
-					entry.RenameTagKey(tagMap.Key, tagMap.Value);
+					entry.RenameField(nameMap.Key, nameMap.Value);
 				}
 			}
 		}

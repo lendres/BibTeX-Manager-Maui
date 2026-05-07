@@ -39,7 +39,7 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	public partial bool							UseAuxiliaryFile { get; set; }
 
 	[ObservableProperty]
-	public partial ValidatableObject<string>	AuxiliaryFile { get; set; }				= new();
+	public partial ValidatableObject<string>	AuxiliaryFile { get; set; }					= new();
 
 	[ObservableProperty]
 	public partial bool							UseTagOrder { get; set; }
@@ -71,7 +71,7 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
 
-	public IReadOnlyList<string>				SorByItems { get; set; }					= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBy>();
+	public IReadOnlyList<string>				SorByItems { get; set; }					= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBibliographyBy>();
 
 	#endregion
 

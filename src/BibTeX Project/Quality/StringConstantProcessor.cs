@@ -74,10 +74,10 @@ public class StringConstantProcessor
 	{
 		foreach (KeyValuePair<string, string> pair in _map)
 		{
-			string key = entry.FindTagValue(pair.Value);
-			if (key != "")
+			string name = entry.FindNameByValue(pair.Value);
+			if (name != "")
 			{
-				entry.SetTagValue(key, pair.Key, FieldValueType.StringConstant);
+				entry.SetField(name, pair.Key, FieldValueType.StringConstant);
 			}
 		}
 	}

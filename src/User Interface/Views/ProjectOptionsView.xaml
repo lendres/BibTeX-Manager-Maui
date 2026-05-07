@@ -196,14 +196,14 @@
 						</Grid>
 						<Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="90,*" RowDefinitions="40,40">
 							<dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="40"
-							Value="{Binding Settings.WriteSettings.AlignAtColumn}"
+							Value="{Binding Settings.WriteSettings.BibEntryAlignAtColumn}"
 							IsEnabled="{Binding AlignTagValues}"
 							IsVisible="{Binding WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
 							<Label Grid.Column="1" Text="Alignment Column" Margin="0" VerticalTextAlignment="Center"
 							IsEnabled="{Binding AlignTagValues}"
 							IsVisible="{Binding WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
 							<dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="10"
-							Value="{Binding Settings.WriteSettings.AlignAtTabStop}"
+							Value="{Binding Settings.WriteSettings.BibEntryAlignAtTabStop}"
 							IsEnabled="{Binding AlignTagValues}"
 							IsVisible="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
 							<Label Grid.Column="1" Text="Alignment Tab Stop" Margin="0" VerticalTextAlignment="Center"
@@ -224,7 +224,7 @@
 							HeightRequest="32"
 							ItemsSource="{Binding SorByItems}"
 							IsEnabled="{Binding SortBibliographyEntries}"
-							SelectedIndex="{Binding Settings.BibliographySortMethod, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type library:SortBy}}"/>
+							SelectedIndex="{Binding Settings.BibliographySortMethod, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type library:SortBibliographyBy}}"/>
 
 					</Grid>
 

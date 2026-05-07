@@ -19,7 +19,7 @@ public abstract class TagProcessor
 {
 	#region Fields
 
-	private TagsToProcess					_tagsToProcess		= TagsToProcess.All;
+	private TagsToProcess					_fieldsToProcess		= TagsToProcess.All;
 	private	readonly BindingList<string>	_tagNames			= [];
 	protected string						_pattern			= string.Empty;
 
@@ -42,7 +42,7 @@ public abstract class TagProcessor
 	/// Process any tag or just those specified.
 	/// </summary>
 	[XmlAttribute("tagstoprocess")]
-	public TagsToProcess TagsToProcess { get => _tagsToProcess; set => _tagsToProcess = value; }
+	public TagsToProcess TagsToProcess { get => _fieldsToProcess; set => _fieldsToProcess = value; }
 
 	/// <summary>
 	/// Tag names to process.
@@ -78,13 +78,13 @@ public abstract class TagProcessor
 	/// <param name="entry">BibEntry to process.</param>
 	public IEnumerable<Correction> Process(BibEntry entry)
 	{
-		foreach (string tagName in entry.TagNames)
+		foreach (string fieldName in entry.FieldNames)
 		{
-			bool processTags = _tagsToProcess switch
+			bool processTags = _fieldsToProcess switch
 			{
 				TagsToProcess.All				=> true,
-				TagsToProcess.ExcludeSpecified	=> !_tagNames.Contains(tagName.ToLower()),
-				TagsToProcess.OnlySpecified		=> _tagNames.Contains(tagName.ToLower()),
+				TagsToProcess.ExcludeSpecified	=> !_tagNames.Contains(fieldName.ToLower()),
+				TagsToProcess.OnlySpecified		=> _tagNames.Contains(fieldName.ToLower()),
 				_								=> throw new System.Exception("The value for TagsToProcess is out of range."),
 			};
 
@@ -93,9 +93,9 @@ public abstract class TagProcessor
 			// tag names are set to lower case.
 			if (processTags)
 			{
-				foreach (Correction correction in ProcessTag(entry, tagName))
+				foreach (Correction correction in ProcessTag(entry, fieldName))
 				{
-					correction.TagName = tagName;
+					correction.TagName = fieldName;
 					yield return correction;
 				}
 			}
@@ -106,11 +106,11 @@ public abstract class TagProcessor
 	/// Process a single tag.
 	/// </summary>
 	/// <param name="entry">BibEntry.</param>
-	/// <param name="tagName">Name of the tag to process.</param>
-	private IEnumerable<Correction> ProcessTag(BibEntry entry, string tagName)
+	/// <param name="fieldName">Name of the tag to process.</param>
+	private IEnumerable<Correction> ProcessTag(BibEntry entry, string fieldName)
 	{
 		StringBuilder output	= new();
-		string tagValue			= entry[tagName];
+		string tagValue			= entry[fieldName];
 		int lastIndex			= 0;
 
 		foreach (Match match in Regex.Matches(tagValue, _pattern))
@@ -138,7 +138,7 @@ public abstract class TagProcessor
 			output.Append(tagValue.AsSpan(lastIndex));
 		}
 
-		entry[tagName] = output.ToString();
+		entry[fieldName] = output.ToString();
 	}
 
 	/// <summary>
