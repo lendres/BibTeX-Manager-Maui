@@ -1,7 +1,5 @@
 ﻿using BibTeXLibrary;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.ViewModels;
 
 namespace BibTeXManager.ViewModels;
@@ -59,7 +57,6 @@ public partial class StringConstantsViewModel : DataGridBaseViewModel<StringEntr
 	}
 
 	#endregion
-
 
 	#endregion
 

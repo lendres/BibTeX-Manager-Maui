@@ -1,11 +1,6 @@
 ﻿using BibTeXLibrary;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
-using DigitalProduction.Maui.Controls;
-using DigitalProduction.Maui.Storage;
-using DigitalProduction.Maui.ViewModels;
-using DigitalProduction.Maui.Views;
-using static System.Net.WebRequestMethods;
 
 namespace BibTeXManager.Views;
 

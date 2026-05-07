@@ -29,7 +29,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 		UseAuxiliaryFile			= projectSettings.UseAuxiliaryFile;
 		AuxiliaryFile				= projectSettings.AuxiliaryFile;
 		UseStringConstants			= projectSettings.UseStringConstants;
-		UseFieldQualityProcessing		= projectSettings.UseFieldQualityProcessing;
+		UseFieldQualityProcessing	= projectSettings.UseFieldQualityProcessing;
 		FieldQualityProcessingFile	= projectSettings.FieldQualityProcessingFile;
 		UseBibEntryRemapping		= projectSettings.UseBibEntryRemapping;
 		BibEntryRemappingFile		= projectSettings.BibEntryRemappingFile;

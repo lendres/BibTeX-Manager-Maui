@@ -8,7 +8,6 @@ public partial class ProgramOptionsViewModel : ObservableObject
 	#endregion
 
 	#region Construction
-
 	public ProgramOptionsViewModel()
 	{
 		Initialize();

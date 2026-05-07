@@ -82,14 +82,14 @@ public partial class ProjectOptionsViewModel : ObservableObject
 		UseRelativePaths		= Settings.UsePathsRelativeToBibFile;
 		UseAuxiliaryFile		= Settings.UseAuxiliaryFile;
 		AuxiliaryFile.Value		= Settings.AuxiliaryFile;
-		UseFieldOrder				= Settings.UseBibEntryInitialization;
-		FieldOrderFile.Value		= Settings.BibEntryInitializationFile;
+		UseFieldOrder			= Settings.UseBibEntryInitialization;
+		FieldOrderFile.Value	= Settings.BibEntryInitializationFile;
 		UseFieldQuality			= Settings.UseFieldQualityProcessing;
 		FieldQualityFile.Value	= Settings.FieldQualityProcessingFile;
 		UseNameRemapping        = Settings.UseBibEntryRemapping;
 		NameRemappingFile.Value	= Settings.BibEntryRemappingFile;
 		WhiteSpace				= Settings.WriteSettings.WhiteSpace;
-		AlignFieldValues			= Settings.WriteSettings.AlignFieldValues;
+		AlignFieldValues		= Settings.WriteSettings.AlignFieldValues;
 		SortBibliographyEntries	= Settings.SortBibliography;
 	}
 
@@ -183,7 +183,6 @@ public partial class ProjectOptionsViewModel : ObservableObject
 	#endregion
 
 	#region Events
-
 	private void OnSettingsModifiedChanged(object sender, bool modified) => ValidateSubmittable();
 
 	private void OnSettingsPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) => ValidateSubmittable();
