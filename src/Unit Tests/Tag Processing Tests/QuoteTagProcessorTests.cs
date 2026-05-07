@@ -15,9 +15,9 @@ public class QuoteProcessorTests
 		string input	= "The \"quick\" brown fox jumped over the lazy dog.";
 
 		BibEntry entry = new() { Title = input };
-		QuoteTagProcessor processor = new()
+		QuoteFieldProcessor processor = new()
 		{
-			TagsToProcess = TagsToProcess.All,
+			TagsToProcess = FieldsToProcess.All,
 			Pattern = "\"[^\"]*\""
 		};
 
@@ -36,9 +36,9 @@ public class QuoteProcessorTests
 		string input	= "The \"quick\" brown fox \"jumped\" over the lazy dog.";
 
 		BibEntry entry = new() { Title = input };
-		QuoteTagProcessor processor = new()
+		QuoteFieldProcessor processor = new()
 		{
-			TagsToProcess = TagsToProcess.All,
+			TagsToProcess = FieldsToProcess.All,
 			Pattern = "\"[^\"]*\""
 		};
 
@@ -57,9 +57,9 @@ public class QuoteProcessorTests
 		string input	= "The \"quick\"\"brown\" fox jumped over the lazy dog.";
 
 		BibEntry entry = new() { Title = input };
-		QuoteTagProcessor processor = new()
+		QuoteFieldProcessor processor = new()
 		{
-			TagsToProcess = TagsToProcess.All,
+			TagsToProcess = FieldsToProcess.All,
 			Pattern = "\"[^\"]*\""
 		};
 

@@ -94,7 +94,7 @@ public partial class EditRawBibEntryForm : ContentPage
 
 		MessageBoxYesNoToAllResult lastDialogResult = MessageBoxYesNoToAllResult.Cancel;
 
-		foreach (TagProcessingData tagProcessingData in _viewModel.CheckQuality())
+		foreach (FieldProcessingData tagProcessingData in _viewModel.CheckQuality())
 		{
 			// If the processing was cancelled, we break.  We have to loop back around here to give the
 			// processing a chance to finish (it was yielded).  Now exit before processing another entry.

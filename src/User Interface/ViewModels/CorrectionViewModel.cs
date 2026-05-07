@@ -8,7 +8,7 @@ public partial class CorrectionViewModel : ObservableObject
 {
 	#region Construction
 
-	public CorrectionViewModel(TagProcessingData tagProcessingData)
+	public CorrectionViewModel(FieldProcessingData tagProcessingData)
 	{
 		TagProcessingData = tagProcessingData;
 	}
@@ -21,7 +21,7 @@ public partial class CorrectionViewModel : ObservableObject
 	public partial string				Title { get; set; }					= "Replace Text?";
 
 	[ObservableProperty]
-	public partial TagProcessingData	TagProcessingData { get; set; }
+	public partial FieldProcessingData	TagProcessingData { get; set; }
 
 	[ObservableProperty]
 	public partial string				ReplacementText  { get; set; }		= "";
@@ -41,7 +41,7 @@ public partial class CorrectionViewModel : ObservableObject
 		ReplacementText = value;
 	}
 	
-	partial void OnTagProcessingDataChanged(TagProcessingData value)
+	partial void OnTagProcessingDataChanged(FieldProcessingData value)
 	{
 		ReplacementText = value.Correction.ReplacementText;
 	}

@@ -11,7 +11,7 @@ namespace BibTeXManager;
 /// the number of items in the enumeration changes.  The "Length" enumeration must be the last item.
 /// for (int i = 0; i &lt; (int)EnumType.Length; i++) {...}
 /// </summary>
-public enum TagsToProcess
+public enum FieldsToProcess
 {
 	/// <summary>Process all tags.</summary>
 	[Description("All")]

@@ -14,7 +14,7 @@ public class QualityProcessor
 {
 	#region Fields
 
-	private BindingList<TagProcessorGroup>			_tagProcessorGroups			= [];
+	private BindingList<FieldProcessorGroup>			_tagProcessorGroups			= [];
 
 	#endregion
 
@@ -32,7 +32,7 @@ public class QualityProcessor
 	#region Properties
 
 	[XmlArray("tagprocessorgroups"), XmlArrayItem("tagprocessorgroup")]
-	public BindingList<TagProcessorGroup> TagProcessorGroups { get => _tagProcessorGroups; set => _tagProcessorGroups = value; }
+	public BindingList<FieldProcessorGroup> TagProcessorGroups { get => _tagProcessorGroups; set => _tagProcessorGroups = value; }
 
 	#endregion
 
@@ -42,12 +42,12 @@ public class QualityProcessor
 	/// Process a BibEntry and correct errors.
 	/// </summary>
 	/// <param name="entry">BibEntry to process and clean.</param>
-	public IEnumerable<TagProcessingData> Process(BibEntry entry)
+	public IEnumerable<FieldProcessingData> Process(BibEntry entry)
 	{
-		TagProcessingData tagProcessingData = new();
-		foreach (TagProcessorGroup tagProcessorGroup in _tagProcessorGroups)
+		FieldProcessingData tagProcessingData = new();
+		foreach (FieldProcessorGroup tagProcessorGroup in _tagProcessorGroups)
 		{
-			foreach (TagProcessor processor in tagProcessorGroup.TagProcessors)
+			foreach (FieldProcessor processor in tagProcessorGroup.FieldProcessors)
 			{
 				foreach (Correction correction in processor.Process(entry))
 				{

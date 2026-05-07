@@ -23,7 +23,7 @@ public static class Utilities
 	/// </summary>
 	/// <param name="processor">TagProcessor.</param>
 	/// <param name="entry">BibEntry.</param>
-	public static void RunProcessor(TagProcessor processor, BibEntry entry)
+	public static void RunProcessor(FieldProcessor processor, BibEntry entry)
 	{
 		foreach (Correction correction in processor.Process(entry))
 		{
@@ -39,9 +39,9 @@ public static class Utilities
 	/// </summary>
 	/// <param name="processor">TagProcessor.</param>
 	/// <param name="entry">BibEntry.</param>
-	public static void RunProcessors(List<TagProcessor> processors, BibEntry entry)
+	public static void RunProcessors(List<FieldProcessor> processors, BibEntry entry)
 	{
-		foreach (TagProcessor processor in processors)
+		foreach (FieldProcessor processor in processors)
 		{
 			RunProcessor(processor, entry);
 		}

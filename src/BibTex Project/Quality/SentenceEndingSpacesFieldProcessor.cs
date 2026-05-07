@@ -6,7 +6,7 @@ namespace BibTeXManager;
 /// Corrects the spacing at the end of a sentance to be consistent.
 /// The spacing after a sentence ending period can be a single space (French spacing) or double spaced (typical in USA).
 /// </summary>
-public class SentenceEndingSpacesTagProcessor : TagProcessor
+public class SentenceEndingSpacesFieldProcessor : FieldProcessor
 {
 	#region Fields
 
@@ -20,7 +20,7 @@ public class SentenceEndingSpacesTagProcessor : TagProcessor
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public SentenceEndingSpacesTagProcessor()
+	public SentenceEndingSpacesFieldProcessor()
 	{
 	}
 

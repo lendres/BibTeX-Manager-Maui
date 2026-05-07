@@ -6,7 +6,7 @@ namespace BibTeXManagerUnitTests;
 
 public class RemoveEnclosingBracesTagProcessorTests
 {
-	private static RemoveEnclosingBracesTagProcessor	_bracketProcessor  = new() { TagsToProcess = TagsToProcess.All };
+	private static RemoveEnclosingBracesFieldProcessor	_bracketProcessor  = new() { TagsToProcess = FieldsToProcess.All };
 
 	/// <summary>
 	/// Base line test to remove brackets.

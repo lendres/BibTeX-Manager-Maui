@@ -14,7 +14,7 @@ public class StringCaseTagProcessorTests
 		string solution = @"The Quick Brown Fox; Jumped!: Over the Lazy Dog.";
 		string input	= @"THE QUICK BROWN FOX; JUMPED!: OVER THE LAZY DOG.";
 
-		StringCaseTagProcessor processor  = new() { Pattern=@"^[A-Z\s\p{P}]*$",  TagsToProcess = TagsToProcess.All };
+		StringCaseTagProcessor processor  = new() { Pattern=@"^[A-Z\s\p{P}]*$",  TagsToProcess = FieldsToProcess.All };
 
 		BibEntry entry	= new() { Title = input };
 		Utilities.RunProcessor(processor, entry);

@@ -3,7 +3,7 @@
 /// <summary>
 /// 
 /// </summary>
-public class RemoveEnclosingBracesTagProcessor : TagProcessor
+public class RemoveEnclosingBracesFieldProcessor : FieldProcessor
 {
 	#region Fields
 
@@ -14,7 +14,7 @@ public class RemoveEnclosingBracesTagProcessor : TagProcessor
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public RemoveEnclosingBracesTagProcessor()
+	public RemoveEnclosingBracesFieldProcessor()
 	{
 		// Provide a default pattern.  It can be overridden in the input file.
 		_pattern = @"^{[\s\S]*}$";

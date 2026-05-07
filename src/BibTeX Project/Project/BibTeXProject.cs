@@ -402,11 +402,11 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// Clean a single entry.  Used to prompt a user if the issues should be changed or not.
 	/// </summary>
 	/// <param name="entry">BibEntry.</param>
-	public IEnumerable<TagProcessingData> CleanEntry(BibEntry entry)
+	public IEnumerable<FieldProcessingData> CleanEntry(BibEntry entry)
 	{
 		if (_settings.UseTagQualityProcessing)
 		{
-			foreach (TagProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
+			foreach (FieldProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
 			{
 				yield return tagProcessingData;
 			}
@@ -421,7 +421,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	{
 		if (_settings.UseTagQualityProcessing)
 		{
-			foreach (TagProcessingData tagProcessingData in CleanEntry(entry))
+			foreach (FieldProcessingData tagProcessingData in CleanEntry(entry))
 			{
 				tagProcessingData.Correction.ReplaceText    = true;
 				tagProcessingData.AcceptAll                 = true;
@@ -506,11 +506,11 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// Clean the entries.
 	/// Note, it is assumed this method is called deliberately.  It does not check to see if quality processing is enabled in the settings.
 	/// </summary>
-	public IEnumerable<TagProcessingData> CleanAllEntries()
+	public IEnumerable<FieldProcessingData> CleanAllEntries()
 	{
 		foreach (BibEntry entry in _bibliography.Entries)
 		{
-			foreach (TagProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
+			foreach (FieldProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
 			{
 				yield return tagProcessingData;
 			}

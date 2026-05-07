@@ -236,10 +236,10 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	/// <summary>
 	/// Check the quality of the text in the text box.
 	/// </summary>
-	public IEnumerable<TagProcessingData> CheckQuality()
+	public IEnumerable<FieldProcessingData> CheckQuality()
 	{
 		// Cleaning.
-		foreach (TagProcessingData tagProcessingData in Project.CleanAllEntries())
+		foreach (FieldProcessingData tagProcessingData in Project.CleanAllEntries())
 		{
 			yield return tagProcessingData;
 		}

@@ -6,7 +6,7 @@ namespace BibTeXManager;
 /// <summary>
 /// Changes the case of text.
 /// </summary>
-public class StringCaseTagProcessor : TagProcessor
+public class StringCaseTagProcessor : FieldProcessor
 {
 	#region Fields
 

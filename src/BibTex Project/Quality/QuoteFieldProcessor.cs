@@ -3,12 +3,12 @@
 /// <summary>
 /// Changes quotation marks ("...") to LaTeX quotations (``...'').
 /// </summary>
-public class QuoteTagProcessor : TagProcessor
+public class QuoteFieldProcessor : FieldProcessor
 {
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public QuoteTagProcessor()
+	public QuoteFieldProcessor()
 	{
 	}
 

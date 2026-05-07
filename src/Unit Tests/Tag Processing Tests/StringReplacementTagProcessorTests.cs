@@ -15,9 +15,9 @@ public class StringReplacementTagProcessorTests
 		string input	= @"The quick brown fox &amp; quicker red squirrel jumped over the fence &amp; lazy dog.";
 
 		BibEntry entry								= new() { Title = input, Abstract = input };
-		StringReplacementTagProcessor processor		= new()
+		StringReplacementFieldProcessor processor		= new()
 		{
-			TagsToProcess = TagsToProcess.OnlySpecified,
+			TagsToProcess = FieldsToProcess.OnlySpecified,
 			Pattern     = "&amp;",
 			Replacement = @"\&"
 		};
@@ -39,9 +39,9 @@ public class StringReplacementTagProcessorTests
 		string input    = @"The quick brown fox &amp; quicker red squirrel jumped over the fence &amp; lazy dog.";
 
 		BibEntry entry                              = new() { Title = input, Abstract = input };
-		StringReplacementTagProcessor processor		= new()
+		StringReplacementFieldProcessor processor		= new()
 		{
-			TagsToProcess = TagsToProcess.ExcludeSpecified,
+			TagsToProcess = FieldsToProcess.ExcludeSpecified,
 			Pattern       = "&amp;",
 			Replacement   = @"\&"
 		};
@@ -63,9 +63,9 @@ public class StringReplacementTagProcessorTests
 		string input	= @"The quick brown fox &amp; quicker red squirrel jumped over the fence &amp; lazy dog.&amp;";
 
 		BibEntry entry								= new() { Title = input, Abstract = input };
-		StringReplacementTagProcessor processor		= new()
+		StringReplacementFieldProcessor processor		= new()
 		{
-			TagsToProcess = TagsToProcess.All,
+			TagsToProcess = FieldsToProcess.All,
 			Pattern     = "&amp;",
 			Replacement = @"\&"
 		};
@@ -86,9 +86,9 @@ public class StringReplacementTagProcessorTests
 		string input	= @"The quick brown fox & quicker red squirrel jumped over the fence \& lazy dog.";
 
 		BibEntry entry								= new() { Title = input, Abstract = input };
-		StringReplacementTagProcessor processor		= new()
+		StringReplacementFieldProcessor processor		= new()
 		{
-			TagsToProcess = TagsToProcess.All,
+			TagsToProcess = FieldsToProcess.All,
 			Pattern     = "&",
 			Replacement = @"\&"
 		};
@@ -109,9 +109,9 @@ public class StringReplacementTagProcessorTests
 		string input	= @"The quick {Red} fox & quicker Red squirrel jumped over the fence & lazy dog.";
 
 		BibEntry entry							= new() { Title = input};
-		StringReplacementTagProcessor processor	= new()
+		StringReplacementFieldProcessor processor	= new()
 		{
-			TagsToProcess = TagsToProcess.All,
+			TagsToProcess = FieldsToProcess.All,
 			Pattern     = "Red",
 			Replacement = "{Red}"
 		};
@@ -139,9 +139,9 @@ public class StringReplacementTagProcessorTests
 		string input = @"{The quick {Red} fox & quicker {Red} squirrel jumped over the fence & lazy dog.}";
 
 		BibEntry entry							= new() { Title = input };
-		StringReplacementTagProcessor processor = new()
+		StringReplacementFieldProcessor processor = new()
 		{
-			TagsToProcess = TagsToProcess.All,
+			TagsToProcess = FieldsToProcess.All,
 			Pattern = "^{",
 			Replacement = ""
 		};
@@ -168,9 +168,9 @@ public class StringReplacementTagProcessorTests
 		string input = @"The qøick.";
 
 		BibEntry entry							= new() { Title = input };
-		StringReplacementTagProcessor processor = new()
+		StringReplacementFieldProcessor processor = new()
 		{
-			TagsToProcess = TagsToProcess.All,
+			TagsToProcess = FieldsToProcess.All,
 			Pattern = "ø",
 			Replacement = @"{\o}"
 		};

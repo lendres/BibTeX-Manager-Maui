@@ -10,16 +10,16 @@ namespace BibTeXManager;
 /// <summary>
 /// Base class for tag processors.
 /// </summary>
-[XmlInclude(typeof(QuoteTagProcessor))]
-[XmlInclude(typeof(RemoveEnclosingBracesTagProcessor))]
-[XmlInclude(typeof(SentenceEndingSpacesTagProcessor))]
+[XmlInclude(typeof(QuoteFieldProcessor))]
+[XmlInclude(typeof(RemoveEnclosingBracesFieldProcessor))]
+[XmlInclude(typeof(SentenceEndingSpacesFieldProcessor))]
 [XmlInclude(typeof(StringCaseTagProcessor))]
-[XmlInclude(typeof(StringReplacementTagProcessor))]
-public abstract class TagProcessor
+[XmlInclude(typeof(StringReplacementFieldProcessor))]
+public abstract class FieldProcessor
 {
 	#region Fields
 
-	private TagsToProcess					_fieldsToProcess		= TagsToProcess.All;
+	private FieldsToProcess					_fieldsToProcess	= FieldsToProcess.All;
 	private	readonly BindingList<string>	_tagNames			= [];
 	protected string						_pattern			= string.Empty;
 
@@ -30,7 +30,7 @@ public abstract class TagProcessor
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public TagProcessor()
+	public FieldProcessor()
 	{
 	}
 
@@ -42,7 +42,7 @@ public abstract class TagProcessor
 	/// Process any tag or just those specified.
 	/// </summary>
 	[XmlAttribute("tagstoprocess")]
-	public TagsToProcess TagsToProcess { get => _fieldsToProcess; set => _fieldsToProcess = value; }
+	public FieldsToProcess TagsToProcess { get => _fieldsToProcess; set => _fieldsToProcess = value; }
 
 	/// <summary>
 	/// Tag names to process.
@@ -82,10 +82,10 @@ public abstract class TagProcessor
 		{
 			bool processTags = _fieldsToProcess switch
 			{
-				TagsToProcess.All				=> true,
-				TagsToProcess.ExcludeSpecified	=> !_tagNames.Contains(fieldName.ToLower()),
-				TagsToProcess.OnlySpecified		=> _tagNames.Contains(fieldName.ToLower()),
-				_								=> throw new System.Exception("The value for TagsToProcess is out of range."),
+				FieldsToProcess.All					=> true,
+				FieldsToProcess.ExcludeSpecified	=> !_tagNames.Contains(fieldName.ToLower()),
+				FieldsToProcess.OnlySpecified		=> _tagNames.Contains(fieldName.ToLower()),
+				_									=> throw new System.Exception("The value for TagsToProcess is out of range."),
 			};
 
 			// If we are processing all tags or if the current tag name was specified as one to process.
@@ -93,7 +93,7 @@ public abstract class TagProcessor
 			// tag names are set to lower case.
 			if (processTags)
 			{
-				foreach (Correction correction in ProcessTag(entry, fieldName))
+				foreach (Correction correction in ProcessField(entry, fieldName))
 				{
 					correction.TagName = fieldName;
 					yield return correction;
@@ -107,7 +107,7 @@ public abstract class TagProcessor
 	/// </summary>
 	/// <param name="entry">BibEntry.</param>
 	/// <param name="fieldName">Name of the tag to process.</param>
-	private IEnumerable<Correction> ProcessTag(BibEntry entry, string fieldName)
+	private IEnumerable<Correction> ProcessField(BibEntry entry, string fieldName)
 	{
 		StringBuilder output	= new();
 		string tagValue			= entry[fieldName];
