@@ -10,7 +10,7 @@
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	xmlns:library="clr-namespace:BibTeXLibrary;assembly=DigitalProduction.BibTeXLibrary"
 	x:DataType="viewmodel:ProjectOptionsViewModel"
-	x:Class="BibTeXManager.Views.ProjectOptionsView"
+	x:Class="BibTeXManager.Views.SettingsView"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
 	<mct:Popup.Resources>

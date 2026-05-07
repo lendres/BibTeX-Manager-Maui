@@ -3,13 +3,13 @@ using DigitalProduction.Maui.Views;
 
 namespace BibTeXManager.Views;
 
-public partial class ProjectOptionsView : PopupView
+public partial class SettingsView : PopupView
 {
 	readonly ProjectOptionsViewModel	_viewModel;
 
 	readonly IBibTeXFilePicker			_filePicker		= IPlatformApplication.Current!.Services.GetRequiredService<IBibTeXFilePicker>();
 
-	public ProjectOptionsView(ProjectOptionsViewModel viewModel)
+	public SettingsView(ProjectOptionsViewModel viewModel)
 	{
 		InitializeComponent();
 		_viewModel		= viewModel;

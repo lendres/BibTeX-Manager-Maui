@@ -174,7 +174,7 @@ public partial class MainPage : DigitalProductionMainPage
     {
         ProjectOptionsViewModel viewModel = new(BibTeXProject.Instance!.Settings);
 
-        ProjectOptionsView view = new(viewModel);
+        SettingsView view = new(viewModel);
         object? result = await Shell.Current.ShowPopupAsync(view);
 
         if (result is bool boolResut && boolResut)
