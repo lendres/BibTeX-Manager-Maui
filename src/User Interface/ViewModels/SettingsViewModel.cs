@@ -6,14 +6,14 @@ using DigitalProduction.Maui.Validation;
 namespace BibTeXManager.ViewModels;
 
 
-public partial class ProjectOptionsViewModel : ObservableObject
+public partial class SettingsViewModel : ObservableObject
 {
 	#region Fields
 	#endregion
 
 	#region Construction
 
-	public ProjectOptionsViewModel()
+	public SettingsViewModel()
 	{
 		Settings = new ProjectSettings(BibTeXProject.Instance!.Settings);
 		Initialize();

@@ -5,11 +5,11 @@ namespace BibTeXManager.Views;
 
 public partial class SettingsView : ContentPage
 {
-	readonly ProjectOptionsViewModel	_viewModel;
+	readonly SettingsViewModel	_viewModel;
 
 	readonly IBibTeXFilePicker			_filePicker		= IPlatformApplication.Current!.Services.GetRequiredService<IBibTeXFilePicker>();
 
-	public SettingsView(ProjectOptionsViewModel viewModel)
+	public SettingsView(SettingsViewModel viewModel)
 	{
 		InitializeComponent();
 		_viewModel		= viewModel;

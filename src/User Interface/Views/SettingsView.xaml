@@ -9,7 +9,7 @@
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	xmlns:library="clr-namespace:BibTeXLibrary;assembly=DigitalProduction.BibTeXLibrary"
-	x:DataType="viewmodel:ProjectOptionsViewModel"
+	x:DataType="viewmodel:SettingsViewModel"
 	x:Class="BibTeXManager.Views.SettingsView">
 
     <Shell.BackButtonBehavior>
