@@ -56,6 +56,9 @@ public static class MauiProgram
 		services.AddTransient<StringConstantsView>();
 		services.AddTransient<StringConstantsViewModel>();
 
+		services.AddTransient<SettingsView>();
+		services.AddTransient<ProjectOptionsViewModel>();
+
 		services.AddTransientPopup<ProgramOptionsView, ProgramOptionsViewModel>();
 	}
 

@@ -5,6 +5,7 @@ using DigitalProduction.Maui.Validation;
 
 namespace BibTeXManager.ViewModels;
 
+
 public partial class ProjectOptionsViewModel : ObservableObject
 {
 	#region Fields
@@ -12,9 +13,9 @@ public partial class ProjectOptionsViewModel : ObservableObject
 
 	#region Construction
 
-	public ProjectOptionsViewModel(ProjectSettings projectSettings)
+	public ProjectOptionsViewModel()
 	{
-		Settings = new ProjectSettings(projectSettings);
+		Settings = new ProjectSettings(BibTeXProject.Instance!.Settings);
 		Initialize();
 		AddValidations();
 		Settings.ModifiedChanged += OnSettingsModifiedChanged;

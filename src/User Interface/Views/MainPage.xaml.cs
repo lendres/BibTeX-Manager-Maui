@@ -173,17 +173,6 @@ public partial class MainPage : DigitalProductionMainPage
     async void OnProjectOptions(object sender, EventArgs eventArgs)
     {
 		await Shell.Current.GoToAsync(nameof(SettingsView), true);
-
-
-        //ProjectOptionsViewModel viewModel = new(BibTeXProject.Instance!.Settings);
-
-        //SettingsView view = new(viewModel);
-        //object? result = await Shell.Current.ShowPopupAsync(view);
-
-        //if (result is bool boolResut && boolResut)
-        //{
-        //    BibTeXProject.Instance.Settings = viewModel.Settings;
-        //}
     }
 
     async void OnProgramOptions(object sender, EventArgs eventArgs)

@@ -37,7 +37,7 @@ public partial class StringConstantsView : ContentPage
 
 	#region Button Events
 
-	async void OnNewString(object sender, EventArgs eventArgs)
+	async private void OnNewString(object sender, EventArgs eventArgs)
 	{
 		StringConstantViewModel	viewModel	= new();
 		StringConstantView		view		= new(viewModel);
@@ -49,7 +49,7 @@ public partial class StringConstantsView : ContentPage
 		}
 	}
 
-	async void OnEditString(object sender, EventArgs eventArgs)
+	async private void OnEditString(object sender, EventArgs eventArgs)
 	{
 		StringEntry				stringEntry	= new(_viewModel.SelectedItem!);
 		StringConstantViewModel	viewModel		= new(stringEntry);
@@ -62,7 +62,7 @@ public partial class StringConstantsView : ContentPage
 		}
 	}
 
-	async void OnDeleteString(object sender, EventArgs eventArgs)
+	async private void OnDeleteString(object sender, EventArgs eventArgs)
 	{
 		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 
@@ -73,7 +73,7 @@ public partial class StringConstantsView : ContentPage
 		}
 	}
 
-	async public void OnOK(object sender, EventArgs eventArgs)
+	async private void OnOK(object sender, EventArgs eventArgs)
 	{
 		Dictionary<string, object?> navigationParameter = new()
 		{
@@ -83,7 +83,7 @@ public partial class StringConstantsView : ContentPage
 		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
 
-	async public void OnCancel(object sender, EventArgs eventArgs)
+	async private void OnCancel(object sender, EventArgs eventArgs)
 	{
 		await Shell.Current.GoToAsync("../", true);
 	}
