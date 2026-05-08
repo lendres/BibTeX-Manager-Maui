@@ -35,20 +35,21 @@
 
     <Grid RowDefinitions="Auto,*" Margin="0" Padding="30" WidthRequest="800" VerticalOptions="Fill">
         <!-- Top Row Grid -->
-        <Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">
+        <Grid Grid.Row="0" RowDefinitions="Auto" HorizontalOptions="Fill" VerticalOptions="Start">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Text="Settings" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
 
-            <HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0,5,0,0">
+            <HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0,0,0,0" VerticalOptions="Center">
                 <Button 
 				    Text="OK"
 				    HorizontalOptions="End"
 				    StyleClass="StandardSizeButtonStyle"
 				    IsEnabled="{Binding IsSubmittable}"
+                    VerticalOptions="Center"
 				    Clicked="OnSave"/>
                 <Button 
 				    Text="Cancel"
@@ -58,12 +59,13 @@
             </HorizontalStackLayout>
         </Grid>
 
-        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0,0,14,0" Margin="0">
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0,20,0,0" Margin="0">
             <VerticalStackLayout>
                 <!-- Bibliography file. -->
                 <Border StyleClass="SmallTitleBorderStyle">
-                    <Label Text="Auxiliary File" StyleClass="SmallTitleLabelStyle"/>
+                    <Label Text="Bibliography" StyleClass="SmallTitleLabelStyle"/>
                 </Border>
+                <Label Text="Auxiliary File" StyleClass="SmallTitleLabelStyle"/>
                 <VerticalStackLayout StyleClass="VerticalLayoutStyle">
                     <Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
                         <Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding UseAuxiliaryFile}"/>
@@ -72,8 +74,8 @@
                     <Grid StyleClass="FileBrowsingGridStyle">
                         <Label Grid.Row="0" Text="Auxiliary File" StyleClass="ControlLabel" IsEnabled="{Binding UseAuxiliaryFile}"/>
                         <Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
-						x:Name="AuxiliaryFileEntry" Placeholder="Auxiliary File"
-						Text="{Binding AuxiliaryFile.Value}" IsEnabled="{Binding UseAuxiliaryFile}">
+						    x:Name="AuxiliaryFileEntry" Placeholder="Auxiliary File"
+						    Text="{Binding AuxiliaryFile.Value}" IsEnabled="{Binding UseAuxiliaryFile}">
                             <Entry.Behaviors>
                                 <mct:EventToCommandBehavior
 								x:TypeArguments="system:EventArgs"
@@ -83,17 +85,17 @@
                             </Entry.Behaviors>
                         </Entry>
                         <Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding UseAuxiliaryFile}"
-						Text="{Binding AuxiliaryFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
+						    Text="{Binding AuxiliaryFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
                         <Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
-						Text="Browse"  SemanticProperties.Hint="Browse for the input file."
-						Clicked="OnBrowseForAuxiliaryFileFile" IsEnabled="{Binding UseAuxiliaryFile}"/>
+						    Text="Browse"  SemanticProperties.Hint="Browse for the input file."
+						    Clicked="OnBrowseForAuxiliaryFileFile" IsEnabled="{Binding UseAuxiliaryFile}"/>
                     </Grid>
                 </VerticalStackLayout>
 
                 <!-- Bibliography entry field file. -->
-                <Border StyleClass="SmallTitleBorderStyle">
+                <!--<Border StyleClass="SmallTitleBorderStyle">-->
                     <Label Text="Bibliography Entry Field Order" StyleClass="SmallTitleLabelStyle"/>
-                </Border>
+                <!--</Border>-->
                 <VerticalStackLayout StyleClass="VerticalLayoutStyle">
                     <Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
                         <Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding UseFieldOrder}"/>
@@ -102,8 +104,8 @@
                     <Grid StyleClass="FileBrowsingGridStyle">
                         <Label Grid.Row="0" Text="Bibliography Entry Field Order File" StyleClass="ControlLabel" IsEnabled="{Binding UseFieldOrder}"/>
                         <Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
-						x:Name="FieldOrderEntry" Placeholder="Bibliography Entry Field Order File"
-						Text="{Binding FieldOrderFile.Value}" IsEnabled="{Binding UseFieldOrder}">
+						    x:Name="FieldOrderEntry" Placeholder="Bibliography Entry Field Order File"
+						    Text="{Binding FieldOrderFile.Value}" IsEnabled="{Binding UseFieldOrder}">
                             <Entry.Behaviors>
                                 <mct:EventToCommandBehavior
 								x:TypeArguments="system:EventArgs"
@@ -113,10 +115,10 @@
                             </Entry.Behaviors>
                         </Entry>
                         <Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding UseFieldOrder}"
-						Text="{Binding FieldOrderFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
+						    Text="{Binding FieldOrderFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
                         <Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
-						Text="Browse" SemanticProperties.Hint="Browse for the input file."
-						Clicked="OnBrowseFieldOrderFile" IsEnabled="{Binding UseFieldOrder}"/>
+						    Text="Browse" SemanticProperties.Hint="Browse for the input file."
+						    Clicked="OnBrowseFieldOrderFile" IsEnabled="{Binding UseFieldOrder}"/>
                     </Grid>
                 </VerticalStackLayout>
 
@@ -132,8 +134,8 @@
                     <Grid StyleClass="FileBrowsingGridStyle">
                         <Label Grid.Row="0" Text="Bibliography Entry Field Quality File" StyleClass="ControlLabel" IsEnabled="{Binding UseFieldQuality}"/>
                         <Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
-						x:Name="FieldQualityEntry" Placeholder="Bibliography Entry Field Quality File"
-						Text="{Binding FieldQualityFile.Value}" IsEnabled="{Binding UseFieldQuality}">
+						    x:Name="FieldQualityEntry" Placeholder="Bibliography Entry Field Quality File"
+						    Text="{Binding FieldQualityFile.Value}" IsEnabled="{Binding UseFieldQuality}">
                             <Entry.Behaviors>
                                 <mct:EventToCommandBehavior
 								x:TypeArguments="system:EventArgs"
@@ -143,10 +145,10 @@
                             </Entry.Behaviors>
                         </Entry>
                         <Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding UseFieldQuality}"
-						Text="{Binding FieldQualityFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
+						    Text="{Binding FieldQualityFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
                         <Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
-						Text="Browse" SemanticProperties.Hint="Browse for the input file."
-						Clicked="OnBrowseFieldQualityFile" IsEnabled="{Binding UseFieldQuality}"/>
+						    Text="Browse" SemanticProperties.Hint="Browse for the input file."
+						    Clicked="OnBrowseFieldQualityFile" IsEnabled="{Binding UseFieldQuality}"/>
                     </Grid>
                 </VerticalStackLayout>
 
@@ -162,8 +164,8 @@
                     <Grid StyleClass="FileBrowsingGridStyle">
                         <Label Grid.Row="0" Text="Name Remapping File" StyleClass="ControlLabel" IsEnabled="{Binding UseNameRemapping}"/>
                         <Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
-						x:Name="NameRemappingEntry" Placeholder="Name Remapping File"
-						Text="{Binding NameRemappingFile.Value}" IsEnabled="{Binding UseNameRemapping}">
+						    x:Name="NameRemappingEntry" Placeholder="Name Remapping File"
+						    Text="{Binding NameRemappingFile.Value}" IsEnabled="{Binding UseNameRemapping}">
                             <Entry.Behaviors>
                                 <mct:EventToCommandBehavior
 								x:TypeArguments="system:EventArgs"
@@ -173,10 +175,10 @@
                             </Entry.Behaviors>
                         </Entry>
                         <Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle"
-						Text="{Binding NameRemappingFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}" IsEnabled="{Binding UseNameRemapping}"/>
+						    Text="{Binding NameRemappingFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}" IsEnabled="{Binding UseNameRemapping}"/>
                         <Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
-						Text="Browse" SemanticProperties.Hint="Browse for the input file."
-						Clicked="OnBrowseNameRemappingFile" IsEnabled="{Binding UseNameRemapping}"/>
+						    Text="Browse" SemanticProperties.Hint="Browse for the input file."
+						    Clicked="OnBrowseNameRemappingFile" IsEnabled="{Binding UseNameRemapping}"/>
                     </Grid>
                 </VerticalStackLayout>
 
@@ -188,9 +190,9 @@
                     </Border>
                     <!--<Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="*,*" HorizontalOptions="Fill" BackgroundColor="Azure"-->
                     <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="auto,auto"
-					RadioButtonGroup.GroupName="TabModeSelectorGroup" 
-					RadioButtonGroup.SelectedValue="{Binding WhiteSpace, Converter={StaticResource EnumToStringConverter}}"
-					VerticalOptions="Center" HorizontalOptions="Center">
+					    RadioButtonGroup.GroupName="TabModeSelectorGroup" 
+					    RadioButtonGroup.SelectedValue="{Binding WhiteSpace, Converter={StaticResource EnumToStringConverter}}"
+					    VerticalOptions="Center" HorizontalOptions="Center">
                         <Grid.Resources>
                             <Style TargetType="RadioButton">
                                 <Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
@@ -205,9 +207,9 @@
 
                     <Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="90,*" RowDefinitions="40" VerticalOptions="Start">
                         <dpcontrols:Stepper VerticalOptions="Center" Minimum="1" Maximum="10" Value="{Binding Settings.WriteSettings.TabSize}"
-						IsEnabled="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+						    IsEnabled="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
                         <Label Grid.Column="1" Text="Tab size" Margin="0" VerticalTextAlignment="Center"
-						IsEnabled="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+						    IsEnabled="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
                     </Grid>
 
                     <!-- Alignment -->
@@ -220,19 +222,19 @@
                     </Grid>
                     <Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="90,*" RowDefinitions="40,40">
                         <dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="40"
-						Value="{Binding Settings.WriteSettings.BibEntryAlignAtColumn}"
-						IsEnabled="{Binding AlignFieldValues}"
-						IsVisible="{Binding WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
+						    Value="{Binding Settings.WriteSettings.BibEntryAlignAtColumn}"
+						    IsEnabled="{Binding AlignFieldValues}"
+						    IsVisible="{Binding WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
                         <Label Grid.Column="1" Text="Alignment Column" Margin="0" VerticalTextAlignment="Center"
-						IsEnabled="{Binding AlignFieldValues}"
-						IsVisible="{Binding WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
+						    IsEnabled="{Binding AlignFieldValues}"
+						    IsVisible="{Binding WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
                         <dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="10"
-						Value="{Binding Settings.WriteSettings.BibEntryAlignAtTabStop}"
-						IsEnabled="{Binding AlignFieldValues}"
-						IsVisible="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+						    Value="{Binding Settings.WriteSettings.BibEntryAlignAtTabStop}"
+						    IsEnabled="{Binding AlignFieldValues}"
+						    IsVisible="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
                         <Label Grid.Column="1" Text="Alignment Tab Stop" Margin="0" VerticalTextAlignment="Center"
-						IsEnabled="{Binding AlignFieldValues}"
-						IsVisible="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+						    IsEnabled="{Binding AlignFieldValues}"
+						    IsVisible="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
                     </Grid>
 
                     <!-- Organization -->
