@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<dpviews:PopupView
+<ContentPage
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -13,7 +13,7 @@
 	x:Class="BibTeXManager.Views.SettingsView"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
-	<mct:Popup.Resources>
+	<ContentPage.Resources>
 		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
 		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
 		<dpconverters:SingleEnumToBoolConverter x:Key="UseSpacesConverteer" x:TypeArguments="library:WhiteSpace" TrueValue="{x:Static library:WhiteSpace.Space}"/>
@@ -28,7 +28,7 @@
 			<Setter Property="VerticalTextAlignment" Value="End"/>
 			<Setter Property="HeightRequest" Value="26"/>
 		</Style>
-	</mct:Popup.Resources>
+	</ContentPage.Resources>
 
 	<Border StyleClass="PopupFrameStyle" WidthRequest="800" HeightRequest="800">
 		<Grid RowDefinitions="Auto,*,Auto" Margin="0" Padding="0">
@@ -261,4 +261,4 @@
 
 		</Grid>
 	</Border>
-</dpviews:PopupView>
+</ContentPage>
