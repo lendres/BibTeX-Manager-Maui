@@ -36,6 +36,15 @@ public partial class SettingsViewModel : ObservableObject
 
 	#endregion
 
+	#region String Entries
+
+	[ObservableProperty]
+	public partial bool SortStringEntries { get; set; }
+
+	public IReadOnlyList<string> SortStringsByItems { get; set; } = DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortStringsBy>();
+
+	#endregion
+
 	#region Bibliography Entries
 
 	[ObservableProperty]
@@ -65,7 +74,7 @@ public partial class SettingsViewModel : ObservableObject
 	[ObservableProperty]
 	public partial bool							SortBibliographyEntries { get; set; }
 
-	public IReadOnlyList<string>				SorByItems { get; set; }					= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBibliographyBy>();
+	public IReadOnlyList<string>				SorBibliographyByItems { get; set; }					= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBibliographyBy>();
 
 
 	#endregion

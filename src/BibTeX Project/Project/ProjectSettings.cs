@@ -186,7 +186,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	}
 
 	/// <summary>
-	/// Sort the bibliography.
+	/// Sort the bibliography entries.
 	/// </summary>
 	[XmlAttribute("sortbibliography")]
 	public bool SortBibliography
@@ -202,6 +202,26 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public SortBibliographyBy BibliographySortMethod
 	{
 		get => GetValueOrDefault(SortBibliographyBy.Key);
+		set => SetValue(value);
+	}
+
+	/// <summary>
+	/// Sort the string entries.
+	/// </summary>
+	[XmlAttribute("sortstrings")]
+	public bool SortStrings
+	{
+		get => GetValueOrDefault(true);
+		set => SetValue(value);
+	}
+
+	/// <summary>
+	/// Method to sort the strings by.
+	/// </summary>
+	[XmlAttribute("stringssortmethod")]
+	public SortStringsBy StringsSortMethod
+	{
+		get => GetValueOrDefault(SortStringsBy.Name);
 		set => SetValue(value);
 	}
 

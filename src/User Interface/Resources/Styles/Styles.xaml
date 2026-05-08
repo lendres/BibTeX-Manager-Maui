@@ -23,7 +23,15 @@
 		<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
 	</Style>
 
-	<Style TargetType="RadioButton">
+
+    <Style TargetType="Label" Class="MediumTitleLabelStyle">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
+    </Style>
+
+    <Style TargetType="RadioButton">
 		<Setter Property="MinimumWidthRequest" Value="15"/>
 	</Style>
 
