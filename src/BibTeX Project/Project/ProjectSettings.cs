@@ -23,6 +23,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public ProjectSettings(ProjectSettings projectSettings)
 	{
 		WriteSettings				= new WriteSettings(projectSettings.WriteSettings);
+
 		UsePathsRelativeToBibFile	= projectSettings.UsePathsRelativeToBibFile;
 		UseBibEntryInitialization	= projectSettings.UseBibEntryInitialization;
 		BibEntryInitializationFile	= projectSettings.BibEntryInitializationFile;
@@ -35,8 +36,11 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 		BibEntryRemappingFile		= projectSettings.BibEntryRemappingFile;
 		AutoGenerateKeys			= projectSettings.AutoGenerateKeys;
 		CopyCiteKeyOnEntryAdd		= projectSettings.CopyCiteKeyOnEntryAdd;
+		SortStrings					= projectSettings.SortStrings;
+		StringsSortMethod			= projectSettings.StringsSortMethod;
 		SortBibliography			= projectSettings.SortBibliography;
 		BibliographySortMethod		= projectSettings.BibliographySortMethod;
+
 		Modified					= false;
 	}
 
