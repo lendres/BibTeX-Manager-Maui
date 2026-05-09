@@ -93,7 +93,14 @@ public partial class MainPage : DigitalProductionMainPage
 		string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyFilePickerFileType() } );
 		if (!string.IsNullOrEmpty(file))
 		{
-			_viewModel.Save(file);
+			try
+			{
+				_viewModel.Save(file);
+			}
+			catch (Exception exception)
+			{
+				await DisplayAlert("Write Error", exception.Message, "OK");
+			}
 		}
 	}
 
