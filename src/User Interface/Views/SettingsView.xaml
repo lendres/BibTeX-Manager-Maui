@@ -59,8 +59,8 @@
             </HorizontalStackLayout>
         </Grid>
 
-        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0,20,0,0" Margin="0">
-            <VerticalStackLayout>
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0">
+            <VerticalStackLayout Padding="20">
                 <!-- Bibliography file. -->
                 <Border StyleClass="SmallTitleBorderStyle">
                     <Label Text="Bibliography Configuration" StyleClass="SmallTitleLabelStyle"/>
@@ -186,7 +186,7 @@
                 <Border Grid.Row="0" Grid.Column="0" StyleClass="SmallTitleBorderStyle">
                     <Label Text="Organization" StyleClass="SmallTitleLabelStyle"/>
                 </Border>
-                <!-- Tabs, alignment, and automation. -->
+                
                 <Grid ColumnDefinitions="0.5*,0.5*" RowDefinitions="auto,30,40" RowSpacing="4" ColumnSpacing="25" Margin="0" Padding="0,8,0,0">
 
                     <!-- Strings -->
@@ -211,7 +211,7 @@
                     <Picker Grid.Row="2" Grid.Column="1"
 			            MinimumHeightRequest="32"
 			            HeightRequest="32"
-			            ItemsSource="{Binding SorByItems}"
+			            ItemsSource="{Binding SorBibliographyByItems}"
 			            IsEnabled="{Binding SortBibliographyEntries}"
 			            SelectedIndex="{Binding Settings.BibliographySortMethod, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type library:SortBibliographyBy}}"/>
                 </Grid>
@@ -274,21 +274,6 @@
 						    IsEnabled="{Binding AlignFieldValues}"
 						    IsVisible="{Binding WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
                     </Grid>
-
-                    <!-- Organization -->
-                    <Border Grid.Row="0" Grid.Column="2" StyleClass="SmallTitleBorderStyle">
-                        <Label Text="Organization" StyleClass="SmallTitleLabelStyle"/>
-                    </Border>
-                    <Grid Grid.Row="1" Grid.Column="2" ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
-                        <Switch Grid.Row="1" Grid.Column="0" IsToggled="{Binding SortBibliographyEntries}"/>
-                        <Label Grid.Row="1" Grid.Column="1"	Text="Sort bibliography entries" StyleClass="SwitchLabel"/>
-                    </Grid>
-                    <Picker Grid.Row="2" Grid.Column="2"
-						MinimumHeightRequest="32"
-						HeightRequest="32"
-						ItemsSource="{Binding SorByItems}"
-						IsEnabled="{Binding SortBibliographyEntries}"
-						SelectedIndex="{Binding Settings.BibliographySortMethod, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type library:SortBibliographyBy}}"/>
 
                 </Grid>
 
