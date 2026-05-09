@@ -30,7 +30,7 @@ public partial class EditRawBibEntryForm : ContentPage
 		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
 
-	async public void OnCancel(object sender, EventArgs eventArgs)
+	async private void OnCancel(object sender, EventArgs eventArgs)
 	{
 		// Navigate back with a result.
 		Dictionary<string, object> navigationParameter = new()

@@ -16,13 +16,16 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 
 	public ProjectSettings()
 	{
-		ModifiedChanged					+= OnMyModifiedChanged;
-		_writeSettings.ModifiedChanged	+= OnChildModifiedChanged;
+		ModifiedChanged		+= OnMyModifiedChanged;
+		WriteSettings		= new WriteSettings();
+		Modified			= false;
 	}
 
 	public ProjectSettings(ProjectSettings projectSettings)
 	{
+		ModifiedChanged				+= OnMyModifiedChanged;
 		WriteSettings				= new WriteSettings(projectSettings.WriteSettings);
+
 		UsePathsRelativeToBibFile	= projectSettings.UsePathsRelativeToBibFile;
 		UseBibEntryInitialization	= projectSettings.UseBibEntryInitialization;
 		BibEntryInitializationFile	= projectSettings.BibEntryInitializationFile;
@@ -35,8 +38,11 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 		BibEntryRemappingFile		= projectSettings.BibEntryRemappingFile;
 		AutoGenerateKeys			= projectSettings.AutoGenerateKeys;
 		CopyCiteKeyOnEntryAdd		= projectSettings.CopyCiteKeyOnEntryAdd;
+		SortStrings					= projectSettings.SortStrings;
+		StringsSortMethod			= projectSettings.StringsSortMethod;
 		SortBibliography			= projectSettings.SortBibliography;
 		BibliographySortMethod		= projectSettings.BibliographySortMethod;
+
 		Modified					= false;
 	}
 
@@ -159,6 +165,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 			{
 				_writeSettings = value;
 				_writeSettings.ModifiedChanged += OnChildModifiedChanged;
+				_writeSettings.PropertyChanged += OnPropertyChanged;
 				Modified = true;
 				OnPropertyChanged();
 			}
@@ -186,7 +193,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	}
 
 	/// <summary>
-	/// Sort the bibliography.
+	/// Sort the bibliography entries.
 	/// </summary>
 	[XmlAttribute("sortbibliography")]
 	public bool SortBibliography
@@ -202,6 +209,26 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	public SortBibliographyBy BibliographySortMethod
 	{
 		get => GetValueOrDefault(SortBibliographyBy.Key);
+		set => SetValue(value);
+	}
+
+	/// <summary>
+	/// Sort the string entries.
+	/// </summary>
+	[XmlAttribute("sortstrings")]
+	public bool SortStrings
+	{
+		get => GetValueOrDefault(true);
+		set => SetValue(value);
+	}
+
+	/// <summary>
+	/// Method to sort the strings by.
+	/// </summary>
+	[XmlAttribute("stringssortmethod")]
+	public SortStringsBy StringsSortMethod
+	{
+		get => GetValueOrDefault(SortStringsBy.Name);
 		set => SetValue(value);
 	}
 

@@ -87,7 +87,7 @@
 		<MauiXaml Update="Views\StringConstantView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\ProjectOptionsView.xaml">
+		<MauiXaml Update="Views\SettingsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\EditRawBibEntryForm.xaml">
@@ -99,9 +99,6 @@
 		<MauiXaml Update="Views\TemplateSelectionView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\ProgramOptionsView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -111,6 +108,9 @@
 	<ItemGroup>
 		<Compile Update="Views\CorrectionView.xaml.cs">
 		  <DependentUpon>CorrectionView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\SettingsView.xaml.cs">
+		  <DependentUpon>SettingsView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\StringConstantsView.xaml.cs">
 		  <DependentUpon>StringConstantsView.xaml</DependentUpon>
