@@ -19,7 +19,8 @@ public partial class SettingsViewModel : ObservableObject
 		AddValidations();
 		Settings.ModifiedChanged += OnSettingsModifiedChanged;
 		Settings.PropertyChanged += OnSettingsPropertyChanged;
-	}
+		SetModified(false);
+	 }
 
 	#endregion
 
@@ -30,10 +31,28 @@ public partial class SettingsViewModel : ObservableObject
 	[ObservableProperty]
 	public partial ProjectSettings				Settings { get; set; }
 
+	private bool								Modified  { get; set; }
+
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
 
 	public IReadOnlyList<string>				BracketType { get; set; }					= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<EntryBracketType>();
+
+	#endregion
+
+	#region Program
+
+	[ObservableProperty]
+	public partial bool OpenLastProjectAtStartUp { get; set; } = false;
+
+	[ObservableProperty]
+	public partial bool RemoveNotFoundPaths { get; set; }
+
+	[ObservableProperty]
+	public partial int NumberOfItemsShown { get; set; }
+
+	[ObservableProperty]
+	public partial int NumberOfItemsToStore { get; set; }
 
 	#endregion
 
@@ -67,10 +86,15 @@ public partial class SettingsViewModel : ObservableObject
 
 	private void Initialize()
 	{
-		AuxiliaryFile.Value		= Settings.AuxiliaryFile;
-		FieldOrderFile.Value	= Settings.BibEntryInitializationFile;
-		FieldQualityFile.Value	= Settings.FieldQualityProcessingFile;
-		NameRemappingFile.Value	= Settings.BibEntryRemappingFile;
+		OpenLastProjectAtStartUp	= Preferences.LoadLastProjectAtStartUp;
+		RemoveNotFoundPaths			= Preferences.RecentPathsManagerService.RemoveNotFoundPaths;
+		NumberOfItemsShown			= (int)Preferences.RecentPathsManagerService.NumberOfItemsShown;
+		NumberOfItemsToStore		= (int)Preferences.RecentPathsManagerService.MaxSize;
+
+		AuxiliaryFile.Value			= Settings.AuxiliaryFile;
+		FieldOrderFile.Value		= Settings.BibEntryInitializationFile;
+		FieldQualityFile.Value		= Settings.FieldQualityProcessingFile;
+		NameRemappingFile.Value		= Settings.BibEntryRemappingFile;
 	}
 
 	#endregion
@@ -137,7 +161,7 @@ public partial class SettingsViewModel : ObservableObject
 	}
 
 	public bool ValidateSubmittable() => IsSubmittable =
-		Settings.Modified &&
+		Modified &&
 		(!Settings.UseAuxiliaryFile || AuxiliaryFile.IsValid) &&
 		(!Settings.UseFieldQualityProcessing || FieldOrderFile.IsValid) &&
 		(!Settings.UseFieldQualityProcessing || FieldQualityFile.IsValid) &&
@@ -147,16 +171,39 @@ public partial class SettingsViewModel : ObservableObject
 
 	#region Events
 
-	private void OnSettingsModifiedChanged(object sender, bool modified) => ValidateSubmittable();
+	private void OnSettingsModifiedChanged(object sender, bool modified) => SetModified(true);
 
 	private void OnSettingsPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) => ValidateSubmittable();
+
+	partial void OnOpenLastProjectAtStartUpChanged(bool value) => SetModified(true);
+
+	partial void OnRemoveNotFoundPathsChanged(bool value) => SetModified(true);
+
+	partial void OnNumberOfItemsShownChanged(int value) => SetModified(true);
+
+	partial void OnNumberOfItemsToStoreChanged(int value) => SetModified(true);
 
 	#endregion
 
 	#region Methods
 
+	private void SetModified(bool modified)
+	{
+		Modified = modified;
+		ValidateSubmittable();
+	}
+
 	public void Save()
 	{
+		// Save the program settings to the preferences. These settings will be applied immediately and also
+		// remembered for the next time the program is started.
+		Preferences.LoadLastProjectAtStartUp						= OpenLastProjectAtStartUp;
+		Preferences.RecentPathsManagerService.RemoveNotFoundPaths	= RemoveNotFoundPaths;
+		Preferences.RecentPathsManagerService.NumberOfItemsShown	= (uint)NumberOfItemsShown;
+		Preferences.RecentPathsManagerService.MaxSize				= (uint)NumberOfItemsToStore;
+
+		// Save to the preferences which will remember the settings for the next time the program is started.
+		// Also save to the project so that the changes are applied immediately.
 		Preferences.ProjectSettings			= Settings;
 		BibTeXProject.Instance!.Settings	= Settings;
 	}

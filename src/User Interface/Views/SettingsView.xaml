@@ -59,16 +59,50 @@
             </HorizontalStackLayout>
         </Grid>
 
-		<ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0,20,0,0">
+		<!-- The right margin is widened to allow the scroll bar to appear without overlapping the content. -->
+		<ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0,30,0,0">
+			<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
             <VerticalStackLayout Padding="0,0,20,0">
-                <!-- Bibliography file. -->
-                <Border StyleClass="SmallTitleBorderStyle">
+				<!-- Program settings. -->
+				<Border StyleClass="SmallTitleBorderStyle" Margin="0,0,0,10">
+					<Label Text="Program Settings" StyleClass="SmallTitleLabelStyle"/>
+				</Border>
+				<!-- Open last project at start up. -->
+				<Label Text="General" StyleClass="MediumTitleLabelStyle"/>
+				<Grid StyleClass="SwitchGridStyle">
+					<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding OpenLastProjectAtStartUp}"/>
+					<Label Grid.Column="1" Grid.Row="0" Text="Open the last project at start up" StyleClass="SwitchLabel"/>
+				</Grid>
+
+				<!-- Recently used menu. -->
+				<Label Text="Recently Used Files" StyleClass="MediumTitleLabelStyle" Padding="0,20,0,0"/>
+				<Grid StyleClass="SwitchGridStyle">
+					<Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding RemoveNotFoundPaths}"/>
+					<Label Grid.Column="1" Grid.Row="0" Text="Remove paths that do not exist"  StyleClass="SwitchLabel"/>
+				</Grid>
+
+				<Grid ColumnDefinitions="76,*" RowDefinitions="40,40" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<dpcontrols:Stepper Grid.Row="0" Grid.Column="0" VerticalOptions="Center"
+						Minimum="5"
+						Maximum="{Binding NumberOfItemsToStore}"
+						Value="{Binding NumberOfItemsShown}"/>
+					<Label Grid.Row="0" Grid.Column="1" Text="Number of items to show" VerticalOptions="Center" Margin="0" VerticalTextAlignment="Center" Padding="0"/>
+
+					<dpcontrols:Stepper Grid.Column="0" Grid.Row="2" VerticalOptions="Center"
+						Minimum="10"
+						Maximum="20"
+						Value="{Binding NumberOfItemsToStore}"/>
+					<Label Grid.Column="1" Grid.Row="2" Text="Number of items to remember" VerticalOptions="Center" Margin="0" VerticalTextAlignment="Center" Padding="0"/>
+				</Grid>
+
+				<!-- Bibliography file. -->
+				<Border StyleClass="SmallTitleBorderStyle">
                     <Label Text="Bibliography Configuration" StyleClass="SmallTitleLabelStyle"/>
                 </Border>
                 <Label Text="Auxiliary File" StyleClass="MediumTitleLabelStyle"/>
                 <VerticalStackLayout StyleClass="VerticalLayoutStyle">
                     <!-- Auxiliary file. -->
-                    <Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<Grid StyleClass="SwitchGridStyle">
                         <Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UseAuxiliaryFile}"/>
                         <Label Grid.Column="1" Grid.Row="0"	Text="Use an auxiliary file" StyleClass="SwitchLabel"/>
                     </Grid>
@@ -96,7 +130,7 @@
                 <!-- Field order. -->
                 <Label Text="Bibliography Entry Field Order" StyleClass="MediumTitleLabelStyle"/>
                 <VerticalStackLayout StyleClass="VerticalLayoutStyle">
-                    <Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<Grid StyleClass="SwitchGridStyle">
                         <Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UseBibEntryInitialization}"/>
                         <Label Grid.Column="1" Grid.Row="0"	Text="Keep fields in a specified order" StyleClass="SwitchLabel"/>
                     </Grid>
@@ -124,7 +158,7 @@
                 <!-- Field quality. -->
                     <Label Text="Bibliography Entry Field Quality" StyleClass="MediumTitleLabelStyle"/>
                 <VerticalStackLayout StyleClass="VerticalLayoutStyle">
-                    <Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<Grid StyleClass="SwitchGridStyle">
                         <Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UseFieldQualityProcessing}"/>
                         <Label Grid.Column="1" Grid.Row="0"	Text="Perform quality checking on the field values of bibliography enties" StyleClass="SwitchLabel"/>
                     </Grid>
@@ -152,7 +186,7 @@
                 <!-- Bibliography entry name remapping. -->
                 <Label Text="Remap Names of Bibliography Entries" StyleClass="MediumTitleLabelStyle"/>
                 <VerticalStackLayout StyleClass="VerticalLayoutStyle">
-                    <Grid ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<Grid StyleClass="SwitchGridStyle">
                         <Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UseBibEntryRemapping}"/>
                         <Label Grid.Column="1" Grid.Row="0"	Text="Remap the type and field names of bibliography entries" StyleClass="SwitchLabel"/>
                     </Grid>
@@ -182,11 +216,11 @@
                     <Label Text="Organization" StyleClass="SmallTitleLabelStyle"/>
                 </Border>
 
-				<Grid ColumnDefinitions="0.5*,0.5*" RowDefinitions="auto,30,40" StyleClass="SettingsGrid" Padding="0,8,0,0">
+				<Grid ColumnDefinitions="0.5*,0.5*" RowDefinitions="auto,30,40" StyleClass="SettingsTwoColumnGridStyle" Padding="0,8,0,0">
 
                     <!-- Strings -->
                     <Label Grid.Row="0" Grid.Column="0" Text="Strings" StyleClass="MediumTitleLabelStyle"/>
-                    <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<Grid Grid.Row="1" Grid.Column="0" StyleClass="SwitchGridStyle">
                         <Switch Grid.Row="1" Grid.Column="0" IsToggled="{Binding Settings.SortStrings}"/>
                         <Label Grid.Row="1" Grid.Column="1"	Text="Sort string entries" StyleClass="SwitchLabel"/>
                     </Grid>
@@ -199,7 +233,7 @@
 
                     <!-- Bibliography -->
                     <Label Grid.Row="0" Grid.Column="1" Text="Bibliography" StyleClass="MediumTitleLabelStyle"/>
-                    <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+                    <Grid Grid.Row="1" Grid.Column="1" StyleClass="SwitchGridStyle">
                         <Switch Grid.Row="1" Grid.Column="0" IsToggled="{Binding Settings.SortBibliography}"/>
                         <Label Grid.Row="1" Grid.Column="1"	Text="Sort bibliography entries" StyleClass="SwitchLabel"/>
                     </Grid>
@@ -215,19 +249,19 @@
                 <Border Grid.Row="0" Grid.Column="0" StyleClass="SmallTitleBorderStyle">
                     <Label Text="Write Settings" StyleClass="SmallTitleLabelStyle"/>
                 </Border>
-				<Grid ColumnDefinitions="0.5*,0.5*" RowDefinitions="auto,30,50,auto,40,40" StyleClass="SettingsGrid" Margin="0" Padding="0,8,0,0">
+				<Grid ColumnDefinitions="0.5*,0.5*" RowDefinitions="auto,30,50,auto,40,40" StyleClass="SettingsTwoColumnGridStyle" Margin="0" Padding="0,8,0,0">
                     <!-- White space (tabs or spaces). -->
                     <Label Grid.Row="0" Grid.Column="0" Text="Tabs" StyleClass="MediumTitleLabelStyle"/>
-                    <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="auto,auto"
-					    RadioButtonGroup.GroupName="TabModeSelectorGroup" 
+					<Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="*,*" Padding="0" Margin="0"
+					    RadioButtonGroup.GroupName="TabModeSelectorGroup" BackgroundColor="Cyan"
 					    RadioButtonGroup.SelectedValue="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource EnumToStringConverter}}"
-					    VerticalOptions="Center" HorizontalOptions="Center">
+					    VerticalOptions="Center" HorizontalOptions="Fill">
                         <Grid.Resources>
                             <Style TargetType="RadioButton">
                                 <Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
-                                <Setter Property="MinimumWidthRequest" Value="90"/>
-                                <Setter Property="MinimumHeightRequest" Value="22"/>
-                                <Setter Property="HorizontalOptions" Value="Fill"/>
+								<Setter Property="MinimumHeightRequest" Value="22"/>
+								<Setter Property="MinimumWidthRequest" Value="100"/>
+								<Setter Property="HorizontalOptions" Value="Fill"/>
                             </Style>
                         </Grid.Resources>
                         <RadioButton Grid.Column="0" Content="Insert Spaces" Value="Space"/>
@@ -240,14 +274,14 @@
 						    IsEnabled="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
                     </Grid>
 
-                    <!-- Use Alignment -->
+                    <!-- Alignment. -->
                     <Label Grid.Row="0" Grid.Column="1" Text="Align Field Values" StyleClass="MediumTitleLabelStyle"/>
-                    <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="50,*" RowDefinitions="30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+					<Grid Grid.Row="1" Grid.Column="1" StyleClass="SwitchGridStyle">
                         <Switch Grid.Row="1" Grid.Column="0" IsToggled="{Binding Settings.WriteSettings.AlignFieldValues}"/>
                         <Label Grid.Row="1" Grid.Column="1"	Text="Align field value" StyleClass="SwitchLabel"/>
                     </Grid>
 
-                    <!-- Strings -->
+                    <!-- Strings. -->
                     <Label Grid.Row="3" Grid.Column="0" Text="Strings" StyleClass="MediumTitleLabelStyle"/>
                     <Grid Grid.Row="4" Grid.Column="0" ColumnDefinitions="90,*" RowDefinitions="40,40">
                         <dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="40"
@@ -305,7 +339,7 @@
                 <Border StyleClass="SmallTitleBorderStyle">
                     <Label Text="Automation" StyleClass="SmallTitleLabelStyle"/>
                 </Border>
-                <Grid ColumnDefinitions="50,265,50,300" RowDefinitions="30,30" RowSpacing="0" ColumnSpacing="10" Margin="0" Padding="0">
+				<Grid ColumnDefinitions="50,265,50,300" RowDefinitions="30,30" StyleClass="SwitchGridStyle">
                     <Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.AutoGenerateKeys}"/>
                     <Label Grid.Column="1" Grid.Row="0" Text="Automatically generate cite keys" StyleClass="SwitchLabel"/>
                     <Switch Grid.Column="2"  Grid.Row="0" IsToggled="{Binding Settings.UseStringConstants}"/>

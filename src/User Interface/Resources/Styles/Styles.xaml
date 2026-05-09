@@ -31,9 +31,18 @@
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
     </Style>
 
-	<Style TargetType="Grid" Class="SettingsGrid">
+	<Style TargetType="Grid" Class="SettingsTwoColumnGridStyle">
 		<Setter Property="RowSpacing" Value="4"/>
 		<Setter Property="ColumnSpacing" Value="25"/>
+	</Style>
+
+	<Style TargetType="Grid" Class="SwitchGridStyle">
+		<Setter Property="ColumnDefinitions" Value="50,*"/>
+		<Setter Property="RowDefinitions" Value="30"/>
+		<Setter Property="RowSpacing" Value="0"/>
+		<Setter Property="ColumnSpacing" Value="10"/>
+		<Setter Property="Margin" Value="0"/>
+		<Setter Property="Padding" Value="0"/>
 	</Style>
 
 	<Style TargetType="RadioButton">
@@ -43,7 +52,7 @@
 	<ControlTemplate x:Key="ButtonRadioTemplate">
 		<Border
             StrokeThickness="1"
-            HorizontalOptions="Fill">
+            WidthRequest="{TemplateBinding Width}">
 			<Border.StrokeShape>
 				<RoundRectangle CornerRadius="0"/>
 			</Border.StrokeShape>
