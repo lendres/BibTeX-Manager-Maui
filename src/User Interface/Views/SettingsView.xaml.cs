@@ -1,6 +1,4 @@
 using BibTeXManager.ViewModels;
-using DigitalProduction.Maui.Views;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BibTeXManager.Views;
 
