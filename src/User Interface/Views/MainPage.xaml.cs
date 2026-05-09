@@ -177,17 +177,10 @@ public partial class MainPage : DigitalProductionMainPage
 
     #region Settings
 
-    async void OnProjectOptions(object sender, EventArgs eventArgs)
+    async void OnOptions(object sender, EventArgs eventArgs)
     {
 		await Shell.Current.GoToAsync(nameof(SettingsView), true);
     }
-
-    async void OnProgramOptions(object sender, EventArgs eventArgs)
-	{
-		ProgramOptionsViewModel viewModel = new();
-		ProgramOptionsView view = new(viewModel);
-		_ = await Shell.Current.ShowPopupAsync(view);
-	}
 
 	#endregion
 

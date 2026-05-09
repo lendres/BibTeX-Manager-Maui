@@ -111,8 +111,7 @@
 		</MenuBarItem>
 
 		<MenuBarItem Text="Settings">
-            <MenuFlyoutItem Text="Bibliography Settings..." Clicked="OnProjectOptions"/>
-			<MenuFlyoutItem Text="Program Options..." Clicked="OnProgramOptions"/>
+			<MenuFlyoutItem Text="Options..." Clicked="OnOptions"/>
 		</MenuBarItem>
 		<MenuBarItem Text="Tools">
 			<!--<MenuFlyoutSubItem Text="Quality">-->
