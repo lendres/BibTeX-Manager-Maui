@@ -1,5 +1,6 @@
 using BibTeXManager.ViewModels;
 using DigitalProduction.Maui.Views;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BibTeXManager.Views;
 
@@ -18,22 +19,38 @@ public partial class SettingsView : ContentPage
 
 	async private void OnBrowseForAuxiliaryFileFile(object sender, EventArgs eventArgs)
 	{
-		AuxiliaryFileEntry.Text = await _filePicker.BrowseForBibliographyFile();
+		string result = await _filePicker.BrowseForBibliographyFile();
+		if (result != string.Empty)
+		{
+			AuxiliaryFileEntry.Text = result;
+		}
 	}
 
 	async private void OnBrowseFieldOrderFile(object sender, EventArgs eventArgs)
 	{
-		FieldOrderEntry.Text = await _filePicker.BrowseForFieldOrderFile();
+		string result = await _filePicker.BrowseForFieldOrderFile();
+		if (result != string.Empty)
+		{
+			FieldOrderEntry.Text = result;
+		}
 	}
 
 	async private void OnBrowseFieldQualityFile(object sender, EventArgs eventArgs)
 	{
-		FieldQualityEntry.Text = await _filePicker.BrowseForFieldQualityFile();
+		string result = await _filePicker.BrowseForFieldQualityFile();
+		if (result != string.Empty)
+		{
+			FieldQualityEntry.Text = result;
+		}
 	}
 
 	async private void OnBrowseNameRemappingFile(object sender, EventArgs eventArgs)
 	{
-		NameRemappingEntry.Text = await _filePicker.BrowseForNameRemappingFile();
+		string result = await _filePicker.BrowseForNameRemappingFile();
+		if (result != string.Empty)
+		{
+			NameRemappingEntry.Text = result;
+		}
 	}
 
 	async private void OnSave(object? sender, EventArgs eventArgs)
