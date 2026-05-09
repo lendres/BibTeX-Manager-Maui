@@ -37,9 +37,6 @@ public partial class SettingsViewModel : ObservableObject
 
 	#region String Entries
 
-	[ObservableProperty]
-	public partial bool SortStringEntries { get; set; }
-
 	public IReadOnlyList<string> SortStringsByItems { get; set; } = DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortStringsBy>();
 
 	#endregion
@@ -47,33 +44,18 @@ public partial class SettingsViewModel : ObservableObject
 	#region Bibliography Entries
 
 	[ObservableProperty]
-	public partial bool							UseAuxiliaryFile { get; set; }
-
-	[ObservableProperty]
 	public partial ValidatableObject<string>	AuxiliaryFile { get; set; }					= new();
 
 	[ObservableProperty]
-	public partial bool							UseFieldOrder { get; set; }
-
-	[ObservableProperty]
-	public partial ValidatableObject<string>	FieldOrderFile { get; set; }					= new();
-
-	[ObservableProperty]
-	public partial bool							UseFieldQuality { get; set; }
+	public partial ValidatableObject<string>	FieldOrderFile { get; set; }				= new();
 
 	[ObservableProperty]
 	public partial ValidatableObject<string>	FieldQualityFile { get; set; }				= new();
 
 	[ObservableProperty]
-	public partial bool							UseNameRemapping { get; set; }
-
-	[ObservableProperty]
 	public partial ValidatableObject<string>	NameRemappingFile { get; set; }				= new();
 
-	[ObservableProperty]
-	public partial bool							SortBibliographyEntries { get; set; }
-
-	public IReadOnlyList<string>				SorBibliographyByItems { get; set; }					= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBibliographyBy>();
+	public IReadOnlyList<string>				SorBibliographyByItems { get; set; }		= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBibliographyBy>();
 
 
 	#endregion
@@ -94,17 +76,12 @@ public partial class SettingsViewModel : ObservableObject
 
 	private void Initialize()
 	{
-		UseAuxiliaryFile		= Settings.UseAuxiliaryFile;
 		AuxiliaryFile.Value		= Settings.AuxiliaryFile;
-		UseFieldOrder			= Settings.UseBibEntryInitialization;
 		FieldOrderFile.Value	= Settings.BibEntryInitializationFile;
-		UseFieldQuality			= Settings.UseFieldQualityProcessing;
 		FieldQualityFile.Value	= Settings.FieldQualityProcessingFile;
-		UseNameRemapping        = Settings.UseBibEntryRemapping;
 		NameRemappingFile.Value	= Settings.BibEntryRemappingFile;
-		WhiteSpace				= Settings.WriteSettings.WhiteSpace;
-		AlignFieldValues		= Settings.WriteSettings.AlignFieldValues;
-		SortBibliographyEntries	= Settings.SortBibliography;
+WhiteSpace				= Settings.WriteSettings.WhiteSpace;
+AlignFieldValues		= Settings.WriteSettings.AlignFieldValues;
 	}
 
 	#endregion
@@ -172,10 +149,10 @@ public partial class SettingsViewModel : ObservableObject
 
 	public bool ValidateSubmittable() => IsSubmittable =
 		Settings.Modified &&
-		(!UseAuxiliaryFile || AuxiliaryFile.IsValid) &&
-		(!UseFieldOrder || FieldOrderFile.IsValid) &&
-		(!UseFieldQuality || FieldQualityFile.IsValid) &&
-		(!UseNameRemapping || NameRemappingFile.IsValid);
+		(!Settings.UseAuxiliaryFile || AuxiliaryFile.IsValid) &&
+		(!Settings.UseFieldQualityProcessing || FieldOrderFile.IsValid) &&
+		(!Settings.UseFieldQualityProcessing || FieldQualityFile.IsValid) &&
+		(!Settings.UseBibEntryRemapping || NameRemappingFile.IsValid);
 
 	#endregion
 
@@ -184,28 +161,14 @@ public partial class SettingsViewModel : ObservableObject
 
 	private void OnSettingsPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) => ValidateSubmittable();
 
-	partial void OnUseAuxiliaryFileChanged(bool value) => Settings.UseAuxiliaryFile = value;
-
-	partial void OnUseFieldOrderChanged(bool value) => Settings.UseBibEntryInitialization = value;
-
-	partial void OnUseFieldQualityChanged(bool value) => Settings.UseFieldQualityProcessing = value;
-
-	partial void OnUseNameRemappingChanged(bool value) => Settings.UseBibEntryRemapping = value;
-
-	partial void OnWhiteSpaceChanged(WhiteSpace value) => Settings.WriteSettings.WhiteSpace = value;
-
-	partial void OnAlignFieldValuesChanged(bool value) => Settings.WriteSettings.AlignFieldValues = value;
-
-	partial void OnSortBibliographyEntriesChanged(bool value) => Settings.SortBibliography = value;
-
 	#endregion
 
 	#region Methods
 
 	public void Save()
 	{
-		Preferences.ProjectSettings = Settings;
-		BibTeXProject.Instance!.Settings = Settings;
+		Preferences.ProjectSettings			= Settings;
+		BibTeXProject.Instance!.Settings	= Settings;
 	}
 
 	#endregion

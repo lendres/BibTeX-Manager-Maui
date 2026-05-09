@@ -16,12 +16,14 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 
 	public ProjectSettings()
 	{
-		ModifiedChanged					+= OnMyModifiedChanged;
-		_writeSettings.ModifiedChanged	+= OnChildModifiedChanged;
+		ModifiedChanged		+= OnMyModifiedChanged;
+		WriteSettings		= new WriteSettings();
+		Modified			= false;
 	}
 
 	public ProjectSettings(ProjectSettings projectSettings)
 	{
+		ModifiedChanged				+= OnMyModifiedChanged;
 		WriteSettings				= new WriteSettings(projectSettings.WriteSettings);
 
 		UsePathsRelativeToBibFile	= projectSettings.UsePathsRelativeToBibFile;
@@ -163,6 +165,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 			{
 				_writeSettings = value;
 				_writeSettings.ModifiedChanged += OnChildModifiedChanged;
+				_writeSettings.PropertyChanged += OnPropertyChanged;
 				Modified = true;
 				OnPropertyChanged();
 			}
