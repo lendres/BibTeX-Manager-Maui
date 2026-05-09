@@ -5,7 +5,6 @@ using DigitalProduction.Maui.Validation;
 
 namespace BibTeXManager.ViewModels;
 
-
 public partial class SettingsViewModel : ObservableObject
 {
 	#region Fields
@@ -108,11 +107,6 @@ public partial class SettingsViewModel : ObservableObject
 		SortBibliographyEntries	= Settings.SortBibliography;
 	}
 
-	public void Save()
-	{
-		Preferences.ProjectSettings = Settings;
-	}
-
 	#endregion
 
 	#region Validation
@@ -203,6 +197,16 @@ public partial class SettingsViewModel : ObservableObject
 	partial void OnAlignFieldValuesChanged(bool value) => Settings.WriteSettings.AlignFieldValues = value;
 
 	partial void OnSortBibliographyEntriesChanged(bool value) => Settings.SortBibliography = value;
+
+	#endregion
+
+	#region Methods
+
+	public void Save()
+	{
+		Preferences.ProjectSettings = Settings;
+		BibTeXProject.Instance!.Settings = Settings;
+	}
 
 	#endregion
 }
