@@ -25,7 +25,7 @@ public partial class SettingsViewModel : ObservableObject
 
 	#region Properties
 
-	#region General
+	#region General and Common
 
 	[ObservableProperty]
 	public partial ProjectSettings				Settings { get; set; }
@@ -33,11 +33,13 @@ public partial class SettingsViewModel : ObservableObject
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
 
+	public IReadOnlyList<string>				BracketType { get; set; }					= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<EntryBracketType>();
+
 	#endregion
 
 	#region String Entries
 
-	public IReadOnlyList<string> SortStringsByItems { get; set; } = DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortStringsBy>();
+	public IReadOnlyList<string>				SortStringsByItems { get; set; }			= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortStringsBy>();
 
 	#endregion
 
@@ -57,17 +59,6 @@ public partial class SettingsViewModel : ObservableObject
 
 	public IReadOnlyList<string>				SorBibliographyByItems { get; set; }		= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBibliographyBy>();
 
-
-	#endregion
-
-	#region Write Settings
-
-	[ObservableProperty]
-	public partial WhiteSpace					WhiteSpace { get; set; }					= WhiteSpace.Tab;
-
-	[ObservableProperty]
-	public partial bool							AlignFieldValues { get; set; }
-
 	#endregion
 
 	#endregion
@@ -80,8 +71,6 @@ public partial class SettingsViewModel : ObservableObject
 		FieldOrderFile.Value	= Settings.BibEntryInitializationFile;
 		FieldQualityFile.Value	= Settings.FieldQualityProcessingFile;
 		NameRemappingFile.Value	= Settings.BibEntryRemappingFile;
-WhiteSpace				= Settings.WriteSettings.WhiteSpace;
-AlignFieldValues		= Settings.WriteSettings.AlignFieldValues;
 	}
 
 	#endregion
@@ -157,6 +146,7 @@ AlignFieldValues		= Settings.WriteSettings.AlignFieldValues;
 	#endregion
 
 	#region Events
+
 	private void OnSettingsModifiedChanged(object sender, bool modified) => ValidateSubmittable();
 
 	private void OnSettingsPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) => ValidateSubmittable();

@@ -181,8 +181,8 @@
                 <Border Grid.Row="0" Grid.Column="0" StyleClass="SmallTitleBorderStyle">
                     <Label Text="Organization" StyleClass="SmallTitleLabelStyle"/>
                 </Border>
-                
-                <Grid ColumnDefinitions="0.5*,0.5*" RowDefinitions="auto,30,40" RowSpacing="4" ColumnSpacing="25" Margin="0" Padding="0,8,0,0">
+
+				<Grid ColumnDefinitions="0.5*,0.5*" RowDefinitions="auto,30,40" StyleClass="SettingsGrid" Padding="0,8,0,0">
 
                     <!-- Strings -->
                     <Label Grid.Row="0" Grid.Column="0" Text="Strings" StyleClass="MediumTitleLabelStyle"/>
@@ -215,7 +215,7 @@
                 <Border Grid.Row="0" Grid.Column="0" StyleClass="SmallTitleBorderStyle">
                     <Label Text="Write Settings" StyleClass="SmallTitleLabelStyle"/>
                 </Border>
-                <Grid ColumnDefinitions="0.5*,0.5*" RowDefinitions="auto,30,40,auto,40" RowSpacing="4" ColumnSpacing="10" Margin="0" Padding="0">
+				<Grid ColumnDefinitions="0.5*,0.5*" RowDefinitions="auto,30,50,auto,40,40" StyleClass="SettingsGrid" Margin="0" Padding="0,8,0,0">
                     <!-- White space (tabs or spaces). -->
                     <Label Grid.Row="0" Grid.Column="0" Text="Tabs" StyleClass="MediumTitleLabelStyle"/>
                     <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="auto,auto"
@@ -247,27 +247,34 @@
                         <Label Grid.Row="1" Grid.Column="1"	Text="Align field value" StyleClass="SwitchLabel"/>
                     </Grid>
 
-                    <!-- String Alignment -->
-                    <Label Grid.Row="3" Grid.Column="0" Text="String Alignment" StyleClass="MediumTitleLabelStyle"/>
+                    <!-- Strings -->
+                    <Label Grid.Row="3" Grid.Column="0" Text="Strings" StyleClass="MediumTitleLabelStyle"/>
                     <Grid Grid.Row="4" Grid.Column="0" ColumnDefinitions="90,*" RowDefinitions="40,40">
                         <dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="40"
 							Value="{Binding Settings.WriteSettings.StringEntryAlignAtColumn}"
 							IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
 							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
                         <Label Grid.Column="1" Text="Alignment Column" Margin="0" VerticalTextAlignment="Center"
-				    IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-				    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
+							IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
+							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
                         <dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="10"
-				    Value="{Binding Settings.WriteSettings.StringEntryAlignAtTabStop}"
-				    IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-				    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+							Value="{Binding Settings.WriteSettings.StringEntryAlignAtTabStop}"
+							IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
+							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
                         <Label Grid.Column="1" Text="Alignment Tab Stop" Margin="0" VerticalTextAlignment="Center"
-				    IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-				    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+							IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
+							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
                     </Grid>
+					<Grid  Grid.Row="5" Grid.Column="0" ColumnDefinitions="110,*" RowDefinitions="auto">
+						<Label Grid.Row="0" Grid.Column="0" Text="Bracket Type:" Margin="0" VerticalTextAlignment="Center"/>
+						<Picker Grid.Row="0" Grid.Column="1"
+							MinimumHeightRequest="32" HeightRequest="32"
+							ItemsSource="{Binding BracketType}"
+							SelectedIndex="{Binding Settings.WriteSettings.StringEntryBracketType, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type library:EntryBracketType}}"/>
+					</Grid>
 
-                    <!-- Bibliography Alignment -->
-                    <Label Grid.Row="3" Grid.Column="1" Text="Bibliography Alignment" StyleClass="MediumTitleLabelStyle"/>
+					<!-- Bibliographys -->
+                    <Label Grid.Row="3" Grid.Column="1" Text="Bibliographys" StyleClass="MediumTitleLabelStyle"/>
                     <Grid Grid.Row="4" Grid.Column="1" ColumnDefinitions="90,*" RowDefinitions="40,40">
                         <dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="40"
 						    Value="{Binding Settings.WriteSettings.BibEntryAlignAtColumn}"
@@ -284,8 +291,15 @@
 						    IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
 						    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
                     </Grid>
+					<Grid  Grid.Row="5" Grid.Column="1" ColumnDefinitions="110,*" RowDefinitions="auto">
+						<Label Grid.Row="0" Grid.Column="0" Text="Bracket Type:" Margin="0" VerticalTextAlignment="Center"/>
+						<Picker Grid.Row="0" Grid.Column="1"
+							MinimumHeightRequest="32" HeightRequest="32"
+							ItemsSource="{Binding BracketType}"
+							SelectedIndex="{Binding Settings.WriteSettings.BibEntryBracketType, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type library:EntryBracketType}}"/>
+					</Grid>
 
-                </Grid>
+				</Grid>
 
                 <!-- Automation -->
                 <Border StyleClass="SmallTitleBorderStyle">
