@@ -15,6 +15,7 @@
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
 	</ContentPage.Resources>
 
+	<!-- Menubar. -->
 	<ContentPage.MenuBarItems>
 		<MenuBarItem Text="File">
 			<MenuFlyoutItem Text="New..." Clicked="OnNew">
@@ -133,6 +134,8 @@
 		</MenuBarItem>
 	</ContentPage.MenuBarItems>
 
+	
+	
 	<Grid StyleClass="DataGridEditStyle">
 
 		<!-- Button Grid -->

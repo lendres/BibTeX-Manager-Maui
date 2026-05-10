@@ -220,7 +220,6 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		List<string> tagNames		= ["author", "title"];
 		List<BibEntry> findResults	= Project.Bibliography.SearchBibEntries(tagNames, true, search);
 		return SetSearchResults(search, findResults);
-
 	}
 
 	#endregion
