@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibTeXProject", "BibTeX Pro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests", "Unit Tests\Unit Tests.csproj", "{2262C014-36B0-44C6-8B7A-4F656466E7EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalProduction.Projects", "..\..\DigitalProduction.Project\src\Library\DigitalProduction.Projects.csproj", "{5F198438-957E-44F8-61D4-E079FA14E284}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalProduction.Projects", "..\..\DigitalProduction.Projects\src\Library\DigitalProduction.Projects.csproj", "{5F198438-957E-44F8-61D4-E079FA14E284}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
