@@ -135,7 +135,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	{
 		Path = file;
 		ReadBibliographyFile();
-		base.Open();
 	}
 
 	/// <summary>
@@ -161,8 +160,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		}
 
 		BuildStringConstantMap();
-		Modified	= false;
-		IsOpen		= true;
+		base.Open();
 	}
 
 	/// <summary>
