@@ -15,28 +15,27 @@ public partial class MainPage : DigitalProductionMainPage
 {
 	#region Fields
 
-	private readonly MainViewModel		_viewModel;
-
-	private readonly IBibTeXFilePicker	_filePicker;
-	private readonly ISaveFilePicker	_saveFilePicker;
-
-	private readonly bool				_animateScrollToSelection		= false;
+	private readonly MainViewModel					_viewModel;
+	private readonly IBibTeXFilePicker				_filePicker;
+	private readonly ISaveFilePicker				_saveFilePicker;
+	private readonly ISaveService					_saveBeforeExitService;
 
 	#endregion
 
 	#region Construction
 
-	public MainPage(MainViewModel viewModel, IPageProvider pageProvider, IBibTeXFilePicker filePicker, ISaveFilePicker saveFilePicker)
+	public MainPage(MainViewModel viewModel, IPageProvider pageProvider, IBibTeXFilePicker filePicker, ISaveFilePicker saveFilePicker, ISaveService saveBeforeExitService)
 	{
 		InitializeComponent();
 
-		pageProvider.CurrentPage	= this;
-		_filePicker					= filePicker;
-		_saveFilePicker				= saveFilePicker;
+		pageProvider.CurrentPage		= this;
+		_filePicker						= filePicker;
+		_saveFilePicker					= saveFilePicker;
+		_saveBeforeExitService			= saveBeforeExitService;
 
-		BindingContext				= viewModel;
-		_viewModel					= viewModel;
-		_viewModel.MenuHostingPage	= this;
+		BindingContext					= viewModel;
+		_viewModel						= viewModel;
+		_viewModel.MenuHostingPage		= this;
 
 		if (Preferences.LoadLastProjectAtStartUp)
 		{
@@ -58,17 +57,24 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region File
 
-	async void OnNew(object sender, EventArgs eventArgs)
+	private async void OnNew(object sender, EventArgs eventArgs)
 	{
-		_viewModel.New();
+		if (await TryCloseProject())
+		{
+			_bibliographyEditGridView.New();
+			_viewModel.New();
+		}
 	}
 
 	async void OnOpen(object sender, EventArgs eventArgs)
 	{
-		string file = await _filePicker.BrowseForBibliographyFile();
-		if (!string.IsNullOrEmpty(file))
+		if (await TryCloseProject())
 		{
-			await _viewModel.OpenWithPathSave(file);
+			string file = await _filePicker.BrowseForBibliographyFile();
+			if (!string.IsNullOrEmpty(file))
+			{
+				await _viewModel.OpenWithPathSave(file);
+			}
 		}
 	}
 
@@ -88,7 +94,7 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 	}
 
-	async void OnSaveAs(object sender, EventArgs eventArgs)
+	private async void OnSaveAs(object sender, EventArgs eventArgs)
 	{
 		string? file = await _saveFilePicker.PickAsync(new PickOptions() { FileTypes=_filePicker.CreateBibliographyFilePickerFileType() } );
 		if (!string.IsNullOrEmpty(file))
@@ -104,14 +110,49 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 	}
 
-	void OnClose(object sender, EventArgs eventArgs)
+	private async void OnClose(object sender, EventArgs eventArgs)
 	{
-		_viewModel.CloseProject();
+		_ = await TryCloseProject();
+	}
+
+	private async Task<bool> TryCloseProject()
+	{
+		SaveChoice closeChoice = await _saveBeforeExitService.PromptSaveChangesAsync();
+
+		switch (closeChoice)
+		{
+			case SaveChoice.Cancel:
+				return false;
+		}
+
+		_bibliographyEditGridView.Close();
+		_viewModel.Close();
+		return true;
 	}
 
 	#endregion
 
 	#region Edit
+
+	async void OnNewBibEntry(object sender, EventArgs eventArgs)
+	{
+		_bibliographyEditGridView.OnNewBibEntry(sender, eventArgs);
+	}
+
+	async void OnNewBibEntryFromTemplate(object sender, EventArgs eventArgs)
+	{
+		_bibliographyEditGridView.OnNewBibEntryFromTemplate(sender, eventArgs);
+	}
+
+	async void OnEditBibEntry(object sender, EventArgs eventArgs)
+	{
+		_bibliographyEditGridView.OnEditBibEntry(sender, eventArgs);
+	}
+
+	async void OnDeleteBibEntry(object sender, EventArgs eventArgs)
+	{
+		_bibliographyEditGridView.OnDeleteBibEntry(sender, eventArgs);
+	}
 
 	void OnFind(object sender, EventArgs eventArgs)
 	{
@@ -126,7 +167,7 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 		else
 		{
-			FindInDataGridView();
+			SelectNextFoundItem();
 		}
 	}
 
@@ -138,30 +179,26 @@ public partial class MainPage : DigitalProductionMainPage
 
 		if (result is bool boolResut && boolResut)
 		{
-			bool foundEntries = _viewModel.Find(viewModel.SearchTermsString);
+			bool foundEntries = _bibliographyEditGridView.Find(viewModel.SearchTermsString);
 			if (!foundEntries)
 			{
 				await DisplayAlert("Not Found", "No entries found for the specified search term(s).\nSearch string: "+viewModel.SearchTermsString , "OK");
 			}
 			else
 			{
-				FindInDataGridView();
+				SelectNextFoundItem();
 			}
 		}
 	}
 
-	private void FindInDataGridView()
+	private void SelectNextFoundItem()
 	{
-		_viewModel.SelectNextFoundItem();
-		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
+		_bibliographyEditGridView.SelectNextFoundItem();
 	}
 
 	private void OnScrollToSelection(object sender, EventArgs eventArgs)
 	{
-		if (_viewModel.SelectedItem != null)
-		{
-			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem, ScrollToPosition.Center, _animateScrollToSelection);
-		}
+		_bibliographyEditGridView.OnScrollToSelection(sender, eventArgs);
 	}
 
     #endregion
@@ -242,55 +279,6 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#endregion
 
-	#region Button Events
-
-	async void OnNewBibEntry(object sender, EventArgs eventArgs)
-	{
-		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
-		{
-			{ "AddMode",  true }
-		});
-	}
-
-	async void OnNewBibEntryFromTemplate(object sender, EventArgs eventArgs)
-	{
-		TemplateSelectionViewModel	viewModel	= new(_viewModel.Project.BibEntryInitialization.TemplateNames);
-		TemplateSelectionView		view		= new(viewModel);
-		object?						result		= await Shell.Current.ShowPopupAsync(view);
-
-		if (result is bool boolResult && boolResult)
-		{
-			BibEntry entry = BibEntry.NewBibEntryFromTemplate(_viewModel.Project.BibEntryInitialization, viewModel.Template);
-	
-			await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
-			{
-				{ "AddMode",  true },
-				{ "BibEntry", entry }
-			});
-		}
-	}
-
-	async void OnEditBibEntry(object sender, EventArgs eventArgs)
-	{
-		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
-		{
-			{ "AddMode",  false },
-			{ "BibEntry", _viewModel.SelectedItem! }
-		});
-	}
-
-	async void OnDeleteBibEntry(object sender, EventArgs eventArgs)
-	{
-		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
-
-		if (result)
-		{
-			_viewModel.Delete();
-			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
-		}
-	}
-
-	#endregion
 
 	#region Navigation
 
@@ -306,14 +294,12 @@ public partial class MainPage : DigitalProductionMainPage
 		{
 			case "Save":
 				System.Diagnostics.Debug.Assert(NavigationObject != null);
-				_viewModel.Insert(NavigationObject);
-				BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
+				_bibliographyEditGridView.Insert(NavigationObject);
 				break;
 
 			case "Replace":
 				System.Diagnostics.Debug.Assert(NavigationObject != null);
-				_viewModel.ReplaceSelected(NavigationObject);
-				BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
+				_bibliographyEditGridView.ReplaceSelected(NavigationObject);
 				break;
 			case "Cancel":
 			default:

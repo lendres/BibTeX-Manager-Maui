@@ -2,11 +2,11 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
-using DigitalProduction.Maui.ViewModels;
+using DigitalProduction.ViewModels;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
+public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 {
 	#region Fields
 
@@ -16,30 +16,23 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 
 	#region Construction
 
-	public MainViewModel(IRecentPathsManagerService recentPathsManagerService, IDialogService dialogService, ISaveService saveBeforeExitService)
+	public MainViewModel(IRecentPathsManagerService recentPathsManagerService, IDialogService dialogService, ISaveService saveBeforeExitService) :
+		base(BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."))
     {
 		RecentPathsManagerService	= recentPathsManagerService;
 		_dialogService				= dialogService;
 
-		SaveBeforeExitService						= saveBeforeExitService;
-		SaveBeforeExitService.IsModifiedFunction	= IsModified;
-		SaveBeforeExitService.SaveFunction			= SaveAsync;
-
-		BibTeXProject.New(Preferences.ProjectSettings);
-		ProjectInitialization();
+		saveBeforeExitService.IsModifiedFunction	= IsModified;
+		saveBeforeExitService.SaveFunction			= SaveAsync;
 	}
 
 	#endregion
 
 	#region Properties
 
-	public BibTeXProject							Project { get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
-
-	public bool										SavePathRequired { get => !(BibTeXProject.Instance?.IsSaveable) ?? false; }
+	public bool										SavePathRequired { get => !Project.HasSavePath; }
 
 	public IRecentPathsManagerService				RecentPathsManagerService { get; set; }
-
-	public ISaveService								SaveBeforeExitService { get; private set; }
 
 	public Page? MenuHostingPage
 	{
@@ -47,105 +40,30 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		set => _dialogService.HostingPage = value;
 	}
 
-	[ObservableProperty]
-	public partial bool								ProjectOpen { get; set; }					= false;
+	public string?									SearchString { get; set; } = null;
 
-	[ObservableProperty]
-	public partial bool								CanSave { get; set; }						= false;
+	public bool										RequireSearchString => SearchString == null;
 
-	[ObservableProperty]
-	public partial bool								HasTemplates { get; set; }					= false;
+	public BibEntry?								SelectedBibliographyItem { get; set; }
 
-	[ObservableProperty]
-	public partial bool								IsSubmittable { get; set; }					= false;
+	//[ObservableProperty]
+	//public partial bool								IsSubmittable { get; set; }					= false;
 
 	#endregion
 
 	#region Validation
-
-	private void ValidateCanSave()
-	{
-		CanSave = Modified && ProjectOpen;
-	}
-
-	private void ValidateHasTemplates()
-	{
-		HasTemplates = ProjectOpen && BibTeXProject.Instance?.BibEntryInitialization.TemplateNames.Count > 0;
-	}
-
 	#endregion
 
 	#region Events
-
-	private void OnProjectModifiedChanged(object sender, bool modified)
-	{
-		Modified = modified;
-		ValidateCanSave();
-		ValidateHasTemplates();
-	}
-
-	private void OnProjectPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs eventArgs)
-	{
-		ValidateHasTemplates();
-	}
-
-	partial void OnProjectOpenChanged(bool value)
-	{
-		ValidateCanSave();
-		ValidateHasTemplates();
-	}
-
-	[RelayCommand]
-	private void CopyCiteKeyToClipboard()
-	{
-		System.Diagnostics.Debug.Assert(SelectedItem != null);
-		Clipboard.Default.SetTextAsync(SelectedItem.Key);
-	}
-
 	#endregion
 
 	#region Methods and Commands
-
-	#region DataGridBaseViewModel Overrides
-
-	public override void Insert(BibEntry item, int position = 0, bool select = true)
-	{
-		if (Project.Settings.SortBibliography)
-		{
-			// If sorting, ignore the position and add based on the sort method.
-			Project.Bibliography.Insert(item, Project.Settings.BibliographySortMethod);
-		}
-		else
-		{
-
-			if (position == 0)
-			{
-				// If we are adding new (position == 0) and not sorting, add to the end of the list.
-				Project.Bibliography.Add(item);
-			}
-			else
-			{
-				// If we are not sorting, then add at the specified position.
-				Project.Bibliography.Insert(item, position);
-			}
-		}
-
-		FinalizeInsert(item, select);
-	}
-
-	#endregion
 
 	#region File Menu
 
 	public void New()
 	{
 		Project.NewBibliographyFile();
-		if (Project.Bibliography != null)
-		{
-			Items = Project.Bibliography.Entries;
-		}
-		Modified = true;
-		ValidateCanSave();
 	}
 
 	public async Task OpenWithPathSave(string projectFile)
@@ -157,26 +75,9 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	[RelayCommand]
 	public async Task Open(string file)
 	{
-		SaveChoice closeChoice = await SaveBeforeExitService.PromptSaveChangesAsync();
-
-		switch (closeChoice)
-		{
-			case SaveChoice.Cancel:
-				return;
-		}
-
-		System.Diagnostics.Debug.Assert(BibTeXProject.Instance != null);
-		Items?.Clear();
 		Project.NewBibliographyFile();
 		Project.ReadBibliographyFile(file);
-		Items		=  Project.Bibliography.Entries;
-		ProjectOpen	= true;
-	}
-
-	void ProjectInitialization()
-	{
-		Project.ModifiedChanged += OnProjectModifiedChanged;
-		Project.PropertyChanged += OnProjectPropertyChanged;
+		IsOpen	= true;
 	}
 
 	[RelayCommand]
@@ -197,31 +98,16 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 		Project.WriteBibliographyFile();
 	}
 
-	public void CloseProject()
+	public void Close()
 	{
 		Project.Close();
-		Items?.Clear();
-		Items		= null;
-		ProjectOpen	= false;
+		IsOpen		= false;
 		Modified	= false;
 	}
 
 	#endregion
 
 	#region Edit Menu
-
-	/// <summary>
-	/// Searches the bibliography for the specified search string in the author and title fields.
-	/// </summary>
-	/// <param name="search">Search term.</param>
-	/// <returns>True if at least one BibEntry is found, false if no entries are found.</returns>
-	public override bool Find(string search)
-	{
-		List<string> tagNames		= ["author", "title"];
-		List<BibEntry> findResults	= Project.Bibliography.SearchBibEntries(tagNames, true, search);
-		return SetSearchResults(search, findResults);
-	}
-
 	#endregion
 
 	#region Tools Menu
@@ -252,7 +138,7 @@ public partial class MainViewModel : DataGridBaseViewModel<BibEntry>
 	/// Interface function for the save before exit service to check if the project is modified and needs to be saved before exiting.
 	/// </summary>
 	/// <returns>True if the project is modified, false otherwise.</returns>
-	public bool IsModified() => CanSave;
+	public bool IsModified() => RequiresSave;
 
 	/// <summary>
 	/// Interface function for the save before exit service to.  Asynchronously saves the current state or changes to the underlying data store.

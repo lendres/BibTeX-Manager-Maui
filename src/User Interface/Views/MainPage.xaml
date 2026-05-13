@@ -5,8 +5,8 @@
 	xmlns:dpatkcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
-	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:views="clr-namespace:BibTeXManager.Views"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:DataType="viewmodel:MainViewModel"
 	x:Class="BibTeXManager.Views.MainPage">
@@ -28,13 +28,13 @@
 					<KeyboardAccelerator Key="o" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-			<MenuFlyoutItem Text="Save" Clicked="OnSave" IsEnabled="{Binding CanSave}">
+			<MenuFlyoutItem Text="Save" Clicked="OnSave" IsEnabled="{Binding RequiresSave}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="s" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-			<MenuFlyoutItem Text="Save As..." Clicked="OnSaveAs" IsEnabled="{Binding ProjectOpen}"/>
-			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding ProjectOpen}"/>
+			<MenuFlyoutItem Text="Save As..." Clicked="OnSaveAs" IsEnabled="{Binding IsOpen}"/>
+			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding IsOpen}"/>
 			<dpcontrols:RecentlyUsedMenuFlyout
 				Text="Recently Used"
 				PathCommand="{Binding OpenCommand}"
@@ -46,7 +46,7 @@
 			<MenuFlyoutItem
 				Text="Add Entry..."
 				Clicked="OnNewBibEntry"
-				IsEnabled="{Binding ProjectOpen}">
+				IsEnabled="{Binding IsOpen}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="a"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
@@ -62,7 +62,7 @@
 			<MenuFlyoutItem
 				Text="Edit Entry..."
 				Clicked="OnEditBibEntry"
-				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}">
+				IsEnabled="{Binding SelectedBibliographyItem, Converter={StaticResource IsNotNullConverter}}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="e"/>
 					<KeyboardAccelerator Key="F2"/>
@@ -71,7 +71,7 @@
 			<MenuFlyoutItem
 				Text="Delete Entry..."
 				Clicked="OnDeleteBibEntry"
-				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}">
+				IsEnabled="{Binding SelectedBibliographyItem, Converter={StaticResource IsNotNullConverter}}">
 				<!--<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="d"/>
 				</MenuFlyoutItem.KeyboardAccelerators>-->
@@ -79,7 +79,7 @@
 			<MenuFlyoutItem
 				Text="Find..."
 				Clicked="OnFind"
-				IsEnabled="{Binding ProjectOpen}">
+				IsEnabled="{Binding IsOpen}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="f" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
@@ -87,7 +87,7 @@
 			<MenuFlyoutItem
 				Text="Find Next"
 				Clicked="OnFindNext"
-				IsEnabled="{Binding ProjectOpen}">
+				IsEnabled="{Binding IsOpen}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F3"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
@@ -95,7 +95,7 @@
 			<MenuFlyoutItem
 				Text="Scroll to Selection"
 				Clicked="OnScrollToSelection"
-				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}">
+				IsEnabled="{Binding SelectedBibliographyItem, Converter={StaticResource IsNotNullConverter}}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="s"/>
 					<KeyboardAccelerator Key="F4"/>
@@ -107,7 +107,7 @@
 			<MenuFlyoutItem
 				Text="Edit Strings..."
 				Clicked="OnEditStringConstants"
-				IsEnabled="{Binding ProjectOpen}">
+				IsEnabled="{Binding IsOpen}">
 			</MenuFlyoutItem>
 		</MenuBarItem>
 
@@ -116,8 +116,8 @@
 		</MenuBarItem>
 		<MenuBarItem Text="Tools">
 			<!--<MenuFlyoutSubItem Text="Quality">-->
-				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding ProjectOpen}"/>
-				<MenuFlyoutItem Text="Check Field Quality" Clicked="OnCheckFieldQuality" IsEnabled="{Binding ProjectOpen}"/>
+				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding IsOpen}"/>
+				<MenuFlyoutItem Text="Check Field Quality" Clicked="OnCheckFieldQuality" IsEnabled="{Binding IsOpen}"/>
 			<!--</MenuFlyoutSubItem>-->
 		</MenuBarItem>
 		<MenuBarItem Text="Help">
@@ -134,85 +134,8 @@
 		</MenuBarItem>
 	</ContentPage.MenuBarItems>
 
-	
-	
-	<Grid StyleClass="DataGridEditStyle">
+	<views:BibliographyEditGridView
+		x:Name="_bibliographyEditGridView"
+		SelectedItem="{Binding SelectedBibliographyItem, Mode=TwoWay}"/>
 
-		<!-- Button Grid -->
-		<Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="200"/>
-			</Grid.ColumnDefinitions>
-
-			<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
-				<Button
-					Text="Add"
-					Clicked="OnNewBibEntry"
-					StyleClass="SquareButtonStyle"
-					IsEnabled="{Binding ProjectOpen}"/>
-
-				<Button
-					Text="Add from Template"
-					Clicked="OnNewBibEntryFromTemplate"
-					StyleClass="SquareButtonStyle"
-					IsEnabled="{Binding HasTemplates}"/>
-
-				<Button
-					Text="Edit"
-					Clicked="OnEditBibEntry"
-					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-
-				<Button 
-					Text="Delete"
-					Clicked="OnDeleteBibEntry"
-					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-
-				<Button 
-					Text="Copy Key"
-					Command="{Binding CopyCiteKeyToClipboardCommand}"
-					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-
-			</HorizontalStackLayout>
-
-			<Button 
-				Grid.Column="1"
-				Text="Save"
-				IsEnabled="{Binding CanSave}"
-				Clicked="OnSave"
-				WidthRequest="75"
-				HorizontalOptions="End"/>
-		</Grid>
-
-		<dg:DataGrid
-			Grid.Row="1"
-			x:Name="BibliographyDataGrid"
-			Style="{DynamicResource DataGridDefaultLooseStyle}"
-			ItemsSource="{Binding Items, Mode=TwoWay}" SelectionMode="{Binding SelectionMode}"
-			SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
-			RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
-			PaginationEnabled="false"
-			RowTappedCommand="{Binding TappedCommand}"
-			IsVisible="{Binding Items, Converter={StaticResource IsNotNullConverter}}"
-			IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
-
-			<dg:DataGrid.Columns>
-
-				<!--Name column.-->
-				<dg:DataGridColumn Title="Key" PropertyName="Key" Width="0.25*" SortingEnabled="true"
-						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
-
-				<!--Description column.-->
-				<dg:DataGridColumn Title="Author(s)" PropertyName="Author" Width="1.0*" SortingEnabled="true"
-						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
-
-				<dg:DataGridColumn Title="Title" PropertyName="Title" Width="1.0*" SortingEnabled="true"
-						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
-
-			</dg:DataGrid.Columns>
-		</dg:DataGrid>
-	</Grid>
 </dpatkcontrols:DigitalProductionMainPage>

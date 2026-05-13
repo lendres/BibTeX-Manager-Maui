@@ -81,6 +81,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="Views\BibliographyEditGridView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\StringConstantsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
