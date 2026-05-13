@@ -325,13 +325,13 @@
 						    IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
 						    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
                     </Grid>
-					<Grid  Grid.Row="5" Grid.Column="1" ColumnDefinitions="110,*" RowDefinitions="auto">
+					<!--<Grid  Grid.Row="5" Grid.Column="1" ColumnDefinitions="110,*" RowDefinitions="auto">
 						<Label Grid.Row="0" Grid.Column="0" Text="Bracket Type:" Margin="0" VerticalTextAlignment="Center"/>
 						<Picker Grid.Row="0" Grid.Column="1"
 							MinimumHeightRequest="32" HeightRequest="32"
 							ItemsSource="{Binding BracketType}"
 							SelectedIndex="{Binding Settings.WriteSettings.BibEntryBracketType, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type library:EntryBracketType}}"/>
-					</Grid>
+					</Grid>-->
 
 				</Grid>
 
