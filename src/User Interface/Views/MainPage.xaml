@@ -37,7 +37,7 @@
 			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding IsOpen}"/>
 			<dpcontrols:RecentlyUsedMenuFlyout
 				Text="Recently Used"
-				PathCommand="{Binding OpenCommand}"
+				PathClicked="OnRecentPathClicked"
 				PathNotFoundCommand="{Binding ShowRemovedMessageCommand}"
 				RecentPathsManagerService="{Binding RecentPathsManagerService}"/>
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>

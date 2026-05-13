@@ -66,6 +66,11 @@ public partial class MainPage : DigitalProductionMainPage
 		}
 	}
 
+	private async void OnRecentPathClicked(object? sender, PathClickedEventArgs eventArgs)
+	{
+		await Open(eventArgs.Path);
+	}
+
 	async void OnOpen(object sender, EventArgs eventArgs)
 	{
 		if (await TryCloseProject())
@@ -73,9 +78,15 @@ public partial class MainPage : DigitalProductionMainPage
 			string file = await _filePicker.BrowseForBibliographyFile();
 			if (!string.IsNullOrEmpty(file))
 			{
-				await _viewModel.OpenWithPathSave(file);
+				await Open(file);
 			}
 		}
+	}
+
+	private async Task Open(string path)
+	{
+		await _viewModel.OpenWithPathSave(path);
+		_bibliographyEditGridView.Open();
 	}
 
 	async void OnSave(object sender, EventArgs eventArgs)
@@ -278,7 +289,6 @@ public partial class MainPage : DigitalProductionMainPage
 	#endregion
 
 	#endregion
-
 
 	#region Navigation
 

@@ -24,6 +24,7 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 
 		saveBeforeExitService.IsModifiedFunction	= IsModified;
 		saveBeforeExitService.SaveFunction			= SaveAsync;
+
 	}
 
 	#endregion
@@ -72,12 +73,10 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 		await Open(projectFile);
 	}
 
-	[RelayCommand]
 	public async Task Open(string file)
 	{
 		Project.NewBibliographyFile();
 		Project.ReadBibliographyFile(file);
-		IsOpen	= true;
 	}
 
 	[RelayCommand]

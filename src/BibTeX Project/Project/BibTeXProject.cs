@@ -19,21 +19,12 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	public static BibTeXProject? Instance
 	{
 		get => _instance;
-		set
-		{
-			_instance = value;
-			if (_instance != null)
-			{
-				_instance.Closed += OnClose;
-			}
-		}
+		set => _instance = value;
 	}
 
 	public static void New() => Instance = new BibTeXProject();
 
 	public static void New(ProjectSettings settings) => Instance = new BibTeXProject(settings);
-
-	private static void OnClose() { _instance!.Modified = false; }
 
 	#endregion
 
@@ -134,7 +125,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		_bibliography.ModifiedChanged	+= OnChildModifiedChanged;
 		_bibliography.PropertyChanged	+= OnPropertyChanged;
 		Path                            =  "";
-		Modified                        = false;
+		base.Open();
 	}
 
 	/// <summary>
@@ -144,6 +135,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	{
 		Path = file;
 		ReadBibliographyFile();
+		base.Open();
 	}
 
 	/// <summary>
@@ -169,7 +161,8 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		}
 
 		BuildStringConstantMap();
-		Modified = false;
+		Modified	= false;
+		IsOpen		= true;
 	}
 
 	/// <summary>
