@@ -15,7 +15,7 @@
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
 	</ContentView.Resources>
 
-	<Grid StyleClass="DataGridEditStyle">
+	<Grid x:Name="_mainGrid" StyleClass="DataGridEditStyle">
 
 		<!-- Button Grid -->
 		<Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">

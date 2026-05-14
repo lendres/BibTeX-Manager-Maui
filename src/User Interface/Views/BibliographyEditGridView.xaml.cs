@@ -20,8 +20,8 @@ public partial class BibliographyEditGridView : ContentView
 	{
 		InitializeComponent();
 
-		_viewModel		=  MauiProgram.Services.GetRequiredService<BibliographyEditGridViewModel>(); ;
-		BindingContext	= _viewModel;
+		_viewModel					=  MauiProgram.Services.GetRequiredService<BibliographyEditGridViewModel>(); ;
+		_mainGrid.BindingContext	= _viewModel;
 
 		Loaded += OnLoaded;
 	}
@@ -43,20 +43,18 @@ public partial class BibliographyEditGridView : ContentView
 		private set => SetValue(SelectedItemProperty, value);
 	}
 
-	private BibliographyEditGridViewModel ViewModel => (BibliographyEditGridViewModel)BindingContext;
-
 	private void OnLoaded(object? sender, EventArgs eventArgs)
 	{
-		ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+		_viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
-		SelectedItem = ViewModel.SelectedItem;
+		SelectedItem = _viewModel.SelectedItem;
 	}
 
 	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs eventArgs)
 	{
 		if (eventArgs.PropertyName == nameof(BibliographyEditGridViewModel.SelectedItem))
 		{
-			SelectedItem = ViewModel.SelectedItem;
+			SelectedItem = _viewModel.SelectedItem;
 		}
 	}
 
@@ -108,7 +106,6 @@ public partial class BibliographyEditGridView : ContentView
 	}
 
 	#endregion
-
 
 	#region Button Events
 

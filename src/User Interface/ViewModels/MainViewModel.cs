@@ -25,6 +25,15 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 		saveBeforeExitService.IsModifiedFunction	= IsModified;
 		saveBeforeExitService.SaveFunction			= SaveAsync;
 
+		ProjectInitialization();
+	}
+
+	void ProjectInitialization()
+	{
+		Project.ModifiedChanged += OnProjectModifiedChanged;
+		Project.PropertyChanged += OnProjectPropertyChanged;
+		Project.Opened += OnProjectOpenChanged;
+		Project.Closed += OnProjectOpenChanged;
 	}
 
 	#endregion
@@ -41,15 +50,15 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 		set => _dialogService.HostingPage = value;
 	}
 
+	[ObservableProperty]
+	public partial bool HasTemplates { get; set; } = false;
+
 	public string?									SearchString { get; set; } = null;
 
 	public bool										RequireSearchString => SearchString == null;
 
-	public BibEntry?								SelectedBibliographyItem
-	{ 
-		get;
-		set;
-	}
+	[ObservableProperty]
+	public partial BibEntry?						SelectedBibliographyItem { get; set; }
 
 	//[ObservableProperty]
 	//public partial bool								IsSubmittable { get; set; }					= false;
@@ -57,6 +66,31 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 	#endregion
 
 	#region Validation
+
+	private void ValidateHasTemplates()
+	{
+		HasTemplates = Project.IsOpen && BibTeXProject.Instance?.BibEntryInitialization.TemplateNames.Count > 0;
+	}
+
+	#endregion
+
+	#region Events
+
+	private void OnProjectModifiedChanged(object sender, bool modified)
+	{
+		ValidateHasTemplates();
+	}
+
+	private void OnProjectPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs eventArgs)
+	{
+		ValidateHasTemplates();
+	}
+
+	private void OnProjectOpenChanged()
+	{
+		ValidateHasTemplates();
+	}
+
 	#endregion
 
 	#region Events

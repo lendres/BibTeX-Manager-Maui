@@ -26,10 +26,10 @@ public partial class BibliographyEditGridViewModel : DataGridBaseViewModel<BibEn
 
 	#region Properties
 
-	public BibTeXProject Project { get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
+	public BibTeXProject	Project			{ get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
 
 	[ObservableProperty]
-	public partial bool HasTemplates { get; set; } = false;
+	public partial bool		HasTemplates	{ get; set; } = false;
 
 	#endregion
 
