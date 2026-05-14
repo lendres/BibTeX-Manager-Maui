@@ -17,6 +17,7 @@
 
 	<!-- Menubar. -->
 	<ContentPage.MenuBarItems>
+		<!-- File. -->
 		<MenuBarItem Text="File">
 			<MenuFlyoutItem Text="New..." Clicked="OnNew">
 				<MenuFlyoutItem.KeyboardAccelerators>
@@ -42,6 +43,8 @@
 				RecentPathsManagerService="{Binding RecentPathsManagerService}"/>
 			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
 		</MenuBarItem>
+		
+		<!-- Edit. -->
 		<MenuBarItem Text="Edit">
 			<MenuFlyoutItem
 				Text="Add Entry..."
@@ -103,6 +106,7 @@
 			</MenuFlyoutItem>
 		</MenuBarItem>
 
+		<!-- Configuration. -->
 		<MenuBarItem Text="Configuration">
 			<MenuFlyoutItem
 				Text="Edit Strings..."
@@ -111,15 +115,20 @@
 			</MenuFlyoutItem>
 		</MenuBarItem>
 
+		<!-- Settings. -->
 		<MenuBarItem Text="Settings">
 			<MenuFlyoutItem Text="Options..." Clicked="OnOptions"/>
 		</MenuBarItem>
+
+		<!-- Tools. -->
 		<MenuBarItem Text="Tools">
 			<!--<MenuFlyoutSubItem Text="Quality">-->
 				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding IsOpen}"/>
 				<MenuFlyoutItem Text="Check Field Quality" Clicked="OnCheckFieldQuality" IsEnabled="{Binding IsOpen}"/>
 			<!--</MenuFlyoutSubItem>-->
 		</MenuBarItem>
+
+		<!-- Help. -->
 		<MenuBarItem Text="Help">
 			<MenuFlyoutItem Text="Help" Clicked="OnHelp">
 				<MenuFlyoutItem.KeyboardAccelerators>
