@@ -42,7 +42,7 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 	#region Properties
 
 	[ObservableProperty]
-	public partial BibliographyPartType			BibliographyPart			{  get; set; }	= BibliographyPartType.BibliographyEntries;
+	public partial BibliographyPartType			ActiveBibliographyPart		{  get; set; }	= BibliographyPartType.BibliographyEntries;
 
 	public bool									SavePathRequired			{ get => !Project.HasSavePath; }
 

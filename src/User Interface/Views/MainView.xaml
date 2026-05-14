@@ -15,6 +15,9 @@
 	<ContentPage.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
 		<dpconverters:EnumToStringConverter x:Key="PartTypeEnumToStringConverter" x:TypeArguments="enums:BibliographyPartType"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="IsHeaderView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.Header}"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="IsStringEntryView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.StringEntries}"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="IsBibliographyEntriesView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.BibliographyEntries}"/>
 	</ContentPage.Resources>
 
 	<!-- Menubar. -->
@@ -149,7 +152,7 @@
 	<Grid RowDefinitions="Auto,*" ColumnDefinitions="*" Padding="0" Margin="0" RowSpacing="20">
 		<Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="*,*,*" Padding="0" Margin="0"
 			RadioButtonGroup.GroupName="PartSelectorGroup"
-			RadioButtonGroup.SelectedValue="{Binding BibliographyPart, Converter={StaticResource PartTypeEnumToStringConverter}}"
+			RadioButtonGroup.SelectedValue="{Binding ActiveBibliographyPart, Converter={StaticResource PartTypeEnumToStringConverter}}"
 			VerticalOptions="Center" HorizontalOptions="Fill">
 			<Grid.Resources>
 				<Style TargetType="RadioButton">
@@ -166,6 +169,7 @@
 
 		<views:BibliographyEditGridView Grid.Row="1" Grid.Column="0"
 			x:Name="_bibliographyEditGridView"
-			SelectedItem="{Binding SelectedBibliographyItem, Mode=OneWayToSource}"/>
+			SelectedItem="{Binding SelectedBibliographyItem, Mode=OneWayToSource}"
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsBibliographyEntriesView}}"/>
 	</Grid>
 </dpatkcontrols:DigitalProductionMainPage>
