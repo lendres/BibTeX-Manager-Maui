@@ -4,18 +4,18 @@ using CommunityToolkit.Maui.Views;
 
 namespace BibTeXManager.Views;
 
-public partial class StringConstantsView : ContentPage
+public partial class StringsEditView : ContentPage
 {
 	#region Fields
 
-	private readonly StringConstantsViewModel		_viewModel;
-	private readonly bool							_animateScrollToSelection		= false;
+	private readonly StringsEditViewModel	_viewModel;
+	private readonly bool					_animateScrollToSelection		= false;
 
 	#endregion
 
 	#region Construction
 
-	public StringConstantsView(StringConstantsViewModel viewModel)
+	public StringsEditView(StringsEditViewModel viewModel)
 	{
 		InitializeComponent();
 
@@ -39,9 +39,9 @@ public partial class StringConstantsView : ContentPage
 
 	async private void OnNewString(object sender, EventArgs eventArgs)
 	{
-		StringConstantViewModel	viewModel	= new();
-		StringConstantView		view		= new(viewModel);
-		object?			result				= await Shell.Current.ShowPopupAsync(view);
+		StringEditViewModel	viewModel	= new();
+		StringEditView		view		= new(viewModel);
+		object?				result				= await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResult && boolResult)
 		{
@@ -51,10 +51,10 @@ public partial class StringConstantsView : ContentPage
 
 	async private void OnEditString(object sender, EventArgs eventArgs)
 	{
-		StringEntry				stringEntry	= new(_viewModel.SelectedItem!);
-		StringConstantViewModel	viewModel		= new(stringEntry);
-		StringConstantView		view			= new(viewModel);
-		object?					result			= await Shell.Current.ShowPopupAsync(view);
+		StringEntry			stringEntry	= new(_viewModel.SelectedItem!);
+		StringEditViewModel	viewModel	= new(stringEntry);
+		StringEditView		view		= new(viewModel);
+		object?				result		= await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResult && boolResult)
 		{

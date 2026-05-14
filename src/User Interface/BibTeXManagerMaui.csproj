@@ -84,10 +84,10 @@
 		<MauiXaml Update="Views\BibliographyEditGridView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\StringConstantsView.xaml">
+		<MauiXaml Update="Views\StringsEditView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\StringConstantView.xaml">
+		<MauiXaml Update="Views\StringEditView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\SettingsView.xaml">
@@ -115,11 +115,11 @@
 		<Compile Update="Views\SettingsView.xaml.cs">
 		  <DependentUpon>SettingsView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\StringConstantsView.xaml.cs">
-		  <DependentUpon>StringConstantsView.xaml</DependentUpon>
+		<Compile Update="Views\StringsEditView.xaml.cs">
+		  <DependentUpon>StringsEditView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\StringConstantView.xaml.cs">
-		  <DependentUpon>StringConstantView.xaml</DependentUpon>
+		<Compile Update="Views\StringEditView.xaml.cs">
+		  <DependentUpon>StringEditView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\TemplateSelectionView.xaml.cs">
 			<DependentUpon>TemplateSelectionView.xaml</DependentUpon>

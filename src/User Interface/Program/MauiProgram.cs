@@ -56,8 +56,8 @@ public static class MauiProgram
 		services.AddSingleton<MainPage>();
 		services.AddSingleton<MainViewModel>();
 
-		services.AddSingleton<StringConstantsView>();
-		services.AddSingleton<StringConstantsViewModel>();
+		services.AddSingleton<StringsEditView>();
+		services.AddSingleton<StringsEditViewModel>();
 
 		services.AddSingleton<BibliographyEditGridView>();
 		services.AddSingleton<BibliographyEditGridViewModel>();

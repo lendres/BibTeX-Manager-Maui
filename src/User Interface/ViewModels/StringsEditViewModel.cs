@@ -4,7 +4,7 @@ using DigitalProduction.Maui.ViewModels;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class StringConstantsViewModel : DataGridBaseViewModel<StringEntry>
+public partial class StringsEditViewModel : DataGridBaseViewModel<StringEntry>
 {
 	#region Fields
 
@@ -12,7 +12,7 @@ public partial class StringConstantsViewModel : DataGridBaseViewModel<StringEntr
 
 	#region Construction
 
-	public StringConstantsViewModel()
+	public StringsEditViewModel()
     {
 		Items = Project.Bibliography.StringConstants;
 	}
