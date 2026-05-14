@@ -54,5 +54,4 @@ TestResults/
 src/.vs/
 Archive/
 src/XSLTProcessorMaui/Testing Files/output.html
-*.bib
-*.bibproj
+Test Files/strings-out.bib

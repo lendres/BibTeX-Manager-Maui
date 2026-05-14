@@ -13,6 +13,8 @@ namespace BibTeXManager;
 
 public static class MauiProgram
 {
+	public static IServiceProvider Services { get; private set; } = null!;
+
 	public static MauiApp CreateMauiApp()
 	{
 		MauiAppBuilder builder = MauiApp.CreateBuilder();
@@ -42,7 +44,11 @@ public static class MauiProgram
 			builder.Logging.AddDebug();
 		#endif
 
-		return builder.Build();
+		BibTeXProject.New(Preferences.ProjectSettings);
+
+		MauiApp mauiApp	= builder.Build();
+		Services		= mauiApp.Services;
+		return mauiApp;
 	}
 
 	static void RegisterViewsAndViewModels(IServiceCollection services)
@@ -50,14 +56,17 @@ public static class MauiProgram
 		services.AddSingleton<MainPage>();
 		services.AddSingleton<MainViewModel>();
 
+		services.AddSingleton<StringConstantsView>();
+		services.AddSingleton<StringConstantsViewModel>();
+
+		services.AddSingleton<BibliographyEditGridView>();
+		services.AddSingleton<BibliographyEditGridViewModel>();
+
 		services.AddTransient<EditRawBibEntryForm>();
 		services.AddTransient<BibEntryViewModel>();
 
-		services.AddTransient<StringConstantsView>();
-		services.AddTransient<StringConstantsViewModel>();
-
-		services.AddTransient<SettingsView>();
-		services.AddTransient<SettingsViewModel>();
+		services.AddSingleton<SettingsView>();
+		services.AddSingleton<SettingsViewModel>();
 	}
 
 	private static void RegisterServices(IServiceCollection services)
