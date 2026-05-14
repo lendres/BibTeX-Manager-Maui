@@ -19,21 +19,12 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	public static BibTeXProject? Instance
 	{
 		get => _instance;
-		set
-		{
-			_instance = value;
-			if (_instance != null)
-			{
-				_instance.Closed += OnClose;
-			}
-		}
+		set => _instance = value;
 	}
 
 	public static void New() => Instance = new BibTeXProject();
 
 	public static void New(ProjectSettings settings) => Instance = new BibTeXProject(settings);
-
-	private static void OnClose() { _instance!.Modified = false; }
 
 	#endregion
 
@@ -107,6 +98,9 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	[XmlIgnore()]
 	public Bibliography Bibliography { get => _bibliography; }
 
+	[XmlIgnore()]
+	public bool BibliographytOpen { get; set; } = false;
+
 	#endregion
 
 	#region File Reading Methods
@@ -131,7 +125,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		_bibliography.ModifiedChanged	+= OnChildModifiedChanged;
 		_bibliography.PropertyChanged	+= OnPropertyChanged;
 		Path                            =  "";
-		Modified                        = false;
+		base.Open();
 	}
 
 	/// <summary>
@@ -148,6 +142,8 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// </summary>
 	public void ReadBibliographyFile()
 	{
+		System.Diagnostics.Debug.Assert(_bibliography != null, "An instance of Bibliography is required. Call \"NewBibliographyFile\" before calling this method.");
+
 		if (!File.Exists(Path))
 		{
 			return;
@@ -164,7 +160,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		}
 
 		BuildStringConstantMap();
-		Modified = false;
+		base.Open();
 	}
 
 	/// <summary>
