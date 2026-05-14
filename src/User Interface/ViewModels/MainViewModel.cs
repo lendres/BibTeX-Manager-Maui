@@ -1,4 +1,5 @@
 ﻿using BibTeXLibrary;
+using BibTeXManager.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
@@ -40,28 +41,26 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 
 	#region Properties
 
-	public bool										SavePathRequired { get => !Project.HasSavePath; }
+	[ObservableProperty]
+	public partial BibliographyPartType			BibliographyPart			{  get; set; }	= BibliographyPartType.BibliographyEntries;
 
-	public IRecentPathsManagerService				RecentPathsManagerService { get; set; }
+	public bool									SavePathRequired			{ get => !Project.HasSavePath; }
 
-	public Page? MenuHostingPage
-	{
-		get => _dialogService.HostingPage;
-		set => _dialogService.HostingPage = value;
-	}
+	public IRecentPathsManagerService			RecentPathsManagerService	{ get; set; }
+
+	public Page?								MenuHostingPage				{ get => _dialogService.HostingPage; set => _dialogService.HostingPage = value; }
+
+
+
+	public string?								SearchString				{ get; set; } = null;
+
+	public bool									RequireSearchString			{ get => SearchString == null; }
 
 	[ObservableProperty]
-	public partial bool HasTemplates { get; set; } = false;
-
-	public string?									SearchString { get; set; } = null;
-
-	public bool										RequireSearchString => SearchString == null;
+	public partial BibEntry?					SelectedBibliographyItem	{ get; set; }
 
 	[ObservableProperty]
-	public partial BibEntry?						SelectedBibliographyItem { get; set; }
-
-	//[ObservableProperty]
-	//public partial bool								IsSubmittable { get; set; }					= false;
+	public partial bool							HasTemplates				{ get; set; } = false;
 
 	#endregion
 

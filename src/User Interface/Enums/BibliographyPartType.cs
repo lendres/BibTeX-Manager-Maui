@@ -7,7 +7,7 @@
 /// </summary>
 namespace BibTeXManager.Enums
 {
-	internal enum BibliographyPartType
+	public enum BibliographyPartType
 	{
 		/// <summary>Bibliography entries.</summary>
 		[Description("Bibliography Entries")]
