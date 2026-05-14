@@ -253,7 +253,7 @@
                     <!-- White space (tabs or spaces). -->
                     <Label Grid.Row="0" Grid.Column="0" Text="Tabs" StyleClass="MediumTitleLabelStyle"/>
 					<Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="*,*" Padding="0" Margin="0"
-					    RadioButtonGroup.GroupName="TabModeSelectorGroup" BackgroundColor="Cyan"
+					    RadioButtonGroup.GroupName="TabModeSelectorGroup"
 					    RadioButtonGroup.SelectedValue="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource EnumToStringConverter}}"
 					    VerticalOptions="Center" HorizontalOptions="Fill">
                         <Grid.Resources>
