@@ -10,8 +10,7 @@ public partial class BibliographyEditGridView : ContentView
 	#region Fields
 
 	private readonly BibliographyEditGridViewModel	_viewModel;
-	private bool									_updatingSelectedItem;
-	private readonly bool							_animateScrollToSelection = false;
+	private readonly bool							_animateScrollToSelection	= false;
 
 	#endregion
 
@@ -36,54 +35,28 @@ public partial class BibliographyEditGridView : ContentView
 		typeof(object),
 		typeof(BibliographyEditGridView),
 		null,
-		BindingMode.TwoWay,
-		propertyChanged: OnSelectedItemChanged);
+		BindingMode.OneWayToSource);
 
 	public object? SelectedItem
 	{
 		get => GetValue(SelectedItemProperty);
-		set => SetValue(SelectedItemProperty, value);
+		private set => SetValue(SelectedItemProperty, value);
 	}
+
+	private BibliographyEditGridViewModel ViewModel => (BibliographyEditGridViewModel)BindingContext;
 
 	private void OnLoaded(object? sender, EventArgs eventArgs)
 	{
-		if (_viewModel is INotifyPropertyChanged notifyPropertyChanged)
-		{
-			notifyPropertyChanged.PropertyChanged += OnViewModelPropertyChanged;
-		}
+		ViewModel.PropertyChanged += OnViewModelPropertyChanged;
 
-		SelectedItem = _viewModel.SelectedItem;
-	}
-
-	private static void OnSelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
-	{
-		BibliographyEditGridView bibliographyEditGrid = (BibliographyEditGridView)bindable;
-
-		if (bibliographyEditGrid._updatingSelectedItem)
-		{
-			return;
-		}
-
-		if (!Equals(bibliographyEditGrid._viewModel.SelectedItem, newValue))
-		{
-			bibliographyEditGrid._updatingSelectedItem		= true;
-			bibliographyEditGrid._viewModel.SelectedItem	= (BibEntry)newValue;
-			bibliographyEditGrid._updatingSelectedItem		= false;
-		}
+		SelectedItem = ViewModel.SelectedItem;
 	}
 
 	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs eventArgs)
 	{
-		if (eventArgs.PropertyName != nameof(BibliographyEditGridViewModel.SelectedItem))
+		if (eventArgs.PropertyName == nameof(BibliographyEditGridViewModel.SelectedItem))
 		{
-			return;
-		}
-
-		if (!Equals(SelectedItem, _viewModel.SelectedItem))
-		{
-			_updatingSelectedItem	= true;
-			SelectedItem			= _viewModel.SelectedItem;
-			_updatingSelectedItem	= false;
+			SelectedItem = ViewModel.SelectedItem;
 		}
 	}
 

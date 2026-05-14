@@ -136,6 +136,6 @@
 
 	<views:BibliographyEditGridView
 		x:Name="_bibliographyEditGridView"
-		SelectedItem="{Binding SelectedBibliographyItem, Mode=TwoWay}"/>
+		SelectedItem="{Binding SelectedBibliographyItem, Mode=OneWayToSource}"/>
 
 </dpatkcontrols:DigitalProductionMainPage>

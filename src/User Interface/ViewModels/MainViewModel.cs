@@ -45,7 +45,11 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 
 	public bool										RequireSearchString => SearchString == null;
 
-	public BibEntry?								SelectedBibliographyItem { get; set; }
+	public BibEntry?								SelectedBibliographyItem
+	{ 
+		get;
+		set;
+	}
 
 	//[ObservableProperty]
 	//public partial bool								IsSubmittable { get; set; }					= false;
