@@ -53,7 +53,7 @@ public static class MauiProgram
 
 	static void RegisterViewsAndViewModels(IServiceCollection services)
 	{
-		services.AddSingleton<MainPage>();
+		services.AddSingleton<MainView>();
 		services.AddSingleton<MainViewModel>();
 
 		services.AddTransient<StringsEditView>();

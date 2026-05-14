@@ -112,6 +112,9 @@
 		<Compile Update="Views\CorrectionView.xaml.cs">
 		  <DependentUpon>CorrectionView.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Views\MainView.xaml.cs">
+		  <DependentUpon>MainView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\SettingsView.xaml.cs">
 		  <DependentUpon>SettingsView.xaml</DependentUpon>
 		</Compile>

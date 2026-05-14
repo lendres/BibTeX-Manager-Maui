@@ -8,7 +8,7 @@
     Title="BibTeX Manager">
 
 	<ShellContent
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage"/>
+        ContentTemplate="{DataTemplate views:MainView}"
+        Route="MainView"/>
 
 </Shell>

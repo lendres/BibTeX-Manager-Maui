@@ -11,7 +11,7 @@ namespace BibTeXManager.Views;
 
 [QueryProperty(nameof(NavigationCommand), "NavigationCommand")]
 [QueryProperty(nameof(NavigationObject), "NavigationObject")]
-public partial class MainPage : DigitalProductionMainPage
+public partial class MainView : DigitalProductionMainPage
 {
 	#region Fields
 
@@ -24,7 +24,7 @@ public partial class MainPage : DigitalProductionMainPage
 
 	#region Construction
 
-	public MainPage(MainViewModel viewModel, IPageProvider pageProvider, IBibTeXFilePicker filePicker, ISaveFilePicker saveFilePicker, ISaveService saveBeforeExitService)
+	public MainView(MainViewModel viewModel, IPageProvider pageProvider, IBibTeXFilePicker filePicker, ISaveFilePicker saveFilePicker, ISaveService saveBeforeExitService)
 	{
 		InitializeComponent();
 

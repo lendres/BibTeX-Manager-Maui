@@ -9,7 +9,7 @@
 	xmlns:views="clr-namespace:BibTeXManager.Views"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:DataType="viewmodel:MainViewModel"
-	x:Class="BibTeXManager.Views.MainPage">
+	x:Class="BibTeXManager.Views.MainView">
 
 	<ContentPage.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
@@ -142,6 +142,29 @@
 			</MenuFlyoutItem>
 		</MenuBarItem>
 	</ContentPage.MenuBarItems>
+
+
+	<Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="*,*" Padding="0" Margin="0"
+					    RadioButtonGroup.GroupName="PartSelectorGroup"
+					    RadioButtonGroup.SelectedValue="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource EnumToStringConverter}}"
+					    VerticalOptions="Center" HorizontalOptions="Fill">
+		<Grid.Resources>
+			<Style TargetType="RadioButton">
+				<Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
+				<Setter Property="MinimumHeightRequest" Value="22"/>
+				<Setter Property="MinimumWidthRequest" Value="100"/>
+				<Setter Property="HorizontalOptions" Value="Fill"/>
+			</Style>
+		</Grid.Resources>
+		<RadioButton Grid.Column="0" Content="Insert Spaces" Value="Space"/>
+		<RadioButton Grid.Column="1" Content="Insert Tabs" Value="Tab"/>
+	</Grid>
+	<Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="90,*" RowDefinitions="40" VerticalOptions="Start">
+		<dpcontrols:Stepper VerticalOptions="Center" Minimum="1" Maximum="10" Value="{Binding Settings.WriteSettings.TabSize}"
+						    IsEnabled="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+		<Label Grid.Column="1" Text="Tab size" Margin="0" VerticalTextAlignment="Center"
+						    IsEnabled="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+	</Grid>
 
 	<views:BibliographyEditGridView
 		x:Name="_bibliographyEditGridView"
