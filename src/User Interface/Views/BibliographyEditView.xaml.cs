@@ -7,9 +7,6 @@ namespace BibTeXManager.Views;
 
 public partial class BibliographyEditView : BibliographyPartDataGridView<BibliographyEditViewModel, BibEntry>
 {
-	#region Fields
-	#endregion
-
 	#region Construction
 
 	public BibliographyEditView() :
@@ -55,7 +52,6 @@ public partial class BibliographyEditView : BibliographyPartDataGridView<Bibliog
 	}
 
 	#endregion
-
 
 	#region Button Events
 

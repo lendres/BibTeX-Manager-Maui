@@ -52,10 +52,4 @@ public partial class StringsEditView : BibliographyPartDataGridView<StringsEditV
 	}
 
 	#endregion
-
-	#region Methods
-
-
-
-	#endregion
 }

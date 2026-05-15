@@ -24,7 +24,7 @@
 	<ContentPage.MenuBarItems>
 		<!-- File. -->
 		<MenuBarItem Text="File">
-			<MenuFlyoutItem Text="New..." Clicked="OnNew">
+			<MenuFlyoutItem Text="New" Clicked="OnNew">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="n" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
@@ -77,7 +77,7 @@
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
 			<MenuFlyoutItem
-				Text="Delete Entry..."
+				Text="Delete Entry"
 				Clicked="OnDeleteBibEntry"
 				IsEnabled="{Binding SelectedBibliographyItem, Converter={StaticResource IsNotNullConverter}}">
 				<!--<MenuFlyoutItem.KeyboardAccelerators>

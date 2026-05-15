@@ -83,7 +83,7 @@ public class BibliographyPartDataGridView<TViewModel, TPart> : ContentView where
 
 	public async void OnDeleteEntry(object sender, EventArgs eventArgs)
 	{
-		//bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+//bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 		bool result = true;
 		if (result)
 		{
