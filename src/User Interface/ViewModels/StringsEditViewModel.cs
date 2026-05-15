@@ -4,12 +4,8 @@ using DigitalProduction.Maui.ViewModels;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class StringsEditViewModel : DataGridBaseViewModel<StringEntry>
+public partial class StringsEditViewModel : BibiographyPartDataGridBaseViewModel<StringEntry>
 {
-	#region Fields
-
-	#endregion
-
 	#region Construction
 
 	public StringsEditViewModel()
@@ -19,31 +15,9 @@ public partial class StringsEditViewModel : DataGridBaseViewModel<StringEntry>
 
 	#endregion
 
-	#region Properties
+	#region Methods
 
-	public BibTeXProject							Project { get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
-
-	[ObservableProperty]
-	public partial bool								IsSubmittable { get; set; }					= false;
-
-	#endregion
-
-	#region Validation
-
-	#endregion
-
-	#region Events
-
-	private void OnProjectModifiedChanged(object sender, bool modified)
-	{
-		Modified = modified;
-	}
-
-	#endregion
-
-	#region Methods and Commands
-
-	#region Edit Menu
+	protected override void AddItems() => Items = Project.Bibliography.StringConstants;
 
 	/// <summary>
 	/// Searches the bibliography for the specified search string in the author and title fields.
@@ -55,8 +29,6 @@ public partial class StringsEditViewModel : DataGridBaseViewModel<StringEntry>
 		List<StringEntry> findResults = Project.Bibliography.SearchStringConstants(true, search);
 		return SetSearchResults(search, findResults);
 	}
-
-	#endregion
 
 	#endregion
 
