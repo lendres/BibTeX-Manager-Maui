@@ -17,53 +17,38 @@
 
 	<Grid x:Name="_mainGrid" StyleClass="DataGridEditStyle">
 
-		<!-- Button Grid -->
-		<Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="200"/>
-			</Grid.ColumnDefinitions>
+		<!-- Buttons. -->
+		<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
+			<Button
+				Text="Add"
+				Clicked="OnNewBibEntry"
+				StyleClass="SquareButtonStyle"/>
 
-			<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
-				<Button
-					Text="Add"
-					Clicked="OnNewBibEntry"
-					StyleClass="SquareButtonStyle"/>
+			<Button
+				Text="Add from Template"
+				Clicked="OnNewBibEntryFromTemplate"
+				StyleClass="SquareButtonStyle"
+				IsEnabled="{Binding HasTemplates}"/>
 
-				<Button
-					Text="Add from Template"
-					Clicked="OnNewBibEntryFromTemplate"
-					StyleClass="SquareButtonStyle"
-					IsEnabled="{Binding HasTemplates}"/>
+			<Button
+				Text="Edit"
+				Clicked="OnEditBibEntry"
+				StyleClass="SquareButton"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
-				<Button
-					Text="Edit"
-					Clicked="OnEditBibEntry"
-					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+			<Button 
+				Text="Delete"
+				Clicked="OnDeleteBibEntry"
+				StyleClass="SquareButton"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
-				<Button 
-					Text="Delete"
-					Clicked="OnDeleteBibEntry"
-					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+			<Button 
+				Text="Copy Key"
+				Command="{Binding CopyCiteKeyToClipboardCommand}"
+				StyleClass="SquareButton"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
-				<Button 
-					Text="Copy Key"
-					Command="{Binding CopyCiteKeyToClipboardCommand}"
-					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-
-			</HorizontalStackLayout>
-
-			<!--<Button 
-				Grid.Column="1"
-				Text="Save"
-				IsEnabled="{Binding CanSave}"
-				Clicked="OnSave"
-				WidthRequest="75"
-				HorizontalOptions="End"/>-->
-		</Grid>
+		</HorizontalStackLayout>
 
 		<dg:DataGrid
 			Grid.Row="1"

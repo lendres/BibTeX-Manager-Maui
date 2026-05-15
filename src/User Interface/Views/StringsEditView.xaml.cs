@@ -4,7 +4,7 @@ using CommunityToolkit.Maui.Views;
 
 namespace BibTeXManager.Views;
 
-public partial class StringsEditView : ContentPage
+public partial class StringsEditView : ContentView
 {
 	#region Fields
 
@@ -15,12 +15,12 @@ public partial class StringsEditView : ContentPage
 
 	#region Construction
 
-	public StringsEditView(StringsEditViewModel viewModel)
+	public StringsEditView()
 	{
 		InitializeComponent();
 
-		BindingContext	= viewModel;
-		_viewModel		= viewModel;
+		_viewModel					= MauiProgram.Services.GetRequiredService<StringsEditViewModel>();
+		_mainGrid.BindingContext	= _viewModel;
 	}
 
 	#endregion
@@ -64,8 +64,8 @@ public partial class StringsEditView : ContentPage
 
 	async private void OnDeleteString(object sender, EventArgs eventArgs)
 	{
-		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
-
+//bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+bool result = true;
 		if (result)
 		{
 			_viewModel.Delete();

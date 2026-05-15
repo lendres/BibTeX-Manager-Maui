@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<ContentView
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:dpatkcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui.AppToolkit"
@@ -11,50 +11,33 @@
 	x:DataType="viewmodel:StringsEditViewModel"
 	x:Class="BibTeXManager.Views.StringsEditView">
 
-	<Shell.BackButtonBehavior>
-		<BackButtonBehavior IsVisible="False" IsEnabled="False" />
-	</Shell.BackButtonBehavior>
-
-	<ContentPage.Resources>
+	<ContentView.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
-	</ContentPage.Resources>
+	</ContentView.Resources>
 
-	<Grid RowDefinitions="auto,*"  Padding="30" RowSpacing="20" HorizontalOptions="Fill" VerticalOptions="Fill">
+	<Grid x:Name="_mainGrid" StyleClass="DataGridEditStyle">
 
-		<!-- Button Grid -->
-		<Grid Grid.Row="0" HorizontalOptions="Fill" VerticalOptions="Start">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="200"/>
-			</Grid.ColumnDefinitions>
+		<!-- Buttons. -->
+		<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
+			<Button
+				Text="Add"
+				Clicked="OnNewString"
+				StyleClass="SquareButtonStyle"/>
 
-			<HorizontalStackLayout Grid.Column="0" StyleClass="TopButtonRowStyle">
-				<Button
-					Text="Add"
-					Clicked="OnNewString"
-					StyleClass="SquareButtonStyle"/>
-
-				<Button
-					Text="Edit"
-					Clicked="OnEditString"
-					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-
-				<Button 
-					Text="Delete"
-					Clicked="OnDeleteString"
-					StyleClass="SquareButton"
-					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-
-			</HorizontalStackLayout>
+			<Button
+				Text="Edit"
+				Clicked="OnEditString"
+				StyleClass="SquareButton"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
 			<Button 
-				Grid.Column="1"
-				Text="OK"
-				Clicked="OnOK"
-				WidthRequest="75"
-				HorizontalOptions="End"/>
-		</Grid>
+				Text="Delete"
+				Clicked="OnDeleteString"
+				StyleClass="SquareButton"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+
+		</HorizontalStackLayout>
+
 
 		<dg:DataGrid
 			Grid.Row="1"
@@ -81,4 +64,4 @@
 			</dg:DataGrid.Columns>
 		</dg:DataGrid>
 	</Grid>
-</ContentPage>
+</ContentView>

@@ -16,7 +16,7 @@
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
 		<dpconverters:EnumToStringConverter x:Key="PartTypeEnumToStringConverter" x:TypeArguments="enums:BibliographyPartType"/>
 		<dpconverters:SingleEnumToBoolConverter x:Key="IsHeaderView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.Header}"/>
-		<dpconverters:SingleEnumToBoolConverter x:Key="IsStringEntryView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.StringEntries}"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="IsStringEntriesView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.StringEntries}"/>
 		<dpconverters:SingleEnumToBoolConverter x:Key="IsBibliographyEntriesView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.BibliographyEntries}"/>
 	</ContentPage.Resources>
 
@@ -111,15 +111,6 @@
 			</MenuFlyoutItem>
 		</MenuBarItem>
 
-		<!-- Configuration. -->
-		<MenuBarItem Text="Configuration">
-			<MenuFlyoutItem
-				Text="Edit Strings..."
-				Clicked="OnEditStringConstants"
-				IsEnabled="{Binding IsOpen}">
-			</MenuFlyoutItem>
-		</MenuBarItem>
-
 		<!-- Settings. -->
 		<MenuBarItem Text="Settings">
 			<MenuFlyoutItem Text="Options..." Clicked="OnOptions"/>
@@ -166,6 +157,11 @@
 			<RadioButton Grid.Column="1" Content="String Entries" Value="StringEntries"/>
 			<RadioButton Grid.Column="2" Content="Bibliography Entries" Value="BibliographyEntries"/>
 		</Grid>
+
+		<views:StringsEditView Grid.Row="1" Grid.Column="0"
+			x:Name="_stringsEditView"
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsStringEntriesView}}"
+			IsEnabled="{Binding IsOpen}"/>
 
 		<views:BibliographyEditView Grid.Row="1" Grid.Column="0"
 			x:Name="_bibliographyEditView"

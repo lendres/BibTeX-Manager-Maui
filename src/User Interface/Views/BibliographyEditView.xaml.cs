@@ -20,7 +20,7 @@ public partial class BibliographyEditView : ContentView
 	{
 		InitializeComponent();
 
-		_viewModel					=  MauiProgram.Services.GetRequiredService<BibliographyEditViewModel>(); ;
+		_viewModel					=  MauiProgram.Services.GetRequiredService<BibliographyEditViewModel>();
 		_mainGrid.BindingContext	= _viewModel;
 
 		Loaded += OnLoaded;
