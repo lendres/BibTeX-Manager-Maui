@@ -35,5 +35,4 @@ public abstract class BibiographyPartDataGridBaseViewModel<T> : DataGridBaseView
 	protected abstract void AddItems();
 
 	#endregion
-
 }
