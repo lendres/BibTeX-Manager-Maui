@@ -83,9 +83,12 @@
 				Margin="0"
 				x:Name="TextLabel"
 				x:DataType="RadioButton"
-				FontSize="12" FontAttributes="Bold" 
-				HorizontalOptions="Fill" VerticalOptions="Center"
-				HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+				FontSize="{TemplateBinding FontSize}"
+				FontAttributes="Bold" 
+				HorizontalOptions="Fill"
+				VerticalOptions="Center"
+				HorizontalTextAlignment="Center"
+				VerticalTextAlignment="Center"/>
 		</Border>
 	</ControlTemplate>
 

@@ -259,10 +259,9 @@
                         <Grid.Resources>
                             <Style TargetType="RadioButton">
                                 <Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
-								<Setter Property="MinimumHeightRequest" Value="22"/>
-								<Setter Property="MinimumWidthRequest" Value="100"/>
 								<Setter Property="HorizontalOptions" Value="Fill"/>
-                            </Style>
+								<Setter Property="FontSize" Value="12"/>
+							</Style>
                         </Grid.Resources>
                         <RadioButton Grid.Column="0" Content="Insert Spaces" Value="Space"/>
                         <RadioButton Grid.Column="1" Content="Insert Tabs" Value="Tab"/>
