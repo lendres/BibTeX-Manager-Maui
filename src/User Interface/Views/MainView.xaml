@@ -170,6 +170,7 @@
 		<views:BibliographyEditView Grid.Row="1" Grid.Column="0"
 			x:Name="_bibliographyEditView"
 			SelectedItem="{Binding SelectedBibliographyItem, Mode=OneWayToSource}"
-			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsBibliographyEntriesView}}"/>
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsBibliographyEntriesView}}"
+			IsEnabled="{Binding IsOpen}"/>
 	</Grid>
 </dpatkcontrols:DigitalProductionMainPage>
