@@ -5,23 +5,19 @@ using System.ComponentModel;
 
 namespace BibTeXManager.Views;
 
-public partial class BibliographyEditView : ContentView
+public partial class BibliographyEditView : BibliographyPartDataGridView<BibliographyEditViewModel, BibEntry>
 {
 	#region Fields
-
-	private readonly BibliographyEditViewModel	_viewModel;
-	private readonly bool							_animateScrollToSelection	= false;
-
 	#endregion
 
 	#region Construction
 
-	public BibliographyEditView()
+	public BibliographyEditView() :
+		base(MauiProgram.Services.GetRequiredService<BibliographyEditViewModel>())
 	{
 		InitializeComponent();
-
-		_viewModel					=  MauiProgram.Services.GetRequiredService<BibliographyEditViewModel>();
-		_mainGrid.BindingContext	= _viewModel;
+		_mainGrid.BindingContext	= ViewModel;
+		DataGrid					= _dataGrid;
 
 		Loaded += OnLoaded;
 	}
@@ -45,67 +41,21 @@ public partial class BibliographyEditView : ContentView
 
 	private void OnLoaded(object? sender, EventArgs eventArgs)
 	{
-		_viewModel.PropertyChanged += OnViewModelPropertyChanged;
+		ViewModel.PropertyChanged += OnViewModelPropertyChanged;
 
-		SelectedItem = _viewModel.SelectedItem;
+		SelectedItem = ViewModel.SelectedItem;
 	}
 
 	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs eventArgs)
 	{
 		if (eventArgs.PropertyName == nameof(BibliographyEditViewModel.SelectedItem))
 		{
-			SelectedItem = _viewModel.SelectedItem;
+			SelectedItem = ViewModel.SelectedItem;
 		}
 	}
 
 	#endregion
 
-	#region File
-
-	public async void New()
-	{
-		await _viewModel.New();
-	}
-
-	public async void Open()
-	{
-		await _viewModel.Open();
-	}
-
-	public async void Close()
-	{
-		await _viewModel.Close();
-	}
-
-	#endregion
-
-	#region Edit
-
-	public bool RequireSearchString()
-	{
-		return _viewModel.RequireSearchString;
-	}
-
-	public bool Find(string searchString)
-	{
-		return _viewModel.Find(searchString);
-	}
-
-	public void SelectNextFoundItem()
-	{
-		_viewModel.SelectNextFoundItem();
-		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
-	}
-
-	public void OnScrollToSelection(object sender, EventArgs eventArgs)
-	{
-		if (_viewModel.SelectedItem != null)
-		{
-			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem, ScrollToPosition.Center, _animateScrollToSelection);
-		}
-	}
-
-	#endregion
 
 	#region Button Events
 
@@ -119,13 +69,13 @@ public partial class BibliographyEditView : ContentView
 
 	public async void OnNewBibEntryFromTemplate(object sender, EventArgs eventArgs)
 	{
-		TemplateSelectionViewModel viewModel = new(_viewModel.Project.BibEntryInitialization.TemplateNames);
-		TemplateSelectionView view = new(viewModel);
+		TemplateSelectionViewModel	viewModel	= new(ViewModel.Project.BibEntryInitialization.TemplateNames);
+		TemplateSelectionView		view		= new(viewModel);
 		object? result = await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResult && boolResult)
 		{
-			BibEntry entry = BibEntry.NewBibEntryFromTemplate(_viewModel.Project.BibEntryInitialization, viewModel.Template);
+			BibEntry entry = BibEntry.NewBibEntryFromTemplate(ViewModel.Project.BibEntryInitialization, viewModel.Template);
 
 			await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
 			{
@@ -140,35 +90,8 @@ public partial class BibliographyEditView : ContentView
 		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
 		{
 			{ "AddMode",  false },
-			{ "BibEntry", _viewModel.SelectedItem! }
+			{ "BibEntry", ViewModel.SelectedItem! }
 		});
-	}
-
-	public async void OnDeleteBibEntry(object sender, EventArgs eventArgs)
-	{
-//bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
-bool result = true;
-		if (result)
-		{
-			_viewModel.Delete();
-			BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
-		}
-	}
-
-	#endregion
-
-	#region Methods
-
-	public void Insert(BibEntry bibEntry)
-	{
-		_viewModel.Insert(bibEntry);
-		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
-	}
-
-	public void ReplaceSelected(BibEntry bibEntry)
-	{
-		_viewModel.ReplaceSelected(bibEntry);
-		BibliographyDataGrid.ScrollTo(_viewModel.SelectedItem!, ScrollToPosition.Center, _animateScrollToSelection);
 	}
 
 	#endregion

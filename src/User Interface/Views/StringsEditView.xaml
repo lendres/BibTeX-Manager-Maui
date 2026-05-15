@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentView
+<view:BibliographyPartDataGridView
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:dpatkcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui.AppToolkit"
@@ -7,13 +7,16 @@
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:library="clr-namespace:BibTeXLibrary;assembly=DigitalProduction.BibTeXLibrary"
+	xmlns:view="clr-namespace:BibTeXManager.Views"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:DataType="viewmodel:StringsEditViewModel"
-	x:Class="BibTeXManager.Views.StringsEditView">
+	x:Class="BibTeXManager.Views.StringsEditView"
+	x:TypeArguments="viewmodel:StringsEditViewModel,library:StringEntry">
 
-	<ContentView.Resources>
+	<view:BibliographyPartDataGridView.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
-	</ContentView.Resources>
+	</view:BibliographyPartDataGridView.Resources>
 
 	<Grid x:Name="_mainGrid" StyleClass="DataGridEditStyle">
 
@@ -32,7 +35,7 @@
 
 			<Button 
 				Text="Delete"
-				Clicked="OnDeleteString"
+				Clicked="OnDeleteEntry"
 				StyleClass="SquareButton"
 				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
@@ -41,14 +44,13 @@
 
 		<dg:DataGrid
 			Grid.Row="1"
-			x:Name="StringsDataGrid"
+			x:Name="_dataGrid"
 			Style="{DynamicResource DataGridDefaultLooseStyle}"
 			ItemsSource="{Binding Items, Mode=TwoWay}" SelectionMode="{Binding SelectionMode}"
 			SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
 			RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
 			PaginationEnabled="false"
 			RowTappedCommand="{Binding TappedCommand}"
-			IsVisible="{Binding Items, Converter={StaticResource IsNotNullConverter}}"
 			IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
 
 			<dg:DataGrid.Columns>
@@ -64,4 +66,4 @@
 			</dg:DataGrid.Columns>
 		</dg:DataGrid>
 	</Grid>
-</ContentView>
+</view:BibliographyPartDataGridView>

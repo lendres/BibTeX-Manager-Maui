@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView
+<view:BibliographyPartDataGridView
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:dpatkcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui.AppToolkit"
@@ -7,13 +7,16 @@
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:library="clr-namespace:BibTeXLibrary;assembly=DigitalProduction.BibTeXLibrary"
+	xmlns:view="clr-namespace:BibTeXManager.Views"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:DataType="viewmodel:BibliographyEditViewModel"
-	x:Class="BibTeXManager.Views.BibliographyEditView">
+	x:Class="BibTeXManager.Views.BibliographyEditView"
+	x:TypeArguments="viewmodel:BibliographyEditViewModel,library:BibEntry">
 
-	<ContentView.Resources>
+	<view:BibliographyPartDataGridView.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
-	</ContentView.Resources>
+	</view:BibliographyPartDataGridView.Resources>
 
 	<Grid x:Name="_mainGrid" StyleClass="DataGridEditStyle">
 
@@ -38,7 +41,7 @@
 
 			<Button 
 				Text="Delete"
-				Clicked="OnDeleteBibEntry"
+				Clicked="OnDeleteEntry"
 				StyleClass="SquareButton"
 				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
@@ -52,7 +55,7 @@
 
 		<dg:DataGrid
 			Grid.Row="1"
-			x:Name="BibliographyDataGrid"
+			x:Name="_dataGrid"
 			Style="{DynamicResource DataGridDefaultLooseStyle}"
 			ItemsSource="{Binding Items, Mode=TwoWay}" SelectionMode="{Binding SelectionMode}"
 			SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
@@ -77,4 +80,4 @@
 			</dg:DataGrid.Columns>
 		</dg:DataGrid>
 	</Grid>
-</ContentView>
+</view:BibliographyPartDataGridView>

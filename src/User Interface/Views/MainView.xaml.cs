@@ -61,6 +61,7 @@ public partial class MainView : DigitalProductionMainPage
 	{
 		if (await TryCloseProject())
 		{
+			_stringsEditView.New();
 			_bibliographyEditView.New();
 			_viewModel.New();
 		}
@@ -86,6 +87,7 @@ public partial class MainView : DigitalProductionMainPage
 	private async Task Open(string path)
 	{
 		await _viewModel.OpenWithPathSave(path);
+		_stringsEditView.Open();
 		_bibliographyEditView.Open();
 	}
 
@@ -136,6 +138,7 @@ public partial class MainView : DigitalProductionMainPage
 				return false;
 		}
 
+		_stringsEditView.Close();
 		_bibliographyEditView.Close();
 		_viewModel.Close();
 		return true;
@@ -162,7 +165,7 @@ public partial class MainView : DigitalProductionMainPage
 
 	async void OnDeleteBibEntry(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditView.OnDeleteBibEntry(sender, eventArgs);
+		_bibliographyEditView.OnDeleteEntry(sender, eventArgs);
 	}
 
 	void OnFind(object sender, EventArgs eventArgs)
@@ -213,15 +216,6 @@ public partial class MainView : DigitalProductionMainPage
 	}
 
     #endregion
-
-	#region Configuration
-
-	async void OnEditStringConstants(object sender, EventArgs eventArgs)
-	{
-		await Shell.Current.GoToAsync(nameof(StringsEditView), true);
-	}
-
-	#endregion
 
     #region Settings
 
