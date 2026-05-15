@@ -5,11 +5,11 @@ using DigitalProduction.Maui.ViewModels;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class BibliographyEditGridViewModel : DataGridBaseViewModel<BibEntry>
+public partial class BibliographyEditViewModel : DataGridBaseViewModel<BibEntry>
 {
 	#region Construction
 
-	public BibliographyEditGridViewModel()
+	public BibliographyEditViewModel()
 	{
 		ProjectInitialization();
 	}

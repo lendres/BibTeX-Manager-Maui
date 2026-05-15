@@ -167,8 +167,8 @@
 			<RadioButton Grid.Column="2" Content="Bibliography Entries" Value="BibliographyEntries"/>
 		</Grid>
 
-		<views:BibliographyEditGridView Grid.Row="1" Grid.Column="0"
-			x:Name="_bibliographyEditGridView"
+		<views:BibliographyEditView Grid.Row="1" Grid.Column="0"
+			x:Name="_bibliographyEditView"
 			SelectedItem="{Binding SelectedBibliographyItem, Mode=OneWayToSource}"
 			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsBibliographyEntriesView}}"/>
 	</Grid>

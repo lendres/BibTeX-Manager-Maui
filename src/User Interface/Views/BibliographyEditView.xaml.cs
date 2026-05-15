@@ -5,22 +5,22 @@ using System.ComponentModel;
 
 namespace BibTeXManager.Views;
 
-public partial class BibliographyEditGridView : ContentView
+public partial class BibliographyEditView : ContentView
 {
 	#region Fields
 
-	private readonly BibliographyEditGridViewModel	_viewModel;
+	private readonly BibliographyEditViewModel	_viewModel;
 	private readonly bool							_animateScrollToSelection	= false;
 
 	#endregion
 
 	#region Construction
 
-	public BibliographyEditGridView()
+	public BibliographyEditView()
 	{
 		InitializeComponent();
 
-		_viewModel					=  MauiProgram.Services.GetRequiredService<BibliographyEditGridViewModel>(); ;
+		_viewModel					=  MauiProgram.Services.GetRequiredService<BibliographyEditViewModel>(); ;
 		_mainGrid.BindingContext	= _viewModel;
 
 		Loaded += OnLoaded;
@@ -33,7 +33,7 @@ public partial class BibliographyEditGridView : ContentView
 	public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
 		nameof(SelectedItem),
 		typeof(object),
-		typeof(BibliographyEditGridView),
+		typeof(BibliographyEditView),
 		null,
 		BindingMode.OneWayToSource);
 
@@ -52,7 +52,7 @@ public partial class BibliographyEditGridView : ContentView
 
 	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs eventArgs)
 	{
-		if (eventArgs.PropertyName == nameof(BibliographyEditGridViewModel.SelectedItem))
+		if (eventArgs.PropertyName == nameof(BibliographyEditViewModel.SelectedItem))
 		{
 			SelectedItem = _viewModel.SelectedItem;
 		}

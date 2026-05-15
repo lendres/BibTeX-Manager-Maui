@@ -61,7 +61,7 @@ public partial class MainView : DigitalProductionMainPage
 	{
 		if (await TryCloseProject())
 		{
-			_bibliographyEditGridView.New();
+			_bibliographyEditView.New();
 			_viewModel.New();
 		}
 	}
@@ -86,7 +86,7 @@ public partial class MainView : DigitalProductionMainPage
 	private async Task Open(string path)
 	{
 		await _viewModel.OpenWithPathSave(path);
-		_bibliographyEditGridView.Open();
+		_bibliographyEditView.Open();
 	}
 
 	async void OnSave(object sender, EventArgs eventArgs)
@@ -136,7 +136,7 @@ public partial class MainView : DigitalProductionMainPage
 				return false;
 		}
 
-		_bibliographyEditGridView.Close();
+		_bibliographyEditView.Close();
 		_viewModel.Close();
 		return true;
 	}
@@ -147,22 +147,22 @@ public partial class MainView : DigitalProductionMainPage
 
 	async void OnNewBibEntry(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditGridView.OnNewBibEntry(sender, eventArgs);
+		_bibliographyEditView.OnNewBibEntry(sender, eventArgs);
 	}
 
 	async void OnNewBibEntryFromTemplate(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditGridView.OnNewBibEntryFromTemplate(sender, eventArgs);
+		_bibliographyEditView.OnNewBibEntryFromTemplate(sender, eventArgs);
 	}
 
 	async void OnEditBibEntry(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditGridView.OnEditBibEntry(sender, eventArgs);
+		_bibliographyEditView.OnEditBibEntry(sender, eventArgs);
 	}
 
 	async void OnDeleteBibEntry(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditGridView.OnDeleteBibEntry(sender, eventArgs);
+		_bibliographyEditView.OnDeleteBibEntry(sender, eventArgs);
 	}
 
 	void OnFind(object sender, EventArgs eventArgs)
@@ -190,7 +190,7 @@ public partial class MainView : DigitalProductionMainPage
 
 		if (result is bool boolResut && boolResut)
 		{
-			bool foundEntries = _bibliographyEditGridView.Find(viewModel.SearchTermsString);
+			bool foundEntries = _bibliographyEditView.Find(viewModel.SearchTermsString);
 			if (!foundEntries)
 			{
 				await DisplayAlert("Not Found", "No entries found for the specified search term(s).\nSearch string: "+viewModel.SearchTermsString , "OK");
@@ -204,12 +204,12 @@ public partial class MainView : DigitalProductionMainPage
 
 	private void SelectNextFoundItem()
 	{
-		_bibliographyEditGridView.SelectNextFoundItem();
+		_bibliographyEditView.SelectNextFoundItem();
 	}
 
 	private void OnScrollToSelection(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditGridView.OnScrollToSelection(sender, eventArgs);
+		_bibliographyEditView.OnScrollToSelection(sender, eventArgs);
 	}
 
     #endregion
@@ -304,12 +304,12 @@ public partial class MainView : DigitalProductionMainPage
 		{
 			case "Save":
 				System.Diagnostics.Debug.Assert(NavigationObject != null);
-				_bibliographyEditGridView.Insert(NavigationObject);
+				_bibliographyEditView.Insert(NavigationObject);
 				break;
 
 			case "Replace":
 				System.Diagnostics.Debug.Assert(NavigationObject != null);
-				_bibliographyEditGridView.ReplaceSelected(NavigationObject);
+				_bibliographyEditView.ReplaceSelected(NavigationObject);
 				break;
 			case "Cancel":
 			default:
