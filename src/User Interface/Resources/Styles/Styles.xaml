@@ -8,9 +8,18 @@
 	<Style TargetType="Button" Class="SquareButtonStyle">
 	</Style>
 
-	<Style TargetType="Button" Class="ToolBarButtonStyle"  BasedOn="{StaticResource ButtonBaseStyle}">
-		<!--<Setter Property="FontSize" Value="12"/>-->
-		<!--<Setter Property="CornerRadius" Value="4"/>-->
+	<Style TargetType="Button" ApplyToDerivedTypes="True" x:Key="ToolBarButtonBaseStyle"  BasedOn="{StaticResource ButtonBaseStyle}">
+		<Setter Property="WidthRequest" Value="40"/>
+		<Setter Property="HeightRequest" Value="20"/>
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="CornerRadius" Value="6"/>
+	</Style>
+
+	<Style TargetType="Button" Class="ToolBarButtonStyle" BasedOn="{StaticResource ToolBarButtonBaseStyle}">
+	</Style>
+	
+	<Style TargetType="Button" Class="WideToolBarButtonStyle" BasedOn="{StaticResource ToolBarButtonBaseStyle}">
+		<Setter Property="WidthRequest" Value="80"/>
 	</Style>
 
 	<Style TargetType="Border" Class="SmallTitleBorderStyle">
