@@ -103,20 +103,20 @@ public partial class SettingsViewModel : ObservableObject
 
 	private void AddValidations()
 	{
-		AuxiliaryFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		AuxiliaryFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		AuxiliaryFile.Validations.Add(new ConditionalIsNotNullOrEmptyRule { IsRequired = () => Settings.UseAuxiliaryFile, ValidationMessage = "A file name is required." });
+		AuxiliaryFile.Validations.Add(new ConditionalFileExistsRule { IsRequired = () => Settings.UseAuxiliaryFile, ValidationMessage = "The file does not exist." });
 		ValidateAuxiliaryFile();
 
-		FieldOrderFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		FieldOrderFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		FieldOrderFile.Validations.Add(new ConditionalIsNotNullOrEmptyRule { IsRequired = () => Settings.UseBibEntryInitialization, ValidationMessage = "A file name is required." });
+		FieldOrderFile.Validations.Add(new ConditionalFileExistsRule { IsRequired = () => Settings.UseBibEntryInitialization, ValidationMessage = "The file does not exist." });
 		ValidateFieldOrderFile();
 
-		FieldQualityFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		FieldQualityFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		FieldQualityFile.Validations.Add(new ConditionalIsNotNullOrEmptyRule { IsRequired = () => Settings.UseFieldQualityProcessing, ValidationMessage = "A file name is required." });
+		FieldQualityFile.Validations.Add(new ConditionalFileExistsRule { IsRequired = () => Settings.UseFieldQualityProcessing, ValidationMessage = "The file does not exist." });
 		ValidateFieldQualityFile();
 
-		NameRemappingFile.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A file name is required." });
-		NameRemappingFile.Validations.Add(new FileExistsRule { ValidationMessage = "The file does not exist." });
+		NameRemappingFile.Validations.Add(new ConditionalIsNotNullOrEmptyRule { IsRequired = () => Settings.UseBibEntryRemapping, ValidationMessage = "A file name is required." });
+		NameRemappingFile.Validations.Add(new ConditionalFileExistsRule { IsRequired = () => Settings.UseBibEntryRemapping, ValidationMessage = "The file does not exist." });
 		ValidateNameRemappingFile();
 	}
 
