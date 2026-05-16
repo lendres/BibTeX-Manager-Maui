@@ -8,6 +8,11 @@
 	<Style TargetType="Button" Class="SquareButtonStyle">
 	</Style>
 
+	<Style TargetType="Button" Class="ToolBarButtonStyle"  BasedOn="{StaticResource ButtonBaseStyle}">
+		<!--<Setter Property="FontSize" Value="12"/>-->
+		<!--<Setter Property="CornerRadius" Value="4"/>-->
+	</Style>
+
 	<Style TargetType="Border" Class="SmallTitleBorderStyle">
 		<Setter Property="StrokeShape" Value="RoundRectangle 8"/>
 		<Setter Property="StrokeThickness" Value="2"/>
@@ -70,8 +75,8 @@
 						<VisualState x:Name="Unchecked">
 							<VisualState.Setters>
 								<Setter TargetName="TextLabel" Property="Label.TextColor" Value="{DynamicResource Primary}"/>
-								<Setter Property="Background" Value="{DynamicResource SecondaryBrush}"/>
-								<Setter Property="Stroke" Value="{DynamicResource SecondaryBrush}"/>
+								<Setter Property="Background" Value="{DynamicResource SelectorBackgroundColor}"/>
+								<Setter Property="Stroke" Value="{DynamicResource SelectorBackgroundColor}"/>
 							</VisualState.Setters>
 						</VisualState>
 					</VisualStateGroup>
