@@ -103,8 +103,16 @@
                 <VerticalStackLayout StyleClass="VerticalLayoutStyle">
                     <!-- Auxiliary file. -->
 					<Grid StyleClass="SwitchGridStyle">
-                        <Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UseAuxiliaryFile}"/>
-                        <Label Grid.Column="1" Grid.Row="0"	Text="Use an auxiliary file" StyleClass="SwitchLabel"/>
+						<Switch Grid.Column="0"  Grid.Row="0" x:Name="AuxiliaryFileSwitch" IsToggled="{Binding Settings.UseAuxiliaryFile}">
+							<Switch.Behaviors>
+								<mct:EventToCommandBehavior
+									x:TypeArguments="system:EventArgs"
+									Command="{Binding ValidateAuxiliaryFileCommand}"
+									BindingContext="{Binding Path=BindingContext, Source={x:Reference AuxiliaryFileSwitch}, x:DataType=Switch}"
+									EventName="Toggled"/>
+							</Switch.Behaviors>
+						</Switch>
+						<Label Grid.Column="1" Grid.Row="0"	Text="Use an auxiliary file" StyleClass="SwitchLabel"/>
                     </Grid>
                     <Grid StyleClass="FileBrowsingGridStyle">
                         <Label Grid.Row="0" Text="Auxiliary File" StyleClass="ControlLabel" IsEnabled="{Binding Settings.UseAuxiliaryFile}"/>
@@ -131,8 +139,16 @@
                 <Label Text="Bibliography Entry Field Order" StyleClass="MediumTitleLabelStyle"/>
                 <VerticalStackLayout StyleClass="VerticalLayoutStyle">
 					<Grid StyleClass="SwitchGridStyle">
-                        <Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UseBibEntryInitialization}"/>
-                        <Label Grid.Column="1" Grid.Row="0"	Text="Keep fields in a specified order" StyleClass="SwitchLabel"/>
+						<Switch Grid.Column="0"  Grid.Row="0" x:Name="FieldOrderSwitch" IsToggled="{Binding Settings.UseBibEntryInitialization}">
+							<Switch.Behaviors>
+								<mct:EventToCommandBehavior
+									x:TypeArguments="system:EventArgs"
+									Command="{Binding ValidateFieldOrderFileCommand}"
+									BindingContext="{Binding Path=BindingContext, Source={x:Reference FieldOrderSwitch}, x:DataType=Switch}"
+									EventName="Toggled"/>
+							</Switch.Behaviors>
+						</Switch>
+						<Label Grid.Column="1" Grid.Row="0"	Text="Keep fields in a specified order" StyleClass="SwitchLabel"/>
                     </Grid>
                     <Grid StyleClass="FileBrowsingGridStyle">
                         <Label Grid.Row="0" Text="Bibliography Entry Field Order File" StyleClass="ControlLabel" IsEnabled="{Binding Settings.UseBibEntryInitialization}"/>
@@ -159,8 +175,16 @@
                     <Label Text="Bibliography Entry Field Quality" StyleClass="MediumTitleLabelStyle"/>
                 <VerticalStackLayout StyleClass="VerticalLayoutStyle">
 					<Grid StyleClass="SwitchGridStyle">
-                        <Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UseFieldQualityProcessing}"/>
-                        <Label Grid.Column="1" Grid.Row="0"	Text="Perform quality checking on the field values of bibliography enties" StyleClass="SwitchLabel"/>
+						<Switch Grid.Column="0"  Grid.Row="0" x:Name="FieldQualitySwitch" IsToggled="{Binding Settings.UseFieldQualityProcessing}">
+							<Switch.Behaviors>
+								<mct:EventToCommandBehavior
+									x:TypeArguments="system:EventArgs"
+									Command="{Binding ValidateFieldQualityFileCommand}"
+									BindingContext="{Binding Path=BindingContext, Source={x:Reference FieldQualitySwitch}, x:DataType=Switch}"
+									EventName="Toggled"/>
+							</Switch.Behaviors>
+						</Switch>
+						<Label Grid.Column="1" Grid.Row="0"	Text="Perform quality checking on the field values of bibliography enties" StyleClass="SwitchLabel"/>
                     </Grid>
                     <Grid StyleClass="FileBrowsingGridStyle">
                         <Label Grid.Row="0" Text="Bibliography Entry Field Quality File" StyleClass="ControlLabel" IsEnabled="{Binding Settings.UseFieldQualityProcessing}"/>
@@ -187,8 +211,16 @@
                 <Label Text="Remap Names of Bibliography Entries" StyleClass="MediumTitleLabelStyle"/>
                 <VerticalStackLayout StyleClass="VerticalLayoutStyle">
 					<Grid StyleClass="SwitchGridStyle">
-                        <Switch Grid.Column="0"  Grid.Row="0" IsToggled="{Binding Settings.UseBibEntryRemapping}"/>
-                        <Label Grid.Column="1" Grid.Row="0"	Text="Remap the type and field names of bibliography entries" StyleClass="SwitchLabel"/>
+						<Switch Grid.Column="0"  Grid.Row="0" x:Name="BibEntryRemappingSwitch" IsToggled="{Binding Settings.UseBibEntryRemapping}">
+							<Switch.Behaviors>
+								<mct:EventToCommandBehavior
+									x:TypeArguments="system:EventArgs"
+									Command="{Binding ValidateNameRemappingFileCommand}"
+									BindingContext="{Binding Path=BindingContext, Source={x:Reference BibEntryRemappingSwitch}, x:DataType=Switch}"
+									EventName="Toggled"/>
+							</Switch.Behaviors>
+						</Switch>
+						<Label Grid.Column="1" Grid.Row="0"	Text="Remap the type and field names of bibliography entries" StyleClass="SwitchLabel"/>
                     </Grid>
                     <Grid StyleClass="FileBrowsingGridStyle">
                         <Label Grid.Row="0" Text="Name Remapping File" StyleClass="ControlLabel" IsEnabled="{Binding Settings.UseBibEntryRemapping}"/>
