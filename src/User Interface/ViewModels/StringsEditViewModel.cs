@@ -1,49 +1,45 @@
 ﻿using BibTeXLibrary;
-using CommunityToolkit.Mvvm.ComponentModel;
-using DigitalProduction.Maui.ViewModels;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class StringsEditViewModel : DataGridBaseViewModel<StringEntry>
+public partial class StringsEditViewModel : BibiographyPartDataGridBaseViewModel<StringEntry>
 {
-	#region Fields
-
-	#endregion
-
 	#region Construction
 
 	public StringsEditViewModel()
     {
-		Items = Project.Bibliography.StringConstants;
 	}
 
 	#endregion
 
-	#region Properties
+	#region Methods
 
-	public BibTeXProject							Project { get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
+	protected override void AddItems() => Items = Project.Bibliography.StringConstants;
 
-	[ObservableProperty]
-	public partial bool								IsSubmittable { get; set; }					= false;
-
-	#endregion
-
-	#region Validation
-
-	#endregion
-
-	#region Events
-
-	private void OnProjectModifiedChanged(object sender, bool modified)
+	public override void Insert(StringEntry item, int position = 0, bool select = true)
 	{
-		Modified = modified;
+		if (Project.Settings.SortBibliography)
+		{
+			// If sorting, ignore the position and add based on the sort method.
+			Project.Bibliography.Insert(item, Project.Settings.StringsSortMethod);
+		}
+		else
+		{
+
+			if (position == 0)
+			{
+				// If we are adding new (position == 0) and not sorting, add to the end of the list.
+				Project.Bibliography.Add(item);
+			}
+			else
+			{
+				// If we are not sorting, then add at the specified position.
+				Project.Bibliography.Insert(item, position);
+			}
+		}
+
+		FinalizeInsert(item, select);
 	}
-
-	#endregion
-
-	#region Methods and Commands
-
-	#region Edit Menu
 
 	/// <summary>
 	/// Searches the bibliography for the specified search string in the author and title fields.
@@ -55,8 +51,6 @@ public partial class StringsEditViewModel : DataGridBaseViewModel<StringEntry>
 		List<StringEntry> findResults = Project.Bibliography.SearchStringConstants(true, search);
 		return SetSearchResults(search, findResults);
 	}
-
-	#endregion
 
 	#endregion
 

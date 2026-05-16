@@ -81,7 +81,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="Views\BibliographyEditGridView.xaml">
+		<MauiXaml Update="Views\BibliographyEditView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\StringsEditView.xaml">
@@ -109,8 +109,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\BibliographyEditView.xaml.cs">
+		  <DependentUpon>BibliographyEditView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\CorrectionView.xaml.cs">
 		  <DependentUpon>CorrectionView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\MainView.xaml.cs">
+		  <DependentUpon>MainView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\SettingsView.xaml.cs">
 		  <DependentUpon>SettingsView.xaml</DependentUpon>

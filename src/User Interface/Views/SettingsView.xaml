@@ -122,7 +122,7 @@
                         <Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding Settings.UseAuxiliaryFile}"
 						    Text="{Binding AuxiliaryFile.Errors, Converter={StaticResource FirstValidationErrorConverter}}"/>
                         <Button Grid.Row="1" Grid.Column="1" StyleClass="StandardHeightButtonStyle"
-						    Text="Browse"  SemanticProperties.Hint="Browse for the input file."
+						    Text="Browse" SemanticProperties.Hint="Browse for the input file."
 						    Clicked="OnBrowseForAuxiliaryFileFile" IsEnabled="{Binding Settings.UseAuxiliaryFile}"/>
                     </Grid>
                 </VerticalStackLayout>
@@ -253,16 +253,15 @@
                     <!-- White space (tabs or spaces). -->
                     <Label Grid.Row="0" Grid.Column="0" Text="Tabs" StyleClass="MediumTitleLabelStyle"/>
 					<Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="*,*" Padding="0" Margin="0"
-					    RadioButtonGroup.GroupName="TabModeSelectorGroup" BackgroundColor="Cyan"
+					    RadioButtonGroup.GroupName="TabModeSelectorGroup"
 					    RadioButtonGroup.SelectedValue="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource EnumToStringConverter}}"
 					    VerticalOptions="Center" HorizontalOptions="Fill">
                         <Grid.Resources>
                             <Style TargetType="RadioButton">
                                 <Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
-								<Setter Property="MinimumHeightRequest" Value="22"/>
-								<Setter Property="MinimumWidthRequest" Value="100"/>
 								<Setter Property="HorizontalOptions" Value="Fill"/>
-                            </Style>
+								<Setter Property="FontSize" Value="12"/>
+							</Style>
                         </Grid.Resources>
                         <RadioButton Grid.Column="0" Content="Insert Spaces" Value="Space"/>
                         <RadioButton Grid.Column="1" Content="Insert Tabs" Value="Tab"/>
