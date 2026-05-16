@@ -50,15 +50,6 @@
 		<Setter Property="ColumnSpacing" Value="25"/>
 	</Style>
 
-	<Style TargetType="Grid" Class="SwitchGridStyle">
-		<Setter Property="ColumnDefinitions" Value="50,*"/>
-		<Setter Property="RowDefinitions" Value="30"/>
-		<Setter Property="RowSpacing" Value="0"/>
-		<Setter Property="ColumnSpacing" Value="10"/>
-		<Setter Property="Margin" Value="0"/>
-		<Setter Property="Padding" Value="0"/>
-	</Style>
-
 	<Style TargetType="RadioButton">
 		<Setter Property="MinimumWidthRequest" Value="15"/>
 	</Style>
