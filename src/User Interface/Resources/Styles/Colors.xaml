@@ -6,5 +6,6 @@
 
 	<Color x:Key="DivisionColor">#F7B548</Color>
 	<Color x:Key="SelectorSelectedColor">#F6AD36</Color>
+	<Color x:Key="SelectorBackgroundColor">#DFD8F7</Color>
 
 </ResourceDictionary>
