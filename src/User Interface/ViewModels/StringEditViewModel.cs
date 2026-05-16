@@ -5,7 +5,7 @@ using DigitalProduction.Maui.Validation;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class StringConstantViewModel : ObservableObject
+public partial class StringEditViewModel : ObservableObject
 {
 	#region Fields
 
@@ -13,18 +13,18 @@ public partial class StringConstantViewModel : ObservableObject
 
 	#region Construction
 
-	public StringConstantViewModel()
+	public StringEditViewModel()
 	{
-		StringConstant				= new();
-		Title						= "Add String";
+		StringEntry				= new();
+		Title					= "Add String";
 		Initialize(null);
 	}
 
-	public StringConstantViewModel(StringConstant stringConstant)
+	public StringEditViewModel(StringEntry stringEntry)
     {
-		StringConstant				= stringConstant;
+		StringEntry					= stringEntry;
 		Title						= "Edit String";
-		Initialize(stringConstant);
+		Initialize(stringEntry);
 	}
 
 	#endregion
@@ -43,18 +43,18 @@ public partial class StringConstantViewModel : ObservableObject
 	public partial ValidatableObject<string>	EnteredValue { get; set; }				= new();
 
 	[ObservableProperty]
-	public partial string						Description { get; set; }
+	public partial string						Description { get; set; }				= "";
 
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
 
-	public StringConstant						StringConstant { get; set; }
+	public StringEntry							StringEntry { get; set; }
 
 	#endregion
 
 	#region Methods
 
-	private void Initialize(StringConstant? excludeStringConstant)
+	private void Initialize(StringEntry? excludeStringConstant)
 	{
 		InitializeValues();
 		AddValidations(excludeStringConstant);
@@ -63,11 +63,11 @@ public partial class StringConstantViewModel : ObservableObject
 
 	private void InitializeValues()
 	{
-		EnteredName.Value	= StringConstant.Name;
-		EnteredValue.Value	= StringConstant.Value;
+		EnteredName.Value	= StringEntry.Name;
+		EnteredValue.Value	= StringEntry.Value;
 	}
 
-	private void AddValidations(StringConstant? excludeStringConstant)
+	private void AddValidations(StringEntry? excludeStringConstant)
 	{
 		EnteredName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A name is required." });
 		EnteredName.Validations.Add(new IsNotDuplicateStringRule
@@ -93,7 +93,7 @@ public partial class StringConstantViewModel : ObservableObject
 	{
 		if (EnteredName.Validate())
 		{
-			StringConstant.Name = EnteredName.Value ?? "";
+			StringEntry.Name = EnteredName.Value ?? "";
 		}
 		ValidateSubmittable();
 	}
@@ -103,7 +103,7 @@ public partial class StringConstantViewModel : ObservableObject
 	{
 		if (EnteredValue.Validate())
 		{
-			StringConstant.Value = EnteredValue.Value ?? "";
+			StringEntry.Value = EnteredValue.Value ?? "";
 		}
 		ValidateSubmittable();
 	}

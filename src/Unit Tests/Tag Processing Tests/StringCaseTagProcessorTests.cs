@@ -3,7 +3,7 @@ using BibTeXManager;
 
 namespace BibTeXManagerUnitTests;
 
-public class StringCaseTagProcessorTests
+public class StringCaseFieldProcessorTests
 {
 	/// <summary>
 	/// Convert all caps to title case.
@@ -14,7 +14,7 @@ public class StringCaseTagProcessorTests
 		string solution = @"The Quick Brown Fox; Jumped!: Over the Lazy Dog.";
 		string input	= @"THE QUICK BROWN FOX; JUMPED!: OVER THE LAZY DOG.";
 
-		StringCaseTagProcessor processor  = new() { Pattern=@"^[A-Z\s\p{P}]*$",  TagsToProcess = TagsToProcess.All };
+		StringCaseFieldProcessor processor  = new() { Pattern=@"^[A-Z\s\p{P}]*$",  FieldsToProcess = FieldsToProcess.All };
 
 		BibEntry entry	= new() { Title = input };
 		Utilities.RunProcessor(processor, entry);

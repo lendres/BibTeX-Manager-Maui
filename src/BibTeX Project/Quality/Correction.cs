@@ -28,9 +28,9 @@ public class Correction
 	#region Properties
 
 	/// <summary>
-	/// The tag being processed.
+	/// The field being processed.
 	/// </summary>
-	public string TagName { get; set; } = "";
+	public string FieldName { get; set; } = "";
 
 	/// <summary>
 	/// The full, original text.
@@ -53,7 +53,7 @@ public class Correction
 	public string ReplacementText { get; set; } = "";
 
 	/// <summary>
-	/// Specifies if the text should be replaced.  Output from user prompting or if the tag processor
+	/// Specifies if the text should be replaced.  Output from user prompting or if the field processor
 	/// determines that the text should not be replaced.
 	/// </summary>
 	public bool ReplaceText { get; set; } = false;

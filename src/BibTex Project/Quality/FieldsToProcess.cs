@@ -11,18 +11,18 @@ namespace BibTeXManager;
 /// the number of items in the enumeration changes.  The "Length" enumeration must be the last item.
 /// for (int i = 0; i &lt; (int)EnumType.Length; i++) {...}
 /// </summary>
-public enum TagsToProcess
+public enum FieldsToProcess
 {
-	/// <summary>Process all tags.</summary>
+	/// <summary>Process all fields.</summary>
 	[Description("All")]
 	All,
 
-	/// <summary>Exclude the specified tags.</summary>
-	[Description("Exclude the Specified Tags")]
+	/// <summary>Exclude the specified fields.</summary>
+	[Description("Exclude the Specified Fields")]
 	ExcludeSpecified,
 
-	/// <summary>Only the specified tags.</summary>
-	[Description("Only the Specified Tags")]
+	/// <summary>Only the specified fields.</summary>
+	[Description("Only the Specified Fields")]
 	OnlySpecified,
 
 

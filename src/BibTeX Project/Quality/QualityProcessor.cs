@@ -14,7 +14,7 @@ public class QualityProcessor
 {
 	#region Fields
 
-	private BindingList<TagProcessorGroup>			_tagProcessorGroups			= [];
+	private BindingList<FieldProcessorGroup>			_tagProcessorGroups			= [];
 
 	#endregion
 
@@ -32,7 +32,7 @@ public class QualityProcessor
 	#region Properties
 
 	[XmlArray("tagprocessorgroups"), XmlArrayItem("tagprocessorgroup")]
-	public BindingList<TagProcessorGroup> TagProcessorGroups { get => _tagProcessorGroups; set => _tagProcessorGroups = value; }
+	public BindingList<FieldProcessorGroup> FieldProcessorGroups { get => _tagProcessorGroups; set => _tagProcessorGroups = value; }
 
 	#endregion
 
@@ -42,23 +42,23 @@ public class QualityProcessor
 	/// Process a BibEntry and correct errors.
 	/// </summary>
 	/// <param name="entry">BibEntry to process and clean.</param>
-	public IEnumerable<TagProcessingData> Process(BibEntry entry)
+	public IEnumerable<FieldProcessingData> Process(BibEntry entry)
 	{
-		TagProcessingData tagProcessingData = new();
-		foreach (TagProcessorGroup tagProcessorGroup in _tagProcessorGroups)
+		FieldProcessingData fieldProcessingData = new();
+		foreach (FieldProcessorGroup fieldProcessorGroup in _tagProcessorGroups)
 		{
-			foreach (TagProcessor processor in tagProcessorGroup.TagProcessors)
+			foreach (FieldProcessor processor in fieldProcessorGroup.FieldProcessors)
 			{
 				foreach (Correction correction in processor.Process(entry))
 				{
-					tagProcessingData.Correction = correction;
-					if (tagProcessingData.AcceptAll)
+					fieldProcessingData.Correction = correction;
+					if (fieldProcessingData.AcceptAll)
 					{
 						correction.ReplaceText = true;
 					}
 					else
 					{
-						yield return tagProcessingData;
+						yield return fieldProcessingData;
 					}
 				}
 			}
@@ -78,7 +78,7 @@ public class QualityProcessor
 	{
 		if (!DigitalProduction.IO.Path.PathIsWritable(path))
 		{
-			throw new InvalidOperationException("The file cannot be saved.  A valid path must be specified.");
+			throw new InvalidOperationException("The file cannot be saved. A valid path must be specified.");
 		}
 		Serialization.SerializeObject(this, path);
 	}

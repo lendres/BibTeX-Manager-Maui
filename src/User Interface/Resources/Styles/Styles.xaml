@@ -12,7 +12,7 @@
 		<Setter Property="StrokeShape" Value="RoundRectangle 8"/>
 		<Setter Property="StrokeThickness" Value="2"/>
 		<Setter Property="Padding" Value="0,1,0,2"/>
-		<Setter Property="Margin" Value="0,8,0,2"/>
+		<Setter Property="Margin" Value="0,30,0,2"/>
 		<Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
 	</Style>
 
@@ -23,6 +23,28 @@
 		<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
 	</Style>
 
+
+    <Style TargetType="Label" Class="MediumTitleLabelStyle">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
+    </Style>
+
+	<Style TargetType="Grid" Class="SettingsTwoColumnGridStyle">
+		<Setter Property="RowSpacing" Value="4"/>
+		<Setter Property="ColumnSpacing" Value="25"/>
+	</Style>
+
+	<Style TargetType="Grid" Class="SwitchGridStyle">
+		<Setter Property="ColumnDefinitions" Value="50,*"/>
+		<Setter Property="RowDefinitions" Value="30"/>
+		<Setter Property="RowSpacing" Value="0"/>
+		<Setter Property="ColumnSpacing" Value="10"/>
+		<Setter Property="Margin" Value="0"/>
+		<Setter Property="Padding" Value="0"/>
+	</Style>
+
 	<Style TargetType="RadioButton">
 		<Setter Property="MinimumWidthRequest" Value="15"/>
 	</Style>
@@ -30,7 +52,7 @@
 	<ControlTemplate x:Key="ButtonRadioTemplate">
 		<Border
             StrokeThickness="1"
-            HorizontalOptions="Fill">
+            WidthRequest="{TemplateBinding Width}">
 			<Border.StrokeShape>
 				<RoundRectangle CornerRadius="0"/>
 			</Border.StrokeShape>
@@ -61,9 +83,12 @@
 				Margin="0"
 				x:Name="TextLabel"
 				x:DataType="RadioButton"
-				FontSize="12" FontAttributes="Bold" 
-				HorizontalOptions="Fill" VerticalOptions="Center"
-				HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+				FontSize="{TemplateBinding FontSize}"
+				FontAttributes="Bold" 
+				HorizontalOptions="Fill"
+				VerticalOptions="Center"
+				HorizontalTextAlignment="Center"
+				VerticalTextAlignment="Center"/>
 		</Border>
 	</ControlTemplate>
 

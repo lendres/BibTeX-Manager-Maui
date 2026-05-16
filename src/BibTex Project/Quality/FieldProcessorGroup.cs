@@ -7,13 +7,13 @@ namespace BibTeXManager.Quality;
 /// <summary>
 /// 
 /// </summary>
-[XmlRoot("tagprocessorgroup")]
-public class TagProcessorGroup
+[XmlRoot("fieldprocessorgroup")]
+public class FieldProcessorGroup
 {
 	#region Fields
 
-	private string                                  _name					= string.Empty;
-	private BindingList<TagProcessor>               _tagProcessors          = [];
+	private string								_name					= string.Empty;
+	private BindingList<FieldProcessor>			_fieldProcessors		= [];
 
 	#endregion
 
@@ -22,7 +22,7 @@ public class TagProcessorGroup
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public TagProcessorGroup()
+	public FieldProcessorGroup()
 	{
 	}
 
@@ -37,10 +37,10 @@ public class TagProcessorGroup
 	public string Name { get => _name; set => _name = value; }
 
 	/// <summary>
-	/// Tag processing groups.
+	/// Field processing groups.
 	/// </summary>
-	[XmlArray("tagprocessors"), XmlArrayItem("tagprocessor")]
-	public BindingList<TagProcessor> TagProcessors { get => _tagProcessors; set => _tagProcessors = value; }
+	[XmlArray("fieldprocessors"), XmlArrayItem("fieldprocessor")]
+	public BindingList<FieldProcessor> FieldProcessors { get => _fieldProcessors; set => _fieldProcessors = value; }
 
 	#endregion
 
@@ -69,9 +69,9 @@ public class TagProcessorGroup
 	/// Create an instance from a file.
 	/// </summary>
 	/// <param name="path">The file to read from.</param>
-	public static TagProcessorGroup? Deserialize(string path)
+	public static FieldProcessorGroup? Deserialize(string path)
 	{
-		return Serialization.DeserializeObject<TagProcessorGroup>(path);
+		return Serialization.DeserializeObject<FieldProcessorGroup>(path);
 	}
 
 	#endregion

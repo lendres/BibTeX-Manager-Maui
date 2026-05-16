@@ -19,21 +19,12 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	public static BibTeXProject? Instance
 	{
 		get => _instance;
-		set
-		{
-			_instance = value;
-			if (_instance != null)
-			{
-				_instance.Closed += OnClose;
-			}
-		}
+		set => _instance = value;
 	}
 
 	public static void New() => Instance = new BibTeXProject();
 
 	public static void New(ProjectSettings settings) => Instance = new BibTeXProject(settings);
-
-	private static void OnClose() { _instance!.Modified = false; }
 
 	#endregion
 
@@ -49,7 +40,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 
 	private BibEntryInitialization				_bibEntryInitialization			= new();
 
-	private QualityProcessor					_tagQualityProcessor			= new();
+	private QualityProcessor					_fieldQualityProcessor			= new();
 
 	private BibEntryRemapper					_nameRemapper					= new();
 
@@ -107,6 +98,9 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	[XmlIgnore()]
 	public Bibliography Bibliography { get => _bibliography; }
 
+	[XmlIgnore()]
+	public bool BibliographytOpen { get; set; } = false;
+
 	#endregion
 
 	#region File Reading Methods
@@ -131,7 +125,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		_bibliography.ModifiedChanged	+= OnChildModifiedChanged;
 		_bibliography.PropertyChanged	+= OnPropertyChanged;
 		Path                            =  "";
-		Modified                        = false;
+		base.Open();
 	}
 
 	/// <summary>
@@ -148,6 +142,8 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// </summary>
 	public void ReadBibliographyFile()
 	{
+		System.Diagnostics.Debug.Assert(_bibliography != null, "An instance of Bibliography is required. Call \"NewBibliographyFile\" before calling this method.");
+
 		if (!File.Exists(Path))
 		{
 			return;
@@ -164,7 +160,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		}
 
 		BuildStringConstantMap();
-		Modified = false;
+		base.Open();
 	}
 
 	/// <summary>
@@ -204,15 +200,15 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	}
 
 	/// <summary>
-	/// Read tag quality processing file.
+	/// Read field quality processing file.
 	/// </summary>
-	private void ReadTagQualityProcessingFile()
+	private void ReadFieldQualityProcessingFile()
 	{
-		string absolutePath = ConvertToAbsolutePath(_settings.TagQualityProcessingFile);
+		string absolutePath = ConvertToAbsolutePath(_settings.FieldQualityProcessingFile);
 		if (System.IO.File.Exists(absolutePath))
 		{
-			_tagQualityProcessor = QualityProcessor.Deserialize(absolutePath) ??
-				throw new Exception("Tag quality initialization failed.");
+			_fieldQualityProcessor = QualityProcessor.Deserialize(absolutePath) ??
+				throw new Exception("Field quality initialization failed.");
 		}
 	}
 
@@ -262,7 +258,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	public void ReadAccessoaryFiles()
 	{
 		ReadBibEntryInitializationFiles();
-		ReadTagQualityProcessingFile();
+		ReadFieldQualityProcessingFile();
 		ReadNameMappingFile();
 		ReadAccessoryFiles();
 		BuildStringConstantMap();
@@ -311,8 +307,8 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 				BuildStringConstantMap();
 				break;
 
-			case nameof(Settings.TagQualityProcessingFile):
-				ReadTagQualityProcessingFile();
+			case nameof(Settings.FieldQualityProcessingFile):
+				ReadFieldQualityProcessingFile();
 				break;
 
 			case nameof(Settings.BibEntryRemappingFile):
@@ -402,13 +398,13 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// Clean a single entry.  Used to prompt a user if the issues should be changed or not.
 	/// </summary>
 	/// <param name="entry">BibEntry.</param>
-	public IEnumerable<TagProcessingData> CleanEntry(BibEntry entry)
+	public IEnumerable<FieldProcessingData> CleanEntry(BibEntry entry)
 	{
-		if (_settings.UseTagQualityProcessing)
+		if (_settings.UseFieldQualityProcessing)
 		{
-			foreach (TagProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
+			foreach (FieldProcessingData fieldProcessingData in _fieldQualityProcessor.Process(entry))
 			{
-				yield return tagProcessingData;
+				yield return fieldProcessingData;
 			}
 		}
 	}
@@ -419,18 +415,18 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// <param name="entry">BibEntry.</param>
 	public void AutoCleanEntry(BibEntry entry)
 	{
-		if (_settings.UseTagQualityProcessing)
+		if (_settings.UseFieldQualityProcessing)
 		{
-			foreach (TagProcessingData tagProcessingData in CleanEntry(entry))
+			foreach (FieldProcessingData fieldProcessingData in CleanEntry(entry))
 			{
-				tagProcessingData.Correction.ReplaceText    = true;
-				tagProcessingData.AcceptAll                 = true;
+				fieldProcessingData.Correction.ReplaceText    = true;
+				fieldProcessingData.AcceptAll                 = true;
 			}
 		}
 	}
 
 	/// <summary>
-	/// Remaps the Key and Tag Keys to new names.
+	/// Remaps the Key and Field Keys to new names.
 	/// </summary>
 	/// <param name="entry">BibEntry.</param>
 	public void RemapEntryNames(BibEntry entry)
@@ -506,13 +502,13 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// Clean the entries.
 	/// Note, it is assumed this method is called deliberately.  It does not check to see if quality processing is enabled in the settings.
 	/// </summary>
-	public IEnumerable<TagProcessingData> CleanAllEntries()
+	public IEnumerable<FieldProcessingData> CleanAllEntries()
 	{
 		foreach (BibEntry entry in _bibliography.Entries)
 		{
-			foreach (TagProcessingData tagProcessingData in _tagQualityProcessor.Process(entry))
+			foreach (FieldProcessingData fieldProcessingData in _fieldQualityProcessor.Process(entry))
 			{
-				yield return tagProcessingData;
+				yield return fieldProcessingData;
 			}
 		}
 	}

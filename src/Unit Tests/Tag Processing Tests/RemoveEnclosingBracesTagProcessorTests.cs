@@ -4,9 +4,9 @@ using BibTeXManager.Quality;
 
 namespace BibTeXManagerUnitTests;
 
-public class RemoveEnclosingBracesTagProcessorTests
+public class RemoveEnclosingBracesFieldProcessorTests
 {
-	private static RemoveEnclosingBracesTagProcessor	_bracketProcessor  = new() { TagsToProcess = TagsToProcess.All };
+	private static RemoveEnclosingBracesFieldProcessor	_bracketProcessor  = new() { FieldsToProcess = FieldsToProcess.All };
 
 	/// <summary>
 	/// Base line test to remove brackets.

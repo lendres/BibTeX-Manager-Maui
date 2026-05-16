@@ -3,11 +3,11 @@ using DigitalProduction.Maui.Views;
 
 namespace BibTeXManager.Views;
 
-public partial class StringConstantView : PopupView
+public partial class StringEditView : PopupView
 {
 	#region Construction
 
-	public StringConstantView(StringConstantViewModel viewModel)
+	public StringEditView(StringEditViewModel viewModel)
 	{
 		BindingContext = viewModel;
 		InitializeComponent();

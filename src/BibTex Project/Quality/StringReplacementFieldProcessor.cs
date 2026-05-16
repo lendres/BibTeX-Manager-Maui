@@ -5,7 +5,7 @@ namespace BibTeXManager;
 /// <summary>
 /// Replaces each pattern found with the replacement string.
 /// </summary>
-public class StringReplacementTagProcessor : TagProcessor
+public class StringReplacementFieldProcessor : FieldProcessor
 {
 	#region Fields
 
@@ -18,7 +18,7 @@ public class StringReplacementTagProcessor : TagProcessor
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public StringReplacementTagProcessor()
+	public StringReplacementFieldProcessor()
 	{
 	}
 

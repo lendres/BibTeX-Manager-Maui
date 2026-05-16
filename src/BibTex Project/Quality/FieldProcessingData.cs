@@ -3,7 +3,7 @@
 /// <summary>
 /// Data used for processing by a single TagProcessor.
 /// </summary>
-public class TagProcessingData
+public class FieldProcessingData
 {
 	#region Fields
 
@@ -17,7 +17,7 @@ public class TagProcessingData
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public TagProcessingData()
+	public FieldProcessingData()
 	{
 	}
 

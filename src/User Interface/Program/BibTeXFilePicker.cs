@@ -16,15 +16,15 @@ class BibTeXFilePicker : IBibTeXFilePicker
 		return await BrowseForFile(pickOptions);
 	}
 
-	public async Task<string> BrowseForTagOrderFile()
+	public async Task<string> BrowseForFieldOrderFile()
 	{
-		PickOptions pickOptions = new() { PickerTitle="Select a Tag Order File", FileTypes=CreateTagOrderFilePickerFileType() };
+		PickOptions pickOptions = new() { PickerTitle="Select a Field Order File", FileTypes=CreateFieldOrderFilePickerFileType() };
 		return await BrowseForFile(pickOptions);
 	}
 
-	public async Task<string> BrowseForTagQualityFile()
+	public async Task<string> BrowseForFieldQualityFile()
 	{
-		PickOptions pickOptions = new() { PickerTitle="Select a Tag Quality File", FileTypes=CreateTagQualityFilePickerFileType() };
+		PickOptions pickOptions = new() { PickerTitle= "Select a Field Quality File", FileTypes=CreateFieldQualityFilePickerFileType() };
 		return await BrowseForFile(pickOptions);
 	}
 
@@ -57,7 +57,7 @@ class BibTeXFilePicker : IBibTeXFilePicker
 		});
 	}
 
-	public FilePickerFileType CreateTagOrderFilePickerFileType()
+	public FilePickerFileType CreateFieldOrderFilePickerFileType()
 	{
 		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
 		{
@@ -68,7 +68,7 @@ class BibTeXFilePicker : IBibTeXFilePicker
 		});
 	}
 
-	public FilePickerFileType CreateTagQualityFilePickerFileType()
+	public FilePickerFileType CreateFieldQualityFilePickerFileType()
 	{
 		return new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
 		{
