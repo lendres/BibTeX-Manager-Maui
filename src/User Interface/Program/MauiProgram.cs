@@ -65,8 +65,8 @@ public static class MauiProgram
 		services.AddTransient<EditRawBibEntryForm>();
 		services.AddTransient<BibEntryViewModel>();
 
-		services.AddTransient<SettingsView>();
-		services.AddTransient<SettingsViewModel>();
+		services.AddSingleton<SettingsView>();
+		services.AddSingleton<SettingsViewModel>();
 	}
 
 	private static void RegisterServices(IServiceCollection services)
