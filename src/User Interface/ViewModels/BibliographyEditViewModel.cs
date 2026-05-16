@@ -1,15 +1,14 @@
 ﻿using BibTeXLibrary;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DigitalProduction.Maui.ViewModels;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class BibliographyEditGridViewModel : DataGridBaseViewModel<BibEntry>
+public partial class BibliographyEditViewModel : BibiographyPartDataGridBaseViewModel<BibEntry>
 {
 	#region Construction
 
-	public BibliographyEditGridViewModel()
+	public BibliographyEditViewModel()
 	{
 		ProjectInitialization();
 	}
@@ -25,8 +24,6 @@ public partial class BibliographyEditGridViewModel : DataGridBaseViewModel<BibEn
 	#endregion
 
 	#region Properties
-
-	public BibTeXProject	Project			{ get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
 
 	[ObservableProperty]
 	public partial bool		HasTemplates	{ get; set; } = false;
@@ -63,25 +60,7 @@ public partial class BibliographyEditGridViewModel : DataGridBaseViewModel<BibEn
 
 	#region File Menu
 
-	public async Task New()
-	{
-		if (Project.Bibliography != null)
-		{
-			Items = Project.Bibliography.Entries;
-		}
-	}
-
-	public async Task Open()
-	{
-		Items?.Clear();
-		Items = Project.Bibliography.Entries;
-	}
-
-	public async Task Close()
-	{
-		Items?.Clear();
-		Items = null;
-	}
+	protected override void AddItems() => Items = Project.Bibliography.Entries;
 
 	#endregion
 

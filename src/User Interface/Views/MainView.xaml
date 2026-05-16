@@ -6,20 +6,25 @@
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
     xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:enums="clr-namespace:BibTeXManager.Enums"
 	xmlns:views="clr-namespace:BibTeXManager.Views"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:DataType="viewmodel:MainViewModel"
-	x:Class="BibTeXManager.Views.MainPage">
+	x:Class="BibTeXManager.Views.MainView">
 
 	<ContentPage.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
+		<dpconverters:EnumToStringConverter x:Key="PartTypeEnumToStringConverter" x:TypeArguments="enums:BibliographyPartType"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="IsHeaderView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.Header}"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="IsStringEntriesView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.StringEntries}"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="IsBibliographyEntriesView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.BibliographyEntries}"/>
 	</ContentPage.Resources>
 
 	<!-- Menubar. -->
 	<ContentPage.MenuBarItems>
 		<!-- File. -->
 		<MenuBarItem Text="File">
-			<MenuFlyoutItem Text="New..." Clicked="OnNew">
+			<MenuFlyoutItem Text="New" Clicked="OnNew">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="n" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
@@ -72,7 +77,7 @@
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
 			<MenuFlyoutItem
-				Text="Delete Entry..."
+				Text="Delete Entry"
 				Clicked="OnDeleteBibEntry"
 				IsEnabled="{Binding SelectedBibliographyItem, Converter={StaticResource IsNotNullConverter}}">
 				<!--<MenuFlyoutItem.KeyboardAccelerators>
@@ -106,15 +111,6 @@
 			</MenuFlyoutItem>
 		</MenuBarItem>
 
-		<!-- Configuration. -->
-		<MenuBarItem Text="Configuration">
-			<MenuFlyoutItem
-				Text="Edit Strings..."
-				Clicked="OnEditStringConstants"
-				IsEnabled="{Binding IsOpen}">
-			</MenuFlyoutItem>
-		</MenuBarItem>
-
 		<!-- Settings. -->
 		<MenuBarItem Text="Settings">
 			<MenuFlyoutItem Text="Options..." Clicked="OnOptions"/>
@@ -143,8 +139,36 @@
 		</MenuBarItem>
 	</ContentPage.MenuBarItems>
 
-	<views:BibliographyEditGridView
-		x:Name="_bibliographyEditGridView"
-		SelectedItem="{Binding SelectedBibliographyItem, Mode=OneWayToSource}"/>
+	<!-- Body. -->
+	<Grid RowDefinitions="Auto,*" ColumnDefinitions="*" Padding="0" Margin="0" RowSpacing="20">
+		<!-- Selector. -->
+		<Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="*,*,*" Padding="0" Margin="0"
+			RadioButtonGroup.GroupName="PartSelectorGroup"
+			RadioButtonGroup.SelectedValue="{Binding ActiveBibliographyPart, Converter={StaticResource PartTypeEnumToStringConverter}}"
+			VerticalOptions="Center" HorizontalOptions="Fill">
+			<Grid.Resources>
+				<Style TargetType="RadioButton">
+					<Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
+					<Setter Property="HorizontalOptions" Value="Fill"/>
+					<Setter Property="FontSize" Value="20"/>
+				</Style>
+			</Grid.Resources>
+			<RadioButton Grid.Column="0" Content="Header" Value="Header"/>
+			<RadioButton Grid.Column="1" Content="String Entries" Value="StringEntries"/>
+			<RadioButton Grid.Column="2" Content="Bibliography Entries" Value="BibliographyEntries"/>
+		</Grid>
+
+		<!-- Part views. -->
+		<views:StringsEditView Grid.Row="1" Grid.Column="0"
+			x:Name="_stringsEditView"
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsStringEntriesView}}"
+			IsEnabled="{Binding IsOpen}"/>
+
+		<views:BibliographyEditView Grid.Row="1" Grid.Column="0"
+			x:Name="_bibliographyEditView"
+			SelectedItem="{Binding SelectedBibliographyItem, Mode=OneWayToSource}"
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsBibliographyEntriesView}}"
+			IsEnabled="{Binding IsOpen}"/>
+	</Grid>
 
 </dpatkcontrols:DigitalProductionMainPage>
