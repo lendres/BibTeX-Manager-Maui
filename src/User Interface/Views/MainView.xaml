@@ -20,6 +20,18 @@
 		<dpconverters:SingleEnumToBoolConverter x:Key="IsBibliographyEntriesView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.BibliographyEntries}"/>
 	</ContentPage.Resources>
 
+	<Shell.TitleView>
+		<Grid ColumnDefinitions="*,Auto" Margin="0,0,10,0">
+			<HorizontalStackLayout Grid.Column="1" Spacing="8" HorizontalOptions="End">
+
+				<Button Text="New" Clicked="OnNew" StyleClass="ToolBarButtonStyle"/>
+				<Button Text="Open..." Clicked="OnOpen" StyleClass="ToolBarButtonStyle"/>
+				<Button Text="Save" Clicked="OnSave" IsEnabled="{Binding RequiresSave}" StyleClass="ToolBarButtonStyle"/>
+
+			</HorizontalStackLayout>
+		</Grid>
+	</Shell.TitleView>
+
 	<!-- Menubar. -->
 	<ContentPage.MenuBarItems>
 		<!-- File. -->
