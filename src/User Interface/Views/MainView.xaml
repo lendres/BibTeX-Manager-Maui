@@ -25,8 +25,8 @@
 			<HorizontalStackLayout Grid.Column="1" Spacing="8" HorizontalOptions="End">
 
 				<Button Text="New" Clicked="OnNew" StyleClass="ToolBarButtonStyle"/>
-				<Button Text="Open..." Clicked="OnOpen" StyleClass="ToolBarButtonStyle"/>
-				<Button Text="Save" Clicked="OnSave" IsEnabled="{Binding RequiresSave}" StyleClass="ToolBarButtonStyle"/>
+				<Button Text="Open" Clicked="OnOpen" StyleClass="ToolBarButtonStyle"/>
+				<Button Text="Save" Clicked="OnSave" IsEnabled="{Binding RequiresSave}" StyleClass="ToolBarButtonStyle" WidthRequest="100"/>
 
 			</HorizontalStackLayout>
 		</Grid>
