@@ -26,11 +26,6 @@
 			<Setter Property="VerticalOptions" Value="Start"/>
 			<Setter Property="HorizontalOptions" Value="Start"/>
 		</Style>
-		<Style TargetType="Label" Class="SwitchLabel">
-			<Setter Property="VerticalOptions" Value="Center"/>
-			<Setter Property="VerticalTextAlignment" Value="End"/>
-			<Setter Property="HeightRequest" Value="26"/>
-		</Style>
 	</ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*" Margin="0" Padding="30" WidthRequest="800" VerticalOptions="Fill">
