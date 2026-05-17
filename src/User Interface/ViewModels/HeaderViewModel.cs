@@ -15,10 +15,7 @@ public partial class HeaderViewModel : ObservableObject, IBibliographyPartViewMo
 	public BibTeXProject Project { get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
 
 	[ObservableProperty]
-	public partial string Header
-{ get;
-set; }
-= "";
+	public partial string Header { get; set; } = "";
 
 	#endregion
 
