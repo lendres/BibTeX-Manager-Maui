@@ -10,7 +10,7 @@
 	xmlns:library="clr-namespace:BibTeXLibrary;assembly=DigitalProduction.BibTeXLibrary"
 	xmlns:view="clr-namespace:BibTeXManager.Views"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
-	x:DataType="viewmodel:BibliographyEditViewModel"
+	x:DataType="viewmodel:HeaderViewModel"
 	x:Class="BibTeXManager.Views.HeaderView"
 	x:TypeArguments="viewmodel:HeaderViewModel">
 
