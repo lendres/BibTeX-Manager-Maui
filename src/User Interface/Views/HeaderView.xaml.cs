@@ -1,7 +1,4 @@
-using BibTeXLibrary;
 using BibTeXManager.ViewModels;
-using CommunityToolkit.Maui.Views;
-using System.ComponentModel;
 
 namespace BibTeXManager.Views;
 

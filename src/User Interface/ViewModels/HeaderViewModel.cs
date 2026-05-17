@@ -15,7 +15,10 @@ public partial class HeaderViewModel : ObservableObject, IBibliographyPartViewMo
 	public BibTeXProject Project { get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
 
 	[ObservableProperty]
-	public partial string Header { get; set; } = "";
+	public partial string Header
+{ get;
+set; }
+= "";
 
 	#endregion
 
@@ -29,6 +32,7 @@ public partial class HeaderViewModel : ObservableObject, IBibliographyPartViewMo
 	{
 		if (Project.Bibliography != null)
 		{
+			Header = "";
 			foreach (string line in Project.Bibliography.Header)
 				Header += line + Environment.NewLine;
 		}
