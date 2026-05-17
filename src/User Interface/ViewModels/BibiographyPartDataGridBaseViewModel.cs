@@ -2,7 +2,7 @@
 
 namespace BibTeXManager.ViewModels;
 
-public abstract class BibiographyPartDataGridBaseViewModel<T> : DataGridBaseViewModel<T> where T : class
+public abstract class BibiographyPartDataGridBaseViewModel<T> : DataGridBaseViewModel<T>, IBibliographyPartViewModel where T : class
 {
 	#region Properties
 

@@ -81,6 +81,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="Views\HeaderView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\BibliographyEditView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -109,6 +112,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\HeaderView.xaml.cs">
+		  <DependentUpon>HeaderView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\BibliographyEditView.xaml.cs">
 		  <DependentUpon>BibliographyEditView.xaml</DependentUpon>
 		</Compile>

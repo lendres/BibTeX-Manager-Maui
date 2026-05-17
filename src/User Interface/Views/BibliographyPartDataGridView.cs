@@ -3,43 +3,22 @@ using Maui.DataGrid;
 
 namespace BibTeXManager.Views;
 
-public class BibliographyPartDataGridView<TViewModel, TPart> : ContentView where TViewModel : BibiographyPartDataGridBaseViewModel<TPart> where TPart : class
+public class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartView<TViewModel> where TViewModel : BibiographyPartDataGridBaseViewModel<TPart> where TPart : class
 {
 	#region Construction
 
-	public BibliographyPartDataGridView(TViewModel viewModel)
+	public BibliographyPartDataGridView(TViewModel viewModel) :
+		base(viewModel)
 	{
-		ViewModel = viewModel;
 	}
 
 	#endregion
 
 	#region Properties
 
-	protected TViewModel ViewModel { get; set; }
-
 	protected bool AnimateScrollToSelection { get; } = false;
 
 	protected DataGrid DataGrid { get; set; } = null!;
-
-	#endregion
-
-	#region File
-
-	public async void New()
-	{
-		await ViewModel.New();
-	}
-
-	public async void Open()
-	{
-		await ViewModel.Open();
-	}
-
-	public async void Close()
-	{
-		await ViewModel.Close();
-	}
 
 	#endregion
 

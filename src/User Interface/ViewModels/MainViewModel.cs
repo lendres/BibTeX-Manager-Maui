@@ -41,20 +41,19 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 
 	#region Properties
 
-	[ObservableProperty]
-	public partial BibliographyPartType			ActiveBibliographyPart		{  get; set; }	= BibliographyPartType.BibliographyEntries;
+	public IRecentPathsManagerService RecentPathsManagerService { get; set; }
+
+	public Page? MenuHostingPage { get => _dialogService.HostingPage; set => _dialogService.HostingPage = value; }
+
 
 	public bool									SavePathRequired			{ get => !Project.HasSavePath; }
-
-	public IRecentPathsManagerService			RecentPathsManagerService	{ get; set; }
-
-	public Page?								MenuHostingPage				{ get => _dialogService.HostingPage; set => _dialogService.HostingPage = value; }
-
-
 
 	public string?								SearchString				{ get; set; } = null;
 
 	public bool									RequireSearchString			{ get => SearchString == null; }
+
+	[ObservableProperty]
+	public partial BibliographyPartType			ActiveBibliographyPart		{  get; set; }	= BibliographyPartType.BibliographyEntries;
 
 	[ObservableProperty]
 	public partial BibEntry?					SelectedBibliographyItem	{ get; set; }
@@ -90,9 +89,6 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 		ValidateHasTemplates();
 	}
 
-	#endregion
-
-	#region Events
 	#endregion
 
 	#region Methods and Commands

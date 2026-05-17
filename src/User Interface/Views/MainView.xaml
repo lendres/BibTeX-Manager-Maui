@@ -153,6 +153,7 @@
 
 	<!-- Body. -->
 	<Grid RowDefinitions="Auto,*" ColumnDefinitions="*" Padding="0" Margin="0" RowSpacing="20">
+		
 		<!-- Selector. -->
 		<Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="*,*,*" Padding="0" Margin="0"
 			RadioButtonGroup.GroupName="PartSelectorGroup"
@@ -171,6 +172,12 @@
 		</Grid>
 
 		<!-- Part views. -->
+		<views:HeaderView 
+			Grid.Row="1" Grid.Column="0"
+			x:Name="_headerView"
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsHeaderView}}"
+			IsEnabled="{Binding IsOpen}"/>
+
 		<views:StringsEditView Grid.Row="1" Grid.Column="0"
 			x:Name="_stringsEditView"
 			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsStringEntriesView}}"
@@ -181,6 +188,7 @@
 			SelectedItem="{Binding SelectedBibliographyItem, Mode=OneWayToSource}"
 			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsBibliographyEntriesView}}"
 			IsEnabled="{Binding IsOpen}"/>
+		
 	</Grid>
 
 </dpatkcontrols:DigitalProductionMainPage>
