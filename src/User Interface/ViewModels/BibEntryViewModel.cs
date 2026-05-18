@@ -129,9 +129,9 @@ public partial class BibEntryViewModel : ObservableObject
 			return;
 		}
 
+		// In add mode, we need to make sure the key is not already in the bibliography.
 		if (_addMode == true)
 		{
-			// In add mode, we need to make sure the key is not already in the bibliography.
 			IsKeyValid = !BibTeXProject.Instance.Bibliography.IsKeyInUse(_bibEntry!.Key);
 			return;
 		}
