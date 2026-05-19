@@ -61,6 +61,7 @@ public partial class MainView : DigitalProductionMainPage
 	{
 		if (await TryCloseProject())
 		{
+			_headerView.New();
 			_stringsEditView.New();
 			_bibliographyEditView.New();
 			_viewModel.New();
@@ -89,6 +90,7 @@ public partial class MainView : DigitalProductionMainPage
 	private async Task Open(string path)
 	{
 		await _viewModel.OpenWithPathSave(path);
+		_headerView.Open();
 		_stringsEditView.Open();
 		_bibliographyEditView.Open();
 	}
@@ -140,6 +142,7 @@ public partial class MainView : DigitalProductionMainPage
 				return false;
 		}
 
+		_headerView.Close();
 		_stringsEditView.Close();
 		_bibliographyEditView.Close();
 		_viewModel.Close();

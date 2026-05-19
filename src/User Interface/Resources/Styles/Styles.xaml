@@ -57,7 +57,8 @@
 	<ControlTemplate x:Key="ButtonRadioTemplate">
 		<Border
             StrokeThickness="1"
-            WidthRequest="{TemplateBinding Width}">
+            WidthRequest="{TemplateBinding Width}"
+			x:DataType="RadioButton">
 			<Border.StrokeShape>
 				<RoundRectangle CornerRadius="0"/>
 			</Border.StrokeShape>

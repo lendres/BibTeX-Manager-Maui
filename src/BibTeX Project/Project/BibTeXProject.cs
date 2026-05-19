@@ -235,7 +235,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		string absolutePath = ConvertToAbsolutePath(_settings.AuxiliaryFile);
 		if (System.IO.File.Exists(absolutePath))
 		{
-			_accessoryFilesDOMs.Add(BibParser.Parse(absolutePath));
+			_accessoryFilesDOMs.Add(BibliographyParser.Parse(absolutePath));
 		}
 	}
 
@@ -351,11 +351,11 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 
 		if (_settings.UseBibEntryInitialization)
 		{
-			result = BibParser.Parse(textReader, _bibEntryInitialization);
+			result = BibliographyParser.Parse(textReader, _bibEntryInitialization);
 		}
 		else
 		{
-			result = BibParser.Parse(textReader);
+			result = BibliographyParser.Parse(textReader);
 		}
 
 		return result.Entries;
