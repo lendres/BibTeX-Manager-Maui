@@ -78,21 +78,20 @@ public partial class MainView : DigitalProductionMainPage
 		// Only proceed if the user actually selected a file.  If they cancelled, the file will be null or empty and we do nothing.
 		// If they did select a file, we try to close the current project. If that succeeds (they didn't cancel out of closing), then we open the new file.
 		string file = await _filePicker.BrowseForBibliographyFile();
-		if (!string.IsNullOrEmpty(file))
-		{
-			if (await TryCloseProject())
-			{
-				await Open(file);
-			}
-		}
 	}
 
 	private async Task Open(string path)
 	{
-		await _viewModel.OpenWithPathSave(path);
-		_headerView.Open();
-		_stringsEditView.Open();
-		_bibliographyEditView.Open();
+		if (!string.IsNullOrEmpty(path))
+		{
+			if (await TryCloseProject())
+			{
+				await _viewModel.OpenWithPathSave(path);
+				_headerView.Open();
+				_stringsEditView.Open();
+				_bibliographyEditView.Open();
+			}
+		}
 	}
 
 	async void OnSave(object sender, EventArgs eventArgs)
