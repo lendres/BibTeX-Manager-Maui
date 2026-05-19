@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using DigitalProduction.Strings;
 using DigitalProduction.Projects;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ public partial class HeaderViewModel : ObservableObject, IBibliographyPartViewMo
 
 	partial void OnHeaderChanged(string value)
 	{
-		if (Project.Bibliography.Header != value)
+		if (!Project.Bibliography.Header.EqualsIgnoringLineEndings(value))
 		{
 			Project.Bibliography.Header = value;
 		}
