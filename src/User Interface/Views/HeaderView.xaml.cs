@@ -14,10 +14,4 @@ public partial class HeaderView : BibliographyPartView<HeaderViewModel>
 	}
 
 	#endregion
-
-	#region Properties
-	#endregion
-
-	#region Button Events
-	#endregion
 }
