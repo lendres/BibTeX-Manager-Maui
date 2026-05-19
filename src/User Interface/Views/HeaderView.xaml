@@ -21,11 +21,11 @@
 	<Grid x:Name="_mainGrid" Padding="20">
 		
 		<Editor 
+			StyleClass="EditorStyle"
 			Grid.Row="0" Grid.Column="0"
 			x:Name="_headerEditor"
 			VerticalOptions="Fill"
 			HorizontalOptions="Fill"
-			
 			FontFamily="IBMPlexMono-Regular"
 			Text="{Binding Header}"/>
 

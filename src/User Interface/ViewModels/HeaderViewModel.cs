@@ -15,7 +15,7 @@ public partial class HeaderViewModel : ObservableObject, IBibliographyPartViewMo
 	public BibTeXProject Project { get => BibTeXProject.Instance ?? throw new NullReferenceException("Project is null."); }
 
 	[ObservableProperty]
-	public partial string Header { get; set; } = "";
+	public partial string Header { get; set; } = "This is the header";
 
 	#endregion
 
@@ -29,14 +29,21 @@ public partial class HeaderViewModel : ObservableObject, IBibliographyPartViewMo
 	{
 		if (Project.Bibliography != null)
 		{
-			Header = "";
-			foreach (string line in Project.Bibliography.Header)
-				Header += line + Environment.NewLine;
+			Header = Project.Bibliography.Header;
 		}
 	}
 
 	public async Task Close()
 	{
+		Header = string.Empty;
+	}
+
+	partial void OnHeaderChanged(string value)
+	{
+		if (Project.Bibliography.Header != value)
+		{
+			Project.Bibliography.Header = value;
+		}
 	}
 
 	#endregion

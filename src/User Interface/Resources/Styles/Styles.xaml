@@ -97,4 +97,26 @@
 		</Border>
 	</ControlTemplate>
 
+	<Style TargetType="Editor" Class="EditorStyle">
+		<Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource Black}, Dark={DynamicResource White}}"/>
+		<Setter Property="BackgroundColor" Value="Transparent"/>
+		<Setter Property="FontFamily" Value="OpenSansRegular"/>
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={DynamicResource Gray200}, Dark={DynamicResource Gray500}}"/>
+		<Setter Property="MinimumHeightRequest" Value="32"/>
+		<Setter Property="MinimumWidthRequest" Value="44"/>
+		<!--<Setter Property="VisualStateManager.VisualStateGroups">
+			<VisualStateGroupList>
+				<VisualStateGroup x:Name="CommonStates">
+					<VisualState x:Name="Normal"/>
+					<VisualState x:Name="Disabled">
+						<VisualState.Setters>
+							<Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource Gray300}, Dark={DynamicResource Gray600}}"/>
+						</VisualState.Setters>
+					</VisualState>
+				</VisualStateGroup>
+			</VisualStateGroupList>
+		</Setter>-->
+	</Style>
+
 </ResourceDictionary>
