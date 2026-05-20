@@ -67,7 +67,10 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 
 	private void ValidateHasTemplates()
 	{
-		HasTemplates = Project.IsOpen && BibTeXProject.Instance?.BibEntryInitialization.TemplateNames.Count > 0;
+		HasTemplates = 
+			Project.IsOpen && 
+			BibTeXProject.Instance!.BibEntryInitialization.TemplateNames.Count > 0 &&
+			BibTeXProject.Instance!.Settings.UseBibEntryInitialization;
 	}
 
 	#endregion

@@ -82,6 +82,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 			{
 				_settings = value;
 				ReadAccessoaryFiles();
+				OnPropertyChanged();
 			}
 		}
 	}
@@ -197,6 +198,10 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 			_bibEntryInitialization = BibEntryInitialization.Deserialize(absolutePath) ??
 				throw new Exception("Bibliography entry initialization failed.");
 		}
+		else
+		{
+			_bibEntryInitialization = new();
+		}
 	}
 
 	/// <summary>
@@ -210,6 +215,10 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 			_fieldQualityProcessor = QualityProcessor.Deserialize(absolutePath) ??
 				throw new Exception("Field quality initialization failed.");
 		}
+		else
+		{
+			_fieldQualityProcessor = new();
+		}
 	}
 
 	/// <summary>
@@ -222,6 +231,10 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		{
 			_nameRemapper = BibEntryRemapper.Deserialize(absolutePath) ??
 				throw new Exception("Name remapping initialization failed.");
+		}
+		else
+		{
+			_nameRemapper = new();
 		}
 	}
 
@@ -315,6 +328,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 				ReadNameMappingFile();
 				break;
 		}
+		OnPropertyChanged(nameof(Settings));
 	}
 
 	#endregion
