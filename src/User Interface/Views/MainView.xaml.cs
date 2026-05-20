@@ -24,11 +24,10 @@ public partial class MainView : DigitalProductionMainPage
 
 	#region Construction
 
-	public MainView(MainViewModel viewModel, IPageProvider pageProvider, IBibTeXFilePicker filePicker, ISaveFilePicker saveFilePicker, ISaveService saveBeforeExitService)
+	public MainView(MainViewModel viewModel, IBibTeXFilePicker filePicker, ISaveFilePicker saveFilePicker, ISaveService saveBeforeExitService)
 	{
 		InitializeComponent();
 
-		pageProvider.CurrentPage		= this;
 		_filePicker						= filePicker;
 		_saveFilePicker					= saveFilePicker;
 		_saveBeforeExitService			= saveBeforeExitService;
