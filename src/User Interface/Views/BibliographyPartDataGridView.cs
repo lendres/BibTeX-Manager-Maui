@@ -1,6 +1,7 @@
 ﻿using BibTeXManager.ViewModels;
 using DigitalProduction.Maui.Services;
 using Maui.DataGrid;
+using System.ComponentModel;
 
 namespace BibTeXManager.Views;
 
@@ -18,11 +19,41 @@ public class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartV
 		base(viewModel)
 	{
 		_dialogService = MauiProgram.Services.GetRequiredService<IDialogService>();
+
+		Loaded += OnLoaded;
 	}
 
 	#endregion
 
 	#region Properties
+
+	public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
+		nameof(SelectedItem),
+		typeof(object),
+		typeof(BibliographyEditView),
+		null,
+		BindingMode.OneWayToSource);
+
+	public object? SelectedItem
+	{
+		get => GetValue(SelectedItemProperty);
+		private set => SetValue(SelectedItemProperty, value);
+	}
+
+	private void OnLoaded(object? sender, EventArgs eventArgs)
+	{
+		ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+
+		SelectedItem = ViewModel.SelectedItem;
+	}
+
+	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs eventArgs)
+	{
+		if (eventArgs.PropertyName == nameof(BibliographyEditViewModel.SelectedItem))
+		{
+			SelectedItem = ViewModel.SelectedItem;
+		}
+	}
 
 	protected bool AnimateScrollToSelection { get; } = false;
 
