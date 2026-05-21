@@ -19,7 +19,7 @@
     <ContentPage.Resources>
 		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
 		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
-		<dpconverters:SingleEnumToBoolConverter x:Key="UseSpacesConverteer" x:TypeArguments="library:WhiteSpace" Enum="{x:Static library:WhiteSpace.Tab}"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="UseSpacesConverteer" x:TypeArguments="library:WhiteSpace" Enum="{x:Static library:WhiteSpace.Space}"/>
 		<dpconverters:SingleEnumToBoolConverter x:Key="UseTabsConverteer" x:TypeArguments="library:WhiteSpace" Enum="{x:Static library:WhiteSpace.Tab}"/>
 		<dpconverters:EnumToStringConverter x:Key="EnumToStringConverter" x:TypeArguments="library:WhiteSpace"/>
 		<Style TargetType="Switch">
