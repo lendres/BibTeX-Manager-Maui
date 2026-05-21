@@ -79,7 +79,7 @@ public static class MauiProgram
 		services.AddSingleton<IRecentPathsManagerService, RecentPathsManagerService>();
 		services.AddSingleton<ISaveFilePicker, SaveFilePicker>();
 		services.AddSingleton<ISaveService, SaveService>();
-		services.AddSingleton<IPageProvider, PageProvider>();
+		services.AddSingleton<IPageProvider, CurrentPageProvider>();
 	}
 
 	static void RegisterEssentials(in IServiceCollection services)

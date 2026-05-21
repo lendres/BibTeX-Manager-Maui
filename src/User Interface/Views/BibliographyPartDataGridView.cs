@@ -1,15 +1,23 @@
 ﻿using BibTeXManager.ViewModels;
+using DigitalProduction.Maui.Services;
 using Maui.DataGrid;
 
 namespace BibTeXManager.Views;
 
 public class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartView<TViewModel> where TViewModel : BibiographyPartDataGridBaseViewModel<TPart> where TPart : class
 {
+	#region Fields
+
+	private readonly IDialogService _dialogService;
+
+	#endregion
+
 	#region Construction
 
 	public BibliographyPartDataGridView(TViewModel viewModel) :
 		base(viewModel)
 	{
+		_dialogService = MauiProgram.Services.GetRequiredService<IDialogService>();
 	}
 
 	#endregion
@@ -62,8 +70,7 @@ public class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartV
 
 	public async void OnDeleteEntry(object sender, EventArgs eventArgs)
 	{
-//bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
-		bool result = true;
+		bool result = await _dialogService.HostingPage!.DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 		if (result)
 		{
 			ViewModel.Delete();

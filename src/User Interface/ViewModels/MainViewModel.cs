@@ -41,9 +41,9 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 
 	#region Properties
 
-	public IRecentPathsManagerService RecentPathsManagerService { get; set; }
+	public IRecentPathsManagerService			RecentPathsManagerService	{ get; set; }
 
-	public Page? MenuHostingPage { get => _dialogService.HostingPage; set => _dialogService.HostingPage = value; }
+	public Page?								MenuHostingPage				{ get => _dialogService.HostingPage; set => _dialogService.HostingPage = value; }
 
 
 	public bool									SavePathRequired			{ get => !Project.HasSavePath; }
