@@ -65,7 +65,7 @@
 		<MenuBarItem Text="Edit">
 			<MenuFlyoutItem
 				Text="Add Entry..."
-				Clicked="OnNewBibEntry"
+				Clicked="OnNewEntry"
 				IsEnabled="{Binding IsOpen}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="a"/>
@@ -81,7 +81,7 @@
 			</MenuFlyoutItem>
 			<MenuFlyoutItem
 				Text="Edit Entry..."
-				Clicked="OnEditBibEntry"
+				Clicked="OnEditEntry"
 				IsEnabled="{Binding SelectedBibliographyItem, Converter={StaticResource IsNotNullConverter}}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="e"/>
@@ -90,7 +90,7 @@
 			</MenuFlyoutItem>
 			<MenuFlyoutItem
 				Text="Delete Entry"
-				Clicked="OnDeleteBibEntry"
+				Clicked="OnDeleteEntry"
 				IsEnabled="{Binding SelectedBibliographyItem, Converter={StaticResource IsNotNullConverter}}">
 				<!--<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="d"/>

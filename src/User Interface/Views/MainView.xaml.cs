@@ -151,7 +151,7 @@ public partial class MainView : DigitalProductionMainPage
 
 	#region Edit
 
-	async void OnNewBibEntry(object sender, EventArgs eventArgs)
+	async void OnNewEntry(object sender, EventArgs eventArgs)
 	{
 		_bibliographyEditView.OnNewBibEntry(sender, eventArgs);
 	}
@@ -161,12 +161,12 @@ public partial class MainView : DigitalProductionMainPage
 		_bibliographyEditView.OnNewBibEntryFromTemplate(sender, eventArgs);
 	}
 
-	async void OnEditBibEntry(object sender, EventArgs eventArgs)
+	async void OnEditEntry(object sender, EventArgs eventArgs)
 	{
 		_bibliographyEditView.OnEditBibEntry(sender, eventArgs);
 	}
 
-	async void OnDeleteBibEntry(object sender, EventArgs eventArgs)
+	async void OnDeleteEntry(object sender, EventArgs eventArgs)
 	{
 		_bibliographyEditView.OnDeleteEntry(sender, eventArgs);
 	}
