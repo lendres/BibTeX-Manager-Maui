@@ -24,7 +24,7 @@ public partial class BibliographyEditView : BibliographyPartDataGridView<Bibliog
 
 	#region Button Events
 
-	public async void OnNewBibEntry(object sender, EventArgs eventArgs)
+	public override async void OnNewEntry(object sender, EventArgs eventArgs)
 	{
 		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
 		{
@@ -50,7 +50,7 @@ public partial class BibliographyEditView : BibliographyPartDataGridView<Bibliog
 		}
 	}
 
-	public async void OnEditBibEntry(object sender, EventArgs eventArgs)
+	public override async void OnEditEntry(object sender, EventArgs eventArgs)
 	{
 		await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
 		{

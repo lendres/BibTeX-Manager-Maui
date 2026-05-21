@@ -15,9 +15,7 @@
 	<ContentPage.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
 		<dpconverters:EnumToStringConverter x:Key="PartTypeEnumToStringConverter" x:TypeArguments="enums:BibliographyPartType"/>
-		<dpconverters:SingleEnumToBoolConverter x:Key="IsHeaderView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.Header}"/>
-		<dpconverters:SingleEnumToBoolConverter x:Key="IsStringEntriesView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.StringEntries}"/>
-		<dpconverters:SingleEnumToBoolConverter x:Key="IsBibliographyEntriesView" x:TypeArguments="enums:BibliographyPartType" TrueValue="{x:Static enums:BibliographyPartType.BibliographyEntries}"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="IsPartView" x:TypeArguments="enums:BibliographyPartType"/>
 	</ContentPage.Resources>
 
 	<Shell.TitleView>
@@ -66,7 +64,7 @@
 			<MenuFlyoutItem
 				Text="Add Entry..."
 				Clicked="OnNewEntry"
-				IsEnabled="{Binding IsOpen}">
+				IsEnabled="{Binding CanAdd}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="a"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
@@ -74,7 +72,7 @@
 			<MenuFlyoutItem
 				Text="Add Entry from Template..."
 				Clicked="OnNewBibEntryFromTemplate"
-				IsEnabled="{Binding HasTemplates}">
+				IsEnabled="{Binding CanAddFromTemplates}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="t"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
@@ -82,7 +80,7 @@
 			<MenuFlyoutItem
 				Text="Edit Entry..."
 				Clicked="OnEditEntry"
-				IsEnabled="{Binding SelectedBibliographyItem, Converter={StaticResource IsNotNullConverter}}">
+				IsEnabled="{Binding IsItemSelected}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="e"/>
 					<KeyboardAccelerator Key="F2"/>
@@ -91,7 +89,7 @@
 			<MenuFlyoutItem
 				Text="Delete Entry"
 				Clicked="OnDeleteEntry"
-				IsEnabled="{Binding SelectedBibliographyItem, Converter={StaticResource IsNotNullConverter}}">
+				IsEnabled="{Binding IsItemSelected}">
 				<!--<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="d"/>
 				</MenuFlyoutItem.KeyboardAccelerators>-->
@@ -175,18 +173,19 @@
 		<views:HeaderView 
 			Grid.Row="1" Grid.Column="0"
 			x:Name="_headerView"
-			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsHeaderView}}"
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsPartView}, ConverterParameter={x:Static enums:BibliographyPartType.Header}}"
 			IsEnabled="{Binding IsOpen}"/>
 
 		<views:StringsEditView Grid.Row="1" Grid.Column="0"
 			x:Name="_stringsEditView"
-			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsStringEntriesView}}"
+			SelectedItem="{Binding SelectedStringItem, Mode=OneWayToSource}"
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsPartView}, ConverterParameter={x:Static enums:BibliographyPartType.StringEntries}}"
 			IsEnabled="{Binding IsOpen}"/>
 
 		<views:BibliographyEditView Grid.Row="1" Grid.Column="0"
 			x:Name="_bibliographyEditView"
 			SelectedItem="{Binding SelectedBibliographyItem, Mode=OneWayToSource}"
-			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsBibliographyEntriesView}}"
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsPartView}, ConverterParameter={x:Static enums:BibliographyPartType.BibliographyEntries}}"
 			IsEnabled="{Binding IsOpen}"/>
 		
 	</Grid>

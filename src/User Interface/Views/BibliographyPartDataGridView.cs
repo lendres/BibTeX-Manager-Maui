@@ -5,7 +5,8 @@ using System.ComponentModel;
 
 namespace BibTeXManager.Views;
 
-public class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartView<TViewModel> where TViewModel : BibiographyPartDataGridBaseViewModel<TPart> where TPart : class
+public abstract class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartView<TViewModel>, IBibliographyPartDataGridView
+	where TViewModel : BibiographyPartDataGridBaseViewModel<TPart> where TPart : class
 {
 	#region Fields
 
@@ -98,6 +99,10 @@ public class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartV
 		ViewModel.ReplaceSelected(entry);
 		DataGrid.ScrollTo(ViewModel.SelectedItem!, ScrollToPosition.Center, AnimateScrollToSelection);
 	}
+
+	public abstract void OnNewEntry(object sender, EventArgs eventArgs);
+
+	public abstract void OnEditEntry(object sender, EventArgs eventArgs);
 
 	public async void OnDeleteEntry(object sender, EventArgs eventArgs)
 	{

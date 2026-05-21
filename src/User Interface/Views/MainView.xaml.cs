@@ -1,4 +1,5 @@
 ﻿using BibTeXLibrary;
+using BibTeXManager.Enums;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
@@ -20,6 +21,8 @@ public partial class MainView : DigitalProductionMainPage
 	private readonly ISaveFilePicker				_saveFilePicker;
 	private readonly ISaveService					_saveBeforeExitService;
 
+	private readonly List<IBibliographyPartView>	_bibliographyPartViews;
+
 	#endregion
 
 	#region Construction
@@ -28,13 +31,15 @@ public partial class MainView : DigitalProductionMainPage
 	{
 		InitializeComponent();
 
-		_filePicker						= filePicker;
-		_saveFilePicker					= saveFilePicker;
-		_saveBeforeExitService			= saveBeforeExitService;
+		_filePicker					= filePicker;
+		_saveFilePicker				= saveFilePicker;
+		_saveBeforeExitService		= saveBeforeExitService;
 
-		BindingContext					= viewModel;
-		_viewModel						= viewModel;
-		_viewModel.MenuHostingPage		= this;
+		BindingContext				= viewModel;
+		_viewModel					= viewModel;
+		_viewModel.MenuHostingPage	= this;
+
+		_bibliographyPartViews		= [_headerView, _stringsEditView, _bibliographyEditView];
 
 		if (Preferences.LoadLastProjectAtStartUp)
 		{
@@ -60,9 +65,10 @@ public partial class MainView : DigitalProductionMainPage
 	{
 		if (await TryCloseProject())
 		{
-			_headerView.New();
-			_stringsEditView.New();
-			_bibliographyEditView.New();
+			foreach (IBibliographyPartView bibliographyPartView in _bibliographyPartViews)
+			{
+				bibliographyPartView.New();
+			}
 			_viewModel.New();
 		}
 	}
@@ -86,9 +92,10 @@ public partial class MainView : DigitalProductionMainPage
 			if (await TryCloseProject())
 			{
 				await _viewModel.OpenWithPathSave(path);
-				_headerView.Open();
-				_stringsEditView.Open();
-				_bibliographyEditView.Open();
+				foreach (IBibliographyPartView bibliographyPartView in _bibliographyPartViews)
+				{
+					bibliographyPartView.Open();
+				}
 			}
 		}
 	}
@@ -140,9 +147,11 @@ public partial class MainView : DigitalProductionMainPage
 				return false;
 		}
 
-		_headerView.Close();
-		_stringsEditView.Close();
-		_bibliographyEditView.Close();
+		foreach (IBibliographyPartView bibliographyPartView in _bibliographyPartViews)
+		{
+			bibliographyPartView.Close();
+		}
+
 		_viewModel.Close();
 		return true;
 	}
@@ -153,7 +162,7 @@ public partial class MainView : DigitalProductionMainPage
 
 	async void OnNewEntry(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditView.OnNewBibEntry(sender, eventArgs);
+		GetActiveGridView().OnNewEntry(sender, eventArgs);
 	}
 
 	async void OnNewBibEntryFromTemplate(object sender, EventArgs eventArgs)
@@ -163,12 +172,12 @@ public partial class MainView : DigitalProductionMainPage
 
 	async void OnEditEntry(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditView.OnEditBibEntry(sender, eventArgs);
+		GetActiveGridView().OnEditEntry(sender, eventArgs);
 	}
 
 	async void OnDeleteEntry(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditView.OnDeleteEntry(sender, eventArgs);
+		GetActiveGridView().OnDeleteEntry(sender, eventArgs);
 	}
 
 	void OnFind(object sender, EventArgs eventArgs)
@@ -326,6 +335,11 @@ public partial class MainView : DigitalProductionMainPage
 		{
 			await _viewModel.Open(path);
 		}
+	}
+
+	private IBibliographyPartDataGridView GetActiveGridView()
+	{
+		return (IBibliographyPartDataGridView)_bibliographyPartViews[(int)_viewModel.ActiveBibliographyPart];
 	}
 
 	#endregion

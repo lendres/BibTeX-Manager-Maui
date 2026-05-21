@@ -45,7 +45,6 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 
 	public Page?								MenuHostingPage				{ get => _dialogService.HostingPage; set => _dialogService.HostingPage = value; }
 
-
 	public bool									SavePathRequired			{ get => !Project.HasSavePath; }
 
 	public string?								SearchString				{ get; set; } = null;
@@ -56,10 +55,19 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 	public partial BibliographyPartType			ActiveBibliographyPart		{  get; set; }	= BibliographyPartType.BibliographyEntries;
 
 	[ObservableProperty]
+	public partial BibEntry?					SelectedStringItem			{ get; set; }
+
+	[ObservableProperty]
 	public partial BibEntry?					SelectedBibliographyItem	{ get; set; }
 
 	[ObservableProperty]
-	public partial bool							HasTemplates				{ get; set; } = false;
+	public partial bool							CanAdd						{ get; set; } = false;
+
+	[ObservableProperty]
+	public partial bool							CanAddFromTemplates			{ get; set; } = false;
+
+	[ObservableProperty]
+	public partial bool							IsItemSelected				{ get; set; } = false;
 
 	#endregion
 
@@ -67,7 +75,26 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 
 	private void ValidateHasTemplates()
 	{
-		HasTemplates = Project.IsOpen && BibTeXProject.Instance?.BibEntryInitialization.TemplateNames.Count > 0;
+		CanAddFromTemplates =
+			Project.IsOpen &&
+			BibTeXProject.Instance?.BibEntryInitialization.TemplateNames.Count > 0 &&
+			ActiveBibliographyPart == BibliographyPartType.BibliographyEntries;
+	}
+
+	public void ValidateCanAdd()
+	{
+		CanAdd = Project.IsOpen && ActiveBibliographyPart != BibliographyPartType.Header;
+	}
+
+	public void ValidateIsItemSelected()
+	{
+		IsItemSelected = ActiveBibliographyPart switch
+		{
+			BibliographyPartType.Header					=> false,
+			BibliographyPartType.StringEntries			=> SelectedStringItem != null,
+			BibliographyPartType.BibliographyEntries    => SelectedBibliographyItem != null,
+			_ => throw new InvalidOperationException("Invalid bibliography part type.")
+		};
 	}
 
 	#endregion
@@ -87,6 +114,13 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 	private void OnProjectOpenChanged()
 	{
 		ValidateHasTemplates();
+	}
+
+	partial void OnActiveBibliographyPartChanged(BibliographyPartType oldValue, BibliographyPartType newValue)
+	{
+		ValidateHasTemplates();
+		ValidateCanAdd();
+		ValidateIsItemSelected();
 	}
 
 	#endregion

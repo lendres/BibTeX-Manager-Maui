@@ -24,7 +24,7 @@
 		<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
 			<Button
 				Text="Add"
-				Clicked="OnNewBibEntry"
+				Clicked="OnNewEntry"
 				StyleClass="SquareButtonStyle"/>
 
 			<Button
@@ -35,7 +35,7 @@
 
 			<Button
 				Text="Edit"
-				Clicked="OnEditBibEntry"
+				Clicked="OnEditEntry"
 				StyleClass="SquareButton"
 				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 
