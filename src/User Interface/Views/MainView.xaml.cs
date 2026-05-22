@@ -43,7 +43,10 @@ public partial class MainView : DigitalProductionMainPage
 
 		_bibliographyPartViews		= [_headerView, _stringsEditView, _bibliographyEditView];
 
-		_timer						= new System.Threading.Timer((obj) => { _ = OpenLastProject(); _timer?.Dispose(); }, null, 500, Timeout.Infinite);
+		// We seem to need to add a delay to allow everything to be fully setp and connected before trying to open the last project.
+		// If we try to open it immediately, the views don't seem to be fully connected to the view model and they don't update with
+		// the opened project.
+		_timer = new System.Threading.Timer((obj) => { _ = OpenLastProject(); _timer?.Dispose(); }, null, 500, Timeout.Infinite);
 	}
 
 	#endregion
