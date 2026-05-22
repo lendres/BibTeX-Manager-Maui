@@ -2,6 +2,7 @@
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
+using DigitalProduction.Maui.Enums;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
@@ -208,8 +209,12 @@ public partial class MainView : DigitalProductionMainPage
 
 		if (result is bool boolResut && boolResut)
 		{
-			bool foundEntries = _bibliographyEditView.Find(viewModel.SearchTermsString);
-			if (!foundEntries)
+			_viewModel.SearchString = viewModel.SearchTermsString;
+			_stringsEditView.Find(viewModel.SearchTermsString);
+			_bibliographyEditView.Find(viewModel.SearchTermsString);
+
+			SearchResult searchResult = GetActiveGridView().Find(viewModel.SearchTermsString);
+			if (searchResult == SearchResult.NoItemsFound)
 			{
 				await DisplayAlert("Not Found", "No entries found for the specified search term(s).\nSearch string: "+viewModel.SearchTermsString , "OK");
 			}
@@ -222,12 +227,20 @@ public partial class MainView : DigitalProductionMainPage
 
 	private void SelectNextFoundItem()
 	{
-		_bibliographyEditView.SelectNextFoundItem();
+		switch (GetActiveGridView().SelectNextFoundItem())
+		{
+			case SearchResult.NoMoreFoundItems:
+				DisplayAlert("Find", "No more items were found.", "OK");
+				break;
+			case SearchResult.NoItemsFound:
+				DisplayAlert("Find", "No items were found.", "OK");
+				break;
+		};
 	}
 
 	private void OnScrollToSelection(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditView.OnScrollToSelection(sender, eventArgs);
+		GetActiveGridView().OnScrollToSelection(sender, eventArgs);
 	}
 
     #endregion

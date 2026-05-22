@@ -16,6 +16,7 @@
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
 		<dpconverters:EnumToStringConverter x:Key="PartTypeEnumToStringConverter" x:TypeArguments="enums:BibliographyPartType"/>
 		<dpconverters:SingleEnumToBoolConverter x:Key="IsPartView" x:TypeArguments="enums:BibliographyPartType"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="IsNotHeaderView" x:TypeArguments="enums:BibliographyPartType" ValueToCompare="Header" ResultIfEqual="false"/>
 	</ContentPage.Resources>
 
 	<Shell.TitleView>
@@ -97,7 +98,7 @@
 			<MenuFlyoutItem
 				Text="Find..."
 				Clicked="OnFind"
-				IsEnabled="{Binding IsOpen}">
+				IsEnabled="{Binding ActiveBibliographyPart, Converter={StaticResource IsNotHeaderView}}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="f" Modifiers="Ctrl"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
@@ -105,7 +106,7 @@
 			<MenuFlyoutItem
 				Text="Find Next"
 				Clicked="OnFindNext"
-				IsEnabled="{Binding IsOpen}">
+				IsEnabled="{Binding ActiveBibliographyPart, Converter={StaticResource IsNotHeaderView}}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F3"/>
 				</MenuFlyoutItem.KeyboardAccelerators>
@@ -113,7 +114,7 @@
 			<MenuFlyoutItem
 				Text="Scroll to Selection"
 				Clicked="OnScrollToSelection"
-				IsEnabled="{Binding SelectedBibliographyItem, Converter={StaticResource IsNotNullConverter}}">
+				IsEnabled="{Binding ActiveBibliographyPart, Converter={StaticResource IsNotHeaderView}}">
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="s"/>
 					<KeyboardAccelerator Key="F4"/>

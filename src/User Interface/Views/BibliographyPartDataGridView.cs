@@ -1,4 +1,5 @@
 ﻿using BibTeXManager.ViewModels;
+using DigitalProduction.Maui.Enums;
 using DigitalProduction.Maui.Services;
 using Maui.DataGrid;
 using System.ComponentModel;
@@ -69,15 +70,19 @@ public abstract class BibliographyPartDataGridView<TViewModel, TPart> : Bibliogr
 		return ViewModel.RequireSearchString;
 	}
 
-	public bool Find(string searchString)
+	public SearchResult Find(string searchString)
 	{
 		return ViewModel.Find(searchString);
 	}
 
-	public void SelectNextFoundItem()
+	public SearchResult SelectNextFoundItem()
 	{
-		ViewModel.SelectNextFoundItem();
-		DataGrid.ScrollTo(ViewModel.SelectedItem!, ScrollToPosition.Center, AnimateScrollToSelection);
+		SearchResult searchResult = ViewModel.SelectNextFoundItem();
+		if (searchResult == SearchResult.NextItemFound)
+		{
+			DataGrid.ScrollTo(ViewModel.SelectedItem!, ScrollToPosition.Center, AnimateScrollToSelection);
+		}
+		return searchResult;
 	}
 
 	public void OnScrollToSelection(object sender, EventArgs eventArgs)

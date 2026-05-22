@@ -1,4 +1,5 @@
-﻿namespace BibTeXManager.Views;
+﻿using DigitalProduction.Maui.Enums;
+namespace BibTeXManager.Views;
 
 public interface IBibliographyPartDataGridView
 {
@@ -8,7 +9,9 @@ public interface IBibliographyPartDataGridView
 
 	void OnDeleteEntry(object sender, EventArgs eventArgs);
 
-	void SelectNextFoundItem();
+	SearchResult Find(string searchString);
+
+	SearchResult SelectNextFoundItem();
 
 	void OnScrollToSelection(object sender, EventArgs eventArgs);
 }
