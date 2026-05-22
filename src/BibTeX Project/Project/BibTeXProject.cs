@@ -126,7 +126,6 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		_bibliography.ModifiedChanged	+= OnChildModifiedChanged;
 		_bibliography.PropertyChanged	+= OnPropertyChanged;
 		Path                            =  "";
-		base.Open();
 	}
 
 	/// <summary>

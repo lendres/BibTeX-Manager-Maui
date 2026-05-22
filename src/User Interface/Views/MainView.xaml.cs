@@ -6,6 +6,7 @@ using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
+using System.Timers;
 
 namespace BibTeXManager.Views;
 
@@ -21,6 +22,8 @@ public partial class MainView : DigitalProductionMainPage
 	private readonly ISaveService					_saveBeforeExitService;
 
 	private readonly List<IBibliographyPartView>	_bibliographyPartViews;
+
+	private System.Threading.Timer?					_timer;
 
 	#endregion
 
@@ -40,10 +43,7 @@ public partial class MainView : DigitalProductionMainPage
 
 		_bibliographyPartViews		= [_headerView, _stringsEditView, _bibliographyEditView];
 
-		if (Preferences.LoadLastProjectAtStartUp)
-		{
-			_ = OpenLastProject();
-		}
+		_timer						= new System.Threading.Timer((obj) => { _ = OpenLastProject(); _timer?.Dispose(); }, null, 500, Timeout.Infinite);
 	}
 
 	#endregion
@@ -82,6 +82,7 @@ public partial class MainView : DigitalProductionMainPage
 		// Only proceed if the user actually selected a file.  If they cancelled, the file will be null or empty and we do nothing.
 		// If they did select a file, we try to close the current project. If that succeeds (they didn't cancel out of closing), then we open the new file.
 		string file = await _filePicker.BrowseForBibliographyFile();
+		await Open(file);
 	}
 
 	private async Task Open(string path)
@@ -329,10 +330,13 @@ public partial class MainView : DigitalProductionMainPage
 
 	private async Task OpenLastProject()
 	{
-		string path = Preferences.RecentPathsManagerService.GetTop();
-		if (System.IO.Path.Exists(path))
+		if (Preferences.LoadLastProjectAtStartUp)
 		{
-			await _viewModel.Open(path);
+			string path = Preferences.RecentPathsManagerService.GetTop();
+			if (System.IO.Path.Exists(path))
+			{
+				await Open(path);
+			}
 		}
 	}
 
