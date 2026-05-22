@@ -55,10 +55,10 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 	public partial BibliographyPartType			ActiveBibliographyPart		{  get; set; }	= BibliographyPartType.BibliographyEntries;
 
 	[ObservableProperty]
-	public partial BibEntry?					SelectedStringItem			{ get; set; }
+	public partial object?						SelectedStringItem			{ get; set; }
 
 	[ObservableProperty]
-	public partial BibEntry?					SelectedBibliographyItem	{ get; set; }
+	public partial object?						SelectedBibliographyItem	{ get; set; }
 
 	[ObservableProperty]
 	public partial bool							CanAdd						{ get; set; } = false;
@@ -116,7 +116,17 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 		ValidateHasTemplates();
 	}
 
-	partial void OnActiveBibliographyPartChanged(BibliographyPartType oldValue, BibliographyPartType newValue)
+	partial void OnSelectedStringItemChanged(object? value)
+	{
+		ValidateIsItemSelected();
+	}
+
+	partial void OnSelectedBibliographyItemChanged(object? value)
+	{
+		ValidateIsItemSelected();
+	}
+
+	partial void OnActiveBibliographyPartChanged(BibliographyPartType value)
 	{
 		ValidateHasTemplates();
 		ValidateCanAdd();

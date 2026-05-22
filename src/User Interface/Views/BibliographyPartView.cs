@@ -1,5 +1,4 @@
 ﻿using BibTeXManager.ViewModels;
-using Maui.DataGrid;
 
 namespace BibTeXManager.Views;
 

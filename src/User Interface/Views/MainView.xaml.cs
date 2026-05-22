@@ -1,5 +1,4 @@
 ﻿using BibTeXLibrary;
-using BibTeXManager.Enums;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
