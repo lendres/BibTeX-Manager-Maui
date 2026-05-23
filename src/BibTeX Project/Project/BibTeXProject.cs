@@ -371,7 +371,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 			result = BibliographyParser.Parse(textReader);
 		}
 
-		return result.Entries;
+		return result.BibliographyEntries;
 	}
 
 	#endregion
@@ -517,7 +517,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	/// </summary>
 	public IEnumerable<FieldProcessingData> CleanAllEntries()
 	{
-		foreach (BibEntry entry in _bibliography.Entries)
+		foreach (BibEntry entry in _bibliography.BibliographyEntries)
 		{
 			foreach (FieldProcessingData fieldProcessingData in _fieldQualityProcessor.Process(entry))
 			{

@@ -15,7 +15,7 @@ public partial class StringsEditViewModel : BibiographyPartDataGridBaseViewModel
 
 	#region Methods
 
-	protected override void AddItems() => Items = Project.Bibliography.StringConstants;
+	protected override void AddItems() => Items = Project.Bibliography.StringEntries;
 
 	public override void Insert(StringEntry item, int position = 0, bool select = true)
 	{
