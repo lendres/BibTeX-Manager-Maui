@@ -61,7 +61,7 @@ public partial class BibliographyEditViewModel : BibiographyPartDataGridBaseView
 
 	#region File Menu
 
-	protected override void AddItems() => Items = Project.Bibliography.Entries;
+	protected override void AddItems() => Items = Project.Bibliography.BibliographyEntries;
 
 	#endregion
 

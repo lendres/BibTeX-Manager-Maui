@@ -36,14 +36,11 @@ public partial class StringEditViewModel : ObservableObject
 	[ObservableProperty]
 	public partial string						Title { get; set; }
 
-	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
+	[ObservableProperty]
 	public partial ValidatableObject<string>	EnteredName { get; set; }				= new();
 
-	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
-	public partial ValidatableObject<string>	EnteredValue { get; set; }				= new();
-
 	[ObservableProperty]
-	public partial string						Description { get; set; }				= "";
+	public partial ValidatableObject<string>	EnteredValue { get; set; }				= new();
 
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }

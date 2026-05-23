@@ -56,7 +56,7 @@ public class StringConstantProcessor
 	/// <param name="bibliographyDOMs">BibliographyDOM.</param>
 	public void AddStringConstantsToMap(BibliographyDOM bibliographyDOM)
 	{
-		foreach (StringEntry entry in bibliographyDOM.StringConstants)
+		foreach (StringEntry entry in bibliographyDOM.StringEntries)
 		{
 			// Avoid duplicats. The first one will be used, the rest will be ignored.
 			if (!_map.ContainsKey(entry.Name))
