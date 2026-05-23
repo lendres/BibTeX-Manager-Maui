@@ -14,7 +14,4 @@ public partial class StringEditView : PopupView
 	}
 
 	#endregion
-
-	#region Events
-	#endregion
 }
