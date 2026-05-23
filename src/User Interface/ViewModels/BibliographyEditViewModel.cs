@@ -111,7 +111,7 @@ public partial class BibliographyEditViewModel : BibiographyPartDataGridBaseView
 	public override SearchResult Find(string search)
 	{
 		List<string> tagNames		= ["author", "title"];
-		List<BibEntry> findResults	= Project.Bibliography.SearchBibEntries(tagNames, true, search);
+		List<BibEntry> findResults	= Project.Bibliography.SearchBibliographyEntries(tagNames, true, search);
 		return SetSearchResults(search, findResults);
 	}
 

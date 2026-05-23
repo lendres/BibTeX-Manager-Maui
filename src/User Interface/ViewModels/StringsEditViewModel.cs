@@ -49,7 +49,7 @@ public partial class StringsEditViewModel : BibiographyPartDataGridBaseViewModel
 	/// <returns>True if at least one BibEntry is found, false if no entries are found.</returns>
 	public override SearchResult Find(string search)
 	{
-		List<StringEntry> findResults = Project.Bibliography.SearchStringConstants(true, search);
+		List<StringEntry> findResults = Project.Bibliography.SearchStringEntries(true, search);
 		return SetSearchResults(search, findResults);
 	}
 

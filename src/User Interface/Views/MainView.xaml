@@ -130,6 +130,7 @@
 		<!-- Tools. -->
 		<MenuBarItem Text="Tools">
 			<!--<MenuFlyoutSubItem Text="Quality">-->
+				<MenuFlyoutItem Text="Sort String Entries" Command="{Binding SortStringEntriesCommand}" IsEnabled="{Binding IsOpen}"/>
 				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding IsOpen}"/>
 				<MenuFlyoutItem Text="Check Field Quality" Clicked="OnCheckFieldQuality" IsEnabled="{Binding IsOpen}"/>
 			<!--</MenuFlyoutSubItem>-->

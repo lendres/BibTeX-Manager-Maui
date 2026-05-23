@@ -189,6 +189,12 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 	#region Tools Menu
 
 	[RelayCommand]
+	public void SortStringEntries()
+	{
+		Project.SortStringEntries();
+	}
+
+	[RelayCommand]
 	public void SortBibliographyEntries()
 	{
 		Project.SortBibliographyEntries();

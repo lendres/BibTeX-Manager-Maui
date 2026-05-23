@@ -503,12 +503,21 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	#region Entire Bibliography
 
 	/// <summary>
+	/// Sort the string entries.
+	/// Note, it is assumed this method is called deliberately.  It does not check to see if sorting is enabled in the settings.
+	/// </summary>
+	public void SortStringEntries()
+	{
+		_bibliography.SortStringEntries(_settings.StringsSortMethod);
+	}
+
+	/// <summary>
 	/// Sort the bibliography entries.
 	/// Note, it is assumed this method is called deliberately.  It does not check to see if sorting is enabled in the settings.
 	/// </summary>
 	public void SortBibliographyEntries()
 	{
-		_bibliography.SortBibEntries(_settings.BibliographySortMethod);
+		_bibliography.SortBibliographyEntries(_settings.BibliographySortMethod);
 	}
 
 	/// <summary>
