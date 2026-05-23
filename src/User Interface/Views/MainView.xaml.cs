@@ -2,10 +2,12 @@
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
+using DigitalProduction.Maui.Enums;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
+using System.Timers;
 
 namespace BibTeXManager.Views;
 
@@ -20,6 +22,10 @@ public partial class MainView : DigitalProductionMainPage
 	private readonly ISaveFilePicker				_saveFilePicker;
 	private readonly ISaveService					_saveBeforeExitService;
 
+	private readonly List<IBibliographyPartView>	_bibliographyPartViews;
+
+	private System.Threading.Timer?					_timer;
+
 	#endregion
 
 	#region Construction
@@ -28,18 +34,20 @@ public partial class MainView : DigitalProductionMainPage
 	{
 		InitializeComponent();
 
-		_filePicker						= filePicker;
-		_saveFilePicker					= saveFilePicker;
-		_saveBeforeExitService			= saveBeforeExitService;
+		_filePicker					= filePicker;
+		_saveFilePicker				= saveFilePicker;
+		_saveBeforeExitService		= saveBeforeExitService;
 
-		BindingContext					= viewModel;
-		_viewModel						= viewModel;
-		_viewModel.MenuHostingPage		= this;
+		BindingContext				= viewModel;
+		_viewModel					= viewModel;
+		_viewModel.MenuHostingPage	= this;
 
-		if (Preferences.LoadLastProjectAtStartUp)
-		{
-			_ = OpenLastProject();
-		}
+		_bibliographyPartViews		= [_headerView, _stringsEditView, _bibliographyEditView];
+
+		// We seem to need to add a delay to allow everything to be fully setp and connected before trying to open the last project.
+		// If we try to open it immediately, the views don't seem to be fully connected to the view model and they don't update with
+		// the opened project.
+		_timer = new System.Threading.Timer((obj) => { _ = OpenLastProject(); _timer?.Dispose(); }, null, 500, Timeout.Infinite);
 	}
 
 	#endregion
@@ -60,9 +68,10 @@ public partial class MainView : DigitalProductionMainPage
 	{
 		if (await TryCloseProject())
 		{
-			_headerView.New();
-			_stringsEditView.New();
-			_bibliographyEditView.New();
+			foreach (IBibliographyPartView bibliographyPartView in _bibliographyPartViews)
+			{
+				bibliographyPartView.New();
+			}
 			_viewModel.New();
 		}
 	}
@@ -77,6 +86,7 @@ public partial class MainView : DigitalProductionMainPage
 		// Only proceed if the user actually selected a file.  If they cancelled, the file will be null or empty and we do nothing.
 		// If they did select a file, we try to close the current project. If that succeeds (they didn't cancel out of closing), then we open the new file.
 		string file = await _filePicker.BrowseForBibliographyFile();
+		await Open(file);
 	}
 
 	private async Task Open(string path)
@@ -86,9 +96,10 @@ public partial class MainView : DigitalProductionMainPage
 			if (await TryCloseProject())
 			{
 				await _viewModel.OpenWithPathSave(path);
-				_headerView.Open();
-				_stringsEditView.Open();
-				_bibliographyEditView.Open();
+				foreach (IBibliographyPartView bibliographyPartView in _bibliographyPartViews)
+				{
+					bibliographyPartView.Open();
+				}
 			}
 		}
 	}
@@ -140,9 +151,11 @@ public partial class MainView : DigitalProductionMainPage
 				return false;
 		}
 
-		_headerView.Close();
-		_stringsEditView.Close();
-		_bibliographyEditView.Close();
+		foreach (IBibliographyPartView bibliographyPartView in _bibliographyPartViews)
+		{
+			bibliographyPartView.Close();
+		}
+
 		_viewModel.Close();
 		return true;
 	}
@@ -151,9 +164,9 @@ public partial class MainView : DigitalProductionMainPage
 
 	#region Edit
 
-	async void OnNewBibEntry(object sender, EventArgs eventArgs)
+	async void OnNewEntry(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditView.OnNewBibEntry(sender, eventArgs);
+		GetActiveGridView().OnNewEntry(sender, eventArgs);
 	}
 
 	async void OnNewBibEntryFromTemplate(object sender, EventArgs eventArgs)
@@ -161,14 +174,14 @@ public partial class MainView : DigitalProductionMainPage
 		_bibliographyEditView.OnNewBibEntryFromTemplate(sender, eventArgs);
 	}
 
-	async void OnEditBibEntry(object sender, EventArgs eventArgs)
+	async void OnEditEntry(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditView.OnEditBibEntry(sender, eventArgs);
+		GetActiveGridView().OnEditEntry(sender, eventArgs);
 	}
 
-	async void OnDeleteBibEntry(object sender, EventArgs eventArgs)
+	async void OnDeleteEntry(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditView.OnDeleteEntry(sender, eventArgs);
+		GetActiveGridView().OnDeleteEntry(sender, eventArgs);
 	}
 
 	void OnFind(object sender, EventArgs eventArgs)
@@ -196,8 +209,12 @@ public partial class MainView : DigitalProductionMainPage
 
 		if (result is bool boolResut && boolResut)
 		{
-			bool foundEntries = _bibliographyEditView.Find(viewModel.SearchTermsString);
-			if (!foundEntries)
+			_viewModel.SearchString = viewModel.SearchTermsString;
+			_stringsEditView.Find(viewModel.SearchTermsString);
+			_bibliographyEditView.Find(viewModel.SearchTermsString);
+
+			SearchResult searchResult = GetActiveGridView().Find(viewModel.SearchTermsString);
+			if (searchResult == SearchResult.NoItemsFound)
 			{
 				await DisplayAlert("Not Found", "No entries found for the specified search term(s).\nSearch string: "+viewModel.SearchTermsString , "OK");
 			}
@@ -210,12 +227,20 @@ public partial class MainView : DigitalProductionMainPage
 
 	private void SelectNextFoundItem()
 	{
-		_bibliographyEditView.SelectNextFoundItem();
+		switch (GetActiveGridView().SelectNextFoundItem())
+		{
+			case SearchResult.NoMoreFoundItems:
+				DisplayAlert("Find", "No more items were found.", "OK");
+				break;
+			case SearchResult.NoItemsFound:
+				DisplayAlert("Find", "No items were found.", "OK");
+				break;
+		};
 	}
 
 	private void OnScrollToSelection(object sender, EventArgs eventArgs)
 	{
-		_bibliographyEditView.OnScrollToSelection(sender, eventArgs);
+		GetActiveGridView().OnScrollToSelection(sender, eventArgs);
 	}
 
     #endregion
@@ -321,11 +346,19 @@ public partial class MainView : DigitalProductionMainPage
 
 	private async Task OpenLastProject()
 	{
-		string path = Preferences.RecentPathsManagerService.GetTop();
-		if (System.IO.Path.Exists(path))
+		if (Preferences.LoadLastProjectAtStartUp)
 		{
-			await _viewModel.Open(path);
+			string path = Preferences.RecentPathsManagerService.GetTop();
+			if (System.IO.Path.Exists(path))
+			{
+				await Open(path);
+			}
 		}
+	}
+
+	private IBibliographyPartDataGridView GetActiveGridView()
+	{
+		return (IBibliographyPartDataGridView)_bibliographyPartViews[(int)_viewModel.ActiveBibliographyPart];
 	}
 
 	#endregion

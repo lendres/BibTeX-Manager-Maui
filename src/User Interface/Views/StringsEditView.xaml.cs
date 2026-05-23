@@ -26,7 +26,7 @@ public partial class StringsEditView : BibliographyPartDataGridView<StringsEditV
 
 	#region Button Events
 
-	async private void OnNewString(object sender, EventArgs eventArgs)
+	public override async void OnNewEntry(object sender, EventArgs eventArgs)
 	{
 		StringEditViewModel	viewModel	= new();
 		StringEditView		view		= new(viewModel);
@@ -38,7 +38,7 @@ public partial class StringsEditView : BibliographyPartDataGridView<StringsEditV
 		}
 	}
 
-	async private void OnEditString(object sender, EventArgs eventArgs)
+	public override async void OnEditEntry(object sender, EventArgs eventArgs)
 	{
 		StringEntry			stringEntry	= new(ViewModel.SelectedItem!);
 		StringEditViewModel	viewModel	= new(stringEntry);

@@ -1,10 +1,13 @@
 ﻿using BibTeXManager.ViewModels;
+using DigitalProduction.Maui.Enums;
 using DigitalProduction.Maui.Services;
 using Maui.DataGrid;
+using System.ComponentModel;
 
 namespace BibTeXManager.Views;
 
-public class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartView<TViewModel> where TViewModel : BibiographyPartDataGridBaseViewModel<TPart> where TPart : class
+public abstract class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartView<TViewModel>, IBibliographyPartDataGridView
+	where TViewModel : BibiographyPartDataGridBaseViewModel<TPart> where TPart : class
 {
 	#region Fields
 
@@ -18,11 +21,41 @@ public class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartV
 		base(viewModel)
 	{
 		_dialogService = MauiProgram.Services.GetRequiredService<IDialogService>();
+
+		Loaded += OnLoaded;
 	}
 
 	#endregion
 
 	#region Properties
+
+	public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
+		nameof(SelectedItem),
+		typeof(object),
+		typeof(BibliographyEditView),
+		null,
+		BindingMode.OneWayToSource);
+
+	public object? SelectedItem
+	{
+		get => GetValue(SelectedItemProperty);
+		private set => SetValue(SelectedItemProperty, value);
+	}
+
+	private void OnLoaded(object? sender, EventArgs eventArgs)
+	{
+		ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+
+		SelectedItem = ViewModel.SelectedItem;
+	}
+
+	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs eventArgs)
+	{
+		if (eventArgs.PropertyName == nameof(BibliographyEditViewModel.SelectedItem))
+		{
+			SelectedItem = ViewModel.SelectedItem;
+		}
+	}
 
 	protected bool AnimateScrollToSelection { get; } = false;
 
@@ -37,15 +70,19 @@ public class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartV
 		return ViewModel.RequireSearchString;
 	}
 
-	public bool Find(string searchString)
+	public SearchResult Find(string searchString)
 	{
 		return ViewModel.Find(searchString);
 	}
 
-	public void SelectNextFoundItem()
+	public SearchResult SelectNextFoundItem()
 	{
-		ViewModel.SelectNextFoundItem();
-		DataGrid.ScrollTo(ViewModel.SelectedItem!, ScrollToPosition.Center, AnimateScrollToSelection);
+		SearchResult searchResult = ViewModel.SelectNextFoundItem();
+		if (searchResult == SearchResult.NextItemFound)
+		{
+			DataGrid.ScrollTo(ViewModel.SelectedItem!, ScrollToPosition.Center, AnimateScrollToSelection);
+		}
+		return searchResult;
 	}
 
 	public void OnScrollToSelection(object sender, EventArgs eventArgs)
@@ -67,6 +104,10 @@ public class BibliographyPartDataGridView<TViewModel, TPart> : BibliographyPartV
 		ViewModel.ReplaceSelected(entry);
 		DataGrid.ScrollTo(ViewModel.SelectedItem!, ScrollToPosition.Center, AnimateScrollToSelection);
 	}
+
+	public abstract void OnNewEntry(object sender, EventArgs eventArgs);
+
+	public abstract void OnEditEntry(object sender, EventArgs eventArgs);
 
 	public async void OnDeleteEntry(object sender, EventArgs eventArgs)
 	{

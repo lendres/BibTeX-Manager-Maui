@@ -24,12 +24,12 @@
 		<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
 			<Button
 				Text="Add"
-				Clicked="OnNewString"
+				Clicked="OnNewEntry"
 				StyleClass="SquareButtonStyle"/>
 
 			<Button
 				Text="Edit"
-				Clicked="OnEditString"
+				Clicked="OnEditEntry"
 				StyleClass="SquareButton"
 				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 

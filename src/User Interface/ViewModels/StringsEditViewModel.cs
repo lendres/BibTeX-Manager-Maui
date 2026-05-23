@@ -1,4 +1,5 @@
 ﻿using BibTeXLibrary;
+using DigitalProduction.Maui.Enums;
 
 namespace BibTeXManager.ViewModels;
 
@@ -14,7 +15,7 @@ public partial class StringsEditViewModel : BibiographyPartDataGridBaseViewModel
 
 	#region Methods
 
-	protected override void AddItems() => Items = Project.Bibliography.StringConstants;
+	protected override void AddItems() => Items = Project.Bibliography.StringEntries;
 
 	public override void Insert(StringEntry item, int position = 0, bool select = true)
 	{
@@ -46,7 +47,7 @@ public partial class StringsEditViewModel : BibiographyPartDataGridBaseViewModel
 	/// </summary>
 	/// <param name="search">Search term.</param>
 	/// <returns>True if at least one BibEntry is found, false if no entries are found.</returns>
-	public override bool Find(string search)
+	public override SearchResult Find(string search)
 	{
 		List<StringEntry> findResults = Project.Bibliography.SearchStringConstants(true, search);
 		return SetSearchResults(search, findResults);

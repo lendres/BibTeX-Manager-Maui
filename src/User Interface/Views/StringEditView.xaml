@@ -64,7 +64,7 @@
 				<Label Text="Description" StyleClass="ControlLabel"/>
 				<Entry
 				    Placeholder="Description"
-				    Text="{Binding Description}"
+				    Text="{Binding StringEntry.Comment}"
 				    HorizontalOptions="Fill"/>
 			</VerticalStackLayout>
 

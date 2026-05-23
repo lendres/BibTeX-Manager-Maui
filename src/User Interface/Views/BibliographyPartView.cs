@@ -1,9 +1,8 @@
 ﻿using BibTeXManager.ViewModels;
-using Maui.DataGrid;
 
 namespace BibTeXManager.Views;
 
-public class BibliographyPartView<TViewModel> : ContentView where TViewModel : IBibliographyPartViewModel
+public class BibliographyPartView<TViewModel> : ContentView, IBibliographyPartView where TViewModel : IBibliographyPartViewModel
 {
 	#region Construction
 

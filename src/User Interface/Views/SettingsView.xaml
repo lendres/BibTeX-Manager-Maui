@@ -19,8 +19,8 @@
     <ContentPage.Resources>
 		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
 		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
-		<dpconverters:SingleEnumToBoolConverter x:Key="UseSpacesConverteer" x:TypeArguments="library:WhiteSpace" TrueValue="{x:Static library:WhiteSpace.Space}"/>
-		<dpconverters:SingleEnumToBoolConverter x:Key="UseTabsConverteer" x:TypeArguments="library:WhiteSpace" TrueValue="{x:Static library:WhiteSpace.Tab}"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="UseSpacesConverter" x:TypeArguments="library:WhiteSpace" ValueToCompare="{x:Static library:WhiteSpace.Space}"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="UseTabsConverter" x:TypeArguments="library:WhiteSpace" ValueToCompare="{x:Static library:WhiteSpace.Tab}"/>
 		<dpconverters:EnumToStringConverter x:Key="EnumToStringConverter" x:TypeArguments="library:WhiteSpace"/>
 		<Style TargetType="Switch">
 			<Setter Property="VerticalOptions" Value="Start"/>
@@ -295,9 +295,9 @@
                     </Grid>
                     <Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="90,*" RowDefinitions="40" VerticalOptions="Start">
                         <dpcontrols:Stepper VerticalOptions="Center" Minimum="1" Maximum="10" Value="{Binding Settings.WriteSettings.TabSize}"
-						    IsEnabled="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+						    IsEnabled="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverter}}"/>
                         <Label Grid.Column="1" Text="Tab size" Margin="0" VerticalTextAlignment="Center"
-						    IsEnabled="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+						    IsEnabled="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverter}}"/>
                     </Grid>
 
                     <!-- Alignment. -->
@@ -313,17 +313,17 @@
                         <dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="40"
 							Value="{Binding Settings.WriteSettings.StringEntryAlignAtColumn}"
 							IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
+							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseSpacesConverter}}"/>
                         <Label Grid.Column="1" Text="Alignment Column" Margin="0" VerticalTextAlignment="Center"
 							IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
+							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseSpacesConverter}}"/>
                         <dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="10"
 							Value="{Binding Settings.WriteSettings.StringEntryAlignAtTabStop}"
 							IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConvert1er}}"/>
                         <Label Grid.Column="1" Text="Alignment Tab Stop" Margin="0" VerticalTextAlignment="Center"
 							IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverter}}"/>
                     </Grid>
 					<Grid  Grid.Row="5" Grid.Column="0" ColumnDefinitions="110,*" RowDefinitions="auto">
 						<Label Grid.Row="0" Grid.Column="0" Text="Bracket Type:" Margin="0" VerticalTextAlignment="Center"/>
@@ -339,17 +339,17 @@
                         <dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="40"
 						    Value="{Binding Settings.WriteSettings.BibEntryAlignAtColumn}"
 						    IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-						    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
+						    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseSpacesConverter}}"/>
                         <Label Grid.Column="1" Text="Alignment Column" Margin="0" VerticalTextAlignment="Center"
 						    IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-						    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseSpacesConverteer}}"/>
+						    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseSpacesConverter}}"/>
                         <dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="10"
 						    Value="{Binding Settings.WriteSettings.BibEntryAlignAtTabStop}"
 						    IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-						    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+						    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverter}}"/>
                         <Label Grid.Column="1" Text="Alignment Tab Stop" Margin="0" VerticalTextAlignment="Center"
 						    IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-						    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverteer}}"/>
+						    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverter}}"/>
                     </Grid>
 					<!--<Grid  Grid.Row="5" Grid.Column="1" ColumnDefinitions="110,*" RowDefinitions="auto">
 						<Label Grid.Row="0" Grid.Column="0" Text="Bracket Type:" Margin="0" VerticalTextAlignment="Center"/>
