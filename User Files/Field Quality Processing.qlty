@@ -150,6 +150,16 @@
 
 				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
 					fieldstoprocess="OnlySpecified"
+					pattern="\&amp;amp;"
+					replacement="\&amp;">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
 					pattern="\\\\$"
 					replacement="\$">
 					<fields>
