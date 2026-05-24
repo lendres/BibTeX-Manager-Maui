@@ -129,7 +129,7 @@ public class StringReplacementFieldProcessorTests
 	}
 
 	/// <summary>
-	/// Test that a string replacement at the start and end of strings.
+	/// Test a string replacement at the start and end of strings.
 	/// </summary>
 	[Fact]
 	public void ReplaceAtStartAndEnd()
@@ -159,7 +159,7 @@ public class StringReplacementFieldProcessorTests
 	}
 
 	/// <summary>
-	/// Test that a string replacement at the start and end of strings.
+	/// Test special characters that are replaced with LaTeX commands.
 	/// </summary>
 	[Fact]
 	public void ReplaceInternationalSymbols()
