@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<qualityprocessor xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">
+	<fieldprocessorgroups>
+
+		<fieldprocessorgroup name="Special Screw Ups by SPE">
+			<fieldprocessors>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="\\\\&amp;amp;"
+					replacement="\&amp;">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="\\&amp;amp;"
+					replacement="\&amp;">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>
+
+				<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+					fieldstoprocess="OnlySpecified"
+					pattern="&amp;amp;"
+					replacement="\&amp;">
+					<fields>
+						<field>title</field>
+						<field>abstract</field>
+					</fields>
+				</fieldprocessor>				
+
+			</fieldprocessors>
+		</fieldprocessorgroup>
+
+	</fieldprocessorgroups>
+</qualityprocessor>
