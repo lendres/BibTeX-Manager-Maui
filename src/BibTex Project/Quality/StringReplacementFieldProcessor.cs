@@ -49,7 +49,7 @@ public class StringReplacementFieldProcessor : FieldProcessor
 		// Initialize.
 		correction.ReplacementText = _replacement;
 
-		// See if the replacement contains the original.  If it does, we needto do more checks.  Not every case will need
+		// See if the replacement contains the original.  If it does, we need to do more checks.  Not every case will need
 		// this.  If we are replacing "&amp;" with "\&" we won't need to do anything.
 		int indexOf = _replacement.IndexOf(correction.MatchedText);
 		

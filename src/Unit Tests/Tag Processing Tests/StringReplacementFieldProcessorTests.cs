@@ -15,11 +15,11 @@ public class StringReplacementFieldProcessorTests
 		string input	= @"The quick brown fox &amp; quicker red squirrel jumped over the fence &amp; lazy dog.";
 
 		BibEntry entry								= new() { Title = input, Abstract = input };
-		StringReplacementFieldProcessor processor		= new()
+		StringReplacementFieldProcessor processor	= new()
 		{
-			FieldsToProcess = FieldsToProcess.OnlySpecified,
-			Pattern     = "&amp;",
-			Replacement = @"\&"
+			FieldsToProcess	= FieldsToProcess.OnlySpecified,
+			Pattern			= "&amp;",
+			Replacement		= @"\&"
 		};
 		processor.FieldNames.Add("abstract");
 
@@ -39,11 +39,11 @@ public class StringReplacementFieldProcessorTests
 		string input    = @"The quick brown fox &amp; quicker red squirrel jumped over the fence &amp; lazy dog.";
 
 		BibEntry entry                              = new() { Title = input, Abstract = input };
-		StringReplacementFieldProcessor processor		= new()
+		StringReplacementFieldProcessor processor	= new()
 		{
-			FieldsToProcess = FieldsToProcess.ExcludeSpecified,
-			Pattern       = "&amp;",
-			Replacement   = @"\&"
+			FieldsToProcess	= FieldsToProcess.ExcludeSpecified,
+			Pattern			= "&amp;",
+			Replacement		= @"\&"
 		};
 		processor.FieldNames.Add("abstract");
 
@@ -63,11 +63,11 @@ public class StringReplacementFieldProcessorTests
 		string input	= @"The quick brown fox &amp; quicker red squirrel jumped over the fence &amp; lazy dog.&amp;";
 
 		BibEntry entry								= new() { Title = input, Abstract = input };
-		StringReplacementFieldProcessor processor		= new()
+		StringReplacementFieldProcessor processor	= new()
 		{
-			FieldsToProcess = FieldsToProcess.All,
-			Pattern     = "&amp;",
-			Replacement = @"\&"
+			FieldsToProcess	= FieldsToProcess.All,
+			Pattern			= "&amp;",
+			Replacement		= @"\&"
 		};
 
 		Utilities.RunProcessor(processor, entry);
@@ -86,11 +86,11 @@ public class StringReplacementFieldProcessorTests
 		string input	= @"The quick brown fox & quicker red squirrel jumped over the fence \& lazy dog.";
 
 		BibEntry entry								= new() { Title = input, Abstract = input };
-		StringReplacementFieldProcessor processor		= new()
+		StringReplacementFieldProcessor processor	= new()
 		{
-			FieldsToProcess = FieldsToProcess.All,
-			Pattern     = "&",
-			Replacement = @"\&"
+			FieldsToProcess	= FieldsToProcess.All,
+			Pattern			= "&",
+			Replacement		= @"\&"
 		};
 
 		Utilities.RunProcessor(processor, entry);
@@ -108,12 +108,12 @@ public class StringReplacementFieldProcessorTests
 		string solution = @"The quick {Red} fox & quicker {Red} squirrel jumped over the fence & lazy dog.";
 		string input	= @"The quick {Red} fox & quicker Red squirrel jumped over the fence & lazy dog.";
 
-		BibEntry entry							= new() { Title = input};
+		BibEntry entry								= new() { Title = input};
 		StringReplacementFieldProcessor processor	= new()
 		{
-			FieldsToProcess = FieldsToProcess.All,
-			Pattern     = "Red",
-			Replacement = "{Red}"
+			FieldsToProcess	= FieldsToProcess.All,
+			Pattern			= "Red",
+			Replacement		= "{Red}"
 		};
 		processor.FieldNames.Add("title");
 
@@ -129,21 +129,21 @@ public class StringReplacementFieldProcessorTests
 	}
 
 	/// <summary>
-	/// Test that a string replacement at the start and end of strings.
+	/// Test a string replacement at the start and end of strings.
 	/// </summary>
 	[Fact]
 	public void ReplaceAtStartAndEnd()
 	{
-		string solution1 = @"The quick {Red} fox & quicker {Red} squirrel jumped over the fence & lazy dog.}";
-		string solution2 = @"The quick {Red} fox & quicker {Red} squirrel jumped over the fence & lazy dog.";
-		string input = @"{The quick {Red} fox & quicker {Red} squirrel jumped over the fence & lazy dog.}";
+		string solution1	= @"The quick {Red} fox & quicker {Red} squirrel jumped over the fence & lazy dog.}";
+		string solution2	= @"The quick {Red} fox & quicker {Red} squirrel jumped over the fence & lazy dog.";
+		string input		= @"{The quick {Red} fox & quicker {Red} squirrel jumped over the fence & lazy dog.}";
 
-		BibEntry entry							= new() { Title = input };
-		StringReplacementFieldProcessor processor = new()
+		BibEntry entry								= new() { Title = input };
+		StringReplacementFieldProcessor processor	= new()
 		{
-			FieldsToProcess = FieldsToProcess.All,
-			Pattern = "^{",
-			Replacement = ""
+			FieldsToProcess	= FieldsToProcess.All,
+			Pattern			= "^{",
+			Replacement		= ""
 		};
 		processor.FieldNames.Add("title");
 
@@ -152,27 +152,27 @@ public class StringReplacementFieldProcessorTests
 		Assert.Equal(solution1, entry.Title);
 
 		// Test upper case tage name.
-		processor.Pattern = "}$";
-		processor.Replacement = "";
+		processor.Pattern		= "}$";
+		processor.Replacement	= "";
 		Utilities.RunProcessor(processor, entry);
 		Assert.Equal(solution2, entry.Title);
 	}
 
 	/// <summary>
-	/// Test that a string replacement at the start and end of strings.
+	/// Test special characters that are replaced with LaTeX commands.
 	/// </summary>
 	[Fact]
 	public void ReplaceInternationalSymbols()
 	{
-		string solution = @"The q{\o}ick.";
-		string input = @"The qøick.";
+		string solution	= @"The q{\o}ick.";
+		string input	= @"The qøick.";
 
 		BibEntry entry								= new() { Title = input };
 		StringReplacementFieldProcessor processor	= new()
 		{
-			FieldsToProcess = FieldsToProcess.All,
-			Pattern = "ø",
-			Replacement = @"{\o}"
+			FieldsToProcess	= FieldsToProcess.All,
+			Pattern			= "ø",
+			Replacement		= @"{\o}"
 		};
 		processor.FieldNames.Add("title");
 
