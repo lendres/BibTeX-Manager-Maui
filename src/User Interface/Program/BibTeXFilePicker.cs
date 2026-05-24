@@ -64,7 +64,7 @@ class BibTeXFilePicker : IBibTeXFilePicker
 			{ DevicePlatform.iOS, new[] { "public.xml", "public.plain-text", "public.text" } },
 			{ DevicePlatform.macOS, new[] { "public.xml", "public.plain-text", "public.text" } },
 			{ DevicePlatform.Android, new[] { "text/xml", "text/plain" } },
-			{ DevicePlatform.WinUI, new[] { ".tagord", ".xml", ".txt", ".text" } },
+			{ DevicePlatform.WinUI, new[] { ".bibtmp", ".xml", ".txt", ".text" } },
 		});
 	}
 
