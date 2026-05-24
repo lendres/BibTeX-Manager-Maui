@@ -94,13 +94,23 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	public BibEntryInitialization BibEntryInitialization { get => _bibEntryInitialization; }
 
 	/// <summary>
+	/// Field quality processor.
+	/// </summary>
+	[XmlIgnore()]
+	public QualityProcessor	FieldQualityProcessor { get => _fieldQualityProcessor; }
+
+	/// <summary>
+	/// Bibliography name remapper.
+	/// </summary>
+	[XmlIgnore()]
+	public BibEntryRemapper NameRemapper { get => _nameRemapper; }
+
+	/// <summary>
 	/// Bibliography.
 	/// </summary>
 	[XmlIgnore()]
 	public Bibliography Bibliography { get => _bibliography; }
 
-	[XmlIgnore()]
-	public bool BibliographytOpen { get; set; } = false;
 
 	#endregion
 

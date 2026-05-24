@@ -254,7 +254,7 @@ public partial class MainView : DigitalProductionMainPage
 
 	async void OnEditBibliographyNameMapping(object sender, EventArgs eventArgs)
 	{
-		await Shell.Current.GoToAsync(nameof(BibliographyNameMappingView), true);
+		//await Shell.Current.GoToAsync(nameof(BibliographyNameMappingView), true);
 	}
 
 	#endregion
