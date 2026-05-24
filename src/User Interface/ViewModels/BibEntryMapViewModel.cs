@@ -30,14 +30,21 @@ public partial class BibEntryMapViewModel : ObservableObject
 	#region Properties
 
 	[ObservableProperty]
-	public partial string Title { get; set; }
+	public partial string								Title { get; set; }
 
 	[ObservableProperty]
-	public partial FieldNameMapViewModel? SelectedFieldNameMap { get; set; }
+	public partial FieldNameMapViewModel?				SelectedFieldNameMap { get; set; }
 
-	public BibEntryMap BibEntryMap { get; }
+	public BibEntryMap									BibEntryMap { get; }
 
-	public ObservableCollection<FieldNameMapViewModel> FieldNameMaps { get; } = [];
+	public ObservableCollection<FieldNameMapViewModel>	FieldNameMaps { get; } = [];
+
+	#region Properties
+
+	[ObservableProperty]
+	public partial bool									IsSubmittable { get; set; }
+
+	#endregion
 
 	#endregion
 

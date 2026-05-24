@@ -6,23 +6,44 @@
 	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:Class="BibTeXManager.Views.NameMappingView"
-	x:DataType="viewmodel:NameMappingViewModel"
-	Title="Name Mapping">
+	x:DataType="viewmodel:NameMappingViewModel">
 
 	<ContentPage.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
 	</ContentPage.Resources>
 
-	<Grid StyleClass="DataGridEditStyle">
-		<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
-			<Button Text="Add" Clicked="OnNewEntry" StyleClass="SquareButtonStyle"/>
-			<Button Text="Edit" Clicked="OnEditEntry" StyleClass="SquareButton"
-				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-			<Button Text="Delete" Command="{Binding DeleteCommand}" StyleClass="SquareButton"
-				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-		</HorizontalStackLayout>
+	<Grid RowDefinitions="Auto,*" Margin="0" Padding="30" WidthRequest="800" VerticalOptions="Fill">
+		<!-- Settings label, save, and cancel buttons. -->
+		<Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="*,250" HorizontalOptions="Fill" VerticalOptions="Start">
 
-		<dg:DataGrid
+			<Label Grid.Column="0" Text="Name Mapping" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+			<HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0,0,0,0" VerticalOptions="Center">
+				<Button 
+				    Text="Save"
+				    HorizontalOptions="End"
+				    StyleClass="StandardSizeButtonStyle"
+				    IsEnabled="{Binding IsSubmittable}"
+                    VerticalOptions="Center"
+				    Clicked="OnSave"/>
+				<Button 
+				    Text="Cancel"
+				    StyleClass="StandardSizeButtonStyle"
+				    HorizontalOptions="End"
+				    Clicked="OnCancel"/>
+			</HorizontalStackLayout>
+		</Grid>
+
+		<Grid StyleClass="DataGridEditStyle">
+			<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
+				<Button Text="Add" Clicked="OnNewEntry" StyleClass="SquareButtonStyle"/>
+				<Button Text="Edit" Clicked="OnEditEntry" StyleClass="SquareButton"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+				<Button Text="Delete" Command="{Binding DeleteCommand}" StyleClass="SquareButton"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+			</HorizontalStackLayout>
+
+			<dg:DataGrid
 			Grid.Row="1"
 			Style="{DynamicResource DataGridDefaultLooseStyle}"
 			ItemsSource="{Binding Items}"
@@ -30,12 +51,13 @@
 			SelectedItem="{Binding SelectedItem}"
 			RowTappedCommand="{Binding TappedCommand}"
 			PaginationEnabled="false">
-			<dg:DataGrid.Columns>
-				<dg:DataGridColumn Title="Name" PropertyName="Name" Width="0.4*" SortingEnabled="true"
+				<dg:DataGrid.Columns>
+					<dg:DataGridColumn Title="Name" PropertyName="Name" Width="0.4*" SortingEnabled="true"
 					CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
-				<dg:DataGridColumn Title="To Type" PropertyName="ToType" Width="0.4*" SortingEnabled="true"
+					<dg:DataGridColumn Title="To Type" PropertyName="ToType" Width="0.4*" SortingEnabled="true"
 					CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
-			</dg:DataGrid.Columns>
-		</dg:DataGrid>
+				</dg:DataGrid.Columns>
+			</dg:DataGrid>
+		</Grid>
 	</Grid>
 </ContentPage>

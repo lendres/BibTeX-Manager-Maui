@@ -1,6 +1,7 @@
 ﻿using BibTeXLibrary;
 using BibTeXManager;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using DigitalProduction.Maui.Enums;
 using DigitalProduction.Maui.ViewModels;
 using System.Collections.ObjectModel;
@@ -9,10 +10,21 @@ namespace BibTeXManager.ViewModels;
 
 public partial class NameMappingViewModel : DataGridBaseViewModel<BibEntryMap>
 {
+	#region Construction
+
 	public NameMappingViewModel()
 	{
 		Items = new ObservableCollection<BibEntryMap>(BibTeXProject.Instance!.NameRemapper.Maps.Values);
 	}
+
+	#endregion
+
+	#region Properties
+
+	[ObservableProperty]
+	public partial bool							IsSubmittable { get; set; }
+
+	#endregion
 
 	public void Insert(BibEntryMap item)
 	{
@@ -58,5 +70,10 @@ public partial class NameMappingViewModel : DataGridBaseViewModel<BibEntryMap>
 	public override SearchResult Find(string search)
 	{
 		return SearchResult.NoItemsFound;
+	}
+
+	public void Save()
+	{
+		// TODO: Save to file.
 	}
 }

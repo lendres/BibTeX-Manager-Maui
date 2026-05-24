@@ -42,9 +42,26 @@ public partial class NameMappingView : ContentPage
 		}
 	}
 
+	async private void OnSave(object? sender, EventArgs eventArgs)
+	{
+		ViewModel.Save();
+		Dictionary<string, object?> navigationParameter = new()
+		{
+			{ "NavigationCommand",  "Do Nothing" },
+			{ "NavigationObject",   null }
+		};
+		await Shell.Current.GoToAsync("../", true, navigationParameter);
+	}
+
 	private async void OnCancel(object sender, EventArgs eventArgs)
 	{
-		await Shell.Current.GoToAsync("../");
+		// Navigate back with a result.
+		Dictionary<string, object?> navigationParameter = new()
+		{
+			{ "NavigationCommand",  "Do Nothing" },
+			{ "NavigationObject",   null }
+		};
+		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
 
 	#endregion
