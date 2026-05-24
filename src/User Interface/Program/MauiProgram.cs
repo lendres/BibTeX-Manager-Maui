@@ -70,6 +70,9 @@ public static class MauiProgram
 
 		services.AddTransient<SettingsView>();
 		services.AddTransient<SettingsViewModel>();
+
+		services.AddTransient<NameMappingView>();
+		services.AddTransient<NameMappingViewModel>();
 	}
 
 	private static void RegisterServices(IServiceCollection services)

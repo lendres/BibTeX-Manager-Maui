@@ -81,6 +81,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="Views\BibEntryMapViewl.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\NameMappingView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\HeaderView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -112,6 +118,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\NameMappingView.xaml.cs">
+		  <DependentUpon>NameMappingView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\HeaderView.xaml.cs">
 		  <DependentUpon>HeaderView.xaml</DependentUpon>
 		</Compile>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView
+	x:Class="BibTeXManager.Views.BibEntryMapView"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewModels="clr-namespace:BibTeXManager.ViewModels"
+	x:DataType="viewModels:BibEntryMapViewModel"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="380">
+
+		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+			<Label Text="{Binding Title}" StyleClass="Title"  HorizontalOptions="Start"/>
+
+			<Grid RowDefinitions="Auto,Auto,Auto,*" ColumnDefinitions="Auto,*"
+				RowSpacing="10" ColumnSpacing="10" Padding="20" WidthRequest="700" HeightRequest="500">
+
+
+
+				<Label Grid.Row="1" Grid.Column="0" Text="Name" VerticalOptions="Center"/>
+				<Entry Grid.Row="1" Grid.Column="1" Text="{Binding BibEntryMap.Name}"/>
+
+				<Label Grid.Row="2" Grid.Column="0" Text="To Type" VerticalOptions="Center"/>
+				<Entry Grid.Row="2" Grid.Column="1" Text="{Binding BibEntryMap.ToType}"/>
+
+				<Grid Grid.Row="3" Grid.ColumnSpan="2" RowDefinitions="Auto,*" RowSpacing="10">
+
+					<HorizontalStackLayout Grid.Row="0" Spacing="10">
+
+						<Button
+						Text="Add Field Map"
+						Command="{Binding AddFieldNameMapCommand}"
+						StyleClass="SquareButtonStyle"/>
+
+						<Button
+						Text="Delete Field Map"
+						Command="{Binding DeleteFieldNameMapCommand}"
+						StyleClass="SquareButtonStyle"/>
+
+					</HorizontalStackLayout>
+
+					<dg:DataGrid
+						Grid.Row="1"
+						ItemsSource="{Binding FieldNameMaps}"
+						SelectedItem="{Binding SelectedFieldNameMap}"
+						SelectionMode="Single"
+						PaginationEnabled="False"
+						Style="{DynamicResource DataGridDefaultLooseStyle}">
+
+						<dg:DataGrid.Columns>
+							<dg:DataGridColumn Title="From Name" PropertyName="FromName" Width="0.5*"
+								CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+							<dg:DataGridColumn Title="To Name" PropertyName="ToName" Width="0.5*"
+								CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+						</dg:DataGrid.Columns>
+
+					</dg:DataGrid>
+				</Grid>
+
+			</Grid>
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+						Text="OK"
+						HorizontalOptions="End"
+						StyleClass="StandardSizeButtonStyle"
+						IsEnabled="{Binding IsSubmittable}"
+						Clicked="OnSaveButtonClicked"/>
+				<Button 
+						Text="Cancel"
+						StyleClass="StandardSizeButtonStyle"
+						HorizontalOptions="End"
+						Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+		</VerticalStackLayout>
+	</Border>
+</dpviews:PopupView>
