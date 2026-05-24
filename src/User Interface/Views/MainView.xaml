@@ -125,6 +125,7 @@
 		<!-- Settings. -->
 		<MenuBarItem Text="Settings">
 			<MenuFlyoutItem Text="Options..." Clicked="OnOptions"/>
+			<MenuFlyoutItem Text="Edit Bibliography Name Mapping..." Clicked="OnEditBibliographyNameMapping"/>
 		</MenuBarItem>
 
 		<!-- Tools. -->
