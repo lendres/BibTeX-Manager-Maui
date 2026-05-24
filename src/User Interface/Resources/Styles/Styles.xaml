@@ -8,11 +8,25 @@
 	<Style TargetType="Button" Class="SquareButtonStyle">
 	</Style>
 
+	<Style TargetType="Button" ApplyToDerivedTypes="True" x:Key="ToolBarButtonBaseStyle"  BasedOn="{StaticResource ButtonBaseStyle}">
+		<Setter Property="WidthRequest" Value="60"/>
+		<Setter Property="HeightRequest" Value="20"/>
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="CornerRadius" Value="14"/>
+	</Style>
+
+	<Style TargetType="Button" Class="ToolBarButtonStyle" BasedOn="{StaticResource ToolBarButtonBaseStyle}">
+	</Style>
+	
+	<Style TargetType="Button" Class="WideToolBarButtonStyle" BasedOn="{StaticResource ToolBarButtonBaseStyle}">
+		<Setter Property="WidthRequest" Value="100"/>
+	</Style>
+
 	<Style TargetType="Border" Class="SmallTitleBorderStyle">
 		<Setter Property="StrokeShape" Value="RoundRectangle 8"/>
 		<Setter Property="StrokeThickness" Value="2"/>
 		<Setter Property="Padding" Value="0,1,0,2"/>
-		<Setter Property="Margin" Value="0,8,0,2"/>
+		<Setter Property="Margin" Value="0,30,0,2"/>
 		<Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
 	</Style>
 
@@ -23,6 +37,19 @@
 		<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
 	</Style>
 
+
+    <Style TargetType="Label" Class="MediumTitleLabelStyle">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DivisionColor}, Dark={StaticResource DivisionColor}}"/>
+    </Style>
+
+	<Style TargetType="Grid" Class="SettingsTwoColumnGridStyle">
+		<Setter Property="RowSpacing" Value="4"/>
+		<Setter Property="ColumnSpacing" Value="25"/>
+	</Style>
+
 	<Style TargetType="RadioButton">
 		<Setter Property="MinimumWidthRequest" Value="15"/>
 	</Style>
@@ -30,7 +57,8 @@
 	<ControlTemplate x:Key="ButtonRadioTemplate">
 		<Border
             StrokeThickness="1"
-            HorizontalOptions="Fill">
+            WidthRequest="{TemplateBinding Width}"
+			x:DataType="RadioButton">
 			<Border.StrokeShape>
 				<RoundRectangle CornerRadius="0"/>
 			</Border.StrokeShape>
@@ -48,8 +76,8 @@
 						<VisualState x:Name="Unchecked">
 							<VisualState.Setters>
 								<Setter TargetName="TextLabel" Property="Label.TextColor" Value="{DynamicResource Primary}"/>
-								<Setter Property="Background" Value="{DynamicResource SecondaryBrush}"/>
-								<Setter Property="Stroke" Value="{DynamicResource SecondaryBrush}"/>
+								<Setter Property="Background" Value="{DynamicResource SelectorBackgroundColor}"/>
+								<Setter Property="Stroke" Value="{DynamicResource SelectorBackgroundColor}"/>
 							</VisualState.Setters>
 						</VisualState>
 					</VisualStateGroup>
@@ -61,9 +89,12 @@
 				Margin="0"
 				x:Name="TextLabel"
 				x:DataType="RadioButton"
-				FontSize="12" FontAttributes="Bold" 
-				HorizontalOptions="Fill" VerticalOptions="Center"
-				HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+				FontSize="{TemplateBinding FontSize}"
+				FontAttributes="Bold" 
+				HorizontalOptions="Fill"
+				VerticalOptions="Center"
+				HorizontalTextAlignment="Center"
+				VerticalTextAlignment="Center"/>
 		</Border>
 	</ControlTemplate>
 

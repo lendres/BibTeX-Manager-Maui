@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<view:BibliographyPartDataGridView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:dpatkcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
+	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:library="clr-namespace:BibTeXLibrary;assembly=DigitalProduction.BibTeXLibrary"
+	xmlns:view="clr-namespace:BibTeXManager.Views"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
+	x:DataType="viewmodel:BibliographyEditViewModel"
+	x:Class="BibTeXManager.Views.BibliographyEditView"
+	x:TypeArguments="viewmodel:BibliographyEditViewModel,library:BibEntry">
+
+	<view:BibliographyPartDataGridView.Resources>
+		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
+	</view:BibliographyPartDataGridView.Resources>
+
+	<Grid x:Name="_mainGrid" StyleClass="DataGridEditStyle">
+
+		<!-- Buttons. -->
+		<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
+			<Button
+				Text="Add"
+				Clicked="OnNewEntry"
+				StyleClass="SquareButtonStyle"/>
+
+			<Button
+				Text="Add from Template"
+				Clicked="OnNewBibEntryFromTemplate"
+				StyleClass="SquareButtonStyle"
+				IsEnabled="{Binding HasTemplates}"/>
+
+			<Button
+				Text="Edit"
+				Clicked="OnEditEntry"
+				StyleClass="SquareButton"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+
+			<Button 
+				Text="Delete"
+				Clicked="OnDeleteEntry"
+				StyleClass="SquareButton"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+
+			<Button 
+				Text="Copy Key"
+				Command="{Binding CopyCiteKeyToClipboardCommand}"
+				StyleClass="SquareButton"
+				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+
+		</HorizontalStackLayout>
+
+		<dg:DataGrid
+			Grid.Row="1"
+			x:Name="_dataGrid"
+			Style="{DynamicResource DataGridDefaultLooseStyle}"
+			ItemsSource="{Binding Items, Mode=TwoWay}" SelectionMode="{Binding SelectionMode}"
+			SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
+			RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
+			PaginationEnabled="false"
+			RowTappedCommand="{Binding TappedCommand}"
+			IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
+
+			<dg:DataGrid.Columns>
+
+				<!--Name column.-->
+				<dg:DataGridColumn Title="Key" PropertyName="Key" Width="0.25*" SortingEnabled="true"
+						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+
+				<!--Description column.-->
+				<dg:DataGridColumn Title="Author(s)" PropertyName="Author" Width="1.0*" SortingEnabled="true"
+						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+
+				<dg:DataGridColumn Title="Title" PropertyName="Title" Width="1.0*" SortingEnabled="true"
+						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+
+			</dg:DataGrid.Columns>
+		</dg:DataGrid>
+	</Grid>
+</view:BibliographyPartDataGridView>

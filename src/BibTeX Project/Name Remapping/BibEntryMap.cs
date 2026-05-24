@@ -21,7 +21,7 @@ public class BibEntryMap
 	[XmlAttribute("totype")]
 	public string ToType { get; set; } = "";
 	
-	[XmlElement("tagmaps")]
-	public SerializableDictionary<string, string> TagMaps { get; set; } = new SerializableDictionary<string, string>();
+	[XmlElement("fieldmaps")]
+	public SerializableDictionary<string, string> FieldNameMaps { get; set; } = new SerializableDictionary<string, string>();
 
 } // End class.

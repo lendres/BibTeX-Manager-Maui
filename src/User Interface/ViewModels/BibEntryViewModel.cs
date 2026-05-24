@@ -129,9 +129,9 @@ public partial class BibEntryViewModel : ObservableObject
 			return;
 		}
 
+		// In add mode, we need to make sure the key is not already in the bibliography.
 		if (_addMode == true)
 		{
-			// In add mode, we need to make sure the key is not already in the bibliography.
 			IsKeyValid = !BibTeXProject.Instance.Bibliography.IsKeyInUse(_bibEntry!.Key);
 			return;
 		}
@@ -184,7 +184,7 @@ public partial class BibEntryViewModel : ObservableObject
 	/// <summary>
 	/// Check the quality of the text in the text box.
 	/// </summary>
-	public IEnumerable<TagProcessingData> CheckQuality()
+	public IEnumerable<FieldProcessingData> CheckQuality()
 	{
 		if (_bibEntry == null)
 		{
@@ -201,7 +201,7 @@ public partial class BibEntryViewModel : ObservableObject
 
 		// Cleaning.
 
-		foreach (TagProcessingData tagProcessingData in BibTeXProject.Instance.CleanEntry(_bibEntry))
+		foreach (FieldProcessingData tagProcessingData in BibTeXProject.Instance.CleanEntry(_bibEntry))
 		{
 			yield return tagProcessingData;
 		}

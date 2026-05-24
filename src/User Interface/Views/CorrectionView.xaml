@@ -24,15 +24,15 @@
 			<Label Text="{Binding Title}" StyleClass="Title" HorizontalOptions="Start"/>
 
 			<Grid RowDefinitions="Auto" ColumnDefinitions="150,*">
-				<Label Grid.Column="0" Text="Tage Name"/>
-				<Label Grid.Column="1" Text="{Binding TagProcessingData.Correction.TagName}" HorizontalTextAlignment="Start"/>
+				<Label Grid.Column="0" Text="Fielde Name"/>
+				<Label Grid.Column="1" Text="{Binding FieldProcessingData.Correction.FieldName}" HorizontalTextAlignment="Start"/>
 			</Grid>
 
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
 				<Label Text="Context" StyleClass="ControlLabel"/>
 				<Entry
 					Placeholder="Context"
-					Text="{Binding TagProcessingData.Correction.Context}"
+					Text="{Binding FieldProcessingData.Correction.Context}"
 					HorizontalOptions="Fill">
 				</Entry>
 			</VerticalStackLayout>
@@ -41,7 +41,7 @@
 				<Label Text="ExistingText" StyleClass="ControlLabel"/>
 				<Entry
 					Placeholder="ExistingText"
-					Text="{Binding TagProcessingData.Correction.MatchedText}"
+					Text="{Binding FieldProcessingData.Correction.MatchedText}"
 					HorizontalOptions="Fill">
 				</Entry>
 			</VerticalStackLayout>

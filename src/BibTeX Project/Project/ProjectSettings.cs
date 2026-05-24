@@ -16,27 +16,33 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 
 	public ProjectSettings()
 	{
-		ModifiedChanged					+= OnMyModifiedChanged;
-		_writeSettings.ModifiedChanged	+= OnChildModifiedChanged;
+		ModifiedChanged		+= OnMyModifiedChanged;
+		WriteSettings		= new WriteSettings();
+		Modified			= false;
 	}
 
 	public ProjectSettings(ProjectSettings projectSettings)
 	{
+		ModifiedChanged				+= OnMyModifiedChanged;
 		WriteSettings				= new WriteSettings(projectSettings.WriteSettings);
+
 		UsePathsRelativeToBibFile	= projectSettings.UsePathsRelativeToBibFile;
 		UseBibEntryInitialization	= projectSettings.UseBibEntryInitialization;
 		BibEntryInitializationFile	= projectSettings.BibEntryInitializationFile;
 		UseAuxiliaryFile			= projectSettings.UseAuxiliaryFile;
 		AuxiliaryFile				= projectSettings.AuxiliaryFile;
 		UseStringConstants			= projectSettings.UseStringConstants;
-		UseTagQualityProcessing		= projectSettings.UseTagQualityProcessing;
-		TagQualityProcessingFile	= projectSettings.TagQualityProcessingFile;
+		UseFieldQualityProcessing	= projectSettings.UseFieldQualityProcessing;
+		FieldQualityProcessingFile	= projectSettings.FieldQualityProcessingFile;
 		UseBibEntryRemapping		= projectSettings.UseBibEntryRemapping;
 		BibEntryRemappingFile		= projectSettings.BibEntryRemappingFile;
 		AutoGenerateKeys			= projectSettings.AutoGenerateKeys;
 		CopyCiteKeyOnEntryAdd		= projectSettings.CopyCiteKeyOnEntryAdd;
+		SortStrings					= projectSettings.SortStrings;
+		StringsSortMethod			= projectSettings.StringsSortMethod;
 		SortBibliography			= projectSettings.SortBibliography;
 		BibliographySortMethod		= projectSettings.BibliographySortMethod;
+
 		Modified					= false;
 	}
 
@@ -50,7 +56,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	[XmlAttribute("userelativepaths")]
 	public bool UsePathsRelativeToBibFile
 	{
-		get => GetValueOrDefault<bool>(false);
+		get => GetValueOrDefault(false);
 		set => SetValue(value);
 	}
 
@@ -60,7 +66,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	[XmlAttribute("usebibentryinitialization")]
 	public bool UseBibEntryInitialization
 	{
-		get => GetValueOrDefault<bool>(false);
+		get => GetValueOrDefault(false);
 		set => SetValue(value);
 	}
 
@@ -70,17 +76,17 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	[XmlAttribute("bibentryinitializationfile")]
 	public string BibEntryInitializationFile
 	{
-		get => GetValueOrDefault<string>(string.Empty);
+		get => GetValueOrDefault(string.Empty);
 		set => SetValue(value);
 	}
 
 	/// <summary>
-	/// Replace tag values with string constants.
+	/// Specifies if an accessory file should be used to provide additional information for the bibliography, such as strings.
 	/// </summary>
 	[XmlAttribute("useauxiliaryfile")]
 	public bool UseAuxiliaryFile
 	{
-		get => GetValueOrDefault<bool>(false);
+		get => GetValueOrDefault(false);
 		set => SetValue(value);
 	}
 
@@ -90,27 +96,27 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	[XmlAttribute("auxiliaryfile")]
 	public string AuxiliaryFile
 	{
-		get => GetValueOrDefault<string>(string.Empty);
+		get => GetValueOrDefault(string.Empty);
 		set => SetValue(value);
 	}
 
 	/// <summary>
-	/// Replace tag values with string constants.
+	/// Replace field values with string constants.
 	/// </summary>
 	[XmlAttribute("usestringconstants")]
 	public bool UseStringConstants
 	{
-		get => GetValueOrDefault<bool>(false);
+		get => GetValueOrDefault(false);
 		set => SetValue(value);
 	}
 
 	/// <summary>
-	/// Specifies if the tags should be processed to ensure their quality.
+	/// Specifies if the fields should be processed to ensure their quality.
 	/// </summary>
-	[XmlAttribute("usetagqualityprocessing")]
-	public bool UseTagQualityProcessing
+	[XmlAttribute("usefieldqualityprocessing")]
+	public bool UseFieldQualityProcessing
 	{
-		get => GetValueOrDefault<bool>(false);
+		get => GetValueOrDefault(false);
 		set => SetValue(value);
 	}
 
@@ -118,9 +124,9 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	/// The path to the quality processor file.
 	/// </summary>
 	[XmlAttribute("qualityprocessorfile")]
-	public string TagQualityProcessingFile
+	public string FieldQualityProcessingFile
 	{
-		get => GetValueOrDefault<string>(string.Empty);
+		get => GetValueOrDefault(string.Empty);
 		set => SetValue(value);
 	}
 
@@ -130,7 +136,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	[XmlAttribute("usebibentryremapping")]
 	public bool UseBibEntryRemapping
 	{
-		get => GetValueOrDefault<bool>(false);
+		get => GetValueOrDefault(false);
 		set => SetValue(value);
 	}
 
@@ -140,7 +146,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	[XmlAttribute("nameremappingfile")]
 	public string BibEntryRemappingFile
 	{
-		get => GetValueOrDefault<string>(string.Empty);
+		get => GetValueOrDefault(string.Empty);
 		set => SetValue(value);
 	}
 
@@ -159,6 +165,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 			{
 				_writeSettings = value;
 				_writeSettings.ModifiedChanged += OnChildModifiedChanged;
+				_writeSettings.PropertyChanged += OnPropertyChanged;
 				Modified = true;
 				OnPropertyChanged();
 			}
@@ -171,7 +178,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	[XmlAttribute("autogenerateekeys")]
 	public bool AutoGenerateKeys
 	{
-		get => GetValueOrDefault<bool>(true);
+		get => GetValueOrDefault(true);
 		set => SetValue(value);
 	}
 
@@ -181,17 +188,17 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	[XmlAttribute("copycitekeyonadd")]
 	public bool CopyCiteKeyOnEntryAdd
 	{
-		get => GetValueOrDefault<bool>(true);
+		get => GetValueOrDefault(true);
 		set => SetValue(value);
 	}
 
 	/// <summary>
-	/// Sort the bibliography.
+	/// Sort the bibliography entries.
 	/// </summary>
 	[XmlAttribute("sortbibliography")]
 	public bool SortBibliography
 	{
-		get => GetValueOrDefault<bool>(true);
+		get => GetValueOrDefault(true);
 		set => SetValue(value);
 	}
 
@@ -199,9 +206,29 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 	/// Method to sort the bibliography by.
 	/// </summary>
 	[XmlAttribute("bibliographysortmethod")]
-	public SortBy BibliographySortMethod
+	public SortBibliographyBy BibliographySortMethod
 	{
-		get => GetValueOrDefault<SortBy>(SortBy.Key);
+		get => GetValueOrDefault(SortBibliographyBy.Key);
+		set => SetValue(value);
+	}
+
+	/// <summary>
+	/// Sort the string entries.
+	/// </summary>
+	[XmlAttribute("sortstrings")]
+	public bool SortStrings
+	{
+		get => GetValueOrDefault(true);
+		set => SetValue(value);
+	}
+
+	/// <summary>
+	/// Method to sort the strings by.
+	/// </summary>
+	[XmlAttribute("stringssortmethod")]
+	public SortStringsBy StringsSortMethod
+	{
+		get => GetValueOrDefault(SortStringsBy.Name);
 		set => SetValue(value);
 	}
 
@@ -214,7 +241,7 @@ public class ProjectSettings : NotifyPropertyModifiedChanged
 		// If this instance is saved, then consider the write settings saved, too.
 		if (!modified)
 		{
-			_writeSettings.MarkSaved();
+			_writeSettings.Save();
 		}
 	}
 

@@ -74,20 +74,26 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
-		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.12.11" />
+		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.*" />
 		<PackageReference Include="DigitalProduction.Maui.Images" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="Views\StringConstantsView.xaml">
+		<MauiXaml Update="Views\HeaderView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\StringConstantView.xaml">
+		<MauiXaml Update="Views\BibliographyEditView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\ProjectOptionsView.xaml">
+		<MauiXaml Update="Views\StringsEditView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\StringEditView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\SettingsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\EditRawBibEntryForm.xaml">
@@ -99,9 +105,6 @@
 		<MauiXaml Update="Views\TemplateSelectionView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\ProgramOptionsView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -109,14 +112,26 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\HeaderView.xaml.cs">
+		  <DependentUpon>HeaderView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\BibliographyEditView.xaml.cs">
+		  <DependentUpon>BibliographyEditView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\CorrectionView.xaml.cs">
 		  <DependentUpon>CorrectionView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\StringConstantsView.xaml.cs">
-		  <DependentUpon>StringConstantsView.xaml</DependentUpon>
+		<Compile Update="Views\MainView.xaml.cs">
+		  <DependentUpon>MainView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\StringConstantView.xaml.cs">
-		  <DependentUpon>StringConstantView.xaml</DependentUpon>
+		<Compile Update="Views\SettingsView.xaml.cs">
+		  <DependentUpon>SettingsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\StringsEditView.xaml.cs">
+		  <DependentUpon>StringsEditView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\StringEditView.xaml.cs">
+		  <DependentUpon>StringEditView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\TemplateSelectionView.xaml.cs">
 			<DependentUpon>TemplateSelectionView.xaml</DependentUpon>

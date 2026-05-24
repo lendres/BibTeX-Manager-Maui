@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dpatkcontrols:DigitalProductionMainPage
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:dpatkcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:enums="clr-namespace:BibTeXManager.Enums"
+	xmlns:views="clr-namespace:BibTeXManager.Views"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
+	x:DataType="viewmodel:MainViewModel"
+	x:Class="BibTeXManager.Views.MainView">
+
+	<ContentPage.Resources>
+		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
+		<dpconverters:EnumToStringConverter x:Key="PartTypeEnumToStringConverter" x:TypeArguments="enums:BibliographyPartType"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="IsPartView" x:TypeArguments="enums:BibliographyPartType"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="IsNotHeaderView" x:TypeArguments="enums:BibliographyPartType" ValueToCompare="Header" ResultIfEqual="false"/>
+	</ContentPage.Resources>
+
+	<Shell.TitleView>
+		<Grid ColumnDefinitions="*,Auto" Margin="0,0,10,0">
+			<HorizontalStackLayout Grid.Column="1" Spacing="14" HorizontalOptions="End">
+
+				<Button Text="New" Clicked="OnNew" StyleClass="ToolBarButtonStyle"/>
+				<Button Text="Open" Clicked="OnOpen" StyleClass="ToolBarButtonStyle"/>
+				<Button Text="Save" Clicked="OnSave" IsEnabled="{Binding RequiresSave}" StyleClass="WideToolBarButtonStyle"/>
+
+			</HorizontalStackLayout>
+		</Grid>
+	</Shell.TitleView>
+
+	<!-- Menubar. -->
+	<ContentPage.MenuBarItems>
+		<!-- File. -->
+		<MenuBarItem Text="File">
+			<MenuFlyoutItem Text="New" Clicked="OnNew">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="n" Modifiers="Ctrl"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem Text="Open..." Clicked="OnOpen">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="o" Modifiers="Ctrl"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem Text="Save" Clicked="OnSave" IsEnabled="{Binding RequiresSave}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="s" Modifiers="Ctrl"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem Text="Save As..." Clicked="OnSaveAs" IsEnabled="{Binding IsOpen}"/>
+			<MenuFlyoutItem Text="Close" Clicked="OnClose" IsEnabled="{Binding IsOpen}"/>
+			<dpcontrols:RecentlyUsedMenuFlyout
+				Text="Recently Used"
+				PathClicked="OnRecentPathClicked"
+				PathNotFoundCommand="{Binding ShowRemovedMessageCommand}"
+				RecentPathsManagerService="{Binding RecentPathsManagerService}"/>
+			<MenuFlyoutItem Text="Exit" Clicked="OnExit"/>
+		</MenuBarItem>
+		
+		<!-- Edit. -->
+		<MenuBarItem Text="Edit">
+			<MenuFlyoutItem
+				Text="Add Entry..."
+				Clicked="OnNewEntry"
+				IsEnabled="{Binding CanAdd}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="a"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
+				Text="Add Entry from Template..."
+				Clicked="OnNewBibEntryFromTemplate"
+				IsEnabled="{Binding CanAddFromTemplates}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="t"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
+				Text="Edit Entry..."
+				Clicked="OnEditEntry"
+				IsEnabled="{Binding IsItemSelected}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="e"/>
+					<KeyboardAccelerator Key="F2"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
+				Text="Delete Entry"
+				Clicked="OnDeleteEntry"
+				IsEnabled="{Binding IsItemSelected}">
+				<!--<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="d"/>
+				</MenuFlyoutItem.KeyboardAccelerators>-->
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
+				Text="Find..."
+				Clicked="OnFind"
+				IsEnabled="{Binding ActiveBibliographyPart, Converter={StaticResource IsNotHeaderView}}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="f" Modifiers="Ctrl"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
+				Text="Find Next"
+				Clicked="OnFindNext"
+				IsEnabled="{Binding ActiveBibliographyPart, Converter={StaticResource IsNotHeaderView}}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F3"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
+				Text="Scroll to Selection"
+				Clicked="OnScrollToSelection"
+				IsEnabled="{Binding ActiveBibliographyPart, Converter={StaticResource IsNotHeaderView}}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="s"/>
+					<KeyboardAccelerator Key="F4"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+		</MenuBarItem>
+
+		<!-- Settings. -->
+		<MenuBarItem Text="Settings">
+			<MenuFlyoutItem Text="Options..." Clicked="OnOptions"/>
+		</MenuBarItem>
+
+		<!-- Tools. -->
+		<MenuBarItem Text="Tools">
+			<!--<MenuFlyoutSubItem Text="Quality">-->
+				<MenuFlyoutItem Text="Sort String Entries" Command="{Binding SortStringEntriesCommand}" IsEnabled="{Binding IsOpen}"/>
+				<MenuFlyoutItem Text="Sort Bibliography Entries" Command="{Binding SortBibliographyEntriesCommand}" IsEnabled="{Binding IsOpen}"/>
+				<MenuFlyoutItem Text="Check Field Quality" Clicked="OnCheckFieldQuality" IsEnabled="{Binding IsOpen}"/>
+			<!--</MenuFlyoutSubItem>-->
+		</MenuBarItem>
+
+		<!-- Help. -->
+		<MenuBarItem Text="Help">
+			<MenuFlyoutItem Text="Help" Clicked="OnHelp">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F1"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem Text="About" Clicked="OnAbout">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F10"/>
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+		</MenuBarItem>
+	</ContentPage.MenuBarItems>
+
+	<!-- Body. -->
+	<Grid RowDefinitions="Auto,*" ColumnDefinitions="*" Padding="0" Margin="0" RowSpacing="20">
+		
+		<!-- Selector. -->
+		<Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="*,*,*" Padding="0" Margin="0"
+			RadioButtonGroup.GroupName="PartSelectorGroup"
+			RadioButtonGroup.SelectedValue="{Binding ActiveBibliographyPart, Converter={StaticResource PartTypeEnumToStringConverter}}"
+			VerticalOptions="Center" HorizontalOptions="Fill">
+			<Grid.Resources>
+				<Style TargetType="RadioButton">
+					<Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
+					<Setter Property="HorizontalOptions" Value="Fill"/>
+					<Setter Property="FontSize" Value="20"/>
+				</Style>
+			</Grid.Resources>
+			<RadioButton Grid.Column="0" Content="Header" Value="Header"/>
+			<RadioButton Grid.Column="1" Content="String Entries" Value="StringEntries"/>
+			<RadioButton Grid.Column="2" Content="Bibliography Entries" Value="BibliographyEntries"/>
+		</Grid>
+
+		<!-- Part views. -->
+		<views:HeaderView 
+			Grid.Row="1" Grid.Column="0"
+			x:Name="_headerView"
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsPartView}, ConverterParameter={x:Static enums:BibliographyPartType.Header}}"
+			IsEnabled="{Binding IsOpen}"/>
+
+		<views:StringsEditView Grid.Row="1" Grid.Column="0"
+			x:Name="_stringsEditView"
+			SelectedItem="{Binding SelectedStringItem, Mode=OneWayToSource}"
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsPartView}, ConverterParameter={x:Static enums:BibliographyPartType.StringEntries}}"
+			IsEnabled="{Binding IsOpen}"/>
+
+		<views:BibliographyEditView Grid.Row="1" Grid.Column="0"
+			x:Name="_bibliographyEditView"
+			SelectedItem="{Binding SelectedBibliographyItem, Mode=OneWayToSource}"
+			IsVisible="{Binding ActiveBibliographyPart, Converter={StaticResource IsPartView}, ConverterParameter={x:Static enums:BibliographyPartType.BibliographyEntries}}"
+			IsEnabled="{Binding IsOpen}"/>
+		
+	</Grid>
+
+</dpatkcontrols:DigitalProductionMainPage>

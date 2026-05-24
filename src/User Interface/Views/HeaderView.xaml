@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<view:BibliographyPartView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:dpatkcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
+	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:library="clr-namespace:BibTeXLibrary;assembly=DigitalProduction.BibTeXLibrary"
+	xmlns:view="clr-namespace:BibTeXManager.Views"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
+	x:DataType="viewmodel:HeaderViewModel"
+	x:Class="BibTeXManager.Views.HeaderView"
+	x:TypeArguments="viewmodel:HeaderViewModel">
+
+	<view:BibliographyPartView.Resources>
+		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
+	</view:BibliographyPartView.Resources>
+
+	<Grid x:Name="_mainGrid" Padding="20">
+		
+		<Editor 
+			StyleClass="EditorStyle"
+			Grid.Row="0" Grid.Column="0"
+			x:Name="_headerEditor"
+			VerticalOptions="Fill"
+			HorizontalOptions="Fill"
+			FontFamily="IBMPlexMono-Regular"
+			Text="{Binding Header}"/>
+
+	</Grid>
+</view:BibliographyPartView>

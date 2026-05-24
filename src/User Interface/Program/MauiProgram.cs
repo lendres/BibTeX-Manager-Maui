@@ -13,6 +13,8 @@ namespace BibTeXManager;
 
 public static class MauiProgram
 {
+	public static IServiceProvider Services { get; private set; } = null!;
+
 	public static MauiApp CreateMauiApp()
 	{
 		MauiAppBuilder builder = MauiApp.CreateBuilder();
@@ -42,21 +44,32 @@ public static class MauiProgram
 			builder.Logging.AddDebug();
 		#endif
 
-		return builder.Build();
+		BibTeXProject.New(Preferences.ProjectSettings);
+
+		MauiApp mauiApp	= builder.Build();
+		Services		= mauiApp.Services;
+		return mauiApp;
 	}
 
 	static void RegisterViewsAndViewModels(IServiceCollection services)
 	{
-		services.AddSingleton<MainPage>();
+		services.AddSingleton<MainView>();
 		services.AddSingleton<MainViewModel>();
+
+		services.AddSingleton<HeaderView>();
+		services.AddSingleton<HeaderViewModel>();
+
+		services.AddSingleton<StringsEditView>();
+		services.AddSingleton<StringsEditViewModel>();
+
+		services.AddSingleton<BibliographyEditView>();
+		services.AddSingleton<BibliographyEditViewModel>();
 
 		services.AddTransient<EditRawBibEntryForm>();
 		services.AddTransient<BibEntryViewModel>();
 
-		services.AddTransient<StringConstantsView>();
-		services.AddTransient<StringConstantsViewModel>();
-
-		services.AddTransientPopup<ProgramOptionsView, ProgramOptionsViewModel>();
+		services.AddTransient<SettingsView>();
+		services.AddTransient<SettingsViewModel>();
 	}
 
 	private static void RegisterServices(IServiceCollection services)
@@ -66,7 +79,7 @@ public static class MauiProgram
 		services.AddSingleton<IRecentPathsManagerService, RecentPathsManagerService>();
 		services.AddSingleton<ISaveFilePicker, SaveFilePicker>();
 		services.AddSingleton<ISaveService, SaveService>();
-		services.AddSingleton<IPageProvider, PageProvider>();
+		services.AddSingleton<IPageProvider, CurrentPageProvider>();
 	}
 
 	static void RegisterEssentials(in IServiceCollection services)
