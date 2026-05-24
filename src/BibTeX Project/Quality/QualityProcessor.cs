@@ -7,14 +7,14 @@ using System.Xml.Serialization;
 namespace BibTeXManager;
 
 /// <summary>
-/// 
+/// Represents a quality processor for cleaning BibTeX entries.
 /// </summary>
 [XmlRoot("qualityprocessor")]
 public class QualityProcessor
 {
 	#region Fields
 
-	private BindingList<FieldProcessorGroup>			_tagProcessorGroups			= [];
+	private BindingList<FieldProcessorGroup>			_fieldProcessorGroups			= [];
 
 	#endregion
 
@@ -31,8 +31,8 @@ public class QualityProcessor
 
 	#region Properties
 
-	[XmlArray("tagprocessorgroups"), XmlArrayItem("tagprocessorgroup")]
-	public BindingList<FieldProcessorGroup> FieldProcessorGroups { get => _tagProcessorGroups; set => _tagProcessorGroups = value; }
+	[XmlArray("fieldprocessorgroups"), XmlArrayItem("fieldprocessorgroup")]
+	public BindingList<FieldProcessorGroup> FieldProcessorGroups { get => _fieldProcessorGroups; set => _fieldProcessorGroups = value; }
 
 	#endregion
 
@@ -45,7 +45,7 @@ public class QualityProcessor
 	public IEnumerable<FieldProcessingData> Process(BibEntry entry)
 	{
 		FieldProcessingData fieldProcessingData = new();
-		foreach (FieldProcessorGroup fieldProcessorGroup in _tagProcessorGroups)
+		foreach (FieldProcessorGroup fieldProcessorGroup in _fieldProcessorGroups)
 		{
 			foreach (FieldProcessor processor in fieldProcessorGroup.FieldProcessors)
 			{
