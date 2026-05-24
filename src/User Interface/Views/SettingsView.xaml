@@ -90,7 +90,7 @@
 					<Label Grid.Column="1" Grid.Row="2" Text="Number of items to remember" VerticalOptions="Center" Margin="0" VerticalTextAlignment="Center" Padding="0"/>
 				</Grid>
 
-				<!-- Bibliography file. -->
+				<!-- Bibliography configuration. -->
 				<Border StyleClass="SmallTitleBorderStyle">
                     <Label Text="Bibliography Configuration" StyleClass="SmallTitleLabelStyle"/>
                 </Border>
@@ -130,8 +130,8 @@
                     </Grid>
                 </VerticalStackLayout>
 
-                <!-- Field order. -->
-                <Label Text="Bibliography Entry Field Order" StyleClass="MediumTitleLabelStyle"/>
+                <!-- Field order / template file. -->
+                <Label Text="Bibliography Entry Templates and Field Order" StyleClass="MediumTitleLabelStyle"/>
                 <VerticalStackLayout StyleClass="VerticalLayoutStyle">
 					<Grid StyleClass="SwitchGridStyle">
 						<Switch Grid.Column="0"  Grid.Row="0" x:Name="FieldOrderSwitch" IsToggled="{Binding Settings.UseBibEntryInitialization}">
@@ -146,7 +146,7 @@
 						<Label Grid.Column="1" Grid.Row="0"	Text="Keep fields in a specified order" StyleClass="SwitchLabel"/>
                     </Grid>
                     <Grid StyleClass="FileBrowsingGridStyle">
-                        <Label Grid.Row="0" Text="Bibliography Entry Field Order File" StyleClass="ControlLabel" IsEnabled="{Binding Settings.UseBibEntryInitialization}"/>
+                        <Label Grid.Row="0" Text="Bibliography Entry Template File" StyleClass="ControlLabel" IsEnabled="{Binding Settings.UseBibEntryInitialization}"/>
                         <Entry Grid.Row="1" Grid.Column="0" HorizontalOptions="Fill"
 						    x:Name="FieldOrderEntry" Placeholder="Bibliography Entry Field Order File"
 						    Text="{Binding FieldOrderFile.Value}" IsEnabled="{Binding Settings.UseBibEntryInitialization}">
