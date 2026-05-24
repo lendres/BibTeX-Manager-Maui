@@ -1,5 +1,4 @@
-﻿using BibTeXLibrary;
-using BibTeXManager.Enums;
+﻿using BibTeXManager.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Services;
