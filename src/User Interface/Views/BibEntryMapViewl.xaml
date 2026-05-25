@@ -3,7 +3,8 @@
 	x:Class="BibTeXManager.Views.BibEntryMapView"
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:viewModels="clr-namespace:BibTeXManager.ViewModels"
 	x:DataType="viewModels:BibEntryMapViewModel"
@@ -19,45 +20,28 @@
 
 
 
-				<Label Grid.Row="1" Grid.Column="0" Text="Name" VerticalOptions="Center"/>
-				<Entry Grid.Row="1" Grid.Column="1" Text="{Binding BibEntryMap.Name}"/>
+				<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+					<Label Text="Name" StyleClass="ControlLabel"/>
+					<Entry
+						x:Name="_bibliographyEntryMapNameEntry"
+						Placeholder="Name"
+						Text="{Binding Name.Value}"
+						HorizontalOptions="Fill">
+						<Entry.Behaviors>
+							<mct:EventToCommandBehavior
+								x:TypeArguments="system:EventArgs"
+								Command="{Binding ValidateNameCommand}"
+								BindingContext="{Binding Path=BindingContext, Source={x:Reference _bibliographyEntryMapNameEntry}, x:DataType=Entry}"
+								EventName="TextChanged"/>
+						</Entry.Behaviors>
+					</Entry>
+					<Label Text="{Binding Name.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+				</VerticalStackLayout>
+				
 
 				<Label Grid.Row="2" Grid.Column="0" Text="To Type" VerticalOptions="Center"/>
 				<Entry Grid.Row="2" Grid.Column="1" Text="{Binding BibEntryMap.ToType}"/>
 
-				<Grid Grid.Row="3" Grid.ColumnSpan="2" RowDefinitions="Auto,*" RowSpacing="10">
-
-					<HorizontalStackLayout Grid.Row="0" Spacing="10">
-
-						<Button
-						Text="Add Field Map"
-						Command="{Binding AddFieldNameMapCommand}"
-						StyleClass="SquareButtonStyle"/>
-
-						<Button
-						Text="Delete Field Map"
-						Command="{Binding DeleteFieldNameMapCommand}"
-						StyleClass="SquareButtonStyle"/>
-
-					</HorizontalStackLayout>
-
-					<dg:DataGrid
-						Grid.Row="1"
-						ItemsSource="{Binding FieldNameMaps}"
-						SelectedItem="{Binding SelectedFieldNameMap}"
-						SelectionMode="Single"
-						PaginationEnabled="False"
-						Style="{DynamicResource DataGridDefaultLooseStyle}">
-
-						<dg:DataGrid.Columns>
-							<dg:DataGridColumn Title="From Name" PropertyName="FromName" Width="0.5*"
-								CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
-							<dg:DataGridColumn Title="To Name" PropertyName="ToName" Width="0.5*"
-								CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
-						</dg:DataGrid.Columns>
-
-					</dg:DataGrid>
-				</Grid>
 
 			</Grid>
 

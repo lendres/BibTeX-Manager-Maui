@@ -2,6 +2,7 @@
 using DigitalProduction.Xml.Serialization;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
+using System.Collections.ObjectModel;
 
 namespace BibTeXManager;
 
@@ -27,7 +28,7 @@ public class BibliographyEntryMap : NotifyPropertyModifiedChanged
 	{
 		Name			= other.Name;
 		ToType			= other.ToType;
-		FieldNameMaps	= new SerializableDictionary<string, string>(other.FieldNameMaps);
+		FieldNameMaps	= new ObservableCollection<FieldNameMap>(other.FieldNameMaps);
 	}
 
 	#endregion

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewModels="clr-namespace:BibTeXManager.ViewModels"
+	x:Class="BibTeXManager.Views.FieldMapView"
+	x:DataType="viewModels:FieldMapViewModel"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="380">
+
+		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+			<Label Text="Field Map" StyleClass="Title"  HorizontalOptions="Start"/>
+
+			<!-- From -->
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="From" StyleClass="ControlLabel"/>
+				<Entry Text="{Binding SelectedBibliographyEntryMap.ToType}"/>
+			</VerticalStackLayout>
+
+			<!-- To -->
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="To" StyleClass="ControlLabel"/>
+				<Entry Text="{Binding SelectedBibliographyEntryMap.Name}"/>
+			</VerticalStackLayout>
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+						Text="OK"
+						HorizontalOptions="End"
+						StyleClass="StandardSizeButtonStyle"
+						IsEnabled="{Binding IsSubmittable}"
+						Clicked="OnSaveButtonClicked"/>
+				<Button 
+						Text="Cancel"
+						StyleClass="StandardSizeButtonStyle"
+						HorizontalOptions="End"
+						Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+		</VerticalStackLayout>
+	</Border>
+</dpviews:PopupView>

@@ -17,31 +17,6 @@ public partial class NameMappingView : ContentPage
 
 	#region Button Events
 
-	private async void OnNewEntry(object sender, EventArgs eventArgs)
-	{
-		BibEntryMapViewModel	viewModel	= new();
-		BibEntryMapView			view		= new(viewModel);
-		object? result = await Shell.Current.ShowPopupAsync(view);
-
-		if (result is bool boolResult && boolResult)
-		{
-			ViewModel.Insert(viewModel.BibEntryMap);
-		}
-	}
-
-	private async void OnEditEntry(object sender, EventArgs eventArgs)
-	{
-		BibEntryMap				bibEntryMap	= new(ViewModel.SelectedItem!);
-		BibEntryMapViewModel	viewModel	= new(bibEntryMap);
-		BibEntryMapView			view		= new(viewModel);
-		object? result = await Shell.Current.ShowPopupAsync(view);
-
-		if (result is bool boolResult && boolResult)
-		{
-			ViewModel.ReplaceSelected(viewModel.BibEntryMap);
-		}
-	}
-
 	async private void OnSave(object? sender, EventArgs eventArgs)
 	{
 		ViewModel.Save();
@@ -62,6 +37,41 @@ public partial class NameMappingView : ContentPage
 			{ "NavigationObject",   null }
 		};
 		await Shell.Current.GoToAsync("../", true, navigationParameter);
+	}
+
+	private async void OnNewEntry(object sender, EventArgs eventArgs)
+	{
+		//BibEntryMapViewModel	viewModel	= new();
+		//BibEntryMapView			view		= new(viewModel);
+		//object? result = await Shell.Current.ShowPopupAsync(view);
+
+		//if (result is bool boolResult && boolResult)
+		//{
+		//	ViewModel.Insert(viewModel.BibEntryMap);
+		//}
+	}
+
+	private async void OnEditEntry(object sender, EventArgs eventArgs)
+	{
+		//BibliographyEntryMap				bibEntryMap	= new(ViewModel.SelectedItem!);
+		//BibEntryMapViewModel	viewModel	= new(bibEntryMap);
+		//BibEntryMapView			view		= new(viewModel);
+		//object? result = await Shell.Current.ShowPopupAsync(view);
+
+		//if (result is bool boolResult && boolResult)
+		//{
+		//	ViewModel.ReplaceSelected(viewModel.BibEntryMap);
+		//}
+	}
+
+	async void OnDelete(object sender, EventArgs eventArgs)
+	{
+		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+
+		if (result)
+		{
+			ViewModel.Delete();
+		}
 	}
 
 	#endregion
