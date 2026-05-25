@@ -6,6 +6,7 @@ namespace BibTeXManager;
 /// <summary>
 /// A class for mapping BibEntry data.
 /// </summary>
+[XmlRoot("bibliographyentrymap")]
 public class BibEntryMap
 {
 	#region Construction
