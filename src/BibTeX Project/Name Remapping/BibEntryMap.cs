@@ -1,4 +1,6 @@
-﻿using DigitalProduction.Xml.Serialization;
+﻿using DigitalProduction.ComponentModel;
+using DigitalProduction.Xml.Serialization;
+using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 
 namespace BibTeXManager;
@@ -6,21 +8,22 @@ namespace BibTeXManager;
 /// <summary>
 /// A class for mapping BibEntry data.
 /// </summary>
-public class BibEntryMap
+[XmlRoot("bibliographyentrymap")]
+public class BibliographyEntryMap : NotifyPropertyModifiedChanged
 {
 	#region Construction
 
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public BibEntryMap()
+	public BibliographyEntryMap()
 	{
 	}
 
 	/// <summary>
 	/// Copy constructor.
 	/// </summary>
-	public BibEntryMap(BibEntryMap other)
+	public BibliographyEntryMap(BibliographyEntryMap other)
 	{
 		Name			= other.Name;
 		ToType			= other.ToType;
@@ -32,13 +35,21 @@ public class BibEntryMap
 	#region Properties
 
 	[XmlAttribute("name")]
-	public string Name { get; set; } = "";
+	public string Name
+	{
+		get => GetValueOrDefault(string.Empty);
+		set => SetValue(value);
+	}
 
 	[XmlAttribute("totype")]
-	public string ToType { get; set; } = "";
-	
-	[XmlElement("fieldmaps")]
-	public SerializableDictionary<string, string> FieldNameMaps { get; set; } = new SerializableDictionary<string, string>();
+	public string ToType
+	{
+		get => GetValueOrDefault(string.Empty);
+		set => SetValue(value);
+	}
+
+	[XmlArray("fieldmaps"), XmlArrayItem("fieldmap")]
+	public ObservableCollection<FieldNameMap> FieldNameMaps { get; set; } = new();
 
 	#endregion
 
