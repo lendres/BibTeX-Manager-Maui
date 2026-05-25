@@ -1,8 +1,9 @@
-﻿using System.Xml.Serialization;
+﻿using DigitalProduction.ComponentModel;
+using System.Xml.Serialization;
 
 namespace BibTeXManager;
 
-public partial class FieldNameMap
+public partial class FieldNameMap : NotifyPropertyModifiedChanged
 {
 	#region Construction
 
@@ -27,10 +28,18 @@ public partial class FieldNameMap
 	#region Properties
 
 	[XmlAttribute("from")]
-	public string From { get; set; } = "";
+	public string From
+	{
+		get => GetValueOrDefault(string.Empty);
+		set => SetValue(value);
+	}
 
 	[XmlAttribute("to")]
-	public string To { get; set; } = "";
+	public string To
+	{
+		get => GetValueOrDefault(string.Empty);
+		set => SetValue(value);
+	}
 
 	#endregion
 }
