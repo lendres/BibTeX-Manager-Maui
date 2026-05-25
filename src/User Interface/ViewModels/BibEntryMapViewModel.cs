@@ -69,9 +69,9 @@ public partial class BibEntryMapViewModel : ObservableObject
 
 		foreach (FieldNameMap fieldNameMap in FieldNameMaps)
 		{
-			if (!string.IsNullOrWhiteSpace(fieldNameMap.FromName))
+			if (!string.IsNullOrWhiteSpace(fieldNameMap.From))
 			{
-				BibEntryMap.FieldNameMaps[fieldNameMap.FromName] = fieldNameMap.ToName;
+				BibEntryMap.FieldNameMaps[fieldNameMap.From] = fieldNameMap.To;
 			}
 		}
 	}
