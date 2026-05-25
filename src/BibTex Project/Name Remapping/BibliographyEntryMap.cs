@@ -1,8 +1,6 @@
 ﻿using DigitalProduction.ComponentModel;
-using DigitalProduction.Xml.Serialization;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
-using System.Collections.ObjectModel;
 
 namespace BibTeXManager;
 
@@ -19,6 +17,7 @@ public class BibliographyEntryMap : NotifyPropertyModifiedChanged
 	/// </summary>
 	public BibliographyEntryMap()
 	{
+		FieldNameMaps.CollectionChanged += OnChildModifiedChanged;
 	}
 
 	/// <summary>
@@ -51,6 +50,15 @@ public class BibliographyEntryMap : NotifyPropertyModifiedChanged
 
 	[XmlArray("fieldmaps"), XmlArrayItem("fieldmap")]
 	public ObservableCollection<FieldNameMap> FieldNameMaps { get; set; } = new();
+
+	#endregion
+
+	#region Methods
+
+	private void OnChildModifiedChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs eventArgs)
+	{
+		Modified = true;
+	}
 
 	#endregion
 
