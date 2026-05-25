@@ -8,13 +8,13 @@ using System.Collections.ObjectModel;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class NameMappingViewModel : DataGridBaseViewModel<BibEntryMap>
+public partial class NameMappingViewModel : DataGridBaseViewModel<BibliographyEntryMap>
 {
 	#region Construction
 
 	public NameMappingViewModel()
 	{
-		Items = new ObservableCollection<BibEntryMap>(BibTeXProject.Instance!.NameRemapper.Maps.Values);
+		Items = new ObservableCollection<BibliographyEntryMap>(BibTeXProject.Instance!.NameRemapper.Maps.Values);
 	}
 
 	#endregion
@@ -29,14 +29,14 @@ public partial class NameMappingViewModel : DataGridBaseViewModel<BibEntryMap>
 
 	#endregion
 
-	public void Insert(BibEntryMap item)
+	public void Insert(BibliographyEntryMap item)
 	{
 		BibTeXProject.Instance!.NameRemapper.Maps[item.Name.ToLower()] = item;
 		Items.Add(item);
 		SelectedItem = item;
 	}
 
-	public void ReplaceSelected(BibEntryMap item)
+	public void ReplaceSelected(BibliographyEntryMap item)
 	{
 		if (SelectedItem == null)
 		{

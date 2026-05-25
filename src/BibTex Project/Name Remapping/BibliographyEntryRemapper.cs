@@ -12,7 +12,7 @@ public class BibliographyEntryRemapper
 {
 	#region Fields
 
-	private SerializableDictionary<string, BibEntryMap>		_maps		= new SerializableDictionary<string, BibEntryMap>();
+	private SerializableDictionary<string, BibliographyEntryMap>		_maps		= new SerializableDictionary<string, BibliographyEntryMap>();
 
 	#endregion
 
@@ -33,7 +33,7 @@ public class BibliographyEntryRemapper
 	/// Bibliography entry maps.
 	/// </summary>
 	[XmlElement("maps")]
-	public SerializableDictionary<string, BibEntryMap> Maps { get => _maps; set => _maps = value; }
+	public SerializableDictionary<string, BibliographyEntryMap> Maps { get => _maps; set => _maps = value; }
 	
 	#endregion
 
@@ -48,7 +48,7 @@ public class BibliographyEntryRemapper
 	{
 		if (_maps.ContainsKey(entry.Type.ToLower()))
 		{
-			BibEntryMap map = _maps[entry.Type.ToLower()];
+			BibliographyEntryMap map = _maps[entry.Type.ToLower()];
 			entry.Type		= map.ToType;
 
 			// Getting the field names is a little expensive, so just do it once, outside of the loop.

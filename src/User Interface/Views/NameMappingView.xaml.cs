@@ -31,7 +31,7 @@ public partial class NameMappingView : ContentPage
 
 	private async void OnEditEntry(object sender, EventArgs eventArgs)
 	{
-		BibEntryMap				bibEntryMap	= new(ViewModel.SelectedItem!);
+		BibliographyEntryMap				bibEntryMap	= new(ViewModel.SelectedItem!);
 		BibEntryMapViewModel	viewModel	= new(bibEntryMap);
 		BibEntryMapView			view		= new(viewModel);
 		object? result = await Shell.Current.ShowPopupAsync(view);

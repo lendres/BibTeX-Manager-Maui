@@ -14,7 +14,7 @@ public partial class BibEntryMapViewModel : ObservableObject
 		Title = "Add BibEntry Name Map";
 	}
 
-	public BibEntryMapViewModel(BibEntryMap bibEntryMap)
+	public BibEntryMapViewModel(BibliographyEntryMap bibEntryMap)
 	{
 		BibEntryMap = bibEntryMap;
 		Title = "Edit BibEntry Name Map";
@@ -35,7 +35,7 @@ public partial class BibEntryMapViewModel : ObservableObject
 	[ObservableProperty]
 	public partial FieldNameMap?				SelectedFieldNameMap { get; set; }
 
-	public BibEntryMap									BibEntryMap { get; }
+	public BibliographyEntryMap									BibEntryMap { get; }
 
 	public ObservableCollection<FieldNameMap>	FieldNameMaps { get; } = [];
 

@@ -7,21 +7,21 @@ namespace BibTeXManager;
 /// A class for mapping BibEntry data.
 /// </summary>
 [XmlRoot("bibliographyentrymap")]
-public class BibEntryMap
+public class BibliographyEntryMap
 {
 	#region Construction
 
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public BibEntryMap()
+	public BibliographyEntryMap()
 	{
 	}
 
 	/// <summary>
 	/// Copy constructor.
 	/// </summary>
-	public BibEntryMap(BibEntryMap other)
+	public BibliographyEntryMap(BibliographyEntryMap other)
 	{
 		Name			= other.Name;
 		ToType			= other.ToType;

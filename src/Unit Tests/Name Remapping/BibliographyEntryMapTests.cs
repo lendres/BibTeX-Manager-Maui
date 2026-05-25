@@ -11,7 +11,7 @@ public class BibEntryMapTests
 	[Fact]
 	public void DefaultConstructorCreatesEmptyValues()
 	{
-		BibEntryMap bibEntryMap = new();
+		BibliographyEntryMap bibEntryMap = new();
 
 		Assert.Equal("", bibEntryMap.Name);
 		Assert.Equal("", bibEntryMap.ToType);
@@ -22,7 +22,7 @@ public class BibEntryMapTests
 	[Fact]
 	public void PropertiesCanBeSet()
 	{
-		BibEntryMap bibEntryMap = new()
+		BibliographyEntryMap bibEntryMap = new()
 		{
 			Name = "article",
 			ToType = "inproceedings",
@@ -44,7 +44,7 @@ public class BibEntryMapTests
 	[Fact]
 	public void SerializeIncludesAttributesAndFieldNameMaps()
 	{
-		BibEntryMap bibEntryMap = CreateTestBibEntryMap();
+		BibliographyEntryMap bibEntryMap = CreateTestBibEntryMap();
 
 		string xml = SerializeObjectToString(bibEntryMap);
 
@@ -60,10 +60,10 @@ public class BibEntryMapTests
 	[Fact]
 	public void DeserializeReadsAttributesAndFieldNameMaps()
 	{
-		BibEntryMap bibEntryMap = CreateTestBibEntryMap();
+		BibliographyEntryMap bibEntryMap = CreateTestBibEntryMap();
 		string xml = SerializeObjectToString(bibEntryMap);
 
-		BibEntryMap deserializedBibEntryMap = DeserializeObjectFromString<BibEntryMap>(xml);
+		BibliographyEntryMap deserializedBibEntryMap = DeserializeObjectFromString<BibliographyEntryMap>(xml);
 
 		Assert.Equal("article", deserializedBibEntryMap.Name);
 		Assert.Equal("inproceedings", deserializedBibEntryMap.ToType);
@@ -85,7 +85,7 @@ public class BibEntryMapTests
 			<bibliographyentrymap name="article" totype="inproceedings" />
 			""";
 
-		BibEntryMap bibEntryMap = DeserializeObjectFromString<BibEntryMap>(xml);
+		BibliographyEntryMap bibEntryMap = DeserializeObjectFromString<BibliographyEntryMap>(xml);
 
 		Assert.Equal("article", bibEntryMap.Name);
 		Assert.Equal("inproceedings", bibEntryMap.ToType);
@@ -111,7 +111,7 @@ public class BibEntryMapTests
 			</bibliographyentrymap>
 			""";
 
-		BibEntryMap bibEntryMap = DeserializeObjectFromString<BibEntryMap>(xml);
+		BibliographyEntryMap bibEntryMap = DeserializeObjectFromString<BibliographyEntryMap>(xml);
 
 		Assert.Equal("article", bibEntryMap.Name);
 		Assert.Equal("inproceedings", bibEntryMap.ToType);
@@ -124,9 +124,9 @@ public class BibEntryMapTests
 
 	#region Helper Functions
 
-	private static BibEntryMap CreateTestBibEntryMap()
+	private static BibliographyEntryMap CreateTestBibEntryMap()
 	{
-		BibEntryMap bibEntryMap = new()
+		BibliographyEntryMap bibEntryMap = new()
 		{
 			Name = "article",
 			ToType = "inproceedings",

@@ -158,7 +158,7 @@ public class BibliographyEntryRemapperTests
 
 	private static BibliographyEntryRemapper CreateTestRemapper()
 	{
-		BibEntryMap map = new()
+		BibliographyEntryMap map = new()
 		{
 			Name = "article",
 			ToType = "inproceedings",
