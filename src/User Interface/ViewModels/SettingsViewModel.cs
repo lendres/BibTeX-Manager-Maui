@@ -43,16 +43,16 @@ public partial class SettingsViewModel : ObservableObject
 	#region Program
 
 	[ObservableProperty]
-	public partial bool OpenLastProjectAtStartUp { get; set; } = false;
+	public partial bool							OpenLastProjectAtStartUp { get; set; }		= false;
 
 	[ObservableProperty]
-	public partial bool RemoveNotFoundPaths { get; set; }
+	public partial bool							RemoveNotFoundPaths { get; set; }
 
 	[ObservableProperty]
-	public partial int NumberOfItemsShown { get; set; }
+	public partial int							NumberOfItemsShown { get; set; }
 
 	[ObservableProperty]
-	public partial int NumberOfItemsToStore { get; set; }
+	public partial int							NumberOfItemsToStore { get; set; }
 
 	#endregion
 

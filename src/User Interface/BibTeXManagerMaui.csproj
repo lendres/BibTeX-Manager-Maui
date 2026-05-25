@@ -81,7 +81,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="Views\BibEntryMapViewl.xaml">
+		<MauiXaml Update="Views\FieldMapView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\GetNameView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\NameMappingView.xaml">
@@ -118,6 +121,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\GetNameView.xaml.cs">
+		  <DependentUpon>GetNameView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\FieldMapView.xaml.cs">
+		  <DependentUpon>FieldMapView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\NameMappingView.xaml.cs">
 		  <DependentUpon>NameMappingView.xaml</DependentUpon>
 		</Compile>
