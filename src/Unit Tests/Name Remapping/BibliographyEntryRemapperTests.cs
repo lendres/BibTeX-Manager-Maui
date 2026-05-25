@@ -11,7 +11,7 @@ public class BibliographyEntryRemapperTests
 	[Fact]
 	public void DefaultConstructorCreatesEmptyMaps()
 	{
-		BibEntryRemapper remapper = new();
+		BibliographyEntryRemapper remapper = new();
 
 		Assert.NotNull(remapper.Maps);
 		Assert.Empty(remapper.Maps);
@@ -20,7 +20,7 @@ public class BibliographyEntryRemapperTests
 	[Fact]
 	public void RemapEntryNamesRemapsTypeAndMappedFields()
 	{
-		BibEntryRemapper remapper = CreateTestRemapper();
+		BibliographyEntryRemapper remapper = CreateTestRemapper();
 		BibEntry entry = CreateArticleEntry();
 
 		remapper.RemapEntryNames(entry);
@@ -38,7 +38,7 @@ public class BibliographyEntryRemapperTests
 	[Fact]
 	public void RemapEntryNamesDoesNothingWhenMapDoesNotExist()
 	{
-		BibEntryRemapper remapper = CreateTestRemapper();
+		BibliographyEntryRemapper remapper = CreateTestRemapper();
 		BibEntry entry = CreateArticleEntry();
 
 		entry.Type = "book";
@@ -54,7 +54,7 @@ public class BibliographyEntryRemapperTests
 	[Fact]
 	public void RemapEntryNamesOnlyRenamesExistingFields()
 	{
-		BibEntryRemapper remapper = CreateTestRemapper();
+		BibliographyEntryRemapper remapper = CreateTestRemapper();
 		BibEntry entry = new() { Type = "article" };
 
 		entry["journal"] = "Journal Name";
@@ -71,7 +71,7 @@ public class BibliographyEntryRemapperTests
 	[Fact]
 	public void RemapEntryNamesMatchesEntryTypeIgnoringCase()
 	{
-		BibEntryRemapper remapper = CreateTestRemapper();
+		BibliographyEntryRemapper remapper = CreateTestRemapper();
 		BibEntry entry = CreateArticleEntry();
 
 		entry.Type = "Article";
@@ -90,13 +90,13 @@ public class BibliographyEntryRemapperTests
 	public void SerializeAndDeserializePreservesMaps()
 	{
 		string filePath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.xml");
-		BibEntryRemapper remapper = CreateTestRemapper();
+		BibliographyEntryRemapper remapper = CreateTestRemapper();
 
 		try
 		{
 			remapper.Serialize(filePath);
 
-			BibEntryRemapper deserializedRemapper = BibEntryRemapper.Deserialize(filePath)!;
+			BibliographyEntryRemapper deserializedRemapper = BibliographyEntryRemapper.Deserialize(filePath)!;
 
 			Assert.NotNull(deserializedRemapper);
 			Assert.Single(deserializedRemapper.Maps);
@@ -121,7 +121,7 @@ public class BibliographyEntryRemapperTests
 		string xml =
 			"""
 			<?xml version="1.0" encoding="utf-16"?>
-			<bibentryremapping>
+			<bibliographyentryremapping>
 				<maps>
 					<item key="article">
 						<value name="Article to InProceedings" totype="inproceedings">
@@ -136,13 +136,13 @@ public class BibliographyEntryRemapperTests
 						</value>
 					</item>
 				</maps>
-			</bibentryremapping>
+			</bibliographyentryremapping>
 			""";
 
 		//<fieldnamemap from="journal" to="booktitle" />
 		//<fieldnamemap from="volume" to="number" />
 
-		BibEntryRemapper remapper = DeserializeObjectFromString<BibEntryRemapper>(xml);
+		BibliographyEntryRemapper remapper = DeserializeObjectFromString<BibliographyEntryRemapper>(xml);
 
 		Assert.Single(remapper.Maps);
 		Assert.True(remapper.Maps.ContainsKey("article"));
@@ -156,7 +156,7 @@ public class BibliographyEntryRemapperTests
 
 	#region Helper Functions
 
-	private static BibEntryRemapper CreateTestRemapper()
+	private static BibliographyEntryRemapper CreateTestRemapper()
 	{
 		BibEntryMap map = new()
 		{
@@ -167,7 +167,7 @@ public class BibliographyEntryRemapperTests
 		map.FieldNameMaps.Add("journal", "booktitle");
 		map.FieldNameMaps.Add("volume", "number");
 
-		BibEntryRemapper remapper = new();
+		BibliographyEntryRemapper remapper = new();
 		remapper.Maps.Add("article", map);
 
 		return remapper;

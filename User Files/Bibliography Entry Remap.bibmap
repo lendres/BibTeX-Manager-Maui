@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="us-ascii"?>
-<bibentryremapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<bibliographyentryremapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<maps>
 		<item key="proceedings">
 			<value name="Proceedings to InProceedings" totype="inproceedings">
@@ -23,4 +23,4 @@
 			</value>
 		</item>
 	</maps>
-</bibentryremapping>
+</bibliographyentryremapping>

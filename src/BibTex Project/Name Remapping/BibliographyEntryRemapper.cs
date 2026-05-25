@@ -7,8 +7,8 @@ namespace BibTeXManager;
 /// <summary>
 /// A class to remap the type and field names of a bibilography entry.
 /// </summary>
-[XmlRoot("bibentryremapping")]
-public class BibEntryRemapper
+[XmlRoot("bibliographyentryremapping")]
+public class BibliographyEntryRemapper
 {
 	#region Fields
 
@@ -21,7 +21,7 @@ public class BibEntryRemapper
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public BibEntryRemapper()
+	public BibliographyEntryRemapper()
 	{
 	}
 
@@ -89,9 +89,9 @@ public class BibEntryRemapper
 	/// Create an instance from a file.
 	/// </summary>
 	/// <param name="path">The file to read from.</param>
-	public static BibEntryRemapper? Deserialize(string path)
+	public static BibliographyEntryRemapper? Deserialize(string path)
 	{
-		return Serialization.DeserializeObject<BibEntryRemapper>(path);
+		return Serialization.DeserializeObject<BibliographyEntryRemapper>(path);
 	}
 
 	#endregion
