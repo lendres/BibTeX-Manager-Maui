@@ -53,12 +53,12 @@ public class BibliographyEntryRemapper
 			// Getting the field names is a little expensive, so just do it once, outside of the loop.
 			List<string> fieldNames = entry.FieldNames;
 
-			foreach (KeyValuePair<string, string> nameMap in map.FieldNameMaps)
+			foreach (FieldNameMap nameMap in map.FieldNameMaps)
 			{
 				// Only remap when the key exists.
-				if (fieldNames.Contains(nameMap.Key))
+				if (fieldNames.Contains(nameMap.From))
 				{
-					entry.RenameField(nameMap.Key, nameMap.Value);
+					entry.RenameField(nameMap.From, nameMap.To);
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 ﻿using DigitalProduction.Xml.Serialization;
 using System.Xml.Serialization;
+using System.Collections.ObjectModel;
 
 namespace BibTeXManager;
 
@@ -25,7 +26,7 @@ public class BibliographyEntryMap
 	{
 		Name			= other.Name;
 		ToType			= other.ToType;
-		FieldNameMaps	= new SerializableDictionary<string, string>(other.FieldNameMaps);
+		FieldNameMaps	= new ObservableCollection<FieldNameMap>(other.FieldNameMaps);
 	}
 
 	#endregion
@@ -38,8 +39,8 @@ public class BibliographyEntryMap
 	[XmlAttribute("totype")]
 	public string ToType { get; set; } = "";
 	
-	[XmlElement("fieldmaps")]
-	public SerializableDictionary<string, string> FieldNameMaps { get; set; } = new SerializableDictionary<string, string>();
+	[XmlArray("fieldmaps"), XmlArrayItem("fieldmap")]
+	public ObservableCollection<FieldNameMap> FieldNameMaps { get; set; } = new();
 
 	#endregion
 

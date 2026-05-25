@@ -101,10 +101,10 @@ public class BibliographyEntryRemapperTests
 			Assert.NotNull(deserializedRemapper);
 			Assert.Single(deserializedRemapper.Maps);
 			Assert.True(deserializedRemapper.Maps.ContainsKey("article"));
-			Assert.Equal("article", deserializedRemapper.Maps["article"].Name);
+			Assert.Equal("Article to InProceedings", deserializedRemapper.Maps["article"].Name);
 			Assert.Equal("inproceedings", deserializedRemapper.Maps["article"].ToType);
-			Assert.Equal("booktitle", deserializedRemapper.Maps["article"].FieldNameMaps["journal"]);
-			Assert.Equal("number", deserializedRemapper.Maps["article"].FieldNameMaps["volume"]);
+			Assert.Equal("booktitle", deserializedRemapper.Maps["article"].FieldNameMaps[0].To);
+			Assert.Equal("number", deserializedRemapper.Maps["article"].FieldNameMaps[1].To);
 		}
 		finally
 		{
@@ -126,12 +126,8 @@ public class BibliographyEntryRemapperTests
 					<item key="article">
 						<value name="Article to InProceedings" totype="inproceedings">
 							<fieldmaps>
-								<item key="journal">
-									<value>booktitle</value>
-								</item>
-								<item key="volume">
-									<value>number</value>
-								</item>
+								<fieldmap from="journal" to="booktitle"/>
+								<fieldmap from="volume" to="number"/>
 							</fieldmaps>
 						</value>
 					</item>
@@ -148,8 +144,8 @@ public class BibliographyEntryRemapperTests
 		Assert.True(remapper.Maps.ContainsKey("article"));
 		Assert.Equal("Article to InProceedings", remapper.Maps["article"].Name);
 		Assert.Equal("inproceedings", remapper.Maps["article"].ToType);
-		Assert.Equal("booktitle", remapper.Maps["article"].FieldNameMaps["journal"]);
-		Assert.Equal("number", remapper.Maps["article"].FieldNameMaps["volume"]);
+		Assert.Equal("booktitle", remapper.Maps["article"].FieldNameMaps[0].To);
+		Assert.Equal("number", remapper.Maps["article"].FieldNameMaps[1].To);
 	}
 
 	#endregion
@@ -160,12 +156,12 @@ public class BibliographyEntryRemapperTests
 	{
 		BibliographyEntryMap map = new()
 		{
-			Name = "article",
-			ToType = "inproceedings",
+			Name	= "Article to InProceedings",
+			ToType	= "inproceedings",
 		};
 
-		map.FieldNameMaps.Add("journal", "booktitle");
-		map.FieldNameMaps.Add("volume", "number");
+		map.FieldNameMaps.Add(new FieldNameMap("journal", "booktitle"));
+		map.FieldNameMaps.Add(new FieldNameMap("volume", "number"));
 
 		BibliographyEntryRemapper remapper = new();
 		remapper.Maps.Add("article", map);
@@ -177,9 +173,9 @@ public class BibliographyEntryRemapperTests
 	{
 		BibEntry entry = new() { Type = "article" };
 
-		entry["journal"] = "Journal Name";
-		entry["volume"] = "12";
-		entry["title"] = "Paper Title";
+		entry["journal"]	= "Journal Name";
+		entry["volume"]		= "12";
+		entry["title"]		= "Paper Title";
 
 		return entry;
 	}

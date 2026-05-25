@@ -19,9 +19,9 @@ public partial class BibEntryMapViewModel : ObservableObject
 		BibEntryMap = bibEntryMap;
 		Title = "Edit BibEntry Name Map";
 
-		foreach (KeyValuePair<string, string> fieldNameMap in BibEntryMap.FieldNameMaps)
+		foreach (FieldNameMap fieldNameMap in BibEntryMap.FieldNameMaps)
 		{
-			FieldNameMaps.Add(new FieldNameMap(fieldNameMap.Key, fieldNameMap.Value));
+			FieldNameMaps.Add(new FieldNameMap(fieldNameMap));
 		}
 	}
 
@@ -71,7 +71,7 @@ public partial class BibEntryMapViewModel : ObservableObject
 		{
 			if (!string.IsNullOrWhiteSpace(fieldNameMap.From))
 			{
-				BibEntryMap.FieldNameMaps[fieldNameMap.From] = fieldNameMap.To;
+				//BibEntryMap.FieldNameMaps[fieldNameMap.From] = fieldNameMap.To;
 			}
 		}
 	}

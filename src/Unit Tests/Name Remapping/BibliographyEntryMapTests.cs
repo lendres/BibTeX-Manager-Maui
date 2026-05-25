@@ -28,13 +28,13 @@ public class BibEntryMapTests
 			ToType = "inproceedings",
 		};
 
-		bibEntryMap.FieldNameMaps.Add("journal", "booktitle");
-		bibEntryMap.FieldNameMaps.Add("volume", "number");
+		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("journal", "booktitle"));
+		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("volume", "number"));
 
 		Assert.Equal("article", bibEntryMap.Name);
 		Assert.Equal("inproceedings", bibEntryMap.ToType);
-		Assert.Equal("booktitle", bibEntryMap.FieldNameMaps["journal"]);
-		Assert.Equal("number", bibEntryMap.FieldNameMaps["volume"]);
+		Assert.Equal("booktitle", bibEntryMap.FieldNameMaps[0].To);
+		Assert.Equal("number", bibEntryMap.FieldNameMaps[1].To);
 	}
 
 	#endregion
@@ -68,8 +68,8 @@ public class BibEntryMapTests
 		Assert.Equal("article", deserializedBibEntryMap.Name);
 		Assert.Equal("inproceedings", deserializedBibEntryMap.ToType);
 		Assert.Equal(2, deserializedBibEntryMap.FieldNameMaps.Count);
-		Assert.Equal("booktitle", deserializedBibEntryMap.FieldNameMaps["journal"]);
-		Assert.Equal("number", deserializedBibEntryMap.FieldNameMaps["volume"]);
+		Assert.Equal("booktitle", deserializedBibEntryMap.FieldNameMaps[0].To);
+		Assert.Equal("number", deserializedBibEntryMap.FieldNameMaps[1].To);
 	}
 
 	#endregion
@@ -101,12 +101,8 @@ public class BibEntryMapTests
 			<?xml version="1.0" encoding="utf-16"?>
 			<bibliographyentrymap name="article" totype="inproceedings">
 				<fieldmaps>
-					<item key="journal">
-						<value>booktitle</value>
-					</item>
-					<item key="volume">
-						<value>number</value>
-					</item>
+					<fieldmap from="journal" to="booktitle"/>
+					<fieldmap from="volume" to="number"/>
 				</fieldmaps>
 			</bibliographyentrymap>
 			""";
@@ -116,8 +112,8 @@ public class BibEntryMapTests
 		Assert.Equal("article", bibEntryMap.Name);
 		Assert.Equal("inproceedings", bibEntryMap.ToType);
 		Assert.Equal(2, bibEntryMap.FieldNameMaps.Count);
-		Assert.Equal("booktitle", bibEntryMap.FieldNameMaps["journal"]);
-		Assert.Equal("number", bibEntryMap.FieldNameMaps["volume"]);
+		Assert.Equal("booktitle", bibEntryMap.FieldNameMaps[0].To);
+		Assert.Equal("number", bibEntryMap.FieldNameMaps[1].To);
 	}
 
 	#endregion
@@ -132,8 +128,8 @@ public class BibEntryMapTests
 			ToType = "inproceedings",
 		};
 
-		bibEntryMap.FieldNameMaps.Add("journal", "booktitle");
-		bibEntryMap.FieldNameMaps.Add("volume", "number");
+		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("journal", "booktitle"));
+		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("volume", "number"));
 
 		return bibEntryMap;
 	}

@@ -1,4 +1,6 @@
-﻿namespace BibTeXManager.ViewModels;
+﻿using System.Xml.Serialization;
+
+namespace BibTeXManager;
 
 public partial class FieldNameMap
 {
@@ -14,12 +16,20 @@ public partial class FieldNameMap
 		To		= toName;
 	}
 
+	public FieldNameMap(FieldNameMap other)
+	{
+		From	= other.From;
+		To		= other.To;
+	}
+
 	#endregion
 
 	#region Properties
 
+	[XmlAttribute("from")]
 	public string From { get; set; } = "";
 
+	[XmlAttribute("to")]
 	public string To { get; set; } = "";
 
 	#endregion
