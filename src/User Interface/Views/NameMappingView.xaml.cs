@@ -44,6 +44,26 @@ public partial class NameMappingView : ContentPage
 		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
 
+	private async void OnNewBibliographyEntryMap(object sender, EventArgs eventArgs)
+	{
+
+	}
+
+	private async void OnRenameBibliographyEntryMap(object sender, EventArgs eventArgs)
+	{
+
+	}
+
+	private async void OnDeleteBibliographyEntryMap(object sender, EventArgs eventArgs)
+	{
+		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+
+		if (result)
+		{
+			//ViewModel.Delete();
+		}
+	}
+
 	private async void OnNewFieldMap(object sender, EventArgs eventArgs)
 	{
 		FieldMapViewModel	viewModel	= new(ViewModel.SelectedBibliographyEntryMap!.InUseTypes);

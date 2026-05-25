@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dpviews:PopupView
-	x:Class="BibTeXManager.Views.BibEntryMapView"
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:system="clr-namespace:System;assembly=mscorlib"
 	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:viewModels="clr-namespace:BibTeXManager.ViewModels"
-	x:DataType="viewModels:BibEntryMapViewModel"
+	x:DataType="viewModels:GetNameViewModel"
+	x:Class="BibTeXManager.Views.GetNameView"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="380">
@@ -17,8 +17,6 @@
 
 			<Grid RowDefinitions="Auto,Auto,Auto,*" ColumnDefinitions="Auto,*"
 				RowSpacing="10" ColumnSpacing="10" Padding="20" WidthRequest="700" HeightRequest="500">
-
-
 
 				<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
 					<Label Text="Name" StyleClass="ControlLabel"/>
@@ -38,11 +36,6 @@
 					<Label Text="{Binding Name.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
 				</VerticalStackLayout>
 				
-
-				<Label Grid.Row="2" Grid.Column="0" Text="To Type" VerticalOptions="Center"/>
-				<Entry Grid.Row="2" Grid.Column="1" Text="{Binding BibEntryMap.ToType}"/>
-
-
 			</Grid>
 
 			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">

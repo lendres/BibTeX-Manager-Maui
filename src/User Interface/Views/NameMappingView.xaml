@@ -36,6 +36,13 @@
 		</Grid>
 
 		<VerticalStackLayout Grid.Row="1" Spacing="10" VerticalOptions="Fill" Padding="0" Margin="0,30,0,0">
+			<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
+				<Button Text="Add" Clicked="OnNewBibliographyEntryMap" StyleClass="SquareButtonStyle"/>
+				<Button Text="Rename" Clicked="OnRenameBibliographyEntryMap" StyleClass="SquareButton"
+						IsEnabled="{Binding SelectedBibliographyEntryMap, Converter={StaticResource IsNotNullConverter}}"/>
+				<Button Text="Delete" Clicked="OnDeleteBibliographyEntryMap" StyleClass="SquareButton"
+						IsEnabled="{Binding SelectedBibliographyEntryMap, Converter={StaticResource IsNotNullConverter}}"/>
+			</HorizontalStackLayout>
 
 			<Picker
 				Title="Entry Type"
