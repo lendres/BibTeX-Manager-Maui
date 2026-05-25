@@ -13,18 +13,18 @@ public partial class FieldMapViewModel : ObservableObject
 
 	#region Construction
 
-	public FieldMapViewModel()
+	public FieldMapViewModel(List<string> existingNames)
 	{
 		FieldNameMap	= new();
 		Title			= "Add Field Map";
-		Initialize();
+		Initialize(null, existingNames);
 	}
 
-	public FieldMapViewModel(FieldNameMap fieldMap)
+	public FieldMapViewModel(FieldNameMap fieldMap, List<string> existingNames)
     {
 		FieldNameMap	= fieldMap;
 		Title			= "Edit Field Map";
-		Initialize();
+		Initialize(fieldMap, existingNames);
 	}
 
 	#endregion
@@ -51,10 +51,10 @@ public partial class FieldMapViewModel : ObservableObject
 
 	#region Methods
 
-	private void Initialize()
+	private void Initialize(FieldNameMap? fieldMap, List<string> existingNames)
 	{
 		InitializeValues();
-		AddValidations();
+		AddValidations(fieldMap, existingNames);
 		ValidateSubmittable();
 	}
 
@@ -64,19 +64,25 @@ public partial class FieldMapViewModel : ObservableObject
 		ToName.Value	= FieldNameMap.To;
 	}
 
-	private void AddValidations()
+	private void AddValidations(FieldNameMap? fieldMap, List<string> existingNames)
 	{
 		FromName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A name is required." });
-		ValidateName();
+		FromName.Validations.Add(new IsNotDuplicateStringRule
+		{
+			ValidationMessage = "The value is already in use.",
+			Values = existingNames,
+			ExcludeValue = fieldMap?.From
+		});
+		ValidateFromName();
 
 		ToName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "An value is required." });
-		ValidateValue();
+		ValidateToName();
 	}
 
 	[RelayCommand]
-	private void ValidateName()
+	private void ValidateFromName()
 	{
-		if (FromName.Validate())
+		if (FromName.Validate() && FieldNameMap.From != FromName.Value)
 		{
 			FieldNameMap.From = FromName.Value ?? "";
 		}
@@ -84,9 +90,9 @@ public partial class FieldMapViewModel : ObservableObject
 	}
 
 	[RelayCommand]
-	private void ValidateValue()
+	private void ValidateToName()
 	{
-		if (ToName.Validate())
+		if (ToName.Validate() && FieldNameMap.To != ToName.Value)
 		{
 			FieldNameMap.To = ToName.Value ?? "";
 		}

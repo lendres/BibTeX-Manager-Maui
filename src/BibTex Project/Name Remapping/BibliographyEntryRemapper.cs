@@ -34,10 +34,18 @@ public class BibliographyEntryRemapper
 	/// </summary>
 	[XmlElement("maps")]
 	public SerializableDictionary<string, BibliographyEntryMap> Maps { get => _maps; set => _maps = value; }
-	
+
 	#endregion
 
 	#region Methods
+
+	public void Save()
+	{
+		foreach (KeyValuePair<string, BibliographyEntryMap> keyValuePair in _maps)
+		{
+			keyValuePair.Value.Save();
+		}
+	}
 
 	/// <summary>
 	/// Remap the type and field names in a BibEntry.
@@ -90,7 +98,9 @@ public class BibliographyEntryRemapper
 	/// <param name="path">The file to read from.</param>
 	public static BibliographyEntryRemapper? Deserialize(string path)
 	{
-		return Serialization.DeserializeObject<BibliographyEntryRemapper>(path);
+		BibliographyEntryRemapper? remapper = Serialization.DeserializeObject<BibliographyEntryRemapper>(path);
+		remapper?.Save();
+		return remapper;
 	}
 
 	#endregion

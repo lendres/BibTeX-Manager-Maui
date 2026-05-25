@@ -13,14 +13,16 @@ public partial class FieldNameMap : NotifyPropertyModifiedChanged
 
 	public FieldNameMap(string fromName, string toName)
 	{
-		From	= fromName;
-		To		= toName;
+		From		= fromName;
+		To			= toName;
+		Modified	= false;
 	}
 
 	public FieldNameMap(FieldNameMap other)
 	{
-		From	= other.From;
-		To		= other.To;
+		From		= other.From;
+		To			= other.To;
+		Modified	= false;
 	}
 
 	#endregion

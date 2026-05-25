@@ -17,7 +17,7 @@ public class BibliographyEntryMap : NotifyPropertyModifiedChanged
 	/// </summary>
 	public BibliographyEntryMap()
 	{
-		FieldNameMaps.CollectionChanged += OnChildModifiedChanged;
+		FieldNameMaps.CollectionChanged += OnCollectionModifiedChanged;
 	}
 
 	/// <summary>
@@ -28,6 +28,9 @@ public class BibliographyEntryMap : NotifyPropertyModifiedChanged
 		Name			= other.Name;
 		ToType			= other.ToType;
 		FieldNameMaps	= new ObservableCollection<FieldNameMap>(other.FieldNameMaps);
+
+		FieldNameMaps.CollectionChanged += OnCollectionModifiedChanged;
+		Modified = false;
 	}
 
 	#endregion
@@ -51,11 +54,22 @@ public class BibliographyEntryMap : NotifyPropertyModifiedChanged
 	[XmlArray("fieldmaps"), XmlArrayItem("fieldmap")]
 	public ObservableCollection<FieldNameMap> FieldNameMaps { get; set; } = new();
 
+	public List<string> InUseTypes { get => FieldNameMaps.Select(fieldNameMap => fieldNameMap.From).ToList(); }
+
 	#endregion
 
 	#region Methods
 
-	private void OnChildModifiedChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs eventArgs)
+	public override void Save()
+	{
+		foreach (FieldNameMap fieldNameMap in FieldNameMaps)
+		{
+			fieldNameMap.Save();
+		}
+		base.Save();
+	}
+
+	private void OnCollectionModifiedChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs eventArgs)
 	{
 		Modified = true;
 	}

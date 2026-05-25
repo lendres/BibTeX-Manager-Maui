@@ -11,6 +11,11 @@ public partial class NameMappingView : ContentPage
 		InitializeComponent();
 		ViewModel		= viewModel;
 		BindingContext	= viewModel;
+		
+		if (_bibliographyEntryMapPicker.SelectedIndex < 0 && _bibliographyEntryMapPicker.Items.Count > -1)
+		{
+			_bibliographyEntryMapPicker.SelectedIndex = 0;
+		}
 	}
 
 	private NameMappingViewModel ViewModel { get; set; }
@@ -39,32 +44,32 @@ public partial class NameMappingView : ContentPage
 		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
 
-	private async void OnNewEntry(object sender, EventArgs eventArgs)
+	private async void OnNewFieldMap(object sender, EventArgs eventArgs)
 	{
-		//BibEntryMapViewModel	viewModel	= new();
-		//BibEntryMapView			view		= new(viewModel);
-		//object? result = await Shell.Current.ShowPopupAsync(view);
+		FieldMapViewModel	viewModel	= new(ViewModel.SelectedBibliographyEntryMap!.InUseTypes);
+		FieldMapView		view		= new(viewModel);
+		object?				result		= await Shell.Current.ShowPopupAsync(view);
 
-		//if (result is bool boolResult && boolResult)
-		//{
-		//	ViewModel.Insert(viewModel.BibEntryMap);
-		//}
+		if (result is bool boolResult && boolResult)
+		{
+			ViewModel.Insert(viewModel.FieldNameMap);
+		}
 	}
 
-	private async void OnEditEntry(object sender, EventArgs eventArgs)
+	private async void OnEditFieldMap(object sender, EventArgs eventArgs)
 	{
-		//BibliographyEntryMap				bibEntryMap	= new(ViewModel.SelectedItem!);
-		//BibEntryMapViewModel	viewModel	= new(bibEntryMap);
-		//BibEntryMapView			view		= new(viewModel);
-		//object? result = await Shell.Current.ShowPopupAsync(view);
+		FieldNameMap		fieldNameMap	= new(ViewModel.SelectedItem!);
+		FieldMapViewModel	viewModel		= new(fieldNameMap, ViewModel.SelectedBibliographyEntryMap!.InUseTypes);
+		FieldMapView		view			= new(viewModel);
+		object?				result			= await Shell.Current.ShowPopupAsync(view);
 
-		//if (result is bool boolResult && boolResult)
-		//{
-		//	ViewModel.ReplaceSelected(viewModel.BibEntryMap);
-		//}
+		if (result is bool boolResult && boolResult)
+		{
+			ViewModel.ReplaceSelected(viewModel.FieldNameMap);
+		}
 	}
 
-	async void OnDelete(object sender, EventArgs eventArgs)
+	async void OnDeleteFieldMap(object sender, EventArgs eventArgs)
 	{
 		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 

@@ -69,10 +69,10 @@
 
 			<Grid StyleClass="DataGridEditStyle" Margin="0" Padding="0,20,0,0">
 				<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
-					<Button Text="Add" Clicked="OnNewEntry" StyleClass="SquareButtonStyle"/>
-					<Button Text="Edit" Clicked="OnEditEntry" StyleClass="SquareButtonStyle"
+					<Button Text="Add" Clicked="OnNewFieldMap" StyleClass="SquareButtonStyle"/>
+					<Button Text="Edit" Clicked="OnEditFieldMap" StyleClass="SquareButtonStyle"
 						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-					<Button Text="Delete" Command="{Binding DeleteCommand}" StyleClass="SquareButton"
+					<Button Text="Delete" Clicked="OnDeleteFieldMap" StyleClass="SquareButton"
 						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 				</HorizontalStackLayout>
 
