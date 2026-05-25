@@ -17,6 +17,28 @@ public partial class NameMappingView : ContentPage
 
 	#region Button Events
 
+	async private void OnSave(object? sender, EventArgs eventArgs)
+	{
+		ViewModel.Save();
+		Dictionary<string, object?> navigationParameter = new()
+		{
+			{ "NavigationCommand",  "Do Nothing" },
+			{ "NavigationObject",   null }
+		};
+		await Shell.Current.GoToAsync("../", true, navigationParameter);
+	}
+
+	private async void OnCancel(object sender, EventArgs eventArgs)
+	{
+		// Navigate back with a result.
+		Dictionary<string, object?> navigationParameter = new()
+		{
+			{ "NavigationCommand",  "Do Nothing" },
+			{ "NavigationObject",   null }
+		};
+		await Shell.Current.GoToAsync("../", true, navigationParameter);
+	}
+
 	private async void OnNewEntry(object sender, EventArgs eventArgs)
 	{
 		//BibEntryMapViewModel	viewModel	= new();
@@ -42,26 +64,14 @@ public partial class NameMappingView : ContentPage
 		//}
 	}
 
-	async private void OnSave(object? sender, EventArgs eventArgs)
+	async void OnDelete(object sender, EventArgs eventArgs)
 	{
-		ViewModel.Save();
-		Dictionary<string, object?> navigationParameter = new()
-		{
-			{ "NavigationCommand",  "Do Nothing" },
-			{ "NavigationObject",   null }
-		};
-		await Shell.Current.GoToAsync("../", true, navigationParameter);
-	}
+		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 
-	private async void OnCancel(object sender, EventArgs eventArgs)
-	{
-		// Navigate back with a result.
-		Dictionary<string, object?> navigationParameter = new()
+		if (result)
 		{
-			{ "NavigationCommand",  "Do Nothing" },
-			{ "NavigationObject",   null }
-		};
-		await Shell.Current.GoToAsync("../", true, navigationParameter);
+			ViewModel.Delete();
+		}
 	}
 
 	#endregion

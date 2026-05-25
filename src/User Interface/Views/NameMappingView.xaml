@@ -67,7 +67,7 @@
 
 
 
-			<Grid StyleClass="DataGridEditStyle" Margin="0" Padding="0">
+			<Grid StyleClass="DataGridEditStyle" Margin="0" Padding="0,20,0,0">
 				<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
 					<Button Text="Add" Clicked="OnNewEntry" StyleClass="SquareButtonStyle"/>
 					<Button Text="Edit" Clicked="OnEditEntry" StyleClass="SquareButtonStyle"
