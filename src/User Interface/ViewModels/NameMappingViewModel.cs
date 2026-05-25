@@ -22,6 +22,9 @@ public partial class NameMappingViewModel : DataGridBaseViewModel<BibEntryMap>
 	#region Properties
 
 	[ObservableProperty]
+	public partial List<string>? TranslationMatrices { get; set; }
+
+	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
 
 	#endregion

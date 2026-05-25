@@ -13,7 +13,7 @@
 	</ContentPage.Resources>
 
 	<Grid RowDefinitions="Auto,*" Margin="0" Padding="30" WidthRequest="800" VerticalOptions="Fill">
-		<!-- Settings label, save, and cancel buttons. -->
+		<!-- Title label, save, and cancel buttons. -->
 		<Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="*,250" HorizontalOptions="Fill" VerticalOptions="Start">
 
 			<Label Grid.Column="0" Text="Name Mapping" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
@@ -34,30 +34,43 @@
 			</HorizontalStackLayout>
 		</Grid>
 
-		<Grid StyleClass="DataGridEditStyle">
-			<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
-				<Button Text="Add" Clicked="OnNewEntry" StyleClass="SquareButtonStyle"/>
-				<Button Text="Edit" Clicked="OnEditEntry" StyleClass="SquareButton"
-				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-				<Button Text="Delete" Command="{Binding DeleteCommand}" StyleClass="SquareButton"
-				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
-			</HorizontalStackLayout>
+		<VerticalStackLayout Grid.Row="1" Spacing="10" VerticalOptions="Fill">
 
-			<dg:DataGrid
-			Grid.Row="1"
-			Style="{DynamicResource DataGridDefaultLooseStyle}"
-			ItemsSource="{Binding Items}"
-			SelectionMode="{Binding SelectionMode}"
-			SelectedItem="{Binding SelectedItem}"
-			RowTappedCommand="{Binding TappedCommand}"
-			PaginationEnabled="false">
-				<dg:DataGrid.Columns>
-					<dg:DataGridColumn Title="Name" PropertyName="Name" Width="0.4*" SortingEnabled="true"
-					CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
-					<dg:DataGridColumn Title="To Type" PropertyName="ToType" Width="0.4*" SortingEnabled="true"
-					CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
-				</dg:DataGrid.Columns>
-			</dg:DataGrid>
-		</Grid>
+
+
+
+			<Grid StyleClass="DataGridEditStyle">
+				<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
+					<Button Text="Add" Clicked="OnNewEntry" StyleClass="SquareButtonStyle"/>
+					<Button Text="Edit" Clicked="OnEditEntry" StyleClass="SquareButtonStyle"
+						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+					<Button Text="Delete" Command="{Binding DeleteCommand}" StyleClass="SquareButton"
+						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+				</HorizontalStackLayout>
+
+
+				<dg:DataGrid
+					Grid.Row="1"
+					x:Name="_dataGrid"
+					Style="{DynamicResource DataGridDefaultLooseStyle}"
+					ItemsSource="{Binding Items, Mode=TwoWay}" SelectionMode="{Binding SelectionMode}"
+					SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
+					RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
+					PaginationEnabled="false"
+					RowTappedCommand="{Binding TappedCommand}"
+					IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
+
+					<dg:DataGrid.Columns>
+						<dg:DataGridColumn Title="From Name" PropertyName="FromName" Width="0.5*"
+								CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+						<dg:DataGridColumn Title="To Name" PropertyName="ToName" Width="0.5*"
+								CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+					</dg:DataGrid.Columns>
+
+				</dg:DataGrid>
+
+
+			</Grid>
+		</VerticalStackLayout>
 	</Grid>
 </ContentPage>

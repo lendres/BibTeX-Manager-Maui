@@ -21,7 +21,7 @@ public partial class BibEntryMapViewModel : ObservableObject
 
 		foreach (KeyValuePair<string, string> fieldNameMap in BibEntryMap.FieldNameMaps)
 		{
-			FieldNameMaps.Add(new FieldNameMapViewModel(fieldNameMap.Key, fieldNameMap.Value));
+			FieldNameMaps.Add(new FieldNameMap(fieldNameMap.Key, fieldNameMap.Value));
 		}
 	}
 
@@ -33,11 +33,11 @@ public partial class BibEntryMapViewModel : ObservableObject
 	public partial string								Title { get; set; }
 
 	[ObservableProperty]
-	public partial FieldNameMapViewModel?				SelectedFieldNameMap { get; set; }
+	public partial FieldNameMap?				SelectedFieldNameMap { get; set; }
 
 	public BibEntryMap									BibEntryMap { get; }
 
-	public ObservableCollection<FieldNameMapViewModel>	FieldNameMaps { get; } = [];
+	public ObservableCollection<FieldNameMap>	FieldNameMaps { get; } = [];
 
 	#region Properties
 
@@ -51,7 +51,7 @@ public partial class BibEntryMapViewModel : ObservableObject
 	[RelayCommand]
 	private void AddFieldNameMap()
 	{
-		FieldNameMaps.Add(new FieldNameMapViewModel());
+		FieldNameMaps.Add(new FieldNameMap());
 	}
 
 	[RelayCommand]
@@ -67,7 +67,7 @@ public partial class BibEntryMapViewModel : ObservableObject
 	{
 		BibEntryMap.FieldNameMaps.Clear();
 
-		foreach (FieldNameMapViewModel fieldNameMap in FieldNameMaps)
+		foreach (FieldNameMap fieldNameMap in FieldNameMaps)
 		{
 			if (!string.IsNullOrWhiteSpace(fieldNameMap.FromName))
 			{

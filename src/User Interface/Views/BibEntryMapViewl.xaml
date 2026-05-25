@@ -35,9 +35,9 @@
 						StyleClass="SquareButtonStyle"/>
 
 						<Button
-						Text="Delete Field Map"
-						Command="{Binding DeleteFieldNameMapCommand}"
-						StyleClass="SquareButtonStyle"/>
+							Text="Delete Field Map"
+							Command="{Binding DeleteFieldNameMapCommand}"
+							StyleClass="SquareButtonStyle"/>
 
 					</HorizontalStackLayout>
 

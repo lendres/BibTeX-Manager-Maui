@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class FieldNameMapViewModel : ObservableObject
+public partial class FieldNameMap
 {
 	#region Construction
 
-	public FieldNameMapViewModel()
+	public FieldNameMap()
 	{
 	}
 
-	public FieldNameMapViewModel(string fromName, string toName)
+	public FieldNameMap(string fromName, string toName)
 	{
 		FromName = fromName;
 		ToName = toName;
@@ -25,11 +25,9 @@ public partial class FieldNameMapViewModel : ObservableObject
 
 	#region Properties
 
-	[ObservableProperty]
-	public partial string FromName { get; set; } = "";
+	public string FromName { get; set; } = "";
 
-	[ObservableProperty]
-	public partial string ToName { get; set; } = "";
+	public string ToName { get; set; } = "";
 
 	#endregion
 }
