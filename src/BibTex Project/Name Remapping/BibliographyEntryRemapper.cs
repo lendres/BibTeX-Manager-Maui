@@ -46,10 +46,9 @@ public class BibliographyEntryRemapper
 	/// <param name="mapName">Name of the map to use.</param>
 	public void RemapEntryNames(BibEntry entry)
 	{
-		if (_maps.ContainsKey(entry.Type.ToLower()))
+		if (_maps.TryGetValue(entry.Type.ToLower(), out BibliographyEntryMap? map))
 		{
-			BibliographyEntryMap map = _maps[entry.Type.ToLower()];
-			entry.Type		= map.ToType;
+			entry.Type = map.ToType;
 
 			// Getting the field names is a little expensive, so just do it once, outside of the loop.
 			List<string> fieldNames = entry.FieldNames;
