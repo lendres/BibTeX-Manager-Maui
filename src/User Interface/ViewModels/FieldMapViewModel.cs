@@ -15,16 +15,16 @@ public partial class FieldMapViewModel : ObservableObject
 
 	public FieldMapViewModel()
 	{
-		FieldNameMap			= new();
-		Title					= "Add Field Map";
-		Initialize(null);
+		FieldNameMap	= new();
+		Title			= "Add Field Map";
+		Initialize();
 	}
 
 	public FieldMapViewModel(FieldNameMap fieldMap)
     {
-		FieldNameMap			= fieldMap;
-		Title					= "Edit Field Map";
-		Initialize(fieldMap);
+		FieldNameMap	= fieldMap;
+		Title			= "Edit Field Map";
+		Initialize();
 	}
 
 	#endregion
