@@ -46,7 +46,14 @@ public partial class NameMappingView : ContentPage
 
 	private async void OnNewBibliographyEntryMap(object sender, EventArgs eventArgs)
 	{
+		GetNameViewModel	viewModel	= new(ViewModel.BibliographyEntryTypes!);
+		GetNameView			view		= new(viewModel);
+		object?				result		= await Shell.Current.ShowPopupAsync(view);
 
+		if (result is bool boolResult && boolResult)
+		{
+			// TODO: Add new BibliographyEntryMap to the NameMapper and update the BibliographyEntryTypes and SelectedType properties.
+		}
 	}
 
 	private async void OnRenameBibliographyEntryMap(object sender, EventArgs eventArgs)

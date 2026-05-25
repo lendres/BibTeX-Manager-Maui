@@ -58,18 +58,6 @@ public partial class NameMappingViewModel : DataGridBaseViewModel<FieldNameMap>
 
 	#endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
 	/// <summary>
 	/// Searches.
 	/// </summary>
