@@ -1,28 +1,38 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using DigitalProduction.Maui.Validation;
 
 namespace BibTeXManager.ViewModels;
 
 public partial class BibEntryMapViewModel : ObservableObject
 {
+	#region Fields
+
+	private readonly string					_previousName						= "";
+	private readonly List<string>			_existingNames;
+
+	#endregion
+
 	#region Construction
 
-	public BibEntryMapViewModel()
+	public BibEntryMapViewModel(List<string> existingNames)
 	{
 		BibEntryMap = new();
 		Title = "Add BibEntry Name Map";
+		_existingNames = existingNames;
+		Initialize();
 	}
 
-	public BibEntryMapViewModel(BibliographyEntryMap bibEntryMap)
+	public BibEntryMapViewModel(BibliographyEntryMap bibEntryMap, List<string> existingNames)
 	{
 		BibEntryMap = bibEntryMap;
 		Title = "Edit BibEntry Name Map";
 
-		foreach (FieldNameMap fieldNameMap in BibEntryMap.FieldNameMaps)
-		{
-			FieldNameMaps.Add(new FieldNameMap(fieldNameMap));
-		}
+		_previousName = bibEntryMap.Name;
+		_existingNames = existingNames;
+		Initialize();
+
 	}
 
 	#endregion
@@ -33,46 +43,54 @@ public partial class BibEntryMapViewModel : ObservableObject
 	public partial string								Title { get; set; }
 
 	[ObservableProperty]
+	public partial ValidatableObject<string>			Name  { get; set; }				= new();
+
+	[ObservableProperty]
 	public partial FieldNameMap?				SelectedFieldNameMap { get; set; }
 
 	public BibliographyEntryMap									BibEntryMap { get; }
 
 	public ObservableCollection<FieldNameMap>	FieldNameMaps { get; } = [];
 
-	#region Properties
-
 	[ObservableProperty]
 	public partial bool									IsSubmittable { get; set; }
 
 	#endregion
 
-	#endregion
+	private void Initialize()
+	{
+		InitializeValues();
+		AddValidations();
+		ValidateSubmittable();
+	}
+
+	private void InitializeValues()
+	{
+		Name.Value = BibEntryMap.Name;
+	}
+
+	private void AddValidations()
+	{
+		Name.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A name is required." });
+		Name.Validations.Add(new IsNotDuplicateStringRule
+		{
+			ValidationMessage = "The value is already in use.",
+			Values = _existingNames,
+			ExcludeValue = _previousName
+		});
+		ValidateName();
+	}
 
 	[RelayCommand]
-	private void AddFieldNameMap()
+	private void ValidateName()
 	{
-		FieldNameMaps.Add(new FieldNameMap());
-	}
-
-	[RelayCommand]
-	private void DeleteFieldNameMap()
-	{
-		if (SelectedFieldNameMap != null)
+		if (Name.Validate())
 		{
-			FieldNameMaps.Remove(SelectedFieldNameMap);
+			BibEntryMap.Name = Name.Value ?? "";
 		}
+		ValidateSubmittable();
 	}
 
-	public void Save()
-	{
-		BibEntryMap.FieldNameMaps.Clear();
+	public bool ValidateSubmittable() => IsSubmittable = Name.IsValid;
 
-		foreach (FieldNameMap fieldNameMap in FieldNameMaps)
-		{
-			if (!string.IsNullOrWhiteSpace(fieldNameMap.From))
-			{
-				//BibEntryMap.FieldNameMaps[fieldNameMap.From] = fieldNameMap.To;
-			}
-		}
-	}
 }

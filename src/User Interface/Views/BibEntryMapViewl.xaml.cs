@@ -13,7 +13,6 @@ public partial class BibEntryMapView : PopupView
 
 	protected override void OnSaveButtonClicked(object? sender, EventArgs eventArgs)
 	{
-		((BibEntryMapViewModel)BindingContext).Save();
 		base.OnSaveButtonClicked(sender, eventArgs);
 	}
 }

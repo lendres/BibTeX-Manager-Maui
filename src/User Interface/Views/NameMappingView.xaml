@@ -2,6 +2,7 @@
 <ContentPage
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
 	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
 	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
@@ -34,12 +35,39 @@
 			</HorizontalStackLayout>
 		</Grid>
 
-		<VerticalStackLayout Grid.Row="1" Spacing="10" VerticalOptions="Fill">
+		<VerticalStackLayout Grid.Row="1" Spacing="10" VerticalOptions="Fill" Padding="0" Margin="0,30,0,0">
+
+			<Picker
+				Title="Entry Type"
+				x:Name="_bibliographyEntryMapPicker"
+				ItemsSource="{Binding BibliographyEntryTypes}"
+				SelectedItem="{Binding SelectedType}">
+				<Picker.Behaviors>
+					<mct:EventToCommandBehavior
+                        x:TypeArguments="system:EventArgs"
+                        Command="{Binding SelectedMappingChangedCommand}"
+                        BindingContext="{Binding Path=BindingContext, Source={x:Reference _bibliographyEntryMapPicker}, x:DataType=Picker}"
+                        EventName="SelectedIndexChanged"/>
+				</Picker.Behaviors>
+			</Picker>
+
+			<!-- To Type -->
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="To Type" StyleClass="ControlLabel"/>
+				<Entry Text="{Binding SelectedBibliographyEntryMap.ToType}"/>
+			</VerticalStackLayout>
+
+			<!-- Name -->
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="Name" StyleClass="ControlLabel"/>
+				<Entry Text="{Binding SelectedBibliographyEntryMap.Name}"/>
+			</VerticalStackLayout>
 
 
 
 
-			<Grid StyleClass="DataGridEditStyle">
+
+			<Grid StyleClass="DataGridEditStyle" Margin="0" Padding="0">
 				<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
 					<Button Text="Add" Clicked="OnNewEntry" StyleClass="SquareButtonStyle"/>
 					<Button Text="Edit" Clicked="OnEditEntry" StyleClass="SquareButtonStyle"
@@ -61,9 +89,9 @@
 					IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
 
 					<dg:DataGrid.Columns>
-						<dg:DataGridColumn Title="From Name" PropertyName="FromName" Width="0.5*"
+						<dg:DataGridColumn Title="From Name" PropertyName="From" Width="0.5*"
 								CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
-						<dg:DataGridColumn Title="To Name" PropertyName="ToName" Width="0.5*"
+						<dg:DataGridColumn Title="To Name" PropertyName="To" Width="0.5*"
 								CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
 					</dg:DataGrid.Columns>
 

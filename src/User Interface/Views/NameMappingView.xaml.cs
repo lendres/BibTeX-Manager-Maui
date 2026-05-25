@@ -19,27 +19,27 @@ public partial class NameMappingView : ContentPage
 
 	private async void OnNewEntry(object sender, EventArgs eventArgs)
 	{
-		BibEntryMapViewModel	viewModel	= new();
-		BibEntryMapView			view		= new(viewModel);
-		object? result = await Shell.Current.ShowPopupAsync(view);
+		//BibEntryMapViewModel	viewModel	= new();
+		//BibEntryMapView			view		= new(viewModel);
+		//object? result = await Shell.Current.ShowPopupAsync(view);
 
-		if (result is bool boolResult && boolResult)
-		{
-			ViewModel.Insert(viewModel.BibEntryMap);
-		}
+		//if (result is bool boolResult && boolResult)
+		//{
+		//	ViewModel.Insert(viewModel.BibEntryMap);
+		//}
 	}
 
 	private async void OnEditEntry(object sender, EventArgs eventArgs)
 	{
-		BibliographyEntryMap				bibEntryMap	= new(ViewModel.SelectedItem!);
-		BibEntryMapViewModel	viewModel	= new(bibEntryMap);
-		BibEntryMapView			view		= new(viewModel);
-		object? result = await Shell.Current.ShowPopupAsync(view);
+		//BibliographyEntryMap				bibEntryMap	= new(ViewModel.SelectedItem!);
+		//BibEntryMapViewModel	viewModel	= new(bibEntryMap);
+		//BibEntryMapView			view		= new(viewModel);
+		//object? result = await Shell.Current.ShowPopupAsync(view);
 
-		if (result is bool boolResult && boolResult)
-		{
-			ViewModel.ReplaceSelected(viewModel.BibEntryMap);
-		}
+		//if (result is bool boolResult && boolResult)
+		//{
+		//	ViewModel.ReplaceSelected(viewModel.BibEntryMap);
+		//}
 	}
 
 	async private void OnSave(object? sender, EventArgs eventArgs)
