@@ -81,37 +81,37 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="Views\FieldMapView.xaml">
+		<MauiXaml Update="Views\Name Mapping\FieldMapView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\GetNameView.xaml">
+		<MauiXaml Update="Views\Name Mapping\GetNameView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\NameMappingView.xaml">
+		<MauiXaml Update="Views\Name Mapping\NameMappingView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\HeaderView.xaml">
+		<MauiXaml Update="Views\Main\HeaderView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\BibliographyEditView.xaml">
+		<MauiXaml Update="Views\Main\Bibliography Entries\BibliographyEditView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\StringsEditView.xaml">
+		<MauiXaml Update="Views\Main\String Entries\StringsEditView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\StringEditView.xaml">
+		<MauiXaml Update="Views\Main\String Entries\StringEditView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\SettingsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\EditRawBibEntryForm.xaml">
+		<MauiXaml Update="Views\Main\Bibliography Entries\EditRawBibEntryForm.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\CorrectionView.xaml">
+		<MauiXaml Update="Views\Main\Bibliography Entries\CorrectionView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\TemplateSelectionView.xaml">
+		<MauiXaml Update="Views\Main\Bibliography Entries\TemplateSelectionView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 	</ItemGroup>
@@ -121,37 +121,37 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Views\GetNameView.xaml.cs">
+		<Compile Update="Views\Name Mapping\GetNameView.xaml.cs">
 		  <DependentUpon>GetNameView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\FieldMapView.xaml.cs">
+		<Compile Update="Views\Name Mapping\FieldMapView.xaml.cs">
 		  <DependentUpon>FieldMapView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\NameMappingView.xaml.cs">
+		<Compile Update="Views\Name Mapping\NameMappingView.xaml.cs">
 		  <DependentUpon>NameMappingView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\HeaderView.xaml.cs">
+		<Compile Update="Views\Main\HeaderView.xaml.cs">
 		  <DependentUpon>HeaderView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\BibliographyEditView.xaml.cs">
+		<Compile Update="Views\Main\Bibliography Entries\BibliographyEditView.xaml.cs">
 		  <DependentUpon>BibliographyEditView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\CorrectionView.xaml.cs">
+		<Compile Update="Views\Main\Bibliography Entries\CorrectionView.xaml.cs">
 		  <DependentUpon>CorrectionView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\MainView.xaml.cs">
+		<Compile Update="Views\Main\MainView.xaml.cs">
 		  <DependentUpon>MainView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\SettingsView.xaml.cs">
 		  <DependentUpon>SettingsView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\StringsEditView.xaml.cs">
+		<Compile Update="Views\Main\String Entries\StringsEditView.xaml.cs">
 		  <DependentUpon>StringsEditView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\StringEditView.xaml.cs">
+		<Compile Update="Views\Main\String Entries\StringEditView.xaml.cs">
 		  <DependentUpon>StringEditView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\TemplateSelectionView.xaml.cs">
+		<Compile Update="Views\Main\Bibliography Entries\TemplateSelectionView.xaml.cs">
 			<DependentUpon>TemplateSelectionView.xaml</DependentUpon>
 		</Compile>
 	</ItemGroup>
