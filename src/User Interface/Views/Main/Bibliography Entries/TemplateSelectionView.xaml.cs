@@ -9,6 +9,6 @@ public partial class TemplateSelectionView : PopupView
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-		TemplatePicker.SelectedIndex = 0;
+		_typePicker.SelectedIndex = 0;
 	}
 }
