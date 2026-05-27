@@ -128,9 +128,8 @@
 					</dg:DataGrid.Columns>
 
 				</dg:DataGrid>
-
-
 			</Grid>
+			
 		</VerticalStackLayout>
 	</Grid>
 </ContentPage>

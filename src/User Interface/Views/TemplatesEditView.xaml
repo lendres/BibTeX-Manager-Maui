@@ -6,6 +6,7 @@
 	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
 	xmlns:enums="clr-namespace:BibTeXManager.Enums"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
@@ -66,12 +67,41 @@
 		<ScrollView Grid.Row="2" VerticalScrollBarVisibility="Always" Padding="0" Margin="0,30,0,0">
 			<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
             <VerticalStackLayout Padding="0,0,20,0">
+				
+				
+				<Grid StyleClass="DataGridEditStyle" Margin="0" Padding="0">
+					<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
+						<Button Text="Add" Clicked="OnNewNameMap" StyleClass="SquareButtonStyle"/>
+						<Button Text="Edit" Clicked="OnEditNameMap" StyleClass="SquareButtonStyle"
+						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+						<Button Text="Delete" Clicked="OnDeleteNameMap" StyleClass="SquareButton"
+						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+					</HorizontalStackLayout>
 
+					<dg:DataGrid
+					Grid.Row="1"
+					x:Name="_dataGrid"
+					Style="{DynamicResource DataGridDefaultLooseStyle}"
+					ItemsSource="{Binding Items, Mode=TwoWay}" SelectionMode="{Binding SelectionMode}"
+					SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
+					RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
+					PaginationEnabled="false"
+					RowTappedCommand="{Binding TappedCommand}"
+					IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
 
+						<dg:DataGrid.Columns>
+							<dg:DataGridColumn Title="From Name" PropertyName="From" Width="0.5*"
+								CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+							<dg:DataGridColumn Title="To Name" PropertyName="To" Width="0.5*"
+								CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+						</dg:DataGrid.Columns>
+					</dg:DataGrid>
+				</Grid>
 
-
-            </VerticalStackLayout>
+			</VerticalStackLayout>
         </ScrollView>
+		
+		
 
     </Grid>
 </ContentPage>

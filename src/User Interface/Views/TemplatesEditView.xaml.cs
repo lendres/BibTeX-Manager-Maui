@@ -1,4 +1,6 @@
+using BibTeXLibrary;
 using BibTeXManager.ViewModels;
+using CommunityToolkit.Maui.Views;
 
 namespace BibTeXManager.Views;
 
@@ -36,4 +38,43 @@ public partial class TemplatesEditView : ContentPage
 		};
 		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
+
+	#region Button Events
+
+	private async void OnNewNameMap(object sender, EventArgs eventArgs)
+	{
+		FieldMapViewModel viewModel = new(_viewModel.Initializer.TypeNames);
+		FieldMapView view = new(viewModel);
+		object? result = await Shell.Current.ShowPopupAsync(view);
+
+		if (result is bool boolResult && boolResult)
+		{
+			_viewModel.Insert(viewModel.FieldNameMap);
+		}
+	}
+
+	private async void OnEditNameMap(object sender, EventArgs eventArgs)
+	{
+		NameMap nameMap = new(_viewModel.SelectedItem!);
+		FieldMapViewModel viewModel = new(nameMap, _viewModel.Initializer.TypeNames);
+		FieldMapView view = new(viewModel);
+		object? result = await Shell.Current.ShowPopupAsync(view);
+
+		if (result is bool boolResult && boolResult)
+		{
+			_viewModel.ReplaceSelected(viewModel.FieldNameMap);
+		}
+	}
+
+	async void OnDeleteNameMap(object sender, EventArgs eventArgs)
+	{
+		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+
+		if (result)
+		{
+			_viewModel.Delete();
+		}
+	}
+
+	#endregion
 }

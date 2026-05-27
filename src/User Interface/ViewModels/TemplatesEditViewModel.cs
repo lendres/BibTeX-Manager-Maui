@@ -1,10 +1,14 @@
-﻿using BibTeXManager.Enums;
+﻿using BibTeXLibrary;
+using BibTeXManager.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DigitalProduction.Maui.Enums;
+using DigitalProduction.Maui.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class TemplatesEditViewModel : ObservableObject
+public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 {
 	#region Fields
 	#endregion
@@ -13,6 +17,7 @@ public partial class TemplatesEditViewModel : ObservableObject
 
 	public TemplatesEditViewModel()
 	{
+		Initializer = BibTeXProject.Instance!.BibEntryInitialization;
 		Initialize();
 		AddValidations();
 		SetModified(false);
@@ -22,7 +27,7 @@ public partial class TemplatesEditViewModel : ObservableObject
 
 	#region Properties
 
-	private bool								Modified  { get; set; }
+	public BibEntryInitialization				Initializer { get; set; }
 
 	[ObservableProperty]
 	public partial InitializationPartType		ActiveInitializationPart { get; set; }
@@ -36,6 +41,7 @@ public partial class TemplatesEditViewModel : ObservableObject
 
 	private void Initialize()
 	{
+		Items = new ObservableCollection<NameMap>(Initializer.NameMaps);
 	}
 
 	#endregion
@@ -79,6 +85,11 @@ public partial class TemplatesEditViewModel : ObservableObject
 
 	public void Save()
 	{
+	}
+
+	public override SearchResult Find(string search)
+	{
+		throw new NotImplementedException();
 	}
 
 	#endregion
