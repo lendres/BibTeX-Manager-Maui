@@ -69,7 +69,8 @@
             <VerticalStackLayout Padding="0,0,20,0">
 				
 				
-				<Grid StyleClass="DataGridEditStyle" Margin="0" Padding="0">
+				<Grid StyleClass="DataGridEditStyle" Margin="0" Padding="0"
+					  IsVisible="{Binding ActiveInitializationPart, Converter={StaticResource PartView}, ConverterParameter={x:Static enums:InitializationPartType.TypeMaps}}">
 					<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
 						<Button Text="Add" Clicked="OnNewNameMap" StyleClass="SquareButtonStyle"/>
 						<Button Text="Edit" Clicked="OnEditNameMap" StyleClass="SquareButtonStyle"
