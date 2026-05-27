@@ -1,4 +1,5 @@
-﻿using BibTeXManager;
+﻿using BibTeXLibrary;
+using BibTeXManager;
 
 using System.Xml.Serialization;
 

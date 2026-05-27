@@ -2,58 +2,58 @@
 <bibentryinitialization xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <typetotemplatemappings>
         <item key="article">
-            <value>article</value>
+            <value from="article" to="article"/>
         </item>
         <item key="book">
-            <value>basic</value>
+            <value from="book" to="basic"/>
         </item>
         <item key="booklet">
-            <value>basic</value>
+            <value from="booklet" to="basic"/>
         </item>
         <item key="conference">
-            <value>basic</value>
+            <value from="conference" to="basic"/>
         </item>
         <item key="inbook">
-            <value>basic</value>
+            <value from="inbook" to="basic"/>
         </item>
         <item key="incollection">
-            <value>inproceedings</value>
+            <value from="incollection" to="inproceedings"/>
         </item>
         <item key="inproceedings">
-            <value>inproceedings</value>
+            <value from="inproceedings" to="inproceedings"/>
         </item>
         <item key="mastersthesis">
-            <value>thesis</value>
+            <value from="mastersthesis" to="thesis"/>
         </item>
         <item key="misc">
-            <value>basic</value>
+            <value from="misc" to="basic"/>
         </item>
         <item key="patent">
-            <value>patent</value>
+            <value from="patent" to="patent"/>
         </item>
         <item key="phdthesis">
-            <value>thesis</value>
+            <value from="phdthesis" to="thesis"/>
         </item>
         <item key="manual">
-            <value>manual</value>
+            <value from="manual" to="manual"/>
         </item>
         <item key="proceedings">
-            <value>inproceedings</value>
+            <value from="proceedings" to="inproceedings"/>
         </item>
         <item key="software">
-            <value>software</value>
+            <value from="software" to="software"/>
         </item>
         <item key="techreport">
-            <value>techreport</value>
+            <value from="techreport" to="techreport"/>
         </item>
         <item key="thesis">
-            <value>thesis</value>
+            <value from="thesis" to="thesis"/>
         </item>
         <item key="unpublished">
-            <value>basic</value>
+            <value from="unpublished" to="basic"/>
         </item>
         <item key="webref">
-            <value>webref</value>
+            <value from="webref" to="webref"/>
         </item>
     </typetotemplatemappings>
     <templates>

@@ -1,4 +1,5 @@
-﻿using DigitalProduction.ComponentModel;
+﻿using BibTeXLibrary;
+using DigitalProduction.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 
