@@ -52,13 +52,20 @@ public partial class NameMappingView : ContentPage
 
 		if (result is bool boolResult && boolResult)
 		{
-			// TODO: Add new BibliographyEntryMap to the NameMapper and update the BibliographyEntryTypes and SelectedType properties.
+			ViewModel.NewBibliographyEntryMap(viewModel.Name);
 		}
 	}
 
 	private async void OnRenameBibliographyEntryMap(object sender, EventArgs eventArgs)
 	{
+		GetNameViewModel	viewModel	= new(ViewModel.SelectedType!, ViewModel.BibliographyEntryTypes!);
+		GetNameView			view		= new(viewModel);
+		object?				result		= await Shell.Current.ShowPopupAsync(view);
 
+		if (result is bool boolResult && boolResult)
+		{
+			ViewModel.RenameBibliographyEntryMap(ViewModel.SelectedType!, viewModel.Name);
+		}
 	}
 
 	private async void OnDeleteBibliographyEntryMap(object sender, EventArgs eventArgs)
@@ -67,7 +74,7 @@ public partial class NameMappingView : ContentPage
 
 		if (result)
 		{
-			//ViewModel.Delete();
+			ViewModel.DeleteBibliographyEntryMap(ViewModel.SelectedType!);
 		}
 	}
 

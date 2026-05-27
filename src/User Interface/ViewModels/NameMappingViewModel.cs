@@ -16,7 +16,7 @@ public partial class NameMappingViewModel : DataGridBaseViewModel<FieldNameMap>
 	public NameMappingViewModel()
 	{
 		NameMapper = BibTeXProject.Instance!.NameRemapper;
-				
+		Initialize();
 	}
 
 	#endregion
@@ -35,7 +35,58 @@ public partial class NameMappingViewModel : DataGridBaseViewModel<FieldNameMap>
 	public partial BibliographyEntryMap?		SelectedBibliographyEntryMap { get; set; }
 
 	[ObservableProperty]
+	public partial ValidatableObject<string>	ToType  { get; set; } = new();
+
+	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
+
+	#endregion
+
+
+	#region Initialization and Validation
+
+	private void Initialize()
+	{
+		AddValidations();
+		ValidateSubmittable();
+	}
+
+	private void AddValidations()
+	{
+		ToType.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A name is required." });
+		ValidateToType();
+	}
+
+	[RelayCommand]
+	private void ValidateToType()
+	{
+		if (ToType.Validate())
+		{
+			if (SelectedBibliographyEntryMap != null)
+			{
+				SelectedBibliographyEntryMap.ToType = ToType.Value!;
+			}
+		}
+		ValidateSubmittable();
+	}
+
+	public bool ValidateSubmittable() => IsSubmittable = Modified && ToType.IsValid;
+
+	#endregion
+
+	#region Events
+
+	partial void OnSelectedBibliographyEntryMapChanged(BibliographyEntryMap? oldValue, BibliographyEntryMap? newValue)
+	{
+		oldValue?.ModifiedChanged -= OnMapModifiedChanged;
+		newValue?.ModifiedChanged += OnMapModifiedChanged;
+	}
+
+	private void OnMapModifiedChanged(object sender, bool modified)
+	{
+		Modified = true;
+		ValidateSubmittable();
+	}
 
 	#endregion
 
@@ -44,19 +95,66 @@ public partial class NameMappingViewModel : DataGridBaseViewModel<FieldNameMap>
 	[RelayCommand]
 	private void SelectedMappingChanged()
 	{
-		SelectedBibliographyEntryMap = NameMapper.Maps.TryGetValue(SelectedType!, out BibliographyEntryMap? map) ? map : null;
+		if (SelectedType == null)
+		{
+			SelectedBibliographyEntryMap	= null;
+			Items							= null;
+			SelectedItem					= null;
+			return;
+		}
+
+		SelectedBibliographyEntryMap = NameMapper.Maps.TryGetValue(SelectedType, out BibliographyEntryMap? map) ? map : null;
 		if (SelectedBibliographyEntryMap != null)
 		{
 			Items = NameMapper.Maps[SelectedType!].FieldNameMaps;
+			ToType.Value = SelectedBibliographyEntryMap.ToType;
 		}
 		else
 		{
+			// DataGrid selected item.
 			SelectedItem = null;
 		}
 
 	}
 
 	#endregion
+
+	#region Methods
+
+	public void NewBibliographyEntryMap(string bibliographyEntryType)
+	{
+		BibliographyEntryMap newMap = new();
+		NameMapper.Maps[bibliographyEntryType.ToLower()] = newMap;
+		BibliographyEntryTypes = NameMapper.Maps.Keys.ToList();
+		SelectedType = bibliographyEntryType;
+		SetModified(true);
+	}
+
+	public void RenameBibliographyEntryMap(string oldBibliographyEntryType, string newBibliographyEntryType)
+	{
+		if (NameMapper.Maps.TryGetValue(oldBibliographyEntryType.ToLower(), out BibliographyEntryMap? map))
+		{
+			NameMapper.Maps.Remove(oldBibliographyEntryType.ToLower());
+			NameMapper.Maps[newBibliographyEntryType.ToLower()] = map;
+		}
+		BibliographyEntryTypes = NameMapper.Maps.Keys.ToList();
+		SelectedType = newBibliographyEntryType;
+		SetModified(true);
+	}
+
+	public void DeleteBibliographyEntryMap(string bibliographyEntryType)
+	{
+		NameMapper.Maps.Remove(bibliographyEntryType.ToLower());
+		BibliographyEntryTypes = NameMapper.Maps.Keys.ToList();
+		SelectedType = BibliographyEntryTypes.FirstOrDefault();
+		SetModified(true);
+	}
+
+	public void Save()
+	{
+		NameMapper.Serialize();
+		SetModified(false);
+	}
 
 	/// <summary>
 	/// Searches.
@@ -68,8 +166,11 @@ public partial class NameMappingViewModel : DataGridBaseViewModel<FieldNameMap>
 		return SearchResult.NoItemsFound;
 	}
 
-	public void Save()
+	private void SetModified(bool modified)
 	{
-		// TODO: Save to file.
+		Modified = modified;
+		ValidateSubmittable();
 	}
+
+	#endregion
 }

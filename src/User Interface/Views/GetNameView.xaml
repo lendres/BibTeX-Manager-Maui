@@ -27,8 +27,8 @@
 				<Entry
 					x:Name="_bibliographyEntryMapNameEntry"
 					Placeholder="Name"
-					Text="{Binding Name.Value}"
-					HorizontalOptions="Fill">
+					Text="{Binding NameValidator.Value}"
+					Loaded="OnLoadedSetFocus">
 					<Entry.Behaviors>
 						<mct:EventToCommandBehavior
 							x:TypeArguments="system:EventArgs"
@@ -37,7 +37,7 @@
 							EventName="TextChanged"/>
 					</Entry.Behaviors>
 				</Entry>
-				<Label Text="{Binding Name.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+				<Label Text="{Binding NameValidator.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
 			</VerticalStackLayout>
 				
 

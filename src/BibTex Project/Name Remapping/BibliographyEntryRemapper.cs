@@ -12,6 +12,7 @@ public class BibliographyEntryRemapper
 {
 	#region Fields
 
+	private string														_path		= string.Empty;
 	private SerializableDictionary<string, BibliographyEntryMap>		_maps		= new SerializableDictionary<string, BibliographyEntryMap>();
 
 	#endregion
@@ -77,6 +78,15 @@ public class BibliographyEntryRemapper
 	#region XML
 
 	/// <summary>
+	/// Write this object to a file to the default path (where it was deserialized from).
+	/// </summary>
+	/// <exception cref="InvalidOperationException">Thrown when the projects path is not valid.</exception>
+	public void Serialize()
+	{
+		Serialize(_path);
+	}
+
+	/// <summary>
 	/// Write this object to a file to the provided path.
 	/// </summary>
 	/// <param name="path">Path (full path and filename) to write to.</param>
@@ -90,6 +100,7 @@ public class BibliographyEntryRemapper
 		SerializationSettings settings = new SerializationSettings(this, path);
 		settings.XmlSettings.NewLineOnAttributes = false;
 		Serialization.SerializeObject(settings);
+		Save();
 	}
 
 	/// <summary>
@@ -99,7 +110,11 @@ public class BibliographyEntryRemapper
 	public static BibliographyEntryRemapper? Deserialize(string path)
 	{
 		BibliographyEntryRemapper? remapper = Serialization.DeserializeObject<BibliographyEntryRemapper>(path);
-		remapper?.Save();
+		if (remapper != null)
+		{
+			remapper.Save();
+			remapper._path = path;
+		}
 		return remapper;
 	}
 

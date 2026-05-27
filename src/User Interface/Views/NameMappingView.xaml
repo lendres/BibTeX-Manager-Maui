@@ -3,14 +3,20 @@
 	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
 	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:Class="BibTeXManager.Views.NameMappingView"
 	x:DataType="viewmodel:NameMappingViewModel">
 
+	<Shell.BackButtonBehavior>
+		<BackButtonBehavior IsVisible="False" IsEnabled="False" />
+	</Shell.BackButtonBehavior>
+
 	<ContentPage.Resources>
 		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
+		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
 	</ContentPage.Resources>
 
 	<Grid RowDefinitions="Auto,*" Margin="0" Padding="30" WidthRequest="800" VerticalOptions="Fill">
@@ -36,6 +42,10 @@
 		</Grid>
 
 		<VerticalStackLayout Grid.Row="1" Spacing="10" VerticalOptions="Fill" Padding="0" Margin="0,30,0,0">
+			<!--<Label Text="Type" StyleClass="MediumTitleLabelStyle"/>-->
+			<Border StyleClass="SmallTitleBorderStyle" Margin="0,0,0,10">
+				<Label Text="Type" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
 			<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
 				<Button Text="Add" Clicked="OnNewBibliographyEntryMap" StyleClass="SquareButtonStyle"/>
 				<Button Text="Rename" Clicked="OnRenameBibliographyEntryMap" StyleClass="SquareButton"
@@ -61,7 +71,19 @@
 			<!-- To Type -->
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
 				<Label Text="To Type" StyleClass="ControlLabel"/>
-				<Entry Text="{Binding SelectedBibliographyEntryMap.ToType}"/>
+				<Entry
+					x:Name="_toTypeEntry"
+					Placeholder="To Bibliography Entry Type"
+					Text="{Binding ToType.Value}">
+					<Entry.Behaviors>
+						<mct:EventToCommandBehavior
+							x:TypeArguments="system:EventArgs"
+							Command="{Binding ValidateToTypeCommand}"
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference _toTypeEntry}, x:DataType=Entry}"
+							EventName="TextChanged"/>
+					</Entry.Behaviors>
+				</Entry>
+				<Label Text="{Binding ToType.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
 			</VerticalStackLayout>
 
 			<!-- Name -->
@@ -71,10 +93,13 @@
 			</VerticalStackLayout>
 
 
+			<!-- Fields -->
+			<Border StyleClass="SmallTitleBorderStyle" Margin="0,20,0,10">
+				<Label Text="Fields" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<!--<Label Text="Fields" StyleClass="MediumTitleLabelStyle"/>-->
 
-
-
-			<Grid StyleClass="DataGridEditStyle" Margin="0" Padding="0,20,0,0">
+			<Grid StyleClass="DataGridEditStyle" Margin="0" Padding="0">
 				<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
 					<Button Text="Add" Clicked="OnNewFieldMap" StyleClass="SquareButtonStyle"/>
 					<Button Text="Edit" Clicked="OnEditFieldMap" StyleClass="SquareButtonStyle"

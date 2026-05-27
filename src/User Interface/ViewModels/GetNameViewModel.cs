@@ -31,13 +31,17 @@ public partial class GetNameViewModel : ObservableObject
 	[ObservableProperty]
 	public partial string								Title { get; set; }
 
+	public string										Name  { get => NameValidator.Value == null ? throw new Exception("Name is null") : NameValidator.Value; }
+
 	[ObservableProperty]
-	public partial ValidatableObject<string>			Name  { get; set; }				= new();
+	public partial ValidatableObject<string>			NameValidator  { get; set; } = new();
 
 	[ObservableProperty]
 	public partial bool									IsSubmittable { get; set; }
 
 	#endregion
+
+	#region Initialization and Validation
 
 	private void Initialize(string? currentName, List<string> existingNames)
 	{
@@ -48,13 +52,13 @@ public partial class GetNameViewModel : ObservableObject
 
 	private void InitializeValues(string? currentName)
 	{
-		Name.Value = currentName;
+		NameValidator.Value = currentName;
 	}
 
 	private void AddValidations(string? currentName, List<string> existingNames)
 	{
-		Name.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A name is required." });
-		Name.Validations.Add(new IsNotDuplicateStringRule
+		NameValidator.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A name is required." });
+		NameValidator.Validations.Add(new IsNotDuplicateStringRule
 		{
 			ValidationMessage	= "The value is already in use.",
 			Values				= existingNames,
@@ -66,10 +70,11 @@ public partial class GetNameViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateName()
 	{
-		Name.Validate();
+		NameValidator.Validate();
 		ValidateSubmittable();
 	}
 
-	public bool ValidateSubmittable() => IsSubmittable = Name.IsValid;
+	public bool ValidateSubmittable() => IsSubmittable = NameValidator.IsValid;
 
+	#endregion
 }
