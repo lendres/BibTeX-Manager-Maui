@@ -15,6 +15,11 @@ public partial class TemplatesEditView : ContentPage
 		InitializeComponent();
 		_viewModel		= viewModel;
 		BindingContext	= viewModel;
+
+		if (_templatePicker.SelectedIndex < 0 && _templatePicker.Items.Count > -1)
+		{
+			_templatePicker.SelectedIndex = 0;
+		}
 	}
 
 	async private void OnSave(object? sender, EventArgs eventArgs)
