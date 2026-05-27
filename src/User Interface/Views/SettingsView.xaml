@@ -30,11 +30,7 @@
 
     <Grid RowDefinitions="Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
         <!-- Settings label, save, and cancel buttons. -->
-        <Grid Grid.Row="0" RowDefinitions="Auto" HorizontalOptions="Fill" VerticalOptions="Start">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="250"/>
-            </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="*,250" HorizontalOptions="Fill" VerticalOptions="Start">
 
             <Label Grid.Column="0" Text="Settings" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
 
