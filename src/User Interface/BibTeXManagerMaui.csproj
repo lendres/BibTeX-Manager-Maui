@@ -81,7 +81,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="Views\Name Mapping\FieldMapView.xaml">
+		<MauiXaml Update="Views\Other\NameMapView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\Name Mapping\GetNameView.xaml">
@@ -102,10 +102,10 @@
 		<MauiXaml Update="Views\Main\String Entries\StringEditView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\TemplatesEditView.xaml">
+		<MauiXaml Update="Views\Other\TemplatesEditView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\SettingsView.xaml">
+		<MauiXaml Update="Views\Other\SettingsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\Main\Bibliography Entries\EditRawBibEntryForm.xaml">
@@ -127,8 +127,8 @@
 		<Compile Update="Views\Name Mapping\GetNameView.xaml.cs">
 		  <DependentUpon>GetNameView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\Name Mapping\FieldMapView.xaml.cs">
-		  <DependentUpon>FieldMapView.xaml</DependentUpon>
+		<Compile Update="Views\Other\NameMapView.xaml.cs">
+		  <DependentUpon>NameMapView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Name Mapping\NameMappingView.xaml.cs">
 		  <DependentUpon>NameMappingView.xaml</DependentUpon>
@@ -145,10 +145,10 @@
 		<Compile Update="Views\Main\MainView.xaml.cs">
 		  <DependentUpon>MainView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\TemplatesEditView.xaml.cs">
+		<Compile Update="Views\Other\TemplatesEditView.xaml.cs">
 		  <DependentUpon>TemplatesEditView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\SettingsView.xaml.cs">
+		<Compile Update="Views\Other\SettingsView.xaml.cs">
 		  <DependentUpon>SettingsView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Main\String Entries\StringsEditView.xaml.cs">

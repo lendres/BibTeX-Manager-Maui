@@ -5,7 +5,7 @@ using DigitalProduction.Maui.Validation;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class FieldMapViewModel : ObservableObject
+public partial class NameMapViewModel : ObservableObject
 {
 	#region Fields
 
@@ -13,14 +13,14 @@ public partial class FieldMapViewModel : ObservableObject
 
 	#region Construction
 
-	public FieldMapViewModel(List<string> existingNames)
+	public NameMapViewModel(List<string> existingNames)
 	{
 		FieldNameMap	= new();
 		Title			= "Add Field Map";
 		Initialize(null, existingNames);
 	}
 
-	public FieldMapViewModel(NameMap namemap, List<string> existingNames)
+	public NameMapViewModel(NameMap namemap, List<string> existingNames)
     {
 		FieldNameMap	= namemap;
 		Title			= "Edit Field Map";

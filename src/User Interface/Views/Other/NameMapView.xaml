@@ -7,8 +7,8 @@
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:viewModels="clr-namespace:BibTeXManager.ViewModels"
-	x:Class="BibTeXManager.Views.FieldMapView"
-	x:DataType="viewModels:FieldMapViewModel"
+	x:Class="BibTeXManager.Views.NameMapView"
+	x:DataType="viewModels:NameMapViewModel"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="308">
@@ -20,11 +20,11 @@
 		</Border.Resources>
 
 		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
-			<Label Text="Field Map" StyleClass="Title"  HorizontalOptions="Start"/>
+			<Label Text="Name Map" StyleClass="Title"  HorizontalOptions="Start"/>
 
 			<!-- From -->
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
-				<Label Text="From Field Name" StyleClass="ControlLabel"/>
+				<Label Text="From Name" StyleClass="ControlLabel"/>
 				<Entry 
 					x:Name="_fromNameEntry"
 					Placeholder="From Field Name"
@@ -43,7 +43,7 @@
 
 			<!-- To -->
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
-				<Label Text="To Field Name" StyleClass="ControlLabel"/>
+				<Label Text="To Name" StyleClass="ControlLabel"/>
 				<Entry
 					x:Name="_toNameEntry"
 					Placeholder="To Field Name"
