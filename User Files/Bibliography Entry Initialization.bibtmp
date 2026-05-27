@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <bibentryinitialization xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <typetotemplatemappings>
+        <item key="article">
+            <value>article</value>
+        </item>
+        <item key="book">
+            <value>basic</value>
+        </item>
         <item key="booklet">
             <value>basic</value>
         </item>
@@ -13,20 +19,41 @@
         <item key="incollection">
             <value>inproceedings</value>
         </item>
+        <item key="inproceedings">
+            <value>inproceedings</value>
+        </item>
         <item key="mastersthesis">
             <value>thesis</value>
         </item>
         <item key="misc">
             <value>basic</value>
         </item>
+        <item key="patent">
+            <value>patent</value>
+        </item>
         <item key="phdthesis">
             <value>thesis</value>
+        </item>
+        <item key="manual">
+            <value>manual</value>
         </item>
         <item key="proceedings">
             <value>inproceedings</value>
         </item>
+        <item key="software">
+            <value>software</value>
+        </item>
+        <item key="techreport">
+            <value>techreport</value>
+        </item>
+        <item key="thesis">
+            <value>thesis</value>
+        </item>
         <item key="unpublished">
             <value>basic</value>
+        </item>
+        <item key="webref">
+            <value>webref</value>
         </item>
     </typetotemplatemappings>
     <templates>
