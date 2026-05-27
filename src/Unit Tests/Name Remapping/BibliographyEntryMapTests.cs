@@ -101,8 +101,8 @@ public class BibEntryMapTests
 			<?xml version="1.0" encoding="utf-16"?>
 			<bibliographyentrymap name="article" totype="inproceedings">
 				<fieldmaps>
-					<fieldmap from="journal" to="booktitle"/>
-					<fieldmap from="volume" to="number"/>
+					<namemap from="journal" to="booktitle"/>
+					<namemap from="volume" to="number"/>
 				</fieldmaps>
 			</bibliographyentrymap>
 			""";

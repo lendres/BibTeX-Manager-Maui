@@ -20,11 +20,11 @@ public partial class FieldMapViewModel : ObservableObject
 		Initialize(null, existingNames);
 	}
 
-	public FieldMapViewModel(FieldNameMap fieldMap, List<string> existingNames)
+	public FieldMapViewModel(NameMap namemap, List<string> existingNames)
     {
-		FieldNameMap	= fieldMap;
+		FieldNameMap	= namemap;
 		Title			= "Edit Field Map";
-		Initialize(fieldMap, existingNames);
+		Initialize(namemap, existingNames);
 	}
 
 	#endregion
@@ -45,16 +45,16 @@ public partial class FieldMapViewModel : ObservableObject
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
 
-	public FieldNameMap							FieldNameMap { get; set; }
+	public NameMap							FieldNameMap { get; set; }
 
 	#endregion
 
 	#region Methods
 
-	private void Initialize(FieldNameMap? fieldMap, List<string> existingNames)
+	private void Initialize(NameMap? namemap, List<string> existingNames)
 	{
 		InitializeValues();
-		AddValidations(fieldMap, existingNames);
+		AddValidations(namemap, existingNames);
 		ValidateSubmittable();
 	}
 
@@ -64,14 +64,14 @@ public partial class FieldMapViewModel : ObservableObject
 		ToName.Value	= FieldNameMap.To;
 	}
 
-	private void AddValidations(FieldNameMap? fieldMap, List<string> existingNames)
+	private void AddValidations(NameMap? namemap, List<string> existingNames)
 	{
 		FromName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A name is required." });
 		FromName.Validations.Add(new IsNotDuplicateStringRule
 		{
 			ValidationMessage = "The value is already in use.",
 			Values = existingNames,
-			ExcludeValue = fieldMap?.From
+			ExcludeValue = namemap?.From
 		});
 		ValidateFromName();
 

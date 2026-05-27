@@ -51,7 +51,7 @@ public class BibliographyEntryMap : NotifyPropertyModifiedChanged
 		set => SetValue(value);
 	}
 
-	[XmlArray("fieldmaps"), XmlArrayItem("fieldmap")]
+	[XmlArray("fieldmaps"), XmlArrayItem("namemap")]
 	public ObservableCollection<NameMap> FieldNameMaps { get; set; } = new();
 
 	public List<string> InUseTypes { get => FieldNameMaps.Select(fieldNameMap => fieldNameMap.From).ToList(); }

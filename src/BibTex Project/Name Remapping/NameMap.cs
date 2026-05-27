@@ -3,22 +3,22 @@ using System.Xml.Serialization;
 
 namespace BibTeXManager;
 
-public partial class FieldNameMap : NotifyPropertyModifiedChanged
+public partial class NameMap : NotifyPropertyModifiedChanged
 {
 	#region Construction
 
-	public FieldNameMap()
+	public NameMap()
 	{
 	}
 
-	public FieldNameMap(string fromName, string toName)
+	public NameMap(string fromName, string toName)
 	{
 		From		= fromName;
 		To			= toName;
 		Modified	= false;
 	}
 
-	public FieldNameMap(FieldNameMap other)
+	public NameMap(NameMap other)
 	{
 		From		= other.From;
 		To			= other.To;

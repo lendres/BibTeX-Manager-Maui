@@ -6,7 +6,7 @@ using DigitalProduction.Maui.ViewModels;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class NameMappingViewModel : DataGridBaseViewModel<FieldNameMap>
+public partial class NameMappingViewModel : DataGridBaseViewModel<NameMap>
 {
 	#region Construction
 
