@@ -25,16 +25,11 @@
 		<dpconverters:SingleEnumToBoolConverter x:Key="PartView" x:TypeArguments="enums:InitializationPartType"/>
 	</ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
+    <Grid RowDefinitions="Auto,Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
+		
         <!-- Settings label, save, and cancel buttons. -->
-        <Grid Grid.Row="0" RowDefinitions="Auto" HorizontalOptions="Fill" VerticalOptions="Start">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="250"/>
-            </Grid.ColumnDefinitions>
-
+        <Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="*,250" HorizontalOptions="Fill" VerticalOptions="Start">
             <Label Grid.Column="0" Text="Bibliography Entry Templates" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
-
             <HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0,0,0,0" VerticalOptions="Center">
                 <Button 
 				    Text="OK"
@@ -51,8 +46,24 @@
             </HorizontalStackLayout>
         </Grid>
 
+		<!-- Selector. -->
+		<Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="*,*" Padding="0"  Margin="0,30,0,0"
+			RadioButtonGroup.GroupName="PartSelectorGroup"
+			RadioButtonGroup.SelectedValue="{Binding ActiveInitializationPart, Converter={StaticResource PartTypeEnumToStringConverter}}"
+			VerticalOptions="Center" HorizontalOptions="Fill">
+			<Grid.Resources>
+				<Style TargetType="RadioButton">
+					<Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
+					<Setter Property="HorizontalOptions" Value="Fill"/>
+					<Setter Property="FontSize" Value="20"/>
+				</Style>
+			</Grid.Resources>
+			<RadioButton Grid.Column="0" Content="Types" Value="TypeMaps"/>
+			<RadioButton Grid.Column="1" Content="Templates" Value="Templates"/>
+		</Grid>
+
 		<!-- The right margin is widened to allow the scroll bar to appear without overlapping the content. -->
-		<ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0,30,0,0">
+		<ScrollView Grid.Row="2" VerticalScrollBarVisibility="Always" Padding="0" Margin="0,30,0,0">
 			<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
             <VerticalStackLayout Padding="0,0,20,0">
 

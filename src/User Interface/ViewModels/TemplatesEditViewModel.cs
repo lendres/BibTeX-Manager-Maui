@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Validation;
+using BibTeXManager.Enums;
 
 namespace BibTeXManager.ViewModels;
 
@@ -24,6 +25,9 @@ public partial class TemplatesEditViewModel : ObservableObject
 	#region Properties
 
 	private bool								Modified  { get; set; }
+
+	[ObservableProperty]
+	public partial InitializationPartType		ActiveInitializationPart { get; set; }
 
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
