@@ -8,20 +8,19 @@
 /// 
 /// The "Description" attribute can be accessed using Reflection to get a string representing the enumeration type.
 /// </summary>
-namespace BibTeXManager.Enums
+namespace BibTeXManager.Enums;
+
+public enum BibliographyPartType
 {
-	public enum BibliographyPartType
-	{
-		/// <summary>Header of the bibliography.</summary>
-		[Description("Header")]
-		Header,
+	/// <summary>Header of the bibliography.</summary>
+	[Description("Header")]
+	Header,
 
-		/// <summary>String entries.</summary>
-		[Description("String Entries")]
-		StringEntries,
+	/// <summary>String entries.</summary>
+	[Description("String Entries")]
+	StringEntries,
 
-		/// <summary>Bibliography entries.</summary>
-		[Description("Bibliography Entries")]
-		BibliographyEntries
-	}
+	/// <summary>Bibliography entries.</summary>
+	[Description("Bibliography Entries")]
+	BibliographyEntries
 }
