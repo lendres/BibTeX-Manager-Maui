@@ -33,6 +33,15 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	public partial InitializationPartType		ActiveInitializationPart { get; set; }
 
 	[ObservableProperty]
+	public partial List<string>?				TemplateNames { get; set; }
+
+	[ObservableProperty]
+	public partial string?						SelectedTemplate { get; set; }
+
+	[ObservableProperty]
+	public partial List<string>?				TemplateFieldNames { get; set; }
+
+	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
 
 	#endregion
@@ -42,6 +51,7 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	private void Initialize()
 	{
 		Items = new ObservableCollection<NameMap>(Initializer.NameMaps);
+		TemplateNames = Initializer.TemplateNames;
 	}
 
 	#endregion
@@ -72,6 +82,34 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 
 	#region Events
 
+
+	#endregion
+
+	#region Commands
+
+	[RelayCommand]
+	private void SelectedTemplateChanged()
+	{
+		if (SelectedTemplate == null)
+		{
+			SelectedTemplate = null;
+			TemplateFieldNames = null;
+			return;
+		}
+
+		//SelectedBibliographyEntryMap = NameMapper.Maps.TryGetValue(SelectedTemplate, out BibliographyEntryMap? map) ? map : null;
+		//if (SelectedBibliographyEntryMap != null)
+		//{
+		//	Items = NameMapper.Maps[SelectedTemplate!].FieldNameMaps;
+		//	ToType.Value = SelectedBibliographyEntryMap.ToType;
+		//}
+		//else
+		//{
+		//	// DataGrid selected item.
+		//	SelectedItem = null;
+		//}
+
+	}
 
 	#endregion
 
