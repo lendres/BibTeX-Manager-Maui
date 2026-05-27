@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <bibentryinitialization xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <aliases>
+    <typetotemplatemappings>
         <item key="booklet">
             <value>basic</value>
         </item>
@@ -28,7 +28,7 @@
         <item key="unpublished">
             <value>basic</value>
         </item>
-    </aliases>
+    </typetotemplatemappings>
     <templates>
         <item key="article">
             <value>author</value>
