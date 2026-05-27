@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewModels="clr-namespace:BibTeXManager.ViewModels"
+	x:DataType="viewModels:GetNameViewModel"
+	x:Class="BibTeXManager.Views.GetNameView"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="400" MinimumHeightRequest="220">
+
+		<Border.Resources>
+			<ResourceDictionary>
+				<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+			</ResourceDictionary>
+		</Border.Resources>
+
+		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+			<Label Text="{Binding Title}" StyleClass="Title"  HorizontalOptions="Start"/>
+
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="Name" StyleClass="ControlLabel"/>
+				<Entry
+					x:Name="_bibliographyEntryMapNameEntry"
+					Placeholder="Name"
+					Text="{Binding NameValidator.Value}"
+					Loaded="OnLoadedSetFocus">
+					<Entry.Behaviors>
+						<mct:EventToCommandBehavior
+							x:TypeArguments="system:EventArgs"
+							Command="{Binding ValidateNameCommand}"
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference _bibliographyEntryMapNameEntry}, x:DataType=Entry}"
+							EventName="TextChanged"/>
+					</Entry.Behaviors>
+				</Entry>
+				<Label Text="{Binding NameValidator.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+			</VerticalStackLayout>
+				
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+						Text="OK"
+						HorizontalOptions="End"
+						StyleClass="StandardSizeButtonStyle"
+						IsEnabled="{Binding IsSubmittable}"
+						Clicked="OnSaveButtonClicked"/>
+				<Button 
+						Text="Cancel"
+						StyleClass="StandardSizeButtonStyle"
+						HorizontalOptions="End"
+						Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+		</VerticalStackLayout>
+	</Border>
+</dpviews:PopupView>

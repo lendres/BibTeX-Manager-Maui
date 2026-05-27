@@ -7,12 +7,13 @@ namespace BibTeXManager;
 /// <summary>
 /// A class to remap the type and field names of a bibilography entry.
 /// </summary>
-[XmlRoot("bibentryremapping")]
-public class BibEntryRemapper
+[XmlRoot("bibliographyentryremapping")]
+public class BibliographyEntryRemapper
 {
 	#region Fields
 
-	private SerializableDictionary<string, BibEntryMap>		_maps		= new SerializableDictionary<string, BibEntryMap>();
+	private string														_path		= string.Empty;
+	private SerializableDictionary<string, BibliographyEntryMap>		_maps		= new SerializableDictionary<string, BibliographyEntryMap>();
 
 	#endregion
 
@@ -21,7 +22,7 @@ public class BibEntryRemapper
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public BibEntryRemapper()
+	public BibliographyEntryRemapper()
 	{
 	}
 
@@ -33,11 +34,19 @@ public class BibEntryRemapper
 	/// Bibliography entry maps.
 	/// </summary>
 	[XmlElement("maps")]
-	public SerializableDictionary<string, BibEntryMap> Maps { get => _maps; set => _maps = value; }
-	
+	public SerializableDictionary<string, BibliographyEntryMap> Maps { get => _maps; set => _maps = value; }
+
 	#endregion
 
 	#region Methods
+
+	public void Save()
+	{
+		foreach (KeyValuePair<string, BibliographyEntryMap> keyValuePair in _maps)
+		{
+			keyValuePair.Value.Save();
+		}
+	}
 
 	/// <summary>
 	/// Remap the type and field names in a BibEntry.
@@ -46,20 +55,19 @@ public class BibEntryRemapper
 	/// <param name="mapName">Name of the map to use.</param>
 	public void RemapEntryNames(BibEntry entry)
 	{
-		if (_maps.ContainsKey(entry.Type.ToLower()))
+		if (_maps.TryGetValue(entry.Type.ToLower(), out BibliographyEntryMap? map))
 		{
-			BibEntryMap map = _maps[entry.Type.ToLower()];
-			entry.Type		= map.ToType;
+			entry.Type = map.ToType;
 
 			// Getting the field names is a little expensive, so just do it once, outside of the loop.
 			List<string> fieldNames = entry.FieldNames;
 
-			foreach (KeyValuePair<string, string> nameMap in map.FieldNameMaps)
+			foreach (FieldNameMap nameMap in map.FieldNameMaps)
 			{
 				// Only remap when the key exists.
-				if (fieldNames.Contains(nameMap.Key))
+				if (fieldNames.Contains(nameMap.From))
 				{
-					entry.RenameField(nameMap.Key, nameMap.Value);
+					entry.RenameField(nameMap.From, nameMap.To);
 				}
 			}
 		}
@@ -68,6 +76,15 @@ public class BibEntryRemapper
 	#endregion
 
 	#region XML
+
+	/// <summary>
+	/// Write this object to a file to the default path (where it was deserialized from).
+	/// </summary>
+	/// <exception cref="InvalidOperationException">Thrown when the projects path is not valid.</exception>
+	public void Serialize()
+	{
+		Serialize(_path);
+	}
 
 	/// <summary>
 	/// Write this object to a file to the provided path.
@@ -83,15 +100,22 @@ public class BibEntryRemapper
 		SerializationSettings settings = new SerializationSettings(this, path);
 		settings.XmlSettings.NewLineOnAttributes = false;
 		Serialization.SerializeObject(settings);
+		Save();
 	}
 
 	/// <summary>
 	/// Create an instance from a file.
 	/// </summary>
 	/// <param name="path">The file to read from.</param>
-	public static BibEntryRemapper? Deserialize(string path)
+	public static BibliographyEntryRemapper? Deserialize(string path)
 	{
-		return Serialization.DeserializeObject<BibEntryRemapper>(path);
+		BibliographyEntryRemapper? remapper = Serialization.DeserializeObject<BibliographyEntryRemapper>(path);
+		if (remapper != null)
+		{
+			remapper.Save();
+			remapper._path = path;
+		}
+		return remapper;
 	}
 
 	#endregion

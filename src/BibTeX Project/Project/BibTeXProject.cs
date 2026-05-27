@@ -42,7 +42,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 
 	private QualityProcessor					_fieldQualityProcessor			= new();
 
-	private BibEntryRemapper					_nameRemapper					= new();
+	private BibliographyEntryRemapper					_nameRemapper					= new();
 
 	#endregion
 
@@ -94,13 +94,23 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 	public BibEntryInitialization BibEntryInitialization { get => _bibEntryInitialization; }
 
 	/// <summary>
+	/// Field quality processor.
+	/// </summary>
+	[XmlIgnore()]
+	public QualityProcessor	FieldQualityProcessor { get => _fieldQualityProcessor; }
+
+	/// <summary>
+	/// Bibliography name remapper.
+	/// </summary>
+	[XmlIgnore()]
+	public BibliographyEntryRemapper NameRemapper { get => _nameRemapper; }
+
+	/// <summary>
 	/// Bibliography.
 	/// </summary>
 	[XmlIgnore()]
 	public Bibliography Bibliography { get => _bibliography; }
 
-	[XmlIgnore()]
-	public bool BibliographytOpen { get; set; } = false;
 
 	#endregion
 
@@ -228,7 +238,7 @@ public class BibTeXProject : DigitalProduction.Projects.Project
 		string absolutePath = ConvertToAbsolutePath(_settings.BibEntryRemappingFile);
 		if (System.IO.File.Exists(absolutePath))
 		{
-			_nameRemapper = BibEntryRemapper.Deserialize(absolutePath) ??
+			_nameRemapper = BibliographyEntryRemapper.Deserialize(absolutePath) ??
 				throw new Exception("Name remapping initialization failed.");
 		}
 		else

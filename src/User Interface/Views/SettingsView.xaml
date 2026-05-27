@@ -28,7 +28,7 @@
 		</Style>
 	</ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*" Margin="0" Padding="30" WidthRequest="800" VerticalOptions="Fill">
+    <Grid RowDefinitions="Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
         <!-- Settings label, save, and cancel buttons. -->
         <Grid Grid.Row="0" RowDefinitions="Auto" HorizontalOptions="Fill" VerticalOptions="Start">
             <Grid.ColumnDefinitions>
