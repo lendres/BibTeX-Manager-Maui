@@ -1,8 +1,6 @@
-﻿using BibTeXLibrary;
+﻿using BibTeXManager.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DigitalProduction.Maui.Validation;
-using BibTeXManager.Enums;
 
 namespace BibTeXManager.ViewModels;
 

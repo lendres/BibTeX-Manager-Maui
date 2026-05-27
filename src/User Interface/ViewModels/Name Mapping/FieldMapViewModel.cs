@@ -45,7 +45,7 @@ public partial class FieldMapViewModel : ObservableObject
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
 
-	public NameMap							FieldNameMap { get; set; }
+	public NameMap								FieldNameMap { get; set; }
 
 	#endregion
 
