@@ -28,8 +28,8 @@ public class BibEntryMapTests
 			ToType = "inproceedings",
 		};
 
-		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("journal", "booktitle"));
-		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("volume", "number"));
+		bibEntryMap.FieldNameMaps.Add(new NameMap("journal", "booktitle"));
+		bibEntryMap.FieldNameMaps.Add(new NameMap("volume", "number"));
 
 		Assert.Equal("article", bibEntryMap.Name);
 		Assert.Equal("inproceedings", bibEntryMap.ToType);
@@ -128,8 +128,8 @@ public class BibEntryMapTests
 			ToType = "inproceedings",
 		};
 
-		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("journal", "booktitle"));
-		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("volume", "number"));
+		bibEntryMap.FieldNameMaps.Add(new NameMap("journal", "booktitle"));
+		bibEntryMap.FieldNameMaps.Add(new NameMap("volume", "number"));
 
 		return bibEntryMap;
 	}

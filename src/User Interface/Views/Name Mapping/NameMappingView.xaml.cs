@@ -92,7 +92,7 @@ public partial class NameMappingView : ContentPage
 
 	private async void OnEditFieldMap(object sender, EventArgs eventArgs)
 	{
-		FieldNameMap		fieldNameMap	= new(ViewModel.SelectedItem!);
+		NameMap		fieldNameMap	= new(ViewModel.SelectedItem!);
 		FieldMapViewModel	viewModel		= new(fieldNameMap, ViewModel.SelectedBibliographyEntryMap!.InUseTypes);
 		FieldMapView		view			= new(viewModel);
 		object?				result			= await Shell.Current.ShowPopupAsync(view);

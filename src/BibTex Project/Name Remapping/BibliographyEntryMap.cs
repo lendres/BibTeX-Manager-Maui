@@ -27,7 +27,7 @@ public class BibliographyEntryMap : NotifyPropertyModifiedChanged
 	{
 		Name			= other.Name;
 		ToType			= other.ToType;
-		FieldNameMaps	= new ObservableCollection<FieldNameMap>(other.FieldNameMaps);
+		FieldNameMaps	= new ObservableCollection<NameMap>(other.FieldNameMaps);
 
 		FieldNameMaps.CollectionChanged += OnCollectionModifiedChanged;
 		Modified = false;
@@ -52,7 +52,7 @@ public class BibliographyEntryMap : NotifyPropertyModifiedChanged
 	}
 
 	[XmlArray("fieldmaps"), XmlArrayItem("fieldmap")]
-	public ObservableCollection<FieldNameMap> FieldNameMaps { get; set; } = new();
+	public ObservableCollection<NameMap> FieldNameMaps { get; set; } = new();
 
 	public List<string> InUseTypes { get => FieldNameMaps.Select(fieldNameMap => fieldNameMap.From).ToList(); }
 
@@ -62,7 +62,7 @@ public class BibliographyEntryMap : NotifyPropertyModifiedChanged
 
 	public override void Save()
 	{
-		foreach (FieldNameMap fieldNameMap in FieldNameMaps)
+		foreach (NameMap fieldNameMap in FieldNameMaps)
 		{
 			fieldNameMap.Save();
 		}
