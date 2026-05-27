@@ -257,11 +257,16 @@ public partial class MainView : DigitalProductionMainPage
 		await Shell.Current.GoToAsync(nameof(NameMappingView), true);
 	}
 
+	async void OnEditBibliographyTemplates(object sender, EventArgs eventArgs)
+	{
+		await Shell.Current.GoToAsync(nameof(TemplatesEditView), true);
+	}
+
 	#endregion
 
 	#region Tools
 
-		async void OnCheckFieldQuality(object sender, EventArgs eventArgs)
+	async void OnCheckFieldQuality(object sender, EventArgs eventArgs)
 	{
 		bool breakNext = false;
 

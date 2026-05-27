@@ -1,11 +1,8 @@
-﻿using BibTeXLibrary;
-using BibTeXManager;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.Enums;
 using DigitalProduction.Maui.Validation;
 using DigitalProduction.Maui.ViewModels;
-using System.Collections.ObjectModel;
 
 namespace BibTeXManager.ViewModels;
 
@@ -41,7 +38,6 @@ public partial class NameMappingViewModel : DataGridBaseViewModel<FieldNameMap>
 	public partial bool							IsSubmittable { get; set; }
 
 	#endregion
-
 
 	#region Initialization and Validation
 

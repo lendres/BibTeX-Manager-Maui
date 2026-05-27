@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:enums="clr-namespace:BibTeXManager.Enums"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
+	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
+	xmlns:library="clr-namespace:BibTeXLibrary;assembly=DigitalProduction.BibTeXLibrary"
+	x:DataType="viewmodel:TemplatesEditViewModel"
+	x:Class="BibTeXManager.Views.TemplatesEditView">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.Resources>
+		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
+		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
+		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+		<dpconverters:EnumToStringConverter x:Key="PartTypeEnumToStringConverter" x:TypeArguments="enums:InitializationPartType"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="PartView" x:TypeArguments="enums:InitializationPartType"/>
+	</ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
+        <!-- Settings label, save, and cancel buttons. -->
+        <Grid Grid.Row="0" RowDefinitions="Auto" HorizontalOptions="Fill" VerticalOptions="Start">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Text="Bibliography Entry Templates" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0,0,0,0" VerticalOptions="Center">
+                <Button 
+				    Text="OK"
+				    HorizontalOptions="End"
+				    StyleClass="StandardSizeButtonStyle"
+				    IsEnabled="{Binding IsSubmittable}"
+                    VerticalOptions="Center"
+				    Clicked="OnSave"/>
+                <Button 
+				    Text="Cancel"
+				    StyleClass="StandardSizeButtonStyle"
+				    HorizontalOptions="End"
+				    Clicked="OnCancel"/>
+            </HorizontalStackLayout>
+        </Grid>
+
+		<!-- The right margin is widened to allow the scroll bar to appear without overlapping the content. -->
+		<ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0,30,0,0">
+			<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
+            <VerticalStackLayout Padding="0,0,20,0">
+
+
+
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>
