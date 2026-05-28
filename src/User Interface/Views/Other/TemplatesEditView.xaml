@@ -127,7 +127,9 @@
 					<Button Text="Add" Command="{Binding AddFieldCommand}" StyleClass="SquareButtonStyle"/>
 					<!--<Button Text="Edit" Clicked="OnEditNameMap" StyleClass="SquareButtonStyle"
 						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>-->
-					<Button Text="Delete" Command="{Binding DeleteFieldCommand}" Pressed="DeleteButtonPressed" StyleClass="SquareButton"/>
+					<Button Text="Delete" Command="{Binding DeleteFieldCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
+					<Button Text="Move Up" Command="{Binding MoveFieldUpCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
+					<Button Text="Move Down" Command="{Binding MoveFieldDownCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
 				</HorizontalStackLayout>
 
 				<ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0">

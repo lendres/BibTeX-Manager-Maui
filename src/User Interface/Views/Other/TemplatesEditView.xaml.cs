@@ -82,9 +82,9 @@ public partial class TemplatesEditView : ContentPage
 		}
 	}
 
-	private void DeleteButtonPressed(object? sender, EventArgs e)
+	private void ButtonPressed(object? sender, EventArgs e)
 	{
-		_viewModel.BeginDelete();
+		_viewModel.BeginButtonPress();
 	}
 
 	private void EntryFocused(object? sender, FocusEventArgs e)

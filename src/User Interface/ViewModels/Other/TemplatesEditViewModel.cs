@@ -19,7 +19,7 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 {
 	#region Fields
 
-	private bool _isDeletingField;
+	private bool _isButtonPressed;
 
 	#endregion
 
@@ -53,6 +53,8 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 
 	[ObservableProperty]
 	[NotifyCanExecuteChangedFor(nameof(DeleteFieldCommand))]
+	[NotifyCanExecuteChangedFor(nameof(MoveFieldUpCommand))]
+	[NotifyCanExecuteChangedFor(nameof(MoveFieldDownCommand))]
 	public partial ObservableString?								SelectedField { get; set; }
 
 
@@ -148,23 +150,75 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 
 		TemplateFieldNames.Remove(SelectedField);
 		SelectedField = null;
-		_isDeletingField = false;
+		_isButtonPressed = false;
 		SetModified(true);
 	}
 
-	public void BeginDelete()
+	public void BeginButtonPress()
 	{
-		_isDeletingField = true;
+		_isButtonPressed = true;
 	}
 
 	public bool ShouldIgnoreUnfocus()
 	{
-		return _isDeletingField;
+		return _isButtonPressed;
 	}
 
 	private bool CanDeleteField()
 	{
 		return SelectedField is not null;
+	}
+
+	[RelayCommand(CanExecute = nameof(CanMoveFieldUp))]
+	public void MoveFieldUp()
+	{
+		if (SelectedField is null)
+		{
+			return;
+		}
+
+		int index = TemplateFieldNames.IndexOf(SelectedField);
+
+		if (index <= 0)
+		{
+			return;
+		}
+
+		TemplateFieldNames.Move(index, index - 1);
+		SelectedField = null;
+		_isButtonPressed = false;
+		SetModified(true);
+	}
+
+	private bool CanMoveFieldUp()
+	{
+		return SelectedField is not null && TemplateFieldNames.IndexOf(SelectedField) > 0;
+	}
+
+	[RelayCommand(CanExecute = nameof(CanMoveFieldDown))]
+	public void MoveFieldDown()
+	{
+		if (SelectedField is null)
+		{
+			return;
+		}
+
+		int index = TemplateFieldNames.IndexOf(SelectedField);
+
+		if (index < 0 || index >= TemplateFieldNames.Count - 1)
+		{
+			return;
+		}
+
+		TemplateFieldNames.Move(index, index + 1);
+		SelectedField = null;
+		_isButtonPressed = false;
+		SetModified(true);
+	}
+
+	private bool CanMoveFieldDown()
+	{
+		return SelectedField is not null && TemplateFieldNames.IndexOf(SelectedField) >= 0 && TemplateFieldNames.IndexOf(SelectedField) < TemplateFieldNames.Count - 1;
 	}
 
 	#endregion
