@@ -10,6 +10,7 @@
 	xmlns:enums="clr-namespace:BibTeXManager.Enums"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
+	xmlns:dpcm="clr-namespace:DigitalProduction.Maui.ComponentModel;assembly=DigitalProduction.Maui"
 	xmlns:library="clr-namespace:BibTeXLibrary;assembly=DigitalProduction.BibTeXLibrary"
 	x:DataType="viewmodel:TemplatesEditViewModel"
 	x:Class="BibTeXManager.Views.TemplatesEditView">
@@ -59,10 +60,9 @@
 					<Setter Property="FontSize" Value="20"/>
 				</Style>
 			</Grid.Resources>
-			<RadioButton Grid.Column="0" Content="Types" Value="TypeMaps"/>
-			<RadioButton Grid.Column="1" Content="Templates" Value="Templates"/>
+			<RadioButton Grid.Column="0" Content="Type Assignement" Value="TypeMaps"/>
+			<RadioButton Grid.Column="1" Content="Template Editting" Value="Templates"/>
 		</Grid>
-
 
 
 		<Grid Grid.Row="2" StyleClass="DataGridEditStyle" Margin="0" Padding="0,20,0,0"
@@ -70,9 +70,9 @@
 			<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
 				<Button Text="Add" Clicked="OnNewNameMap" StyleClass="SquareButtonStyle"/>
 				<Button Text="Edit" Clicked="OnEditNameMap" StyleClass="SquareButtonStyle"
-				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 				<Button Text="Delete" Clicked="OnDeleteNameMap" StyleClass="SquareButton"
-				IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 			</HorizontalStackLayout>
 
 			<dg:DataGrid
@@ -87,33 +87,67 @@
 				IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
 
 				<dg:DataGrid.Columns>
-					<dg:DataGridColumn Title="From Name" PropertyName="From" Width="0.5*"
+					<dg:DataGridColumn Title="Type" PropertyName="From" Width="0.5*"
 						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
-					<dg:DataGridColumn Title="To Name" PropertyName="To" Width="0.5*"
+					<dg:DataGridColumn Title="Template" PropertyName="To" Width="0.5*"
 						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
 				</dg:DataGrid.Columns>
 			</dg:DataGrid>
 		</Grid>
 
 		<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
-		<VerticalStackLayout Grid.Row="2" Margin="0" Padding="0,20,0,0"
+		<Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,*" Margin="0" Padding="0,20,0,0"
 			IsVisible="{Binding ActiveInitializationPart, Converter={StaticResource PartView}, ConverterParameter={x:Static enums:InitializationPartType.Templates}}">
 
+			<!-- To Type -->
+			<Border Grid.Row="0" StyleClass="SmallTitleBorderStyle" Margin="0,0,0,10">
+				<Label Text="Type" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
 			<Picker
+				Grid.Row="1"
 				Title="Entry Type"
 				x:Name="_templatePicker"
 				ItemsSource="{Binding TemplateNames}"
 				SelectedItem="{Binding SelectedTemplate}">
 				<Picker.Behaviors>
 					<mct:EventToCommandBehavior
-                    x:TypeArguments="system:EventArgs"
-                    Command="{Binding SelectedTemplateChangedCommand}"
-                    BindingContext="{Binding Path=BindingContext, Source={x:Reference __templatePicker}, x:DataType=Picker}"
-                    EventName="SelectedIndexChanged"/>
+						x:TypeArguments="system:EventArgs"
+						Command="{Binding SelectedTemplateChangedCommand}"
+						BindingContext="{Binding Path=BindingContext, Source={x:Reference _templatePicker}, x:DataType=Picker}"
+						EventName="SelectedIndexChanged"/>
 				</Picker.Behaviors>
 			</Picker>
 
-		</VerticalStackLayout>
+			<!-- Fields -->
+			<Border Grid.Row="2" StyleClass="SmallTitleBorderStyle" Margin="0,20,0,10">
+				<Label Text="Fields" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<Grid Grid.Row="3" StyleClass="DataGridEditStyle" Margin="0" Padding="0">
+				<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle" Margin="0" Padding="0">
+					<Button Text="Add" Command="{Binding AddFieldCommand}" StyleClass="SquareButtonStyle"/>
+					<!--<Button Text="Edit" Clicked="OnEditNameMap" StyleClass="SquareButtonStyle"
+						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>-->
+					<Button Text="Delete" Command="{Binding DeleteFieldCommand}" Pressed="DeleteButtonPressed" StyleClass="SquareButton"/>
+				</HorizontalStackLayout>
+
+				<ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0">
+					<Grid Padding="0,0,10,0">
+						<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
+						<CollectionView Grid.Row="0" ItemsSource="{Binding TemplateFieldNames}" Margin="0">
+							<CollectionView.ItemTemplate>
+								<DataTemplate x:DataType="viewmodel:ObservableString">
+									<Grid Padding="0,3">
+										<Entry Grid.Column="0" Text="{Binding Value}" Focused="EntryFocused" Unfocused="EntryUnfocused"/>
+									</Grid>
+								</DataTemplate>
+							</CollectionView.ItemTemplate>
+						</CollectionView>
+					</Grid>
+
+				</ScrollView>
+			</Grid>
+
+		</Grid>
 
 	</Grid>
 </ContentPage>

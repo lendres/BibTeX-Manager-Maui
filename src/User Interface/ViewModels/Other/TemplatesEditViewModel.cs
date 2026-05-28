@@ -2,15 +2,25 @@
 using BibTeXManager.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DigitalProduction.Maui.ComponentModel;
 using DigitalProduction.Maui.Enums;
 using DigitalProduction.Maui.ViewModels;
 using System.Collections.ObjectModel;
 
 namespace BibTeXManager.ViewModels;
 
+public partial class ObservableString : ObservableWrapper<string>
+{
+	public ObservableString() { }
+	public ObservableString(string value) : base(value) { }
+}
+
 public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 {
 	#region Fields
+
+	private bool _isDeletingField;
+
 	#endregion
 
 	#region Construction
@@ -27,22 +37,27 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 
 	#region Properties
 
-	public BibEntryInitialization				Initializer { get; set; }
+	public BibEntryInitialization									Initializer { get; set; }
 
 	[ObservableProperty]
-	public partial InitializationPartType		ActiveInitializationPart { get; set; }
+	public partial InitializationPartType							ActiveInitializationPart { get; set; }
 
 	[ObservableProperty]
-	public partial List<string>?				TemplateNames { get; set; }
+	public partial List<string>?									TemplateNames { get; set; }
 
 	[ObservableProperty]
-	public partial string?						SelectedTemplate { get; set; }
+	public partial string?											SelectedTemplate { get; set; }
 
 	[ObservableProperty]
-	public partial List<string>?				TemplateFieldNames { get; set; }
+	public partial ObservableCollection<ObservableWrapper<string>>	TemplateFieldNames { get; set; } = new();
 
 	[ObservableProperty]
-	public partial bool							IsSubmittable { get; set; }
+	[NotifyCanExecuteChangedFor(nameof(DeleteFieldCommand))]
+	public partial ObservableString?								SelectedField { get; set; }
+
+
+	[ObservableProperty]
+	public partial bool												IsSubmittable { get; set; }
 
 	#endregion
 
@@ -90,11 +105,16 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	[RelayCommand]
 	private void SelectedTemplateChanged()
 	{
+		TemplateFieldNames.Clear();
+
 		if (SelectedTemplate == null)
 		{
-			SelectedTemplate = null;
-			TemplateFieldNames = null;
 			return;
+		}
+
+		foreach (string fieldName in Initializer.GetDefaultFields(SelectedTemplate))
+		{
+			TemplateFieldNames.Add(new ObservableString(fieldName));
 		}
 
 		//SelectedBibliographyEntryMap = NameMapper.Maps.TryGetValue(SelectedTemplate, out BibliographyEntryMap? map) ? map : null;
@@ -109,6 +129,42 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 		//	SelectedItem = null;
 		//}
 
+	}
+
+	[RelayCommand]
+	public void AddField()
+	{
+		TemplateFieldNames.Add(new ObservableWrapper<string>(""));
+		SetModified(true);
+	}
+
+	[RelayCommand(CanExecute = nameof(CanDeleteField))]
+	public void DeleteField()
+	{
+		if (SelectedField is null)
+		{
+			return;
+		}
+
+		TemplateFieldNames.Remove(SelectedField);
+		SelectedField = null;
+		_isDeletingField = false;
+		SetModified(true);
+	}
+
+	public void BeginDelete()
+	{
+		_isDeletingField = true;
+	}
+
+	public bool ShouldIgnoreUnfocus()
+	{
+		return _isDeletingField;
+	}
+
+	private bool CanDeleteField()
+	{
+		return SelectedField is not null;
 	}
 
 	#endregion

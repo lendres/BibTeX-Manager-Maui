@@ -1,6 +1,7 @@
 using BibTeXLibrary;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
+using DigitalProduction.Maui.ComponentModel;
 
 namespace BibTeXManager.Views;
 
@@ -79,6 +80,31 @@ public partial class TemplatesEditView : ContentPage
 		{
 			_viewModel.Delete();
 		}
+	}
+
+	private void DeleteButtonPressed(object? sender, EventArgs e)
+	{
+		_viewModel.BeginDelete();
+	}
+
+	private void EntryFocused(object? sender, FocusEventArgs e)
+	{
+		if (sender is not Entry entry)
+		{
+			return;
+		}
+
+		_viewModel.SelectedField = entry.BindingContext as ObservableString;
+	}
+
+	private void EntryUnfocused(object? sender, FocusEventArgs e)
+	{
+		if (_viewModel.ShouldIgnoreUnfocus())
+		{
+			return;
+		}
+
+		_viewModel.SelectedField = null;
 	}
 
 	#endregion
