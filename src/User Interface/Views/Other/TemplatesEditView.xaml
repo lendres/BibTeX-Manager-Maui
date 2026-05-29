@@ -137,7 +137,7 @@
 						<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
 						<CollectionView Grid.Row="0" ItemsSource="{Binding TemplateFieldNames}" Margin="0">
 							<CollectionView.ItemTemplate>
-								<DataTemplate x:DataType="viewmodel:ObservableString">
+								<DataTemplate x:DataType="dpcm:ObservableString">
 									<Grid Padding="0,3">
 										<Entry Grid.Column="0" Text="{Binding Value}" Focused="EntryFocused" Unfocused="EntryUnfocused"/>
 									</Grid>

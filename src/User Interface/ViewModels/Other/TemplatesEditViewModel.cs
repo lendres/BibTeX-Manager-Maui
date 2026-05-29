@@ -9,12 +9,6 @@ using System.Collections.ObjectModel;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class ObservableString : ObservableWrapper<string>
-{
-	public ObservableString() { }
-	public ObservableString(string value) : base(value) { }
-}
-
 public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 {
 	#region Fields
@@ -118,19 +112,6 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 		{
 			TemplateFieldNames.Add(new ObservableString(fieldName));
 		}
-
-		//SelectedBibliographyEntryMap = NameMapper.Maps.TryGetValue(SelectedTemplate, out BibliographyEntryMap? map) ? map : null;
-		//if (SelectedBibliographyEntryMap != null)
-		//{
-		//	Items = NameMapper.Maps[SelectedTemplate!].FieldNameMaps;
-		//	ToType.Value = SelectedBibliographyEntryMap.ToType;
-		//}
-		//else
-		//{
-		//	// DataGrid selected item.
-		//	SelectedItem = null;
-		//}
-
 	}
 
 	[RelayCommand]
