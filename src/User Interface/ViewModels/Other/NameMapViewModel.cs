@@ -16,14 +16,14 @@ public partial class NameMapViewModel : ObservableObject
 	public NameMapViewModel(List<string> existingNames)
 	{
 		NameMap	= new();
-		Title			= "Add Field Map";
+		Title			= "Add Map";
 		Initialize(null, existingNames);
 	}
 
 	public NameMapViewModel(NameMap namemap, List<string> existingNames)
     {
 		NameMap	= namemap;
-		Title			= "Edit Field Map";
+		Title			= "Edit Map";
 		Initialize(namemap, existingNames);
 	}
 
