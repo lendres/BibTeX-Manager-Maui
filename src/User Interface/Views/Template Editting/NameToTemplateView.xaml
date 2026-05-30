@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewModels="clr-namespace:BibTeXManager.ViewModels"
+	x:Class="BibTeXManager.Views.NameToTemplateView"
+	x:DataType="viewModels:NameMapViewModel"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="308">
+
+		<Border.Resources>
+			<ResourceDictionary>
+				<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+			</ResourceDictionary>
+		</Border.Resources>
+
+		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+			<Label Text="Name Map" StyleClass="Title"  HorizontalOptions="Start"/>
+
+			<!-- From -->
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="From Name" StyleClass="ControlLabel"/>
+				<Entry 
+					x:Name="_fromNameEntry"
+					Placeholder="From Field Name"
+					Loaded="OnLoadedSetFocus"
+					Text="{Binding FromName.Value}">
+					<Entry.Behaviors>
+						<mct:EventToCommandBehavior
+                            x:TypeArguments="system:EventArgs"
+                            Command="{Binding ValidateFromNameCommand}"
+                            BindingContext="{Binding Path=BindingContext, Source={x:Reference _fromNameEntry}, x:DataType=Entry}"
+                            EventName="TextChanged"/>
+					</Entry.Behaviors>
+				</Entry>
+				<Label Text="{Binding FromName.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+			</VerticalStackLayout>
+
+			<!-- To -->
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Label Text="To Name" StyleClass="ControlLabel"/>
+				<Entry
+					x:Name="_toNameEntry"
+					Placeholder="To Field Name"
+					Text="{Binding ToName.Value}">
+					<Entry.Behaviors>
+						<mct:EventToCommandBehavior
+                            x:TypeArguments="system:EventArgs"
+                            Command="{Binding ValidateToNameCommand}"
+                            BindingContext="{Binding Path=BindingContext, Source={x:Reference _toNameEntry}, x:DataType=Entry}"
+                            EventName="TextChanged"/>
+					</Entry.Behaviors>
+				</Entry>
+				<Label Text="{Binding ToName.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+			</VerticalStackLayout>
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+						Text="OK"
+						HorizontalOptions="End"
+						StyleClass="StandardSizeButtonStyle"
+						IsEnabled="{Binding IsSubmittable}"
+						Clicked="OnSaveButtonClicked"/>
+				<Button 
+						Text="Cancel"
+						StyleClass="StandardSizeButtonStyle"
+						HorizontalOptions="End"
+						Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+		</VerticalStackLayout>
+	</Border>
+</dpviews:PopupView>
