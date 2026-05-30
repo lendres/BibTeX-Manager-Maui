@@ -53,8 +53,5 @@ public partial class TypeToTemplateViewModel : NameMapViewModel
 		ValidateSubmittable();
 	}
 
-	//public override bool ValidateSubmittable() => IsSubmittable = NameMap.Modified && FromName.IsValid && ToName.IsValid;
-
 	#endregion
-
 }

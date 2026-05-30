@@ -8,7 +8,6 @@ namespace BibTeXManager.ViewModels;
 public partial class NameMapViewModel : ObservableObject
 {
 	#region Fields
-
 	#endregion
 
 	#region Construction
