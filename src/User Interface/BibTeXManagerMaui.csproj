@@ -81,7 +81,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="Views\Other\NameMapView.xaml">
+		<MauiXaml Update="Views\Name Mapping\NameMapView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\Name Mapping\GetNameView.xaml">
@@ -127,7 +127,7 @@
 		<Compile Update="Views\Name Mapping\GetNameView.xaml.cs">
 		  <DependentUpon>GetNameView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\Other\NameMapView.xaml.cs">
+		<Compile Update="Views\Name Mapping\NameMapView.xaml.cs">
 		  <DependentUpon>NameMapView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Name Mapping\NameMappingView.xaml.cs">
