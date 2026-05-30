@@ -86,7 +86,7 @@ public partial class NameMappingView : ContentPage
 
 		if (result is bool boolResult && boolResult)
 		{
-			ViewModel.Insert(viewModel.FieldNameMap);
+			ViewModel.Insert(viewModel.NameMap);
 		}
 	}
 
@@ -99,7 +99,7 @@ public partial class NameMappingView : ContentPage
 
 		if (result is bool boolResult && boolResult)
 		{
-			ViewModel.ReplaceSelected(viewModel.FieldNameMap);
+			ViewModel.ReplaceSelected(viewModel.NameMap);
 		}
 	}
 

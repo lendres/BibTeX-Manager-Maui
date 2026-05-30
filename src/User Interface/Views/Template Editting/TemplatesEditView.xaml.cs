@@ -55,7 +55,7 @@ public partial class TemplatesEditView : ContentPage
 
 		if (result is bool boolResult && boolResult)
 		{
-			_viewModel.Insert(viewModel.FieldNameMap);
+			_viewModel.Insert(viewModel.NameMap);
 		}
 	}
 
@@ -68,7 +68,7 @@ public partial class TemplatesEditView : ContentPage
 
 		if (result is bool boolResult && boolResult)
 		{
-			_viewModel.ReplaceSelected(viewModel.FieldNameMap);
+			_viewModel.ReplaceSelected(viewModel.NameMap);
 		}
 	}
 

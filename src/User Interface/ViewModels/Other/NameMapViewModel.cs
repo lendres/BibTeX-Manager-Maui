@@ -15,14 +15,14 @@ public partial class NameMapViewModel : ObservableObject
 
 	public NameMapViewModel(List<string> existingNames)
 	{
-		FieldNameMap	= new();
+		NameMap	= new();
 		Title			= "Add Field Map";
 		Initialize(null, existingNames);
 	}
 
 	public NameMapViewModel(NameMap namemap, List<string> existingNames)
     {
-		FieldNameMap	= namemap;
+		NameMap	= namemap;
 		Title			= "Edit Field Map";
 		Initialize(namemap, existingNames);
 	}
@@ -45,7 +45,7 @@ public partial class NameMapViewModel : ObservableObject
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
 
-	public NameMap								FieldNameMap { get; set; }
+	public NameMap								NameMap { get; set; }
 
 	#endregion
 
@@ -60,8 +60,8 @@ public partial class NameMapViewModel : ObservableObject
 
 	private void InitializeValues()
 	{
-		FromName.Value	= FieldNameMap.From;
-		ToName.Value	= FieldNameMap.To;
+		FromName.Value	= NameMap.From;
+		ToName.Value	= NameMap.To;
 	}
 
 	private void AddValidations(NameMap? namemap, List<string> existingNames)
@@ -82,9 +82,9 @@ public partial class NameMapViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateFromName()
 	{
-		if (FromName.Validate() && FieldNameMap.From != FromName.Value)
+		if (FromName.Validate() && NameMap.From != FromName.Value)
 		{
-			FieldNameMap.From = FromName.Value ?? "";
+			NameMap.From = FromName.Value ?? "";
 		}
 		ValidateSubmittable();
 	}
@@ -92,14 +92,14 @@ public partial class NameMapViewModel : ObservableObject
 	[RelayCommand]
 	private void ValidateToName()
 	{
-		if (ToName.Validate() && FieldNameMap.To != ToName.Value)
+		if (ToName.Validate() && NameMap.To != ToName.Value)
 		{
-			FieldNameMap.To = ToName.Value ?? "";
+			NameMap.To = ToName.Value ?? "";
 		}
 		ValidateSubmittable();
 	}
 
-	public bool ValidateSubmittable() => IsSubmittable = FieldNameMap.Modified && FromName.IsValid && ToName.IsValid;
+	public bool ValidateSubmittable() => IsSubmittable = NameMap.Modified && FromName.IsValid && ToName.IsValid;
 
 	#endregion
 }
