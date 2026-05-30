@@ -6,7 +6,9 @@ using DigitalProduction.Maui.ComponentModel;
 using DigitalProduction.Maui.Enums;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Xml.Serialization;
+using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BibTeXManager.ViewModels;
 
@@ -59,6 +61,7 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 
 	#region Initialization
 
+	[MemberNotNull(nameof(TemplatesDictionary))]
 	private void Initialize()
 	{
 		Items				= new ObservableCollection<NameMap>(Initializer.NameMaps);
@@ -67,6 +70,11 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 		if (TemplateNames.Count > 0)
 		{
 			LastTemplateSelected = TemplateNames[0];
+			// Add new observable strings for the field names for the currently selected template.
+			foreach (string fieldName in TemplatesDictionary[LastTemplateSelected])
+			{
+				AddTemlateFieldName(fieldName);
+			}
 		}
 	}
 
@@ -120,7 +128,7 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 		}
 
 		// Add new observable strings for the field names for the currently selected template.
-		foreach (string fieldName in Initializer.GetDefaultFields(SelectedTemplate))
+		foreach (string fieldName in TemplatesDictionary[SelectedTemplate])
 		{
 			AddTemlateFieldName(fieldName);
 		}
@@ -260,11 +268,16 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 		
 		// Save any field names updates on the UI to the template they belong to.
 		StoreFieldNames();
-
  
-		SerializableDictionary<string, List<string>> templatesDictionary = Initializer.Templates;
+		// Take all the templates from the UI and push them to the model.
+		Initializer.Templates.Clear();
+		foreach (KeyValuePair<string, List<string>> template in TemplatesDictionary)
+		{
+			Initializer.Templates.Add(template.Key, new List<string>(template.Value));
+		}
 
-
+		// Save the file.
+		Initializer.Serialize();
 
 		// Set the observable strings to be saved (not modified).
 		foreach (ObservableString observableString in ObservableTemplateFieldNames)
