@@ -102,7 +102,7 @@
 		<MauiXaml Update="Views\Main\String Entries\StringEditView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\Template Editting\NameToTemplateView.xaml">
+		<MauiXaml Update="Views\Template Editting\TypeToTemplateView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\Template Editting\TemplatesEditView.xaml">
@@ -148,8 +148,8 @@
 		<Compile Update="Views\Main\MainView.xaml.cs">
 		  <DependentUpon>MainView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\Template Editting\NameToTemplateView.xaml.cs">
-		  <DependentUpon>NameToTemplateView.xaml</DependentUpon>
+		<Compile Update="Views\Template Editting\TypeToTemplateView.xaml.cs">
+		  <DependentUpon>TypeToTemplateView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Template Editting\TemplatesEditView.xaml.cs">
 		  <DependentUpon>TemplatesEditView.xaml</DependentUpon>
