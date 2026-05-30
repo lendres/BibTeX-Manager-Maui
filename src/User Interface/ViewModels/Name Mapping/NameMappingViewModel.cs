@@ -35,9 +35,6 @@ public partial class NameMappingViewModel : DataGridBaseViewModel<NameMap>
 	[ObservableProperty]
 	public partial ValidatableObject<string>	ToType  { get; set; } = new();
 
-	[ObservableProperty]
-	public partial bool							IsSubmittable { get; set; }
-
 	#endregion
 
 	#region Initialization and Validation
@@ -67,7 +64,7 @@ public partial class NameMappingViewModel : DataGridBaseViewModel<NameMap>
 		ValidateSubmittable();
 	}
 
-	public bool ValidateSubmittable() => IsSubmittable = Modified && ToType.IsValid;
+	public override bool ValidateSubmittable() => IsSubmittable = Modified && ToType.IsValid;
 
 	#endregion
 
