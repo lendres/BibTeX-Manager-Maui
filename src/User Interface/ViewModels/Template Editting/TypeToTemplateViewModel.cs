@@ -1,12 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BibTeXLibrary;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using DigitalProduction.Maui.Validation;
+using System.Diagnostics.CodeAnalysis;
 
-namespace BibTeXManager.ViewModels.Template_Editting
+namespace BibTeXManager.ViewModels;
+
+public partial class TypeToTemplateViewModel : NameMapViewModel
 {
-	internal class TypeToTemplateViewModel
+	#region Construction
+
+	public TypeToTemplateViewModel(List<string> existingNames) :
+		base(existingNames)
 	{
+		Initialize();
 	}
+
+	public TypeToTemplateViewModel(NameMap namemap, List<string> existingNames) :
+		base(namemap, existingNames)
+	{
+		Initialize();
+	}
+
+	[MemberNotNull(nameof(TemplateNames))]
+	private void Initialize()
+	{
+		TemplateNames = Project.BibEntryInitialization.TemplateNames;
+	}
+
+	#endregion
+
+	#region Properties
+
+		[ObservableProperty]
+	public partial List<string>						TemplateNames { get; set; }
+
+	#endregion
 }
