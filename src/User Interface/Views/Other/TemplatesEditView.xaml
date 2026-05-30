@@ -30,17 +30,24 @@
     <Grid RowDefinitions="Auto,Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
 		
         <!-- Settings label, save, and cancel buttons. -->
-        <Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="*,250" HorizontalOptions="Fill" VerticalOptions="Start">
+        <Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="*,400" HorizontalOptions="Fill" VerticalOptions="Start">
             <Label Grid.Column="0" Text="Bibliography Entry Templates" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
             <HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0,0,0,0" VerticalOptions="Center">
                 <Button 
-				    Text="OK"
+				    Text="Save &amp; Return"
 				    HorizontalOptions="End"
 				    StyleClass="StandardSizeButtonStyle"
 				    IsEnabled="{Binding IsSubmittable}"
                     VerticalOptions="Center"
-				    Clicked="OnSave"/>
-                <Button 
+				    Clicked="OnSaveAndReturn"/>
+				<Button 
+				    Text="Save"
+				    HorizontalOptions="End"
+				    StyleClass="StandardSizeButtonStyle"
+				    IsEnabled="{Binding IsSubmittable}"
+                    VerticalOptions="Center"
+				    Command="{Binding SaveCommand}"/>
+				<Button 
 				    Text="Cancel"
 				    StyleClass="StandardSizeButtonStyle"
 				    HorizontalOptions="End"

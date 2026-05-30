@@ -23,7 +23,7 @@ public partial class TemplatesEditView : ContentPage
 		}
 	}
 
-	async private void OnSave(object? sender, EventArgs eventArgs)
+	async private void OnSaveAndReturn(object? sender, EventArgs eventArgs)
 	{
 		_viewModel.Save();
 		Dictionary<string, object?> navigationParameter = new()
