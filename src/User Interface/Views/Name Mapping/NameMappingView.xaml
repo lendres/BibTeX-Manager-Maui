@@ -108,7 +108,6 @@
 						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 				</HorizontalStackLayout>
 
-
 				<dg:DataGrid
 					Grid.Row="1"
 					x:Name="_dataGrid"
