@@ -142,7 +142,7 @@
 				<ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0">
 					<Grid Padding="0,0,10,0">
 						<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
-						<CollectionView Grid.Row="0" ItemsSource="{Binding TemplateFieldNames}" Margin="0">
+						<CollectionView Grid.Row="0" ItemsSource="{Binding ObservableTemplateFieldNames}" Margin="0">
 							<CollectionView.ItemTemplate>
 								<DataTemplate x:DataType="dpcm:ObservableString">
 									<Grid Padding="0,3">

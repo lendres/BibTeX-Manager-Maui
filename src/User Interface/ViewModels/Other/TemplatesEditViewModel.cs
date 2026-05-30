@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.ComponentModel;
 using DigitalProduction.Maui.Enums;
 using DigitalProduction.Maui.ViewModels;
+using DigitalProduction.Xml.Serialization;
 using System.Collections.ObjectModel;
 
 namespace BibTeXManager.ViewModels;
@@ -43,7 +44,10 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	public partial string?											SelectedTemplate { get; set; }
 
 	[ObservableProperty]
-	public partial ObservableCollection<ObservableWrapper<string>>	TemplateFieldNames { get; set; } = new();
+	public partial ObservableCollection<ObservableWrapper<string>>	ObservableTemplateFieldNames { get; set; } = new();
+
+	private SerializableDictionary<string, List<string>>			TemplatesDictionary { get; set; }
+	private string?													LastTemplateSelected { get; set; } = null;
 
 	[ObservableProperty]
 	[NotifyCanExecuteChangedFor(nameof(DeleteFieldCommand))]
@@ -51,18 +55,19 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	[NotifyCanExecuteChangedFor(nameof(MoveFieldDownCommand))]
 	public partial ObservableString?								SelectedField { get; set; }
 
-
-	[ObservableProperty]
-	public partial bool												IsSubmittable { get; set; }
-
 	#endregion
 
 	#region Initialization
 
 	private void Initialize()
 	{
-		Items = new ObservableCollection<NameMap>(Initializer.NameMaps);
-		TemplateNames = Initializer.TemplateNames;
+		Items				= new ObservableCollection<NameMap>(Initializer.NameMaps);
+		TemplatesDictionary	= new SerializableDictionary<string, List<string>>(Initializer.Templates);
+		TemplateNames		= Initializer.TemplateNames;
+		if (TemplateNames.Count > 0)
+		{
+			LastTemplateSelected = TemplateNames[0];
+		}
 	}
 
 	#endregion
@@ -85,14 +90,18 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 		//}
 		ValidateSubmittable();
 	}
-	public bool ValidateSubmittable() => IsSubmittable =
-		Modified;
-
-
+	
 	#endregion
 
 	#region Events
 
+	private void OnChildModifiedChanged(object sender, bool modified)
+	{
+		if (modified)
+		{
+			SetModified(true);
+		}
+	}
 
 	#endregion
 
@@ -101,23 +110,26 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	[RelayCommand]
 	private void SelectedTemplateChanged()
 	{
-		TemplateFieldNames.Clear();
+		// Store all the field names that were on the UI back into our dictionary, then clear the list.
+		StoreFieldNames();
+		ObservableTemplateFieldNames.Clear();
 
 		if (SelectedTemplate == null)
 		{
 			return;
 		}
 
+		// Add new observable strings for the field names for the currently selected template.
 		foreach (string fieldName in Initializer.GetDefaultFields(SelectedTemplate))
 		{
-			TemplateFieldNames.Add(new ObservableString(fieldName));
+			AddTemlateFieldName(fieldName);
 		}
 	}
 
 	[RelayCommand]
 	public void AddField()
 	{
-		TemplateFieldNames.Add(new ObservableWrapper<string>(""));
+		AddTemlateFieldName(string.Empty);
 		SetModified(true);
 	}
 
@@ -129,7 +141,7 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 			return;
 		}
 
-		TemplateFieldNames.Remove(SelectedField);
+		ObservableTemplateFieldNames.Remove(SelectedField);
 		SelectedField = null;
 		_isButtonPressed = false;
 		SetModified(true);
@@ -158,14 +170,14 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 			return;
 		}
 
-		int index = TemplateFieldNames.IndexOf(SelectedField);
+		int index = ObservableTemplateFieldNames.IndexOf(SelectedField);
 
 		if (index <= 0)
 		{
 			return;
 		}
 
-		TemplateFieldNames.Move(index, index - 1);
+		ObservableTemplateFieldNames.Move(index, index - 1);
 		SelectedField = null;
 		_isButtonPressed = false;
 		SetModified(true);
@@ -173,7 +185,7 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 
 	private bool CanMoveFieldUp()
 	{
-		return SelectedField is not null && TemplateFieldNames.IndexOf(SelectedField) > 0;
+		return SelectedField is not null && ObservableTemplateFieldNames.IndexOf(SelectedField) > 0;
 	}
 
 	[RelayCommand(CanExecute = nameof(CanMoveFieldDown))]
@@ -184,14 +196,14 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 			return;
 		}
 
-		int index = TemplateFieldNames.IndexOf(SelectedField);
+		int index = ObservableTemplateFieldNames.IndexOf(SelectedField);
 
-		if (index < 0 || index >= TemplateFieldNames.Count - 1)
+		if (index < 0 || index >= ObservableTemplateFieldNames.Count - 1)
 		{
 			return;
 		}
 
-		TemplateFieldNames.Move(index, index + 1);
+		ObservableTemplateFieldNames.Move(index, index + 1);
 		SelectedField = null;
 		_isButtonPressed = false;
 		SetModified(true);
@@ -199,12 +211,33 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 
 	private bool CanMoveFieldDown()
 	{
-		return SelectedField is not null && TemplateFieldNames.IndexOf(SelectedField) >= 0 && TemplateFieldNames.IndexOf(SelectedField) < TemplateFieldNames.Count - 1;
+		return SelectedField is not null && ObservableTemplateFieldNames.IndexOf(SelectedField) >= 0 && ObservableTemplateFieldNames.IndexOf(SelectedField) < ObservableTemplateFieldNames.Count - 1;
 	}
 
 	#endregion
 
 	#region Methods
+
+	private void AddTemlateFieldName(string fieldName)
+	{
+		ObservableString observableString	=  new(fieldName);
+		observableString.ModifiedChanged	+= OnChildModifiedChanged;
+		ObservableTemplateFieldNames.Add(observableString);
+	}
+
+	private void StoreFieldNames()
+	{
+		if (LastTemplateSelected != null)
+		{
+			List<string> templateFields = TemplatesDictionary[LastTemplateSelected];
+			templateFields.Clear();
+			foreach (ObservableString observableFieldName in ObservableTemplateFieldNames)
+			{
+				templateFields.Add(observableFieldName.Value!);
+			}
+		}
+		LastTemplateSelected = SelectedTemplate;
+	}
 
 	private void SetModified(bool modified)
 	{
@@ -212,8 +245,33 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 		ValidateSubmittable();
 	}
 
+	[RelayCommand]
 	public void Save()
 	{
+		// Type to template mappings.
+		SerializableDictionary<string, NameMap> nameMapDictionary = Initializer.TypeToTemplateMappings;
+		nameMapDictionary.Clear();
+
+		foreach (NameMap nameMap in Items!)
+		{
+			nameMapDictionary[nameMap.From] = nameMap;
+		}
+
+		
+		// Save any field names updates on the UI to the template they belong to.
+		StoreFieldNames();
+
+ 
+		SerializableDictionary<string, List<string>> templatesDictionary = Initializer.Templates;
+
+
+
+		// Set the observable strings to be saved (not modified).
+		foreach (ObservableString observableString in ObservableTemplateFieldNames)
+		{
+			observableString.Save();
+		}
+		SetModified(false);
 	}
 
 	public override SearchResult Find(string search)
