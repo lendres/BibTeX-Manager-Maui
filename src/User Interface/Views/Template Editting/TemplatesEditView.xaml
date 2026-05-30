@@ -103,15 +103,22 @@
 		</Grid>
 
 		<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
-		<Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,*" Margin="0" Padding="0,20,0,0"
+		<Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto,*" Margin="0" Padding="0,20,0,0"
 			IsVisible="{Binding ActiveInitializationPart, Converter={StaticResource PartView}, ConverterParameter={x:Static enums:InitializationPartType.Templates}}">
 
 			<!-- To Type -->
 			<Border Grid.Row="0" StyleClass="SmallTitleBorderStyle" Margin="0,0,0,10">
 				<Label Text="Type" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
+			<HorizontalStackLayout Grid.Row="1" Grid.Column="0" StyleClass="TopButtonRowStyle">
+				<Button Text="Add" Clicked="OnNewTemplate" StyleClass="SquareButtonStyle"/>
+				<Button Text="Rename" Clicked="OnRenameTemplate" StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedTemplate, Converter={StaticResource IsNotNullConverter}}"/>
+				<Button Text="Delete" Clicked="OnDeleteTemplate" StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedTemplate, Converter={StaticResource IsNotNullConverter}}"/>
+			</HorizontalStackLayout>
 			<Picker
-				Grid.Row="1"
+				Grid.Row="2"
 				Title="Entry Type"
 				x:Name="_templatePicker"
 				ItemsSource="{Binding TemplateNames}"
@@ -126,10 +133,10 @@
 			</Picker>
 
 			<!-- Fields -->
-			<Border Grid.Row="2" StyleClass="SmallTitleBorderStyle" Margin="0,20,0,10">
+			<Border Grid.Row="3" StyleClass="SmallTitleBorderStyle" Margin="0,20,0,10">
 				<Label Text="Fields" StyleClass="SmallTitleLabelStyle"/>
 			</Border>
-			<Grid Grid.Row="3" StyleClass="DataGridEditStyle" Margin="0" Padding="0">
+			<Grid Grid.Row="4" StyleClass="DataGridEditStyle" Margin="0" Padding="0">
 				<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle" Margin="0" Padding="0">
 					<Button Text="Add" Command="{Binding AddFieldCommand}" StyleClass="SquareButtonStyle"/>
 					<!--<Button Text="Edit" Clicked="OnEditNameMap" StyleClass="SquareButtonStyle"

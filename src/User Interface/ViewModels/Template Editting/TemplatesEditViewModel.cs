@@ -40,7 +40,7 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	public partial InitializationPartType							ActiveInitializationPart { get; set; }
 
 	[ObservableProperty]
-	public partial List<string>?									TemplateNames { get; set; }
+	public partial ObservableCollection<string>?					TemplateNames { get; set; }
 
 	[ObservableProperty]
 	public partial string?											SelectedTemplate { get; set; }
@@ -66,7 +66,7 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	{
 		Items				= new ObservableCollection<NameMap>(Initializer.NameMaps);
 		TemplatesDictionary	= new SerializableDictionary<string, List<string>>(Initializer.Templates);
-		TemplateNames		= Initializer.TemplateNames;
+		TemplateNames		= new ObservableCollection<string>(Initializer.TemplateNames);
 		if (TemplateNames.Count > 0)
 		{
 			LastTemplateSelected = TemplateNames[0];
@@ -225,6 +225,48 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	#endregion
 
 	#region Methods
+
+	public void NewTemplate(string templateName)
+	{
+		//BibliographyEntryMap newMap = new();
+		//NameMapper.Maps[templateName.ToLower()] = newMap;
+		//BibliographyEntryTypes = NameMapper.Maps.Keys.ToList();
+		SelectedTemplate = templateName;
+		SetModified(true);
+	}
+
+	public void RenameTemplate(string oldTemplateName, string newTemplateName)
+	{
+		List<string> fields = TemplatesDictionary[oldTemplateName];
+
+		TemplateNames!.Remove(oldTemplateName);
+		TemplateNames.Add(newTemplateName);
+
+		foreach (NameMap nameMap in Items)
+		{
+			if (nameMap.To == oldTemplateName)
+			{
+				nameMap.To = newTemplateName;
+			}
+		}
+
+		TemplatesDictionary.Remove(oldTemplateName);
+		TemplatesDictionary[newTemplateName] = fields;
+
+		LastTemplateSelected	= newTemplateName;
+		SelectedTemplate		= newTemplateName;
+
+		SetModified(true);
+	}
+
+	public void DeleteTemplate(string templateName)
+	{
+		//NameMapper.Maps.Remove(templateName.ToLower());
+		//BibliographyEntryTypes = NameMapper.Maps.Keys.ToList();
+		//SelectedType = BibliographyEntryTypes.FirstOrDefault();
+		TemplatesDictionary.Remove(templateName);
+		SetModified(true);
+	}
 
 	private void AddTemlateFieldName(string fieldName)
 	{

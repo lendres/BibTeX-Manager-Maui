@@ -96,6 +96,46 @@ public partial class TemplatesEditView : ContentPage
 
 	#region Template Editting Button Events
 
+	#region Templates
+
+	private async void OnNewTemplate(object sender, EventArgs eventArgs)
+	{
+		GetNameViewModel	viewModel	= new(_viewModel.TemplateNames!.ToList());
+		GetNameView			view		= new(viewModel);
+		object?				result		= await Shell.Current.ShowPopupAsync(view);
+
+		if (result is bool boolResult && boolResult)
+		{
+			_viewModel.NewTemplate(viewModel.Name);
+		}
+	}
+
+	private async void OnRenameTemplate(object sender, EventArgs eventArgs)
+	{
+		GetNameViewModel	viewModel	= new(_viewModel.SelectedTemplate!, _viewModel.TemplateNames!.ToList());
+		GetNameView			view		= new(viewModel);
+		object?				result		= await Shell.Current.ShowPopupAsync(view);
+
+		if (result is bool boolResult && boolResult)
+		{
+			_viewModel.RenameTemplate(_viewModel.SelectedTemplate!, viewModel.Name);
+		}
+	}
+
+	private async void OnDeleteTemplate(object sender, EventArgs eventArgs)
+	{
+		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+
+		if (result)
+		{
+			_viewModel.DeleteTemplate(_viewModel.SelectedTemplate!);
+		}
+	}
+
+	#endregion
+
+	#region Fields
+
 	private void ButtonPressed(object? sender, EventArgs e)
 	{
 		_viewModel.BeginButtonPress();
@@ -120,6 +160,8 @@ public partial class TemplatesEditView : ContentPage
 
 		_viewModel.SelectedField = null;
 	}
+
+	#endregion
 
 	#endregion
 }
