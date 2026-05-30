@@ -6,9 +6,9 @@
 	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
-	xmlns:viewModels="clr-namespace:BibTeXManager.ViewModels"
+	xmlns:viewmodels="clr-namespace:BibTeXManager.ViewModels"
 	x:Class="BibTeXManager.Views.NameMapView"
-	x:DataType="viewModels:NameMapViewModel"
+	x:DataType="viewmodels:NameMapViewModel"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="308">
