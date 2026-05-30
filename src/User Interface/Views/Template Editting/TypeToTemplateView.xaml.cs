@@ -3,9 +3,9 @@ using DigitalProduction.Maui.Views;
 
 namespace BibTeXManager.Views;
 
-public partial class NameToTemplateView : PopupView
+public partial class TypeToTemplateView : PopupView
 {
-	public NameToTemplateView(NameMapViewModel viewModel)
+	public TypeToTemplateView(NameMapViewModel viewModel)
 	{
 		BindingContext = viewModel;
 		InitializeComponent();

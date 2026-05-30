@@ -7,9 +7,13 @@ namespace BibTeXManager.Views;
 
 public partial class TemplatesEditView : ContentPage
 {
-	readonly TemplatesEditViewModel _viewModel;
+	#region Fields
 
-	readonly IBibTeXFilePicker			_filePicker		= IPlatformApplication.Current!.Services.GetRequiredService<IBibTeXFilePicker>();
+	readonly TemplatesEditViewModel		_viewModel;
+
+	#endregion
+
+	#region Construction
 
 	public TemplatesEditView(TemplatesEditViewModel viewModel)
 	{
@@ -22,6 +26,10 @@ public partial class TemplatesEditView : ContentPage
 			_templatePicker.SelectedIndex = 0;
 		}
 	}
+
+	#endregion
+
+	#region Page Button Events
 
 	async private void OnSaveAndReturn(object? sender, EventArgs eventArgs)
 	{
@@ -45,7 +53,9 @@ public partial class TemplatesEditView : ContentPage
 		await Shell.Current.GoToAsync("../", true, navigationParameter);
 	}
 
-	#region Button Events
+	#endregion
+
+	#region Name Map Button Events
 
 	private async void OnNewNameMap(object sender, EventArgs eventArgs)
 	{
@@ -81,6 +91,10 @@ public partial class TemplatesEditView : ContentPage
 			_viewModel.Delete();
 		}
 	}
+
+	#endregion
+
+	#region Template Editting Button Events
 
 	private void ButtonPressed(object? sender, EventArgs e)
 	{

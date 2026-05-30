@@ -6,9 +6,9 @@
 	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
-	xmlns:viewModels="clr-namespace:BibTeXManager.ViewModels"
-	x:Class="BibTeXManager.Views.NameToTemplateView"
-	x:DataType="viewModels:NameMapViewModel"
+	xmlns:viewmodels="clr-namespace:BibTeXManager.ViewModels"
+	x:Class="BibTeXManager.Views.TypeToTemplateView"
+	x:DataType="viewmodels:TypeToTemplateViewModel"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="308">
@@ -44,18 +44,19 @@
 			<!-- To -->
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
 				<Label Text="To Name" StyleClass="ControlLabel"/>
-				<Entry
-					x:Name="_toNameEntry"
-					Placeholder="To Field Name"
-					Text="{Binding ToName.Value}">
-					<Entry.Behaviors>
-						<mct:EventToCommandBehavior
-                            x:TypeArguments="system:EventArgs"
-                            Command="{Binding ValidateToNameCommand}"
-                            BindingContext="{Binding Path=BindingContext, Source={x:Reference _toNameEntry}, x:DataType=Entry}"
-                            EventName="TextChanged"/>
-					</Entry.Behaviors>
-				</Entry>
+				<Picker
+					Title="Template"
+					x:Name="_templatePicker"
+					ItemsSource="{Binding TemplateNames}"
+					SelectedItem="{Binding NameMap.To}">
+					<Picker.Behaviors>
+						<!--<mct:EventToCommandBehavior
+							x:TypeArguments="system:EventArgs"
+							Command="{Binding SelectedTemplateChangedCommand}"
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference _templatePicker}, x:DataType=Picker}"
+							EventName="SelectedIndexChanged"/>-->
+					</Picker.Behaviors>
+				</Picker>
 				<Label Text="{Binding ToName.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
 			</VerticalStackLayout>
 
