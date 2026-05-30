@@ -80,7 +80,7 @@ public partial class NameMapViewModel : ObservableObject
 	}
 
 	[RelayCommand]
-	private void ValidateFromName()
+	protected void ValidateFromName()
 	{
 		if (FromName.Validate() && NameMap.From != FromName.Value)
 		{
@@ -90,7 +90,7 @@ public partial class NameMapViewModel : ObservableObject
 	}
 
 	[RelayCommand]
-	private void ValidateToName()
+	protected virtual void ValidateToName()
 	{
 		if (ToName.Validate() && NameMap.To != ToName.Value)
 		{
@@ -99,7 +99,7 @@ public partial class NameMapViewModel : ObservableObject
 		ValidateSubmittable();
 	}
 
-	public bool ValidateSubmittable() => IsSubmittable = NameMap.Modified && FromName.IsValid && ToName.IsValid;
+	public virtual bool ValidateSubmittable() => IsSubmittable = NameMap.Modified && FromName.IsValid && ToName.IsValid;
 
 	#endregion
 }

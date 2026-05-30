@@ -59,9 +59,9 @@ public partial class TemplatesEditView : ContentPage
 
 	private async void OnNewNameMap(object sender, EventArgs eventArgs)
 	{
-		NameMapViewModel	viewModel	= new(_viewModel.Initializer.TypeNames);
-		NameMapView			view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
+		TypeToTemplateViewModel viewModel	= new(_viewModel.Initializer.TypeNames);
+		TypeToTemplateView		view		= new(viewModel);
+		object?					result		= await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResult && boolResult)
 		{
@@ -71,9 +71,9 @@ public partial class TemplatesEditView : ContentPage
 
 	private async void OnEditNameMap(object sender, EventArgs eventArgs)
 	{
-		NameMap				nameMap		= new(_viewModel.SelectedItem!);
-		NameMapViewModel	viewModel	= new(nameMap, _viewModel.Initializer.TypeNames);
-		NameMapView			view		= new(viewModel);
+		NameMap					nameMap		= new(_viewModel.SelectedItem!);
+		TypeToTemplateViewModel	viewModel	= new(nameMap, _viewModel.Initializer.TypeNames);
+		TypeToTemplateView		view		= new(viewModel);
 		object? result = await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResult && boolResult)

@@ -11,7 +11,7 @@
 	x:DataType="viewmodels:TypeToTemplateViewModel"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
-	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="308">
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="290" MaximumHeightRequest="300">
 
 		<Border.Resources>
 			<ResourceDictionary>
@@ -20,11 +20,11 @@
 		</Border.Resources>
 
 		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
-			<Label Text="Name Map" StyleClass="Title"  HorizontalOptions="Start"/>
+			<Label Text="Type to Template Map" StyleClass="Title"  HorizontalOptions="Start"/>
 
 			<!-- From -->
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
-				<Label Text="From Name" StyleClass="ControlLabel"/>
+				<Label Text="Type" StyleClass="ControlLabel"/>
 				<Entry 
 					x:Name="_fromNameEntry"
 					Placeholder="From Field Name"
@@ -43,21 +43,20 @@
 
 			<!-- To -->
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
-				<Label Text="To Name" StyleClass="ControlLabel"/>
 				<Picker
 					Title="Template"
 					x:Name="_templatePicker"
 					ItemsSource="{Binding TemplateNames}"
-					SelectedItem="{Binding NameMap.To}">
+					SelectedItem="{Binding ToName.Value}">
 					<Picker.Behaviors>
-						<!--<mct:EventToCommandBehavior
+						<mct:EventToCommandBehavior
 							x:TypeArguments="system:EventArgs"
 							Command="{Binding SelectedTemplateChangedCommand}"
 							BindingContext="{Binding Path=BindingContext, Source={x:Reference _templatePicker}, x:DataType=Picker}"
-							EventName="SelectedIndexChanged"/>-->
+							EventName="SelectedIndexChanged"/>
 					</Picker.Behaviors>
 				</Picker>
-				<Label Text="{Binding ToName.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+				<!--<Label Text="{Binding ToName.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>-->
 			</VerticalStackLayout>
 
 			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
