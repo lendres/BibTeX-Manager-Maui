@@ -239,10 +239,12 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	{
 		List<string> fields = TemplatesDictionary[oldTemplateName];
 
+		// Remove the old name and add the new one.
 		TemplateNames!.Remove(oldTemplateName);
 		TemplateNames.Add(newTemplateName);
 
-		foreach (NameMap nameMap in Items)
+		// Rename the template in the "Type to Template" mappings.
+		foreach (NameMap nameMap in Items!)
 		{
 			if (nameMap.To == oldTemplateName)
 			{
@@ -250,9 +252,11 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 			}
 		}
 
+		// Update the dictionary.
 		TemplatesDictionary.Remove(oldTemplateName);
 		TemplatesDictionary[newTemplateName] = fields;
 
+		// Now update the form by setting it to the new template name.
 		LastTemplateSelected	= newTemplateName;
 		SelectedTemplate		= newTemplateName;
 
@@ -261,9 +265,7 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 
 	public void DeleteTemplate(string templateName)
 	{
-		//NameMapper.Maps.Remove(templateName.ToLower());
-		//BibliographyEntryTypes = NameMapper.Maps.Keys.ToList();
-		//SelectedType = BibliographyEntryTypes.FirstOrDefault();
+
 		TemplatesDictionary.Remove(templateName);
 		SetModified(true);
 	}
