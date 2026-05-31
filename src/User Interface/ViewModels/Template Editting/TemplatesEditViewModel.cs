@@ -8,6 +8,7 @@ using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Xml.Serialization;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace BibTeXManager.ViewModels;
@@ -64,7 +65,7 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	[MemberNotNull(nameof(TemplatesDictionary))]
 	private void Initialize()
 	{
-		Items				= new ObservableCollection<NameMap>(Initializer.NameMaps);
+		Items				= new ObservableCollection<NameMap>(Initializer.CopyNameMaps());
 		TemplatesDictionary	= new SerializableDictionary<string, List<string>>(Initializer.Templates);
 		TemplateNames		= new ObservableCollection<string>(Initializer.TemplateNames);
 		if (TemplateNames.Count > 0)
@@ -113,7 +114,43 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 
 	#endregion
 
-	#region Commands
+	#region Methods
+
+	#region Initializer
+
+	[RelayCommand]
+	public void Save()
+	{
+		// Type to template mappings.
+		SerializableDictionary<string, NameMap> nameMapDictionary = Initializer.TypeToTemplateMappings;
+		nameMapDictionary.Clear();
+
+		foreach (NameMap nameMap in Items!)
+		{
+			nameMapDictionary[nameMap.From] = nameMap;
+		}
+
+		// Save any field names updates on the UI to the template they belong to.
+		StoreFieldNames();
+
+		// Take all the data from the UI and push them to the model. The NameMap 
+		Initializer.SetNameMaps(Items);
+		Initializer.SetTemplates(TemplatesDictionary);
+
+		// Save the file.
+		Initializer.Serialize();
+
+		// Set the observable strings to be saved (not modified).
+		foreach (ObservableString observableString in ObservableTemplateFieldNames)
+		{
+			observableString.Save();
+		}
+		SetModified(false);
+	}
+
+	#endregion
+
+	#region Template Editting
 
 	[RelayCommand]
 	private void SelectedTemplateChanged()
@@ -133,6 +170,69 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 			AddTemlateFieldName(fieldName);
 		}
 	}
+
+	public void NewTemplate(string templateName)
+	{
+		TemplateNames!.Add(templateName);
+		TemplatesDictionary[templateName] = new List<string>();
+
+		// Now update the form by setting it to the new template name.
+		LastTemplateSelected	= templateName;
+		SelectedTemplate		= templateName;
+
+		SetModified(true);
+	}
+
+	public void RenameTemplate(string oldTemplateName, string newTemplateName)
+	{
+		// Remove the old name and add the new one.
+		TemplateNames!.Remove(oldTemplateName);
+		TemplateNames.Add(newTemplateName);
+
+		// Rename the template in the "Type to Template" mappings.
+		foreach (NameMap nameMap in Items!)
+		{
+			if (nameMap.To == oldTemplateName)
+			{
+				nameMap.To = newTemplateName;
+			}
+		}
+
+		// Update the dictionary.
+		List<string> fields = TemplatesDictionary[oldTemplateName];
+		TemplatesDictionary.Remove(oldTemplateName);
+		TemplatesDictionary[newTemplateName] = fields;
+
+		// Now update the form by setting it to the new template name.
+		LastTemplateSelected	= newTemplateName;
+		SelectedTemplate		= newTemplateName;
+
+		SetModified(true);
+	}
+
+	public void DeleteTemplate(string templateName)
+	{
+		TemplateNames!.Remove(templateName);
+		TemplatesDictionary.Remove(templateName);
+
+		// Now update the form by setting it to the new template name.
+		if (templateName.Length > 0)
+		{
+			LastTemplateSelected	= TemplateNames[0];
+			SelectedTemplate		= TemplateNames[0];
+		}
+		else
+		{
+			LastTemplateSelected	= null;
+			SelectedTemplate		= null;
+		}
+
+		SetModified(true);
+	}
+
+	#endregion
+
+	#region Template Field Editting
 
 	[RelayCommand]
 	public void AddField()
@@ -222,58 +322,10 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 		return SelectedField is not null && ObservableTemplateFieldNames.IndexOf(SelectedField) >= 0 && ObservableTemplateFieldNames.IndexOf(SelectedField) < ObservableTemplateFieldNames.Count - 1;
 	}
 
-	#endregion
-
-	#region Methods
-
-	public void NewTemplate(string templateName)
-	{
-		//BibliographyEntryMap newMap = new();
-		//NameMapper.Maps[templateName.ToLower()] = newMap;
-		//BibliographyEntryTypes = NameMapper.Maps.Keys.ToList();
-		SelectedTemplate = templateName;
-		SetModified(true);
-	}
-
-	public void RenameTemplate(string oldTemplateName, string newTemplateName)
-	{
-		List<string> fields = TemplatesDictionary[oldTemplateName];
-
-		// Remove the old name and add the new one.
-		TemplateNames!.Remove(oldTemplateName);
-		TemplateNames.Add(newTemplateName);
-
-		// Rename the template in the "Type to Template" mappings.
-		foreach (NameMap nameMap in Items!)
-		{
-			if (nameMap.To == oldTemplateName)
-			{
-				nameMap.To = newTemplateName;
-			}
-		}
-
-		// Update the dictionary.
-		TemplatesDictionary.Remove(oldTemplateName);
-		TemplatesDictionary[newTemplateName] = fields;
-
-		// Now update the form by setting it to the new template name.
-		LastTemplateSelected	= newTemplateName;
-		SelectedTemplate		= newTemplateName;
-
-		SetModified(true);
-	}
-
-	public void DeleteTemplate(string templateName)
-	{
-
-		TemplatesDictionary.Remove(templateName);
-		SetModified(true);
-	}
-
 	private void AddTemlateFieldName(string fieldName)
 	{
-		ObservableString observableString	=  new(fieldName);
-		observableString.ModifiedChanged	+= OnChildModifiedChanged;
+		ObservableString observableString = new(fieldName);
+		observableString.ModifiedChanged += OnChildModifiedChanged;
 		ObservableTemplateFieldNames.Add(observableString);
 	}
 
@@ -291,50 +343,40 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 		LastTemplateSelected = SelectedTemplate;
 	}
 
+	#endregion
+
+	#region Helper Functions and DataGridView
+
 	private void SetModified(bool modified)
 	{
 		Modified = modified;
 		ValidateSubmittable();
 	}
 
-	[RelayCommand]
-	public void Save()
+	/// <summary>
+	/// Checks if a given template is in use by any of the NameMaps.
+	/// </summary>
+	/// <param name="template">The template name to check for.</param>
+	/// <returns>True if any of the NameMaps uses the template, false otherwise.</returns>
+	public bool IsCurrentTemplateInUse()
 	{
-		// Type to template mappings.
-		SerializableDictionary<string, NameMap> nameMapDictionary = Initializer.TypeToTemplateMappings;
-		nameMapDictionary.Clear();
-
-		foreach (NameMap nameMap in Items!)
+		Trace.Assert(Items != null);
+		foreach (NameMap nameMap in Items)
 		{
-			nameMapDictionary[nameMap.From] = nameMap;
+			if (nameMap.To == SelectedTemplate)
+			{
+				return true;
+			}
 		}
-
-		
-		// Save any field names updates on the UI to the template they belong to.
-		StoreFieldNames();
- 
-		// Take all the templates from the UI and push them to the model.
-		Initializer.Templates.Clear();
-		foreach (KeyValuePair<string, List<string>> template in TemplatesDictionary)
-		{
-			Initializer.Templates.Add(template.Key, new List<string>(template.Value));
-		}
-
-		// Save the file.
-		Initializer.Serialize();
-
-		// Set the observable strings to be saved (not modified).
-		foreach (ObservableString observableString in ObservableTemplateFieldNames)
-		{
-			observableString.Save();
-		}
-		SetModified(false);
+		return false;
 	}
 
 	public override SearchResult Find(string search)
 	{
 		throw new NotImplementedException();
 	}
+
+	#endregion
 
 	#endregion
 }
