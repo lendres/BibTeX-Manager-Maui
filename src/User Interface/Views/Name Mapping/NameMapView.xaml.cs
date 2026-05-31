@@ -3,9 +3,9 @@ using DigitalProduction.Maui.Views;
 
 namespace BibTeXManager.Views;
 
-public partial class FieldMapView : PopupView
+public partial class NameMapView : PopupView
 {
-	public FieldMapView(FieldMapViewModel viewModel)
+	public NameMapView(NameMapViewModel viewModel)
 	{
 		BindingContext = viewModel;
 		InitializeComponent();

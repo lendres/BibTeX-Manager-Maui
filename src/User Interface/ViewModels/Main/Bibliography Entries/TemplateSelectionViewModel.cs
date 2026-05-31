@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Diagnostics;
 
 namespace BibTeXManager.ViewModels;
 
@@ -9,9 +10,10 @@ public partial class TemplateSelectionViewModel : ObservableObject
 
 	#region Construction
 
-	public TemplateSelectionViewModel(List<string> templateNames)
+	public TemplateSelectionViewModel()
 	{
-		Templates = templateNames;
+		Debug.Assert(BibTeXProject.Instance != null, "Project is null.");
+		Types = BibTeXProject.Instance.BibEntryInitialization.TypeNames;
 	}
 
 	#endregion
@@ -19,10 +21,10 @@ public partial class TemplateSelectionViewModel : ObservableObject
 	#region Properties
 
 	[ObservableProperty]
-	public partial string						Template { get; set; }			= string.Empty;
+	public partial string						Type { get; set; }			= string.Empty;
 
 	[ObservableProperty]
-	public partial List<string>					Templates { get; set; }
+	public partial List<string>					Types { get; set; }
 
 	#endregion
 }

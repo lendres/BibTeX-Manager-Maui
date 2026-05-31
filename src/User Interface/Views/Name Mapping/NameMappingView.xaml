@@ -49,9 +49,9 @@
 			<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
 				<Button Text="Add" Clicked="OnNewBibliographyEntryMap" StyleClass="SquareButtonStyle"/>
 				<Button Text="Rename" Clicked="OnRenameBibliographyEntryMap" StyleClass="SquareButton"
-						IsEnabled="{Binding SelectedBibliographyEntryMap, Converter={StaticResource IsNotNullConverter}}"/>
+					IsEnabled="{Binding SelectedBibliographyEntryMap, Converter={StaticResource IsNotNullConverter}}"/>
 				<Button Text="Delete" Clicked="OnDeleteBibliographyEntryMap" StyleClass="SquareButton"
-						IsEnabled="{Binding SelectedBibliographyEntryMap, Converter={StaticResource IsNotNullConverter}}"/>
+					IsEnabled="{Binding SelectedBibliographyEntryMap, Converter={StaticResource IsNotNullConverter}}"/>
 			</HorizontalStackLayout>
 
 			<Picker
@@ -108,7 +108,6 @@
 						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
 				</HorizontalStackLayout>
 
-
 				<dg:DataGrid
 					Grid.Row="1"
 					x:Name="_dataGrid"
@@ -128,9 +127,8 @@
 					</dg:DataGrid.Columns>
 
 				</dg:DataGrid>
-
-
 			</Grid>
+			
 		</VerticalStackLayout>
 	</Grid>
 </ContentPage>

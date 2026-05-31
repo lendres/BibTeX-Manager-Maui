@@ -80,26 +80,26 @@ public partial class NameMappingView : ContentPage
 
 	private async void OnNewFieldMap(object sender, EventArgs eventArgs)
 	{
-		FieldMapViewModel	viewModel	= new(ViewModel.SelectedBibliographyEntryMap!.InUseTypes);
-		FieldMapView		view		= new(viewModel);
+		NameMapViewModel	viewModel	= new(ViewModel.SelectedBibliographyEntryMap!.InUseTypes);
+		NameMapView			view		= new(viewModel);
 		object?				result		= await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResult && boolResult)
 		{
-			ViewModel.Insert(viewModel.FieldNameMap);
+			ViewModel.Insert(viewModel.NameMap);
 		}
 	}
 
 	private async void OnEditFieldMap(object sender, EventArgs eventArgs)
 	{
-		FieldNameMap		fieldNameMap	= new(ViewModel.SelectedItem!);
-		FieldMapViewModel	viewModel		= new(fieldNameMap, ViewModel.SelectedBibliographyEntryMap!.InUseTypes);
-		FieldMapView		view			= new(viewModel);
+		NameMap				nameMap			= new(ViewModel.SelectedItem!);
+		NameMapViewModel	viewModel		= new(nameMap, ViewModel.SelectedBibliographyEntryMap!.InUseTypes);
+		NameMapView			view			= new(viewModel);
 		object?				result			= await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResult && boolResult)
 		{
-			ViewModel.ReplaceSelected(viewModel.FieldNameMap);
+			ViewModel.ReplaceSelected(viewModel.NameMap);
 		}
 	}
 

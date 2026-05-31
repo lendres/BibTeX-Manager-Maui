@@ -126,8 +126,8 @@ public class BibliographyEntryRemapperTests
 					<item key="article">
 						<value name="Article to InProceedings" totype="inproceedings">
 							<fieldmaps>
-								<fieldmap from="journal" to="booktitle"/>
-								<fieldmap from="volume" to="number"/>
+								<namemap from="journal" to="booktitle"/>
+								<namemap from="volume" to="number"/>
 							</fieldmaps>
 						</value>
 					</item>
@@ -160,8 +160,8 @@ public class BibliographyEntryRemapperTests
 			ToType	= "inproceedings",
 		};
 
-		map.FieldNameMaps.Add(new FieldNameMap("journal", "booktitle"));
-		map.FieldNameMaps.Add(new FieldNameMap("volume", "number"));
+		map.FieldNameMaps.Add(new NameMap("journal", "booktitle"));
+		map.FieldNameMaps.Add(new NameMap("volume", "number"));
 
 		BibliographyEntryRemapper remapper = new();
 		remapper.Maps.Add("article", map);

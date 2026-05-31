@@ -6,12 +6,12 @@
 	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
-	xmlns:viewModels="clr-namespace:BibTeXManager.ViewModels"
-	x:Class="BibTeXManager.Views.FieldMapView"
-	x:DataType="viewModels:FieldMapViewModel"
+	xmlns:viewmodels="clr-namespace:BibTeXManager.ViewModels"
+	x:Class="BibTeXManager.Views.TypeToTemplateView"
+	x:DataType="viewmodels:TypeToTemplateViewModel"
 	CanBeDismissedByTappingOutsideOfPopup="False">
 
-	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="308">
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="290" MaximumHeightRequest="300">
 
 		<Border.Resources>
 			<ResourceDictionary>
@@ -20,11 +20,11 @@
 		</Border.Resources>
 
 		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
-			<Label Text="Field Map" StyleClass="Title"  HorizontalOptions="Start"/>
+			<Label Text="Type to Template Map" StyleClass="Title"  HorizontalOptions="Start"/>
 
 			<!-- From -->
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
-				<Label Text="From Field Name" StyleClass="ControlLabel"/>
+				<Label Text="Type" StyleClass="ControlLabel"/>
 				<Entry 
 					x:Name="_fromNameEntry"
 					Placeholder="From Field Name"
@@ -43,20 +43,20 @@
 
 			<!-- To -->
 			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
-				<Label Text="To Field Name" StyleClass="ControlLabel"/>
-				<Entry
-					x:Name="_toNameEntry"
-					Placeholder="To Field Name"
-					Text="{Binding ToName.Value}">
-					<Entry.Behaviors>
+				<Picker
+					Title="Template"
+					x:Name="_templatePicker"
+					ItemsSource="{Binding TemplateNames}"
+					SelectedItem="{Binding ToName.Value}">
+					<Picker.Behaviors>
 						<mct:EventToCommandBehavior
-                            x:TypeArguments="system:EventArgs"
-                            Command="{Binding ValidateToNameCommand}"
-                            BindingContext="{Binding Path=BindingContext, Source={x:Reference _toNameEntry}, x:DataType=Entry}"
-                            EventName="TextChanged"/>
-					</Entry.Behaviors>
-				</Entry>
-				<Label Text="{Binding ToName.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+							x:TypeArguments="system:EventArgs"
+							Command="{Binding SelectedTemplateChangedCommand}"
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference _templatePicker}, x:DataType=Picker}"
+							EventName="SelectedIndexChanged"/>
+					</Picker.Behaviors>
+				</Picker>
+				<!--<Label Text="{Binding ToName.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>-->
 			</VerticalStackLayout>
 
 			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">

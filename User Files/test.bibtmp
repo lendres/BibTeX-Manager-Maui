@@ -1,34 +1,61 @@
 <?xml version="1.0" encoding="us-ascii"?>
-<bibentryinitialization xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <aliases>
+<bibentryinitialization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <typetotemplatemappings>
+        <item key="article">
+            <value from="article" to="article" />
+        </item>
+        <item key="book">
+            <value from="book" to="book" />
+        </item>
         <item key="booklet">
-            <value>basic</value>
+            <value from="booklet" to="basic" />
         </item>
         <item key="conference">
-            <value>basic</value>
+            <value from="conference" to="basic" />
         </item>
         <item key="inbook">
-            <value>basic</value>
+            <value from="inbook" to="basic" />
         </item>
         <item key="incollection">
-            <value>inproceedings</value>
+            <value from="incollection" to="inproceedings" />
+        </item>
+        <item key="inproceedings">
+            <value from="inproceedings" to="inproceedings" />
         </item>
         <item key="mastersthesis">
-            <value>thesis</value>
+            <value from="mastersthesis" to="thesis" />
         </item>
         <item key="misc">
-            <value>basic</value>
+            <value from="misc" to="basic" />
+        </item>
+        <item key="patent">
+            <value from="patent" to="patent" />
         </item>
         <item key="phdthesis">
-            <value>thesis</value>
+            <value from="phdthesis" to="thesis" />
+        </item>
+        <item key="manual">
+            <value from="manual" to="manual" />
         </item>
         <item key="proceedings">
-            <value>inproceedings</value>
+            <value from="proceedings" to="inproceedings" />
+        </item>
+        <item key="software">
+            <value from="software" to="software" />
+        </item>
+        <item key="techreport">
+            <value from="techreport" to="techreport" />
+        </item>
+        <item key="thesis">
+            <value from="thesis" to="thesis" />
         </item>
         <item key="unpublished">
-            <value>basic</value>
+            <value from="unpublished" to="basic" />
         </item>
-    </aliases>
+        <item key="webref">
+            <value from="webref" to="webref" />
+        </item>
+    </typetotemplatemappings>
     <templates>
         <item key="article">
             <value>author</value>
@@ -36,22 +63,22 @@
             <value>journal</value>
             <value>volume</value>
             <value>number</value>
-			<value>day</value>
-			<value>month</value>
+            <value>day</value>
+            <value>month</value>
             <value>year</value>
             <value>pages</value>
-			<value>organization</value>
-			<value>speid</value>
-			<value>issn</value>
-			<value>doi</value>
-			<value>url</value>
-			<value>href</value>
-			<value>eprint</value>
-			<value>logline</value>
-			<value>abstract</value>
+            <value>organization</value>
+            <value>speid</value>
+            <value>issn</value>
+            <value>doi</value>
+            <value>url</value>
+            <value>href</value>
+            <value>eprint</value>
+            <value>logline</value>
+            <value>abstract</value>
         </item>
         <item key="basic">
-            <value>author</value>
+            <value>author2</value>
             <value>title</value>
         </item>
         <item key="book">
@@ -70,14 +97,14 @@
             <value>month</value>
             <value>year</value>
             <value>volume</value>
-			<value>pages</value>
+            <value>pages</value>
             <value>organization</value>
             <value>address</value>
             <value>speid</value>
             <value>doi</value>
             <value>url</value>
-			<value>href</value>
-			<value>note</value>
+            <value>href</value>
+            <value>note</value>
             <value>logline</value>
             <value>abstract</value>
         </item>
@@ -105,23 +132,23 @@
             <value>issuedmonth</value>
             <value>issuedyear</value>
         </item>
-		<item key="software">
-			<value>author</value>
-			<value>title</value>
-			<value>license</value>
-			<value>version</value>
-			<value>month</value>
-			<value>year</value>
-			<value>url</value>
-		</item>
-		<item key="techreport">
-			<value>author</value>
-			<value>title</value>
-			<value>institution</value>
-			<value>address</value>
-			<value>month</value>
-			<value>year</value>
-		</item>
+        <item key="software">
+            <value>author</value>
+            <value>title</value>
+            <value>license</value>
+            <value>version</value>
+            <value>month</value>
+            <value>year</value>
+            <value>url</value>
+        </item>
+        <item key="techreport">
+            <value>author</value>
+            <value>title</value>
+            <value>institution</value>
+            <value>address</value>
+            <value>month</value>
+            <value>year</value>
+        </item>
         <item key="thesis">
             <value>author</value>
             <value>title</value>

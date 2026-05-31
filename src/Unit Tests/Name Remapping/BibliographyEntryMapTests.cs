@@ -1,4 +1,5 @@
-﻿using BibTeXManager;
+﻿using BibTeXLibrary;
+using BibTeXManager;
 
 using System.Xml.Serialization;
 
@@ -28,8 +29,8 @@ public class BibEntryMapTests
 			ToType = "inproceedings",
 		};
 
-		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("journal", "booktitle"));
-		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("volume", "number"));
+		bibEntryMap.FieldNameMaps.Add(new NameMap("journal", "booktitle"));
+		bibEntryMap.FieldNameMaps.Add(new NameMap("volume", "number"));
 
 		Assert.Equal("article", bibEntryMap.Name);
 		Assert.Equal("inproceedings", bibEntryMap.ToType);
@@ -101,8 +102,8 @@ public class BibEntryMapTests
 			<?xml version="1.0" encoding="utf-16"?>
 			<bibliographyentrymap name="article" totype="inproceedings">
 				<fieldmaps>
-					<fieldmap from="journal" to="booktitle"/>
-					<fieldmap from="volume" to="number"/>
+					<namemap from="journal" to="booktitle"/>
+					<namemap from="volume" to="number"/>
 				</fieldmaps>
 			</bibliographyentrymap>
 			""";
@@ -128,8 +129,8 @@ public class BibEntryMapTests
 			ToType = "inproceedings",
 		};
 
-		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("journal", "booktitle"));
-		bibEntryMap.FieldNameMaps.Add(new FieldNameMap("volume", "number"));
+		bibEntryMap.FieldNameMaps.Add(new NameMap("journal", "booktitle"));
+		bibEntryMap.FieldNameMaps.Add(new NameMap("volume", "number"));
 
 		return bibEntryMap;
 	}
