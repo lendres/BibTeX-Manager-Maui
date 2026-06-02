@@ -176,11 +176,10 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 		TemplateNames!.Add(templateName);
 		TemplatesDictionary[templateName] = new List<string>();
 
-		// Now update the form by setting it to the new template name.
-		LastTemplateSelected	= templateName;
-		SelectedTemplate		= templateName;
-
-		SetModified(true);
+		// Now update the form by setting it to the new template name. Then add a new field to the template because
+		// a template should have at least one field. The "AddField" function will also set the modified.
+		SelectedTemplate = templateName;
+		AddField();
 	}
 
 	public void RenameTemplate(string oldTemplateName, string newTemplateName)
@@ -218,8 +217,9 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 		// Now update the form by setting it to the new template name.
 		if (templateName.Length > 0)
 		{
-			LastTemplateSelected	= TemplateNames[0];
+			LastTemplateSelected	= null;
 			SelectedTemplate		= TemplateNames[0];
+			SelectedTemplateChanged();
 		}
 		else
 		{
