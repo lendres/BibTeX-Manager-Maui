@@ -103,7 +103,7 @@
 		</Grid>
 
 		<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
-		<Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto,*" Margin="0" Padding="0,20,0,0"
+		<Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto,*" RowSpacing="10" Margin="0" Padding="0,20,0,0"
 			IsVisible="{Binding ActiveInitializationPart, Converter={StaticResource PartView}, ConverterParameter={x:Static enums:InitializationPartType.Templates}}">
 
 			<!-- To Type -->
