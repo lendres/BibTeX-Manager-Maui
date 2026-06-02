@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿
+using System.ComponentModel;
 
 /// <summary>
 /// Main parts of the Bibliography.
@@ -10,17 +11,13 @@
 /// </summary>
 namespace BibTeXManager.Enums;
 
-public enum BibliographyPartType
+public enum InitializationPartType
 {
-	/// <summary>Header of the bibliography.</summary>
-	[Description("Header")]
-	Header,
+	/// <summary>Type to teomplate maps.</summary>
+	[Description("Type Maps")]
+	TypeMaps,
 
-	/// <summary>String entries.</summary>
-	[Description("String Entries")]
-	StringEntries,
-
-	/// <summary>Bibliography entries.</summary>
-	[Description("Bibliography Entries")]
-	BibliographyEntries
+	/// <summary>Templates.</summary>
+	[Description("Templates")]
+	Templates
 }

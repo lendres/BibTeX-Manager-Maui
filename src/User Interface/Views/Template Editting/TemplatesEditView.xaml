@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
+	xmlns:enums="clr-namespace:BibTeXManager.Enums"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
+	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
+	xmlns:dpcm="clr-namespace:DigitalProduction.Maui.ComponentModel;assembly=DigitalProduction.Maui"
+	xmlns:library="clr-namespace:BibTeXLibrary;assembly=DigitalProduction.BibTeXLibrary"
+	x:DataType="viewmodel:TemplatesEditViewModel"
+	x:Class="BibTeXManager.Views.TemplatesEditView">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.Resources>
+		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
+		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
+		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+		<dpconverters:EnumToStringConverter x:Key="PartTypeEnumToStringConverter" x:TypeArguments="enums:InitializationPartType"/>
+		<dpconverters:SingleEnumToBoolConverter x:Key="PartView" x:TypeArguments="enums:InitializationPartType"/>
+	</ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
+		
+        <!-- Settings label, save, and cancel buttons. -->
+        <Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="*,400" HorizontalOptions="Fill" VerticalOptions="Start">
+            <Label Grid.Column="0" Text="Bibliography Entry Templates" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0,0,0,0" VerticalOptions="Center">
+                <Button 
+				    Text="Save &amp; Return"
+				    HorizontalOptions="End"
+				    StyleClass="StandardSizeButtonStyle"
+				    IsEnabled="{Binding IsSubmittable}"
+                    VerticalOptions="Center"
+				    Clicked="OnSaveAndReturn"/>
+				<Button 
+				    Text="Save"
+				    HorizontalOptions="End"
+				    StyleClass="StandardSizeButtonStyle"
+				    IsEnabled="{Binding IsSubmittable}"
+                    VerticalOptions="Center"
+				    Command="{Binding SaveCommand}"/>
+				<Button 
+				    Text="Cancel"
+				    StyleClass="StandardSizeButtonStyle"
+				    HorizontalOptions="End"
+				    Clicked="OnCancel"/>
+            </HorizontalStackLayout>
+        </Grid>
+
+		<!-- Selector. -->
+		<Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="*,*" Padding="0"  Margin="0,30,0,0"
+			RadioButtonGroup.GroupName="PartSelectorGroup"
+			RadioButtonGroup.SelectedValue="{Binding ActiveInitializationPart, Converter={StaticResource PartTypeEnumToStringConverter}}"
+			VerticalOptions="Center" HorizontalOptions="Fill">
+			<Grid.Resources>
+				<Style TargetType="RadioButton">
+					<Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
+					<Setter Property="HorizontalOptions" Value="Fill"/>
+					<Setter Property="FontSize" Value="20"/>
+				</Style>
+			</Grid.Resources>
+			<RadioButton Grid.Column="0" Content="Type Assignement" Value="TypeMaps"/>
+			<RadioButton Grid.Column="1" Content="Template Editting" Value="Templates"/>
+		</Grid>
+
+
+		<Grid Grid.Row="2" StyleClass="DataGridEditStyle" Margin="0" Padding="0,20,0,0"
+			IsVisible="{Binding ActiveInitializationPart, Converter={StaticResource PartView}, ConverterParameter={x:Static enums:InitializationPartType.TypeMaps}}">
+			<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle">
+				<Button Text="Add" Clicked="OnNewNameMap" StyleClass="SquareButtonStyle"/>
+				<Button Text="Edit" Clicked="OnEditNameMap" StyleClass="SquareButtonStyle"
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+				<Button Text="Delete" Clicked="OnDeleteNameMap" StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+			</HorizontalStackLayout>
+
+			<dg:DataGrid
+				Grid.Row="1"
+				x:Name="_dataGrid"
+				Style="{DynamicResource DataGridDefaultLooseStyle}"
+				ItemsSource="{Binding Items, Mode=TwoWay}" SelectionMode="{Binding SelectionMode}"
+				SelectedItem="{Binding SelectedItem}" RowToEdit="{Binding ItemToEdit}"
+				RefreshingEnabled="true" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
+				PaginationEnabled="false"
+				RowTappedCommand="{Binding TappedCommand}"
+				IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
+
+				<dg:DataGrid.Columns>
+					<dg:DataGridColumn Title="Bibliography Entry Type" PropertyName="From" Width="0.5*"
+						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+					<dg:DataGridColumn Title="Template" PropertyName="To" Width="0.5*"
+						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
+				</dg:DataGrid.Columns>
+			</dg:DataGrid>
+		</Grid>
+
+		<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
+		<Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto,*" RowSpacing="10" Margin="0" Padding="0,20,0,0"
+			IsVisible="{Binding ActiveInitializationPart, Converter={StaticResource PartView}, ConverterParameter={x:Static enums:InitializationPartType.Templates}}">
+
+			<!-- To Type -->
+			<Border Grid.Row="0" StyleClass="SmallTitleBorderStyle" Margin="0,0,0,10">
+				<Label Text="Type" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<HorizontalStackLayout Grid.Row="1" Grid.Column="0" StyleClass="TopButtonRowStyle">
+				<Button Text="Add" Clicked="OnNewTemplate" StyleClass="SquareButtonStyle"/>
+				<Button Text="Rename" Clicked="OnRenameTemplate" StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedTemplate, Converter={StaticResource IsNotNullConverter}}"/>
+				<Button Text="Delete" Clicked="OnDeleteTemplate" StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedTemplate, Converter={StaticResource IsNotNullConverter}}"/>
+			</HorizontalStackLayout>
+			<Picker
+				Grid.Row="2"
+				Title="Entry Type"
+				x:Name="_templatePicker"
+				ItemsSource="{Binding TemplateNames}"
+				SelectedItem="{Binding SelectedTemplate}">
+				<Picker.Behaviors>
+					<mct:EventToCommandBehavior
+						x:TypeArguments="system:EventArgs"
+						Command="{Binding SelectedTemplateChangedCommand}"
+						BindingContext="{Binding Path=BindingContext, Source={x:Reference _templatePicker}, x:DataType=Picker}"
+						EventName="SelectedIndexChanged"/>
+				</Picker.Behaviors>
+			</Picker>
+
+			<!-- Fields -->
+			<Border Grid.Row="3" StyleClass="SmallTitleBorderStyle" Margin="0,20,0,10">
+				<Label Text="Fields" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<Grid Grid.Row="4" StyleClass="DataGridEditStyle" Margin="0" Padding="0">
+				<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle" Margin="0" Padding="0">
+					<Button Text="Add" Command="{Binding AddFieldCommand}" StyleClass="SquareButtonStyle"/>
+					<!--<Button Text="Edit" Clicked="OnEditNameMap" StyleClass="SquareButtonStyle"
+						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>-->
+					<Button Text="Delete" Command="{Binding DeleteFieldCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
+					<Button Text="Move Up" Command="{Binding MoveFieldUpCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
+					<Button Text="Move Down" Command="{Binding MoveFieldDownCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
+				</HorizontalStackLayout>
+
+				<ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0">
+					<Grid Padding="0,0,10,0">
+						<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
+						<CollectionView Grid.Row="0" ItemsSource="{Binding ObservableTemplateFieldNames}" Margin="0">
+							<CollectionView.ItemTemplate>
+								<DataTemplate x:DataType="dpcm:ObservableString">
+									<Grid Padding="0,3">
+										<Entry Grid.Column="0" Text="{Binding Value}" Focused="EntryFocused" Unfocused="EntryUnfocused"/>
+									</Grid>
+								</DataTemplate>
+							</CollectionView.ItemTemplate>
+						</CollectionView>
+					</Grid>
+
+				</ScrollView>
+			</Grid>
+
+		</Grid>
+
+	</Grid>
+</ContentPage>

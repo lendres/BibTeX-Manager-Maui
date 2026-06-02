@@ -5,26 +5,25 @@ using DigitalProduction.Maui.Validation;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class FieldMapViewModel : ObservableObject
+public partial class NameMapViewModel : ObservableObject
 {
 	#region Fields
-
 	#endregion
 
 	#region Construction
 
-	public FieldMapViewModel(List<string> existingNames)
+	public NameMapViewModel(List<string> existingNames)
 	{
-		FieldNameMap	= new();
-		Title			= "Add Field Map";
+		NameMap	= new();
+		Title			= "Add Map";
 		Initialize(null, existingNames);
 	}
 
-	public FieldMapViewModel(FieldNameMap fieldMap, List<string> existingNames)
+	public NameMapViewModel(NameMap namemap, List<string> existingNames)
     {
-		FieldNameMap	= fieldMap;
-		Title			= "Edit Field Map";
-		Initialize(fieldMap, existingNames);
+		NameMap	= namemap;
+		Title			= "Edit Map";
+		Initialize(namemap, existingNames);
 	}
 
 	#endregion
@@ -45,33 +44,33 @@ public partial class FieldMapViewModel : ObservableObject
 	[ObservableProperty]
 	public partial bool							IsSubmittable { get; set; }
 
-	public FieldNameMap							FieldNameMap { get; set; }
+	public NameMap								NameMap { get; set; }
 
 	#endregion
 
 	#region Methods
 
-	private void Initialize(FieldNameMap? fieldMap, List<string> existingNames)
+	private void Initialize(NameMap? namemap, List<string> existingNames)
 	{
 		InitializeValues();
-		AddValidations(fieldMap, existingNames);
+		AddValidations(namemap, existingNames);
 		ValidateSubmittable();
 	}
 
 	private void InitializeValues()
 	{
-		FromName.Value	= FieldNameMap.From;
-		ToName.Value	= FieldNameMap.To;
+		FromName.Value	= NameMap.From;
+		ToName.Value	= NameMap.To;
 	}
 
-	private void AddValidations(FieldNameMap? fieldMap, List<string> existingNames)
+	private void AddValidations(NameMap? namemap, List<string> existingNames)
 	{
 		FromName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A name is required." });
 		FromName.Validations.Add(new IsNotDuplicateStringRule
 		{
 			ValidationMessage = "The value is already in use.",
 			Values = existingNames,
-			ExcludeValue = fieldMap?.From
+			ExcludeValue = namemap?.From
 		});
 		ValidateFromName();
 
@@ -80,26 +79,26 @@ public partial class FieldMapViewModel : ObservableObject
 	}
 
 	[RelayCommand]
-	private void ValidateFromName()
+	protected void ValidateFromName()
 	{
-		if (FromName.Validate() && FieldNameMap.From != FromName.Value)
+		if (FromName.Validate() && NameMap.From != FromName.Value)
 		{
-			FieldNameMap.From = FromName.Value ?? "";
+			NameMap.From = FromName.Value ?? "";
 		}
 		ValidateSubmittable();
 	}
 
 	[RelayCommand]
-	private void ValidateToName()
+	protected virtual void ValidateToName()
 	{
-		if (ToName.Validate() && FieldNameMap.To != ToName.Value)
+		if (ToName.Validate() && NameMap.To != ToName.Value)
 		{
-			FieldNameMap.To = ToName.Value ?? "";
+			NameMap.To = ToName.Value ?? "";
 		}
 		ValidateSubmittable();
 	}
 
-	public bool ValidateSubmittable() => IsSubmittable = FieldNameMap.Modified && FromName.IsValid && ToName.IsValid;
+	public virtual bool ValidateSubmittable() => IsSubmittable = NameMap.Modified && FromName.IsValid && ToName.IsValid;
 
 	#endregion
 }

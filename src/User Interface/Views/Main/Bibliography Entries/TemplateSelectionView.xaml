@@ -12,13 +12,13 @@
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="360" MinimumHeightRequest="200" MaximumHeightRequest="201">
 
 		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
-			<Label Text="Select a Template" StyleClass="Title" HorizontalOptions="Start"/>
+			<Label Text="Select a Bibliography Entry Type" StyleClass="Title" HorizontalOptions="Start"/>
 
 			<Picker
-				Title="Template"
-				x:Name="TemplatePicker"
-				ItemsSource="{Binding Templates}"
-				SelectedItem="{Binding Template}"/>
+				Title="Type"
+				x:Name="_typePicker"
+				ItemsSource="{Binding Types}"
+				SelectedItem="{Binding Type}"/>
 
 			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
 				<Button 

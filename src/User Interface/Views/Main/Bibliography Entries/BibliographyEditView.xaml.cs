@@ -34,13 +34,13 @@ public partial class BibliographyEditView : BibliographyPartDataGridView<Bibliog
 
 	public async void OnNewBibEntryFromTemplate(object sender, EventArgs eventArgs)
 	{
-		TemplateSelectionViewModel	viewModel	= new(ViewModel.Project.BibEntryInitialization.TemplateNames);
+		TemplateSelectionViewModel	viewModel	= new();
 		TemplateSelectionView		view		= new(viewModel);
 		object? result = await Shell.Current.ShowPopupAsync(view);
 
 		if (result is bool boolResult && boolResult)
 		{
-			BibEntry entry = BibEntry.NewBibEntryFromTemplate(ViewModel.Project.BibEntryInitialization, viewModel.Template);
+			BibEntry entry = BibEntry.NewBibEntryFromTemplate(ViewModel.Project.BibEntryInitialization, viewModel.Type);
 
 			await Shell.Current.GoToAsync(nameof(EditRawBibEntryForm), true, new Dictionary<string, object>
 			{

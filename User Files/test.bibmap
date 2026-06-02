@@ -1,59 +1,20 @@
 <?xml version="1.0" encoding="us-ascii"?>
-<bibliographyentryremapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <maps>
-        <item key="proceedings">
-            <value name="Proceedings to InProceedings" totype="inproceedings">
-                <InvokeChangeEvents>true</InvokeChangeEvents>
-                <fieldmaps>
-                    <fieldmap from="series" to="booktitle">
-                        <InvokeChangeEvents>true</InvokeChangeEvents>
-                    </fieldmap>
-                    <fieldmap from="eprint" to="href">
-                        <InvokeChangeEvents>true</InvokeChangeEvents>
-                    </fieldmap>
-                </fieldmaps>
-                <InUseTypes>
-                    <string>series</string>
-                    <string>eprint</string>
-                </InUseTypes>
-            </value>
-        </item>
-        <item key="article">
-            <value name="Article" totype="article">
-                <InvokeChangeEvents>true</InvokeChangeEvents>
-                <fieldmaps>
-                    <fieldmap from="booktitle" to="title">
-                        <InvokeChangeEvents>true</InvokeChangeEvents>
-                    </fieldmap>
-                    <fieldmap from="publisher" to="organization">
-                        <InvokeChangeEvents>true</InvokeChangeEvents>
-                    </fieldmap>
-                </fieldmaps>
-                <InUseTypes>
-                    <string>booktitle</string>
-                    <string>publisher</string>
-                </InUseTypes>
-            </value>
-        </item>
-        <item key="phdthesis">
-            <value name="PhD Thesis to Thesis" totype="thesis">
-                <InvokeChangeEvents>true</InvokeChangeEvents>
-                <fieldmaps>
-                    <fieldmap from="booktitle" to="title">
-                        <InvokeChangeEvents>true</InvokeChangeEvents>
-                    </fieldmap>
-                </fieldmaps>
-                <InUseTypes>
-                    <string>booktitle</string>
-                </InUseTypes>
-            </value>
-        </item>
-        <item key="masterthesis">
-            <value name="" totype="thesis">
-                <InvokeChangeEvents>true</InvokeChangeEvents>
-                <fieldmaps />
-                <InUseTypes />
-            </value>
-        </item>
-    </maps>
+<bibliographyentryremapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<maps>
+		<item key="proceedings">
+			<value name="Proceedings to InProceedings" totype="inproceedings">
+				<fieldmaps>
+					<namemap from="series" to="booktitle"/>
+					<namemap from="eprint" to="href"/>
+				</fieldmaps>
+			</value>
+		</item>
+		<item key="article">
+			<value name="Article" totype="article">
+				<fieldmaps>
+					<namemap from="publisher" to="organization"/>
+				</fieldmaps>
+			</value>
+		</item>
+	</maps>
 </bibliographyentryremapping>

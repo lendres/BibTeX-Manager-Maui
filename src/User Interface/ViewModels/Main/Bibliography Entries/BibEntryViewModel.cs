@@ -37,7 +37,8 @@ public partial class BibEntryViewModel : ObservableObject
 	[ObservableProperty]
 	public partial string						Title { get; set; }					= "Add Bibtex Entry";
 	
-	[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
+	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(IsSubmittable))]
 	public partial string						RawBibEntry { get; set; }			= "";
 
 	//[ObservableProperty, NotifyPropertyChangedFor(nameof(IsSubmittable))]
