@@ -94,7 +94,7 @@
 				IsEnabled="{Binding Items, Converter={StaticResource IsNotNullConverter}}">
 
 				<dg:DataGrid.Columns>
-					<dg:DataGridColumn Title="Type" PropertyName="From" Width="0.5*"
+					<dg:DataGridColumn Title="Bibliography Entry Type" PropertyName="From" Width="0.5*"
 						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>
 					<dg:DataGridColumn Title="Template" PropertyName="To" Width="0.5*"
 						CellTemplate="{StaticResource DataGridDefaultStringCellTempate}"/>

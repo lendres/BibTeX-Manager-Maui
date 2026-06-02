@@ -12,7 +12,7 @@
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="360" MinimumHeightRequest="200" MaximumHeightRequest="201">
 
 		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
-			<Label Text="Select a Template" StyleClass="Title" HorizontalOptions="Start"/>
+			<Label Text="Select a Bibliography Entry Type" StyleClass="Title" HorizontalOptions="Start"/>
 
 			<Picker
 				Title="Type"
