@@ -22,12 +22,6 @@
 			</HorizontalStackLayout>
 		</Grid>
 
-		<!--<Grid Grid.Row="1"  RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" Padding="15">-->
-
-			<!--<Border Grid.Row="1" StyleClass="SmallTitleBorderStyle" Margin="0,25,0,0">
-				<Label Text="Field Group" StyleClass="SmallTitleLabelStyle"/>
-			</Border>-->
-
 		<HorizontalStackLayout Grid.Row="1" Grid.Column="0" StyleClass="TopButtonRowStyle"  Padding="0,20,0,0">
 			<Button Text="Add" Clicked="OnNewFieldProcessingGroup" StyleClass="SquareButtonStyle"/>
 			<Button Text="Rename" Clicked="OnRenameFieldProcessingGroup" StyleClass="SquareButton"
@@ -38,37 +32,35 @@
 				IsEnabled="{Binding SelectedIncludeName, Converter={StaticResource IsNotNullConverter}}"/>
 		</HorizontalStackLayout>
 
-		<!--</Grid>-->
+		<CollectionView
+			Grid.Row="2"
+			ItemsSource="{Binding Includes}"
+			SelectedItem="{Binding SelectedIncludeName}"
+			SelectionMode="Single"
+			Margin="0,20,0,0">
 
-				<CollectionView
-					Grid.Row="2"
-					ItemsSource="{Binding Includes}"
-					SelectedItem="{Binding SelectedIncludeName}"
-					SelectionMode="Single"
-					Margin="0,20,0,0">
+			<CollectionView.ItemTemplate>
+				<DataTemplate x:DataType="viewmodel:GroupManagerIncludeViewModel">
+					<Grid
+						ColumnDefinitions="Auto,*"
+						ColumnSpacing="20"
+						Padding="10,6"
+						VerticalOptions="Center">
 
-					<CollectionView.ItemTemplate>
-						<DataTemplate x:DataType="viewmodel:GroupManagerIncludeViewModel">
-							<Grid
-								ColumnDefinitions="Auto,*"
-								ColumnSpacing="20"
-								Padding="10,6"
-								VerticalOptions="Center">
+						<Switch
+							Grid.Column="0"
+							IsToggled="{Binding IsIncluded}"
+							VerticalOptions="Center" />
 
-								<Switch
-									Grid.Column="0"
-									IsToggled="{Binding IsIncluded}"
-									VerticalOptions="Center" />
-
-								<Label
-									Grid.Column="1"
-									Text="{Binding IncludeName}"
-									VerticalOptions="Center"
-									FontSize="18" />
-							</Grid>
-						</DataTemplate>
-					</CollectionView.ItemTemplate>
-				</CollectionView>
+						<Label
+							Grid.Column="1"
+							Text="{Binding IncludeName}"
+							VerticalOptions="Center"
+							FontSize="18" />
+					</Grid>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
 
 	</Grid>
 	
