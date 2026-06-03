@@ -76,6 +76,10 @@ public static class MauiProgram
 
 		services.AddTransient<TemplatesEditView>();
 		services.AddTransient<TemplatesEditViewModel>();
+
+		services.AddTransient<GroupManagerView>();
+		services.AddTransient<GroupManagerViewModel>();
+		services.AddTransient<GroupManagerIncludeViewModel>();
 	}
 
 	private static void RegisterServices(IServiceCollection services)

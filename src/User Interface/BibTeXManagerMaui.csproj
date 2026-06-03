@@ -81,6 +81,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="Views\Field Quality\GroupManagerView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\Name Mapping\NameMapView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
