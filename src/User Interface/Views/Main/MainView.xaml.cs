@@ -262,6 +262,11 @@ public partial class MainView : DigitalProductionMainPage
 		await Shell.Current.GoToAsync(nameof(TemplatesEditView), true);
 	}
 
+	async void OnConfigureFieldQualityProcessing(object sender, EventArgs eventArgs)
+	{
+		//await Shell.Current.GoToAsync(nameof(FieldQualityProcessingView), true);
+	}
+
 	#endregion
 
 	#region Tools
