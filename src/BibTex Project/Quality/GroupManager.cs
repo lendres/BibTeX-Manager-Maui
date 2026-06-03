@@ -27,7 +27,28 @@ public class GroupManager
 
 	#region Methods
 
-	
+	public static List<string> GetAvailableQualityFiles(string fieldQualityProcessingFile)
+	{
+		if (string.IsNullOrWhiteSpace(fieldQualityProcessingFile))
+		{
+			return [];
+		}
+
+		string? directory	= Path.GetDirectoryName(fieldQualityProcessingFile);
+		string extension	= Path.GetExtension(fieldQualityProcessingFile);
+
+		if (string.IsNullOrWhiteSpace(directory) || !Directory.Exists(directory))
+		{
+			return [];
+		}
+
+		return Directory
+			.GetFiles(directory, $"*{extension}")
+			.Select(Path.GetFileNameWithoutExtension)
+			.Where(fileName => !string.IsNullOrWhiteSpace(fileName))
+			.OrderBy(fileName => fileName)
+			.ToList()!;
+	}
 
 	#endregion
 
