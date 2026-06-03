@@ -21,7 +21,31 @@ public class GroupManager
 	#region Properties
 
 	[XmlArray("fieldprocessorgroups"), XmlArrayItem("include", Namespace = "http://www.w3.org/2001/XInclude")]
-	public ObservableCollection<XInclude> Includes { get; set; } = new();
+	public List<XInclude> Includes { get; set; } = new();
+
+	[XmlIgnore]
+	public List<string> IncludeNames
+	{
+		get
+		{
+			return Includes
+				.Where(include => !string.IsNullOrWhiteSpace(include.Href))
+				.Select(include => Path.GetFileNameWithoutExtension(include.Href))
+				.ToList();
+		}
+
+		set
+		{
+			Includes = value?
+				.Where(name => !string.IsNullOrWhiteSpace(name))
+				.Select(name => new XInclude
+				{
+					Href = Path.ChangeExtension(name, ".qlty")
+				})
+				.ToList()
+				?? [];
+		}
+	}
 
 	#endregion
 
