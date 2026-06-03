@@ -16,6 +16,8 @@ public class GroupManager
 
 	#region Fields
 
+	private const string QualityFileExtension = ".qlty";
+
 	#endregion
 
 	#region Properties
@@ -74,6 +76,35 @@ public class GroupManager
 			.Where(fileName => !fileName!.Equals(inputFileNameRoot, StringComparison.OrdinalIgnoreCase))
 			.OrderBy(fileName => fileName)
 			.ToList()!;
+	}
+
+	public void AddQualityFile(string rootFileName, string includeName)
+	{
+		string includeFileName = Path.ChangeExtension(includeName, QualityFileExtension);
+		string includeFilePath = Path.Combine(Path.GetDirectoryName(rootFileName) ?? string.Empty, includeFileName);
+
+		if (!File.Exists(includeFilePath))
+		{
+			File.WriteAllText(includeFilePath, string.Empty);
+		}
+
+		Includes.Add(new XInclude
+		{
+			Href = includeFileName
+		});
+	}
+
+	public void DeleteQualityFile(string rootFileName, string includeName)
+	{
+		string includeFileName = Path.ChangeExtension(includeName, QualityFileExtension);
+		string includeFilePath = Path.Combine(Path.GetDirectoryName(rootFileName) ?? string.Empty, includeFileName);
+
+		if (File.Exists(includeFilePath))
+		{
+			File.Delete(includeFilePath);
+		}
+
+		Includes.RemoveAll(include => string.Equals(include.Href, includeFileName, StringComparison.OrdinalIgnoreCase));
 	}
 
 	#endregion
