@@ -34,8 +34,9 @@ public class GroupManager
 			return [];
 		}
 
-		string? directory	= Path.GetDirectoryName(fieldQualityProcessingFile);
-		string extension	= Path.GetExtension(fieldQualityProcessingFile);
+		string? directory			= Path.GetDirectoryName(fieldQualityProcessingFile);
+		string inputFileNameRoot	= Path.GetFileNameWithoutExtension(fieldQualityProcessingFile);
+		string extension			= Path.GetExtension(fieldQualityProcessingFile);
 
 		if (string.IsNullOrWhiteSpace(directory) || !Directory.Exists(directory))
 		{
@@ -46,6 +47,7 @@ public class GroupManager
 			.GetFiles(directory, $"*{extension}")
 			.Select(Path.GetFileNameWithoutExtension)
 			.Where(fileName => !string.IsNullOrWhiteSpace(fileName))
+			.Where(fileName => !fileName!.Equals(inputFileNameRoot, StringComparison.OrdinalIgnoreCase))
 			.OrderBy(fileName => fileName)
 			.ToList()!;
 	}
