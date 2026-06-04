@@ -46,7 +46,7 @@ public partial class GroupManagerViewModel : ObservableObject
 	public List<string> AvailableIncludeNames => GroupManager.GetAvailableQualityFiles(FieldQualityProcessingFile);
 
 	[ObservableProperty]
-	public partial GroupManagerIncludeViewModel? SelectedInclude { get; set; }
+	public partial GroupManagerIncludeViewModel? SelectedInclude { get; set; } = null;
 
 	[ObservableProperty]
 	public partial ObservableCollection<GroupManagerIncludeViewModel> Includes { get; set; } = new();
