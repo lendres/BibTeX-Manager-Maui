@@ -18,8 +18,8 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	public GroupManagerViewModel()
 	{
-		GroupManager				= new();
 		FieldQualityProcessingFile	= BibTeXProject.Instance!.Settings.FieldQualityProcessingFile;
+		GroupManager				= GroupManager.Deserialize(FieldQualityProcessingFile) ?? throw new Exception("Failed to deserialize group manager.");
 
 		List<string> includeNames	= GroupManager.IncludeNames;
 		List<string> availableNames	= GroupManager.GetAvailableQualityFiles(FieldQualityProcessingFile);
@@ -28,7 +28,7 @@ public partial class GroupManagerViewModel : ObservableObject
 			availableNames.Select(name => new GroupManagerIncludeViewModel
 			{
 				IncludeName = name,
-				IsIncluded = includeNames.Contains(name, StringComparer.OrdinalIgnoreCase)
+				IsIncluded = includeNames.Contains(name, StringComparer.CurrentCultureIgnoreCase)
 			}));
 	}
 
@@ -40,10 +40,13 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	public string FieldQualityProcessingFile { get; }
 
-	[ObservableProperty]
-	public partial string? SelectedIncludeName { get; set; }
+	//[ObservableProperty]
+	//public partial string? SelectedIncludeName { get; set; }
 
 	public List<string> AvailableIncludeNames => GroupManager.GetAvailableQualityFiles(FieldQualityProcessingFile);
+
+	[ObservableProperty]
+	public partial GroupManagerIncludeViewModel? SelectedInclude { get; set; }
 
 	[ObservableProperty]
 	public partial ObservableCollection<GroupManagerIncludeViewModel> Includes { get; set; } = new();
@@ -53,36 +56,19 @@ public partial class GroupManagerViewModel : ObservableObject
 	[RelayCommand]
 	public void AddSelected()
 	{
-		if (GroupManager is null || string.IsNullOrWhiteSpace(SelectedIncludeName))
-		{
-			return;
-		}
 
-		GroupManager.AddQualityFile(FieldQualityProcessingFile, SelectedIncludeName);
-		//Load(GroupManager, FieldQualityProcessingFile);
 	}
 
 	[RelayCommand]
 	public void DeleteSelected()
 	{
-		if (GroupManager is null || string.IsNullOrWhiteSpace(SelectedIncludeName))
-		{
-			return;
-		}
 
-		GroupManager.DeleteQualityFile(FieldQualityProcessingFile, SelectedIncludeName);
-		//Load(GroupManager, FieldQualityProcessingFile);
 	}
 
 	[RelayCommand]
 	public async Task EditSelected()
 	{
-		if (string.IsNullOrWhiteSpace(SelectedIncludeName))
-		{
-			return;
-		}
-
-		string fileName = Path.ChangeExtension(SelectedIncludeName, ".qlty");
+		string fileName = Path.ChangeExtension(SelectedInclude!.IncludeName, ".qlty");
 		string filePath = Path.Combine(Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty, fileName);
 
 		await Shell.Current.GoToAsync(nameof(GroupManagerView), true, new Dictionary<string, object>
