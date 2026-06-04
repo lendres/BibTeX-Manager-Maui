@@ -1,4 +1,5 @@
 ﻿using BibtexManager;
+using BibTeXManager.Quality;
 using BibTeXManager.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -19,6 +20,7 @@ public partial class GroupManagerViewModel : ObservableObject
 	public GroupManagerViewModel()
 	{
 		FieldQualityProcessingFile	= BibTeXProject.Instance!.Settings.FieldQualityProcessingFile;
+		string directory			= Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty;
 		GroupManager				= GroupManager.Deserialize(FieldQualityProcessingFile) ?? throw new Exception("Failed to deserialize group manager.");
 
 		List<string> includeNames	= GroupManager.IncludeNames;
@@ -27,8 +29,9 @@ public partial class GroupManagerViewModel : ObservableObject
 		Includes = new ObservableCollection<GroupManagerIncludeViewModel>(
 			availableNames.Select(name => new GroupManagerIncludeViewModel
 			{
-				IncludeName = name,
-				IsIncluded = includeNames.Contains(name, StringComparer.CurrentCultureIgnoreCase)
+				IncludeName			= name,
+				IsIncluded			= includeNames.Contains(name, StringComparer.CurrentCultureIgnoreCase),
+				FieldProcessorGroup	= FieldProcessorGroup.Deserialize(Path.Combine(directory, Path.ChangeExtension(name, QualityFileExtension))) ?? new FieldProcessorGroup()
 			}));
 	}
 
@@ -36,33 +39,40 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	#region Properties
 
-	public GroupManager GroupManager { get; }
+	public GroupManager													GroupManager { get; }
 
-	public string FieldQualityProcessingFile { get; }
+	public string														FieldQualityProcessingFile { get; }
 
-	//[ObservableProperty]
-	//public partial string? SelectedIncludeName { get; set; }
-
-	public List<string> AvailableIncludeNames => GroupManager.GetAvailableQualityFiles(FieldQualityProcessingFile);
+	public List<string>													AvailableIncludeNames					=> Includes.Select(include => include.IncludeName).ToList();
 
 	[ObservableProperty]
-	public partial GroupManagerIncludeViewModel? SelectedInclude { get; set; } = null;
+	public partial GroupManagerIncludeViewModel?						SelectedInclude { get; set; }			= null;
 
 	[ObservableProperty]
-	public partial ObservableCollection<GroupManagerIncludeViewModel> Includes { get; set; } = new();
+	public partial ObservableCollection<GroupManagerIncludeViewModel>	Includes { get; set; }					= new();
 
 	#endregion
 
-	[RelayCommand]
-	public void AddSelected()
+	public void NewFieldProcessingGroup(string name)
 	{
-
+		Includes.Add(
+			new GroupManagerIncludeViewModel
+			{
+				IncludeName			= name,
+				IsIncluded			= false,
+				FieldProcessorGroup	= new FieldProcessorGroup()
+			}
+		);
 	}
 
-	[RelayCommand]
-	public void DeleteSelected()
+	public void RenameFieldProcessingGroup(string newName)
 	{
+		SelectedInclude!.IncludeName = newName;
+	}
 
+	public void DeleteFieldProcessingGroup()
+	{
+		Includes.Remove(SelectedInclude!);
 	}
 
 	[RelayCommand]
@@ -72,9 +82,9 @@ public partial class GroupManagerViewModel : ObservableObject
 		string filePath = Path.Combine(Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty, fileName);
 
 		await Shell.Current.GoToAsync(nameof(GroupManagerView), true, new Dictionary<string, object>
-	{
-		{ "FieldQualityProcessingFile", filePath }
-	});
+		{
+			{ "FieldQualityProcessingFile", filePath }
+		});
 	}
 
 	public void Save()

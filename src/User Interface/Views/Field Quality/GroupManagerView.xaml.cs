@@ -53,7 +53,7 @@ public partial class GroupManagerView : ContentPage
 
 		if (result is bool boolResult && boolResult)
 		{
-			//_viewModel.NewTemplate(viewModel.Name);
+			_viewModel.NewFieldProcessingGroup(viewModel.Name);
 		}
 	}
 
@@ -65,20 +65,13 @@ public partial class GroupManagerView : ContentPage
 
 		if (result is bool boolResult && boolResult)
 		{
-			//_viewModel.Rename(_viewModel.SelectedIncludeName!, viewModel.Name);
+			_viewModel.RenameFieldProcessingGroup(viewModel.Name);
 		}
 	}
 
 	private async void OnEditFieldProcessingGroup(object sender, EventArgs eventArgs)
 	{
-		GetNameViewModel	viewModel	= new(_viewModel.SelectedInclude!.IncludeName, _viewModel.AvailableIncludeNames);
-		GetNameView			view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
 
-		if (result is bool boolResult && boolResult)
-		{
-			//_viewModel.Rename(_viewModel.SelectedIncludeName!, viewModel.Name);
-		}
 	}
 
 	private async void OnDeleteFieldProcessingGroup(object sender, EventArgs eventArgs)
@@ -87,7 +80,7 @@ public partial class GroupManagerView : ContentPage
 
 		if (result)
 		{
-			//_viewModel.Delete(_viewModel.SelectedIncludeName!);
+			_viewModel.DeleteFieldProcessingGroup();
 		}
 	}
 }
