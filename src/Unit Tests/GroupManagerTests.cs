@@ -2,9 +2,11 @@
 using BibTeXManager;
 using BibTeXManager.Quality;
 using System.Collections.ObjectModel;
+using System.Xml.Serialization;
 
 namespace BibTeXManagerUnitTests;
 
+[XmlRoot("qualityprocessor")]
 public class GroupManagerTests
 {
 	[Fact]
@@ -73,18 +75,18 @@ public class GroupManagerTests
 		string xml =
 			"""
 			<?xml version="1.0" encoding="utf-8"?>
-			<GroupManager xmlns:xi="http://www.w3.org/2001/XInclude">
+			<qualityprocessor xmlns:xi="http://www.w3.org/2001/XInclude">
 				<fieldprocessorgroups>
 					<xi:include href="LaTeX Field Quality Processing.qlty" />
 				</fieldprocessorgroups>
-			</GroupManager>
+			</qualityprocessor>
 			""";
 
 		File.WriteAllText(path, xml);
 
 		try
 		{
-			GroupManager? groupManager = GroupManager.DeserializeWithoutIncluding<GroupManager>(path);
+			GroupManager? groupManager = GroupManager.Deserialize(path);
 
 			Assert.NotNull(groupManager);
 			Assert.Single(groupManager.Includes);

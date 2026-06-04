@@ -10,7 +10,7 @@ public class XInclude
 	public string Href { get; set; } = string.Empty;
 }
 
-
+[XmlRoot("qualityprocessor")]
 public class GroupManager
 {
 
@@ -123,6 +123,16 @@ public class GroupManager
 			throw new InvalidOperationException("The file cannot be saved. A valid path must be specified.");
 		}
 		Serialization.SerializeObject(this, path);
+	}
+
+	/// <summary>
+	/// Deserialize an object from a file.
+	/// </summary>
+	/// <typeparam name="T">Type of object to deserialize.</typeparam>
+	/// <param name="file">File to deserialize from.</param>
+	public static GroupManager? Deserialize(string file)
+	{
+		return DeserializeWithoutIncluding<GroupManager>(file);
 	}
 
 	/// <summary>
