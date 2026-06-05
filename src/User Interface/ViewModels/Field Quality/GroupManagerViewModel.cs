@@ -93,6 +93,7 @@ public partial class GroupManagerViewModel : ObservableObject
 			.Where(include => include.IsIncluded)
 			.Select(include => include.IncludeName)
 			.ToList();
+	
 	}
 
 	[RelayCommand]

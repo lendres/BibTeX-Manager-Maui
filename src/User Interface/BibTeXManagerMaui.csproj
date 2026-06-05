@@ -73,6 +73,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="ViewModels\Field Quality\GroupManagerViewModel.cs~RF70a88363.TMP" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
 		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.*" />
 		<PackageReference Include="DigitalProduction.Maui.Images" Version="1.1.0" />
