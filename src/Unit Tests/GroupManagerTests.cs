@@ -1,7 +1,5 @@
 ﻿using BibtexManager;
-using BibTeXManager;
-using BibTeXManager.Quality;
-using System.Collections.ObjectModel;
+using DigitalProduction.Xml.Serialization;
 using System.Xml.Serialization;
 
 namespace BibTeXManagerUnitTests;
