@@ -20,7 +20,7 @@ public partial class GroupManagerViewModel : ObservableObject
 	public GroupManagerViewModel()
 	{
 		FieldQualityProcessingFile	= BibTeXProject.Instance!.Settings.FieldQualityProcessingFile;
-		string directory			= Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty;
+
 		GroupManager				= GroupManager.Deserialize(FieldQualityProcessingFile) ?? throw new Exception("Failed to deserialize group manager.");
 
 		List<string> includeNames	= GroupManager.IncludeNames;

@@ -10,8 +10,9 @@ public class GroupManager
 
 	#region Fields
 
-	private const string	QualityFileExtension	= ".qlty";
-	private string			_path					= string.Empty;
+	private const string	FieldQualityManagerExtension			= ".qlty";
+	private const string	FieldQualityProcessingGroupExtension	= ".fqpg";
+	private string			_path									= string.Empty;
 
 	#endregion
 
@@ -37,7 +38,7 @@ public class GroupManager
 				.Where(name => !string.IsNullOrWhiteSpace(name))
 				.Select(name => new XInclude
 				{
-					Href = Path.ChangeExtension(name, QualityFileExtension)
+					Href = Path.ChangeExtension(name, FieldQualityProcessingGroupExtension)
 				})
 				.ToList()
 				?? [];
@@ -48,16 +49,11 @@ public class GroupManager
 
 	#region Methods
 
-	public static List<string> GetAvailableQualityFiles(string fieldQualityProcessingFile)
+	public List<string> GetAvailableQualityFiles()
 	{
-		if (string.IsNullOrWhiteSpace(fieldQualityProcessingFile))
-		{
-			return [];
-		}
-
-		string? directory			= Path.GetDirectoryName(fieldQualityProcessingFile);
-		string inputFileNameRoot	= Path.GetFileNameWithoutExtension(fieldQualityProcessingFile);
-		string extension			= Path.GetExtension(fieldQualityProcessingFile);
+		string? directory			= Path.GetDirectoryName(_path);
+		string inputFileNameRoot	= Path.GetFileNameWithoutExtension(_path);
+		
 
 		if (string.IsNullOrWhiteSpace(directory) || !Directory.Exists(directory))
 		{
@@ -65,41 +61,12 @@ public class GroupManager
 		}
 
 		return Directory
-			.GetFiles(directory, $"*{extension}")
+			.GetFiles(directory, $"*{FieldQualityProcessingGroupExtension}")
 			.Select(Path.GetFileNameWithoutExtension)
 			.Where(fileName => !string.IsNullOrWhiteSpace(fileName))
 			.Where(fileName => !fileName!.Equals(inputFileNameRoot, StringComparison.OrdinalIgnoreCase))
 			.OrderBy(fileName => fileName)
 			.ToList()!;
-	}
-
-	public void AddQualityFile(string rootFileName, string includeName)
-	{
-		string includeFileName = Path.ChangeExtension(includeName, QualityFileExtension);
-		string includeFilePath = Path.Combine(Path.GetDirectoryName(rootFileName) ?? string.Empty, includeFileName);
-
-		if (!File.Exists(includeFilePath))
-		{
-			File.WriteAllText(includeFilePath, string.Empty);
-		}
-
-		Includes.Add(new XInclude
-		{
-			Href = includeFileName
-		});
-	}
-
-	public void DeleteQualityFile(string rootFileName, string includeName)
-	{
-		string includeFileName = Path.ChangeExtension(includeName, QualityFileExtension);
-		string includeFilePath = Path.Combine(Path.GetDirectoryName(rootFileName) ?? string.Empty, includeFileName);
-
-		if (File.Exists(includeFilePath))
-		{
-			File.Delete(includeFilePath);
-		}
-
-		Includes.RemoveAll(include => string.Equals(include.Href, includeFileName, StringComparison.OrdinalIgnoreCase));
 	}
 
 	#endregion
@@ -113,7 +80,7 @@ public class GroupManager
 	/// <exception cref="InvalidOperationException">Thrown when the projects path is not valid.</exception>
 	public void Serialize()
 	{
-		Debug.Assert(!string.IsNullOrWhiteSpace(_path), "The path must be set before serialization.");
+		System.Diagnostics.Debug.Assert(!string.IsNullOrWhiteSpace(_path), "The path must be set before serialization.");
 		Serialize(_path);
 	}
 
