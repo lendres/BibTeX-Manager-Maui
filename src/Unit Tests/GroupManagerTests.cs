@@ -28,7 +28,7 @@ public class GroupManagerTests
 	[InlineData("   ")]
 	public void GetAvailableQualityFilesWithEmptyPathReturnsEmpty(string fieldQualityProcessingFile)
 	{
-		List<string> files = GroupManager.GetAvailableQualityFiles(fieldQualityProcessingFile);
+		List<string> files = GroupManager.GetAvailableQualityFiles();
 
 		Assert.Empty(files);
 	}
@@ -38,7 +38,7 @@ public class GroupManagerTests
 	{
 		string fieldQualityProcessingFile = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString(), "Field Quality Processing.qlty");
 
-		List<string> files = GroupManager.GetAvailableQualityFiles(fieldQualityProcessingFile);
+		List<string> files = GroupManager.GetAvailableQualityFiles();
 
 		Assert.Empty(files);
 	}
