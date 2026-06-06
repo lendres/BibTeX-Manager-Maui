@@ -1,14 +1,8 @@
 ﻿using DigitalProduction.Xml.Serialization;
-using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 
 namespace BibtexManager;
 
-public class XInclude
-{
-	[XmlAttribute("href")]
-	public string Href { get; set; } = string.Empty;
-}
 
 [XmlRoot("qualityprocessor")]
 public class GroupManager
@@ -16,7 +10,8 @@ public class GroupManager
 
 	#region Fields
 
-	private const string QualityFileExtension = ".qlty";
+	private const string	QualityFileExtension	= ".qlty";
+	private string			_path					= string.Empty;
 
 	#endregion
 
@@ -42,7 +37,7 @@ public class GroupManager
 				.Where(name => !string.IsNullOrWhiteSpace(name))
 				.Select(name => new XInclude
 				{
-					Href = Path.ChangeExtension(name, ".qlty")
+					Href = Path.ChangeExtension(name, QualityFileExtension)
 				})
 				.ToList()
 				?? [];
@@ -116,8 +111,20 @@ public class GroupManager
 	/// </summary>
 	/// <param name="path">Path (full path and filename) to write to.</param>
 	/// <exception cref="InvalidOperationException">Thrown when the projects path is not valid.</exception>
+	public void Serialize()
+	{
+		Debug.Assert(!string.IsNullOrWhiteSpace(_path), "The path must be set before serialization.");
+		Serialize(_path);
+	}
+
+	/// <summary>
+	/// Write this object to a file to the provided path.
+	/// </summary>
+	/// <param name="path">Path (full path and filename) to write to.</param>
+	/// <exception cref="InvalidOperationException">Thrown when the projects path is not valid.</exception>
 	public void Serialize(string path)
 	{
+		_path = path;
 		if (!DigitalProduction.IO.Path.PathIsWritable(path))
 		{
 			throw new InvalidOperationException("The file cannot be saved. A valid path must be specified.");
@@ -132,24 +139,15 @@ public class GroupManager
 	/// <param name="file">File to deserialize from.</param>
 	public static GroupManager? Deserialize(string file)
 	{
-		return DeserializeWithoutIncluding<GroupManager>(file);
-	}
-
-	/// <summary>
-	/// Deserialize an object from a file.
-	/// </summary>
-	/// <typeparam name="T">Type of object to deserialize.</typeparam>
-	/// <param name="file">File to deserialize from.</param>
-	public static T? DeserializeWithoutIncluding<T>(string file)
-	{
-		XmlSerializer serializer = new(typeof(T));
-
-		using (StreamReader streamReader = new(file))
+		GroupManager? groupManager = Serialization.DeserializeWithoutIncluding<GroupManager>(file);
+		if (groupManager != null)
 		{
-			T? deserializedobject = (T?)serializer.Deserialize(streamReader);
-			return deserializedobject;
+			groupManager._path = file;
 		}
+		return groupManager;
 	}
+
+
 
 	#endregion
 }

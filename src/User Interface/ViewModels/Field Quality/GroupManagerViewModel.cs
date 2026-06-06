@@ -94,23 +94,24 @@ public partial class GroupManagerViewModel : ObservableObject
 			.Select(include => include.IncludeName)
 			.ToList();
 	
+		foreach (GroupManagerIncludeViewModel include in Includes)
+		{
+			include.FieldProcessorGroup.Serialize(Path.Combine(Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty, Path.ChangeExtension(include.IncludeName, QualityFileExtension)));
+		}
 	}
 
 	[RelayCommand]
 	public void Delete(GroupManagerIncludeViewModel include)
 	{
-		GroupManager.DeleteQualityFile(FieldQualityProcessingFile, include.IncludeName);
 		Includes.Remove(include);
 	}
 
 	public void Add(string includeName)
 	{
-		GroupManager.AddQualityFile(FieldQualityProcessingFile, includeName);
-
 		Includes.Add(new GroupManagerIncludeViewModel
 		{
-			IncludeName = includeName,
-			IsIncluded = true
+			IncludeName	= includeName,
+			IsIncluded	= true
 		});
 	}
 }
