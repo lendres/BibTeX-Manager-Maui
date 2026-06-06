@@ -2,9 +2,9 @@
 
 <qualityprocessor xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">
 	<fieldprocessorgroups>
-		<xi:include href="LaTeX Field Quality Processing.qlty" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-		<xi:include href="Month Numbers to Text.qlty" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-		<xi:include href="Month Abbreviations to Full Name.qlty" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-		<xi:include href="Special Screw Ups by SPE.qlty" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+		<xi:include href="LaTeX Field Quality Processing.fqpg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+		<xi:include href="Month Numbers to Text.fqpg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+		<xi:include href="Month Abbreviations to Full Name.fqpg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+		<xi:include href="Special Screw Ups by SPE.fqpg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
 	</fieldprocessorgroups>
 </qualityprocessor>

@@ -24,14 +24,14 @@ public partial class GroupManagerViewModel : ObservableObject
 		GroupManager				= GroupManager.Deserialize(FieldQualityProcessingFile) ?? throw new Exception("Failed to deserialize group manager.");
 
 		List<string> includeNames	= GroupManager.IncludeNames;
-		List<string> availableNames	= GroupManager.GetAvailableQualityFiles(FieldQualityProcessingFile);
+		List<string> availableNames	= GroupManager.GetAvailableQualityFiles();
 
 		Includes = new ObservableCollection<GroupManagerIncludeViewModel>(
 			availableNames.Select(name => new GroupManagerIncludeViewModel
 			{
-				IncludeName			= name,
+				IncludeName			= Path.GetFileNameWithoutExtension(name),
 				IsIncluded			= includeNames.Contains(name, StringComparer.CurrentCultureIgnoreCase),
-				FieldProcessorGroup	= FieldProcessorGroup.Deserialize(Path.Combine(directory, Path.ChangeExtension(name, QualityFileExtension))) ?? new FieldProcessorGroup()
+				FieldProcessorGroup	= FieldProcessorGroup.Deserialize(Path.Combine(GroupManager.Directory, name)) ?? new FieldProcessorGroup()
 			}));
 	}
 

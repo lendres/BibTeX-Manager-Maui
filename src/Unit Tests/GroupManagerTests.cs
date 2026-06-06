@@ -23,42 +23,38 @@ public class GroupManagerTests
 		Assert.Equal(string.Empty, include.Href);
 	}
 
-	[Theory]
-	[InlineData("")]
-	[InlineData("   ")]
-	public void GetAvailableQualityFilesWithEmptyPathReturnsEmpty(string fieldQualityProcessingFile)
+	[Fact]
+	public void GetAvailableQualityFilesWithEmptyPathReturnsEmpty()
 	{
-		List<string> files = GroupManager.GetAvailableQualityFiles();
-
+		CreateTempGroupManager(out string directory, out GroupManager groupManager);
+		List<string> files = groupManager.GetAvailableQualityFiles();
 		Assert.Empty(files);
+		Directory.Delete(directory, true);
 	}
 
 	[Fact]
 	public void GetAvailableQualityFilesWithMissingDirectoryReturnsEmpty()
 	{
-		string fieldQualityProcessingFile = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString(), "Field Quality Processing.qlty");
-
-		List<string> files = GroupManager.GetAvailableQualityFiles();
-
+		CreateTempGroupManager(out string directory, out GroupManager groupManager);
+		Directory.Delete(directory, true);
+		List<string> files = groupManager.GetAvailableQualityFiles();
 		Assert.Empty(files);
 	}
 
 	[Fact]
 	public void GetAvailableQualityFilesReturnsMatchingFilesWithoutExtensions()
 	{
-		string directory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-		Directory.CreateDirectory(directory);
+		CreateTempGroupManager(out string directory, out GroupManager groupManager);
 
 		try
 		{
-			File.WriteAllText(Path.Combine(directory, "Beta.qlty"), string.Empty);
-			File.WriteAllText(Path.Combine(directory, "Alpha.qlty"), string.Empty);
-			File.WriteAllText(Path.Combine(directory, "Field Quality Processing.qlty"), string.Empty);
+			File.WriteAllText(Path.Combine(directory, "Beta"+GroupManager.FieldQualityProcessingGroupExtension), string.Empty);
+			File.WriteAllText(Path.Combine(directory, "Alpha"+GroupManager.FieldQualityProcessingGroupExtension), string.Empty);
 			File.WriteAllText(Path.Combine(directory, "Ignored.txt"), string.Empty);
 
-			List<string> files = GroupManager.GetAvailableQualityFiles(Path.Combine(directory, "Field Quality Processing.qlty"));
+			List<string> files = groupManager.GetAvailableQualityFiles();
 
-			Assert.Equal(["Alpha", "Beta"], files);
+			Assert.Equal(["Alpha"+GroupManager.FieldQualityProcessingGroupExtension, "Beta"+GroupManager.FieldQualityProcessingGroupExtension], files);
 		}
 		finally
 		{
@@ -75,7 +71,7 @@ public class GroupManagerTests
 			<?xml version="1.0" encoding="utf-8"?>
 			<qualityprocessor xmlns:xi="http://www.w3.org/2001/XInclude">
 				<fieldprocessorgroups>
-					<xi:include href="LaTeX Field Quality Processing.qlty" />
+					<xi:include href="LaTeX Field Quality Processing.fqpg" />
 				</fieldprocessorgroups>
 			</qualityprocessor>
 			""";
@@ -88,11 +84,33 @@ public class GroupManagerTests
 
 			Assert.NotNull(groupManager);
 			Assert.Single(groupManager.Includes);
-			Assert.Equal("LaTeX Field Quality Processing.qlty", groupManager.Includes[0].Href);
+			Assert.Equal("LaTeX Field Quality Processing"+GroupManager.FieldQualityProcessingGroupExtension, groupManager.Includes[0].Href);
 		}
 		finally
 		{
 			File.Delete(path);
 		}
 	}
+
+	#region Helper Methods
+
+	private static void CreateTempGroupManager(out string directory, out GroupManager groupManager)
+	{
+		directory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+		Directory.CreateDirectory(directory);
+
+		string path = Path.Combine(directory, "Field Quality Processing" + GroupManager.FieldQualityManagerExtension);
+
+		File.WriteAllText(path,
+			"""
+			<?xml version="1.0" encoding="utf-8"?>
+			<qualityprocessor>
+				<fieldprocessorgroups />
+			</qualityprocessor>
+			""");
+
+		groupManager = GroupManager.Deserialize(path)!;
+	}
+
+	#endregion
 }

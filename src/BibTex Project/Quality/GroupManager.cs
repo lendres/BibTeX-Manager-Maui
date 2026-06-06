@@ -10,13 +10,15 @@ public class GroupManager
 
 	#region Fields
 
-	private const string	FieldQualityManagerExtension			= ".qlty";
-	private const string	FieldQualityProcessingGroupExtension	= ".fqpg";
+	public const string		FieldQualityManagerExtension			= ".qlty";
+	public const string		FieldQualityProcessingGroupExtension	= ".fqpg";
 	private string			_path									= string.Empty;
 
 	#endregion
 
 	#region Properties
+
+	public string Directory => Path.GetDirectoryName(_path) ?? throw new Exception("The path must be set before accessing the directory.");
 
 	[XmlArray("fieldprocessorgroups"), XmlArrayItem("include", Namespace = "http://www.w3.org/2001/XInclude")]
 	public List<XInclude> Includes { get; set; } = new();
@@ -28,7 +30,7 @@ public class GroupManager
 		{
 			return Includes
 				.Where(include => !string.IsNullOrWhiteSpace(include.Href))
-				.Select(include => Path.GetFileNameWithoutExtension(include.Href))
+				.Select(include => include.Href)
 				.ToList();
 		}
 
@@ -36,10 +38,7 @@ public class GroupManager
 		{
 			Includes = value?
 				.Where(name => !string.IsNullOrWhiteSpace(name))
-				.Select(name => new XInclude
-				{
-					Href = Path.ChangeExtension(name, FieldQualityProcessingGroupExtension)
-				})
+				.Select(name => new XInclude { Href = name })
 				.ToList()
 				?? [];
 		}
@@ -51,20 +50,15 @@ public class GroupManager
 
 	public List<string> GetAvailableQualityFiles()
 	{
-		string? directory			= Path.GetDirectoryName(_path);
-		string inputFileNameRoot	= Path.GetFileNameWithoutExtension(_path);
-		
-
-		if (string.IsNullOrWhiteSpace(directory) || !Directory.Exists(directory))
+		if (string.IsNullOrWhiteSpace(Directory) || !System.IO.Directory.Exists(Directory))
 		{
 			return [];
 		}
 
-		return Directory
-			.GetFiles(directory, $"*{FieldQualityProcessingGroupExtension}")
-			.Select(Path.GetFileNameWithoutExtension)
+		return System.IO.Directory
+			.GetFiles(Directory, $"*{FieldQualityProcessingGroupExtension}")
+			.Select(Path.GetFileName)
 			.Where(fileName => !string.IsNullOrWhiteSpace(fileName))
-			.Where(fileName => !fileName!.Equals(inputFileNameRoot, StringComparison.OrdinalIgnoreCase))
 			.OrderBy(fileName => fileName)
 			.ToList()!;
 	}
