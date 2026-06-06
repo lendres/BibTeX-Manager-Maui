@@ -59,7 +59,7 @@ public partial class GroupManagerView : ContentPage
 
 	private async void OnRenameFieldProcessingGroup(object sender, EventArgs eventArgs)
 	{
-		GetNameViewModel	viewModel	= new(_viewModel.SelectedInclude!.Name, _viewModel.AvailableIncludeNames);
+		GetNameViewModel	viewModel	= new(_viewModel.SelectedFieldProcessingGroup!.Name, _viewModel.AvailableIncludeNames);
 		GetNameView			view		= new(viewModel);
 		object?				result		= await Shell.Current.ShowPopupAsync(view);
 

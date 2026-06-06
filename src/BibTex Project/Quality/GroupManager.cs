@@ -63,6 +63,14 @@ public class GroupManager
 			.ToList()!;
 	}
 
+	public void DeleteAllFieldQualityProcessingGroups()
+	{
+		foreach (string file in System.IO.Directory.GetFiles(Directory, $"*{FieldQualityProcessingGroupExtension}"))
+		{
+			File.Delete(file);
+		}
+	}
+
 	#endregion
 
 	#region XML

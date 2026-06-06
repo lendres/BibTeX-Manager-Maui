@@ -11,8 +11,6 @@ public partial class GroupManagerViewModel : ObservableObject
 {
 	#region Fields
 
-	private const string QualityFileExtension = ".qlty";
-
 	#endregion
 
 	#region Construction
@@ -43,10 +41,10 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	public string														FieldQualityProcessingFile { get; }
 
-	public List<string>													AvailableIncludeNames					=> FieldProcessingGroups.Select(include => include.Name).ToList();
+	public List<string>													AvailableIncludeNames								=> FieldProcessingGroups.Select(include => include.Name).ToList();
 
 	[ObservableProperty]
-	public partial GroupManagerIncludeViewModel?						SelectedInclude { get; set; }			= null;
+	public partial GroupManagerIncludeViewModel?						SelectedFieldProcessingGroup { get; set; }			= null;
 
 	[ObservableProperty]
 	public partial ObservableCollection<GroupManagerIncludeViewModel>	FieldProcessingGroups { get; set; }					= new();
@@ -67,18 +65,18 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	public void RenameFieldProcessingGroup(string newName)
 	{
-		SelectedInclude!.Name = newName;
+		SelectedFieldProcessingGroup!.Name = newName;
 	}
 
 	public void DeleteFieldProcessingGroup()
 	{
-		FieldProcessingGroups.Remove(SelectedInclude!);
+		FieldProcessingGroups.Remove(SelectedFieldProcessingGroup!);
 	}
 
 	[RelayCommand]
 	public async Task EditSelected()
 	{
-		string fileName = Path.ChangeExtension(SelectedInclude!.Name, ".qlty");
+		string fileName = Path.ChangeExtension(SelectedFieldProcessingGroup!.Name, ".qlty");
 		string filePath = Path.Combine(Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty, fileName);
 
 		await Shell.Current.GoToAsync(nameof(GroupManagerView), true, new Dictionary<string, object>
@@ -93,10 +91,11 @@ public partial class GroupManagerViewModel : ObservableObject
 			.Where(include => include.IsIncluded)
 			.Select(include => include.Name)
 			.ToList();
-	
+
+		GroupManager.DeleteAllFieldQualityProcessingGroups();
 		foreach (GroupManagerIncludeViewModel include in FieldProcessingGroups)
 		{
-			include.FieldProcessorGroup.Serialize(Path.Combine(Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty, Path.ChangeExtension(include.Name, QualityFileExtension)));
+			include.FieldProcessorGroup.Serialize(Path.Combine(GroupManager.Directory, Path.ChangeExtension(include.Name, GroupManager.FieldQualityProcessingGroupExtension)));
 		}
 	}
 

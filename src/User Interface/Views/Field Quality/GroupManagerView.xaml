@@ -30,17 +30,17 @@
 		<HorizontalStackLayout Grid.Row="1" Grid.Column="0" StyleClass="TopButtonRowStyle"  Padding="0,20,0,0">
 			<Button Text="Add" Clicked="OnNewFieldProcessingGroup" StyleClass="SquareButtonStyle"/>
 			<Button Text="Rename" Clicked="OnRenameFieldProcessingGroup" StyleClass="SquareButton"
-				IsEnabled="{Binding SelectedInclude, Converter={StaticResource IsNotNullConverter}}"/>
+				IsEnabled="{Binding SelectedFieldProcessingGroup, Converter={StaticResource IsNotNullConverter}}"/>
 			<Button Text="Edit" Clicked="OnEditFieldProcessingGroup" StyleClass="SquareButton"
-				IsEnabled="{Binding SelectedInclude, Converter={StaticResource IsNotNullConverter}}"/>
+				IsEnabled="{Binding SelectedFieldProcessingGroup, Converter={StaticResource IsNotNullConverter}}"/>
 			<Button Text="Delete" Clicked="OnDeleteFieldProcessingGroup" StyleClass="SquareButton"
-				IsEnabled="{Binding SelectedInclude, Converter={StaticResource IsNotNullConverter}}"/>
+				IsEnabled="{Binding SelectedFieldProcessingGroup, Converter={StaticResource IsNotNullConverter}}"/>
 		</HorizontalStackLayout>
 
 		<CollectionView
 			Grid.Row="2"
-			ItemsSource="{Binding Includes}"
-			SelectedItem="{Binding SelectedInclude}"
+			ItemsSource="{Binding FieldProcessingGroups}"
+			SelectedItem="{Binding SelectedFieldProcessingGroup}"
 			SelectionMode="Single"
 			Margin="0,20,0,0">
 
@@ -59,7 +59,7 @@
 
 						<Label
 							Grid.Column="1"
-							Text="{Binding IncludeName}"
+							Text="{Binding Name}"
 							VerticalOptions="Center"
 							FontSize="18" />
 					</Grid>
