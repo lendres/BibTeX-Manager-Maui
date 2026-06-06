@@ -26,10 +26,10 @@ public partial class GroupManagerViewModel : ObservableObject
 		List<string> includeNames	= GroupManager.IncludeNames;
 		List<string> availableNames	= GroupManager.GetAvailableQualityFiles();
 
-		Includes = new ObservableCollection<GroupManagerIncludeViewModel>(
+		FieldProcessingGroups = new ObservableCollection<GroupManagerIncludeViewModel>(
 			availableNames.Select(name => new GroupManagerIncludeViewModel
 			{
-				IncludeName			= Path.GetFileNameWithoutExtension(name),
+				Name				= Path.GetFileNameWithoutExtension(name),
 				IsIncluded			= includeNames.Contains(name, StringComparer.CurrentCultureIgnoreCase),
 				FieldProcessorGroup	= FieldProcessorGroup.Deserialize(Path.Combine(GroupManager.Directory, name)) ?? new FieldProcessorGroup()
 			}));
@@ -43,22 +43,22 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	public string														FieldQualityProcessingFile { get; }
 
-	public List<string>													AvailableIncludeNames					=> Includes.Select(include => include.IncludeName).ToList();
+	public List<string>													AvailableIncludeNames					=> FieldProcessingGroups.Select(include => include.Name).ToList();
 
 	[ObservableProperty]
 	public partial GroupManagerIncludeViewModel?						SelectedInclude { get; set; }			= null;
 
 	[ObservableProperty]
-	public partial ObservableCollection<GroupManagerIncludeViewModel>	Includes { get; set; }					= new();
+	public partial ObservableCollection<GroupManagerIncludeViewModel>	FieldProcessingGroups { get; set; }					= new();
 
 	#endregion
 
 	public void NewFieldProcessingGroup(string name)
 	{
-		Includes.Add(
+		FieldProcessingGroups.Add(
 			new GroupManagerIncludeViewModel
 			{
-				IncludeName			= name,
+				Name			= name,
 				IsIncluded			= false,
 				FieldProcessorGroup	= new FieldProcessorGroup()
 			}
@@ -67,18 +67,18 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	public void RenameFieldProcessingGroup(string newName)
 	{
-		SelectedInclude!.IncludeName = newName;
+		SelectedInclude!.Name = newName;
 	}
 
 	public void DeleteFieldProcessingGroup()
 	{
-		Includes.Remove(SelectedInclude!);
+		FieldProcessingGroups.Remove(SelectedInclude!);
 	}
 
 	[RelayCommand]
 	public async Task EditSelected()
 	{
-		string fileName = Path.ChangeExtension(SelectedInclude!.IncludeName, ".qlty");
+		string fileName = Path.ChangeExtension(SelectedInclude!.Name, ".qlty");
 		string filePath = Path.Combine(Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty, fileName);
 
 		await Shell.Current.GoToAsync(nameof(GroupManagerView), true, new Dictionary<string, object>
@@ -89,28 +89,28 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	public void Save()
 	{
-		GroupManager.IncludeNames = Includes
+		GroupManager.IncludeNames = FieldProcessingGroups
 			.Where(include => include.IsIncluded)
-			.Select(include => include.IncludeName)
+			.Select(include => include.Name)
 			.ToList();
 	
-		foreach (GroupManagerIncludeViewModel include in Includes)
+		foreach (GroupManagerIncludeViewModel include in FieldProcessingGroups)
 		{
-			include.FieldProcessorGroup.Serialize(Path.Combine(Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty, Path.ChangeExtension(include.IncludeName, QualityFileExtension)));
+			include.FieldProcessorGroup.Serialize(Path.Combine(Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty, Path.ChangeExtension(include.Name, QualityFileExtension)));
 		}
 	}
 
 	[RelayCommand]
 	public void Delete(GroupManagerIncludeViewModel include)
 	{
-		Includes.Remove(include);
+		FieldProcessingGroups.Remove(include);
 	}
 
 	public void Add(string includeName)
 	{
-		Includes.Add(new GroupManagerIncludeViewModel
+		FieldProcessingGroups.Add(new GroupManagerIncludeViewModel
 		{
-			IncludeName	= includeName,
+			Name	= includeName,
 			IsIncluded	= true
 		});
 	}

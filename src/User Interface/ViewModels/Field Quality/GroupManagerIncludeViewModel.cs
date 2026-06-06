@@ -9,7 +9,7 @@ public partial class GroupManagerIncludeViewModel : ObservableObject
 	public partial bool IsIncluded { get; set; }
 
 	[ObservableProperty]
-	public partial string IncludeName { get; set; } = string.Empty;
+	public partial string Name { get; set; } = string.Empty;
 
 	public FieldProcessorGroup FieldProcessorGroup { get; set; } = new FieldProcessorGroup();
 }
