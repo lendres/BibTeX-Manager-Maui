@@ -41,6 +41,12 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	public string														FieldQualityProcessingFile { get; }
 
+	[ObservableProperty]
+	public partial bool													Modified  { get; set; }								= false;
+
+	[ObservableProperty]
+	public partial bool													IsSubmittable { get; set; }
+
 	public List<string>													AvailableIncludeNames								=> FieldProcessingGroups.Select(include => include.Name).ToList();
 
 	[ObservableProperty]
@@ -48,6 +54,17 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	[ObservableProperty]
 	public partial ObservableCollection<GroupManagerIncludeViewModel>	FieldProcessingGroups { get; set; }					= new();
+
+	#endregion
+
+	#region Events
+
+	partial void OnModifiedChanged(bool oldValue, bool newValue)
+	{
+		ValidateSubmittable();
+	}
+
+	public bool ValidateSubmittable() => IsSubmittable = Modified;
 
 	#endregion
 
@@ -61,16 +78,19 @@ public partial class GroupManagerViewModel : ObservableObject
 				FieldProcessorGroup	= new FieldProcessorGroup()
 			}
 		);
+		Modified = true;
 	}
 
 	public void RenameFieldProcessingGroup(string newName)
 	{
 		SelectedFieldProcessingGroup!.Name = newName;
+		Modified = true;
 	}
 
 	public void DeleteFieldProcessingGroup()
 	{
 		FieldProcessingGroups.Remove(SelectedFieldProcessingGroup!);
+		Modified = true;
 	}
 
 	[RelayCommand]
@@ -97,20 +117,7 @@ public partial class GroupManagerViewModel : ObservableObject
 		{
 			include.FieldProcessorGroup.Serialize(Path.Combine(GroupManager.Directory, Path.ChangeExtension(include.Name, GroupManager.FieldQualityProcessingGroupExtension)));
 		}
-	}
-
-	[RelayCommand]
-	public void Delete(GroupManagerIncludeViewModel include)
-	{
-		FieldProcessingGroups.Remove(include);
-	}
-
-	public void Add(string includeName)
-	{
-		FieldProcessingGroups.Add(new GroupManagerIncludeViewModel
-		{
-			Name	= includeName,
-			IsIncluded	= true
-		});
+		GroupManager.Serialize();
+		Modified = true;
 	}
 }

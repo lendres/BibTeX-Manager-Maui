@@ -21,8 +21,8 @@
 		<Grid Grid.Row="0" ColumnDefinitions="*,400" HorizontalOptions="Fill">
 			<Label Grid.Column="0" Text="Quality Processing Includes" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center" />
 			<HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle">
-				<Button Text="Save &amp; Return" StyleClass="StandardSizeButtonStyle" Clicked="OnSaveAndReturn" HorizontalOptions="End"/>
-				<Button Text="Save" StyleClass="StandardSizeButtonStyle" Clicked="OnSave" HorizontalOptions="End"/>
+				<Button Text="Save &amp; Return" StyleClass="StandardSizeButtonStyle" Clicked="OnSaveAndReturn" HorizontalOptions="End" IsEnabled="{Binding IsSubmittable}"/>
+				<Button Text="Save" StyleClass="StandardSizeButtonStyle" Clicked="OnSave" HorizontalOptions="End" IsEnabled="{Binding IsSubmittable}"/>
 				<Button Text="Cancel" StyleClass="StandardSizeButtonStyle" Clicked="OnCancel" HorizontalOptions="End"/>
 			</HorizontalStackLayout>
 		</Grid>
