@@ -24,13 +24,15 @@ public partial class GroupManagerViewModel : ObservableObject
 		List<string> includeNames	= GroupManager.IncludeNames;
 		List<string> availableNames	= GroupManager.GetAvailableQualityFiles();
 
-		FieldProcessingGroups = new ObservableCollection<GroupManagerIncludeViewModel>(
-			availableNames.Select(name => new GroupManagerIncludeViewModel
-			{
-				Name				= Path.GetFileNameWithoutExtension(name),
-				IsIncluded			= includeNames.Contains(name, StringComparer.CurrentCultureIgnoreCase),
-				FieldProcessorGroup	= FieldProcessorGroup.Deserialize(Path.Combine(GroupManager.Directory, name)) ?? new FieldProcessorGroup()
-			}));
+		FieldProcessingGroups = new ObservableCollection<GroupManagerIncludeViewModel>();
+		foreach (string name in availableNames)
+		{
+			AddNewGroupManagerIncludeViewModel(
+				Path.GetFileNameWithoutExtension(name),
+				includeNames.Contains(name, StringComparer.CurrentCultureIgnoreCase),
+				FieldProcessorGroup.Deserialize(Path.Combine(GroupManager.Directory, name)) ?? new FieldProcessorGroup()
+			);
+		}
 	}
 
 	#endregion
@@ -68,16 +70,11 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	#endregion
 
+	#region Field Processing Group Management
+
 	public void NewFieldProcessingGroup(string name)
 	{
-		FieldProcessingGroups.Add(
-			new GroupManagerIncludeViewModel
-			{
-				Name			= name,
-				IsIncluded			= false,
-				FieldProcessorGroup	= new FieldProcessorGroup()
-			}
-		);
+		AddNewGroupManagerIncludeViewModel(name, false, new FieldProcessorGroup());
 		Modified = true;
 	}
 
@@ -105,6 +102,10 @@ public partial class GroupManagerViewModel : ObservableObject
 		});
 	}
 
+	#endregion
+
+	#region Methods
+
 	public void Save()
 	{
 		GroupManager.IncludeNames = FieldProcessingGroups
@@ -120,4 +121,24 @@ public partial class GroupManagerViewModel : ObservableObject
 		GroupManager.Serialize();
 		Modified = true;
 	}
+
+	private void AddNewGroupManagerIncludeViewModel(string name, bool isIncluded, FieldProcessorGroup fieldProcessorGroup)
+	{
+		GroupManagerIncludeViewModel groupManagerIncludeViewModel = new GroupManagerIncludeViewModel
+		{
+			Name = name,
+			IsIncluded = isIncluded,
+			FieldProcessorGroup = fieldProcessorGroup
+		};
+		groupManagerIncludeViewModel.PropertyChanged += (sender, args) =>
+		{
+			if (args.PropertyName == nameof(GroupManagerIncludeViewModel.IsIncluded))
+			{
+				Modified = true;
+			}
+		};
+		FieldProcessingGroups.Add(groupManagerIncludeViewModel);
+	}
+
+	#endregion
 }
