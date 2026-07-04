@@ -20,7 +20,7 @@ public abstract class FieldProcessor
 	#region Fields
 
 	private FieldsToProcess					_fieldsToProcess	= FieldsToProcess.All;
-	private	readonly BindingList<string>	_fieldNames			= [];
+	private	readonly List<string>			_fieldNames			= [];
 	protected string						_pattern			= string.Empty;
 
 	#endregion
@@ -48,7 +48,7 @@ public abstract class FieldProcessor
 	/// Field names to process.
 	/// </summary>
 	[XmlArray("fields"), XmlArrayItem("field")]
-	public BindingList<string> FieldNames
+	public List<string> FieldNames
 	{
 		get
 		{

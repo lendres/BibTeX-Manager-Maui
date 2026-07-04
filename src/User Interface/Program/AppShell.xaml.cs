@@ -1,4 +1,5 @@
-﻿using BibTeXManager.Views;
+﻿using BibTeXManager.ViewModels;
+using BibTeXManager.Views;
 
 namespace BibTeXManager;
 
@@ -12,5 +13,6 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(NameMappingView), typeof(NameMappingView));
 		Routing.RegisterRoute(nameof(TemplatesEditView), typeof(TemplatesEditView));
 		Routing.RegisterRoute(nameof(GroupManagerView), typeof(GroupManagerView));
+		Routing.RegisterRoute(nameof(FieldProcessorGroupEditorView), typeof(FieldProcessorGroupEditorView));
 	}
 }

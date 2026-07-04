@@ -1,4 +1,5 @@
-﻿using BibtexManager;
+﻿using BibTeXLibrary;
+using BibtexManager;
 using BibTeXManager.Quality;
 using BibTeXManager.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -90,16 +91,10 @@ public partial class GroupManagerViewModel : ObservableObject
 		Modified = true;
 	}
 
-	[RelayCommand]
-	public async Task EditSelected()
+	public string GetSelectedQualityFilePath()
 	{
 		string fileName = Path.ChangeExtension(SelectedFieldProcessingGroup!.Name, ".qlty");
-		string filePath = Path.Combine(Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty, fileName);
-
-		await Shell.Current.GoToAsync(nameof(GroupManagerView), true, new Dictionary<string, object>
-		{
-			{ "FieldQualityProcessingFile", filePath }
-		});
+		return Path.Combine(Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty, fileName);
 	}
 
 	#endregion

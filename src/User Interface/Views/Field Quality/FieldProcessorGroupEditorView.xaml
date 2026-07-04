@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BibTeXManager.Views.FieldProcessorGroupEditorView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Field Processor Group">
+
+	<Grid RowDefinitions="Auto,*,Auto" Padding="12" RowSpacing="12">
+
+		<VerticalStackLayout Grid.Row="0" Spacing="8">
+			<Label Text="Group Name" />
+			<Entry Text="{Binding GroupName}" />
+		</VerticalStackLayout>
+
+		<Grid Grid.Row="1" ColumnDefinitions="*,2*" ColumnSpacing="12">
+
+			<VerticalStackLayout Grid.Column="0" Spacing="8">
+				<Label Text="Processors" FontAttributes="Bold" />
+
+				<CollectionView
+                    ItemsSource="{Binding Processors}"
+                    SelectedItem="{Binding SelectedProcessor}"
+                    SelectionMode="Single">
+
+					<CollectionView.ItemTemplate>
+						<DataTemplate>
+							<Grid Padding="6" RowDefinitions="Auto,Auto">
+								<Label Text="{Binding Pattern}" FontAttributes="Bold" />
+								<Label Grid.Row="1" Text="{Binding Replacement}" FontSize="12" />
+							</Grid>
+						</DataTemplate>
+					</CollectionView.ItemTemplate>
+				</CollectionView>
+
+				<HorizontalStackLayout Spacing="8">
+					<Button Text="Add" Command="{Binding AddProcessorCommand}" />
+					<Button Text="Delete" Command="{Binding DeleteProcessorCommand}" />
+				</HorizontalStackLayout>
+			</VerticalStackLayout>
+
+			<ScrollView Grid.Column="1">
+				<VerticalStackLayout Spacing="10" BindingContext="{Binding SelectedProcessor}">
+
+					<Label Text="Selected Processor" FontAttributes="Bold" />
+
+					<Label Text="Fields To Process" />
+					<Picker
+                        ItemsSource="{Binding FieldstoprocessOptions}"
+                        SelectedItem="{Binding Fieldstoprocess}" />
+
+					<Label Text="Pattern" />
+					<Entry Text="{Binding Pattern}" />
+
+					<Label Text="Replacement" />
+					<Entry Text="{Binding Replacement}" />
+
+					<Label Text="Fields" FontAttributes="Bold" />
+
+					<CollectionView ItemsSource="{Binding Fields}">
+						<CollectionView.ItemTemplate>
+							<DataTemplate>
+								<Grid ColumnDefinitions="*,Auto" Padding="0,4">
+									<Entry Text="{Binding .}" />
+									<Button
+                                        Grid.Column="1"
+                                        Text="Delete"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteFieldCommand}"
+                                        CommandParameter="{Binding .}" />
+								</Grid>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>
+					</CollectionView>
+
+					<Button
+                        Text="Add Field"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddFieldCommand}" />
+				</VerticalStackLayout>
+			</ScrollView>
+		</Grid>
+
+		<HorizontalStackLayout Grid.Row="2" HorizontalOptions="End" Spacing="8">
+			<Button Text="Save" Clicked="OnSave" />
+			<Button Text="Cancel" Clicked="OnCancel" />
+		</HorizontalStackLayout>
+
+	</Grid>
+</ContentPage>
