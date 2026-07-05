@@ -263,7 +263,7 @@
                     <Picker Grid.Row="2" Grid.Column="1"
 			            MinimumHeightRequest="32"
 			            HeightRequest="32"
-			            ItemsSource="{Binding SorBibliographyByItems}"
+			            ItemsSource="{Binding SortBibliographyByItems}"
 			            IsEnabled="{Binding Settings.SortBibliography}"
 			            SelectedIndex="{Binding Settings.BibliographySortMethod, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type library:SortBibliographyBy}}"/>
                 </Grid>

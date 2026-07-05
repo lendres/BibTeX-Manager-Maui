@@ -76,7 +76,7 @@ public partial class SettingsViewModel : ObservableObject
 	[ObservableProperty]
 	public partial ValidatableObject<string>	NameRemappingFile { get; set; }				= new();
 
-	public IReadOnlyList<string>				SorBibliographyByItems { get; set; }		= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBibliographyBy>();
+	public IReadOnlyList<string>				SortBibliographyByItems { get; set; }		= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<SortBibliographyBy>();
 
 	#endregion
 
