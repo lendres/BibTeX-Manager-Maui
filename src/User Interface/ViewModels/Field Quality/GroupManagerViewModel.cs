@@ -1,9 +1,5 @@
-﻿using BibTeXLibrary;
-using BibtexManager;
-using BibTeXManager.Quality;
-using BibTeXManager.Views;
+﻿using BibtexManager;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 
 namespace BibTeXManager.ViewModels;

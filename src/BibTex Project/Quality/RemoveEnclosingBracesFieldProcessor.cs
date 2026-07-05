@@ -1,4 +1,4 @@
-﻿namespace BibTeXManager.Quality;
+﻿namespace BibTeXManager;
 
 /// <summary>
 /// 

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace BibTeXManager.Quality;
+namespace BibTeXManager;
 
 /// <summary>
 /// 
