@@ -24,10 +24,15 @@ public partial class FieldProcessorGroupEditorView : ContentPage
 
     #region Methods
 
-    private async void OnSave(object? sender, EventArgs eventArgs)
+    private async void OnSaveAndReturn(object? sender, EventArgs eventArgs)
     {
         _viewModel.Save();
         await Shell.Current.GoToAsync("../");
+    }
+
+    private async void OnSave(object? sender, EventArgs eventArgs)
+    {
+        _viewModel.Save();
     }
 
     private async void OnCancel(object? sender, EventArgs eventArgs)

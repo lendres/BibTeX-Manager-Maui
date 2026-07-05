@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="BibTeXManager.Views.FieldProcessorGroupEditorView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Field Processor Group">
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
+	x:DataType="viewmodel:FieldProcessorGroupEditorViewModel"
+    x:Class="BibTeXManager.Views.FieldProcessorGroupEditorView">
 
-	<Grid RowDefinitions="Auto,*,Auto" Padding="12" RowSpacing="12">
+	<Shell.BackButtonBehavior>
+		<BackButtonBehavior IsVisible="False" IsEnabled="False" />
+	</Shell.BackButtonBehavior>
 
-		<VerticalStackLayout Grid.Row="0" Spacing="8">
+	<Grid RowDefinitions="Auto,Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
+
+		<Grid Grid.Row="0" ColumnDefinitions="*,400" HorizontalOptions="Fill">
+			<Label Grid.Column="0" Text="Field Processor Group" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center" />
+			<HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle">
+				<Button Text="Save &amp; Return" StyleClass="StandardSizeButtonStyle" Clicked="OnSaveAndReturn" HorizontalOptions="End" IsEnabled="{Binding IsSubmittable}"/>
+				<Button Text="Save" StyleClass="StandardSizeButtonStyle" Clicked="OnSave" HorizontalOptions="End" IsEnabled="{Binding IsSubmittable}"/>
+				<Button Text="Cancel" StyleClass="StandardSizeButtonStyle" Clicked="OnCancel" HorizontalOptions="End"/>
+			</HorizontalStackLayout>
+		</Grid>
+
+		<VerticalStackLayout Grid.Row="1" Spacing="8">
 			<Label Text="Group Name" />
-			<Entry Text="{Binding GroupName}" />
+			<Entry Text="{Binding FieldProcessorGroup.Name}" />
 		</VerticalStackLayout>
 
-		<Grid Grid.Row="1" ColumnDefinitions="*,2*" ColumnSpacing="12">
+		<Grid Grid.Row="2" ColumnDefinitions="*,2*" ColumnSpacing="12">
 
 			<VerticalStackLayout Grid.Column="0" Spacing="8">
 				<Label Text="Processors" FontAttributes="Bold" />
@@ -77,11 +91,6 @@
 				</VerticalStackLayout>
 			</ScrollView>
 		</Grid>
-
-		<HorizontalStackLayout Grid.Row="2" HorizontalOptions="End" Spacing="8">
-			<Button Text="Save" Clicked="OnSave" />
-			<Button Text="Cancel" Clicked="OnCancel" />
-		</HorizontalStackLayout>
 
 	</Grid>
 </ContentPage>

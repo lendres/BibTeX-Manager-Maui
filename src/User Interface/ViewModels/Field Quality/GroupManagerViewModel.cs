@@ -93,7 +93,7 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	public string GetSelectedQualityFilePath()
 	{
-		string fileName = Path.ChangeExtension(SelectedFieldProcessingGroup!.Name, ".qlty");
+		string fileName = Path.ChangeExtension(SelectedFieldProcessingGroup!.Name, GroupManager.FieldQualityProcessingGroupExtension);
 		return Path.Combine(Path.GetDirectoryName(FieldQualityProcessingFile) ?? string.Empty, fileName);
 	}
 

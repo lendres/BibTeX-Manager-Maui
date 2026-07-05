@@ -10,37 +10,41 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 {
     #region Fields
 
-    private readonly GroupManagerIncludeViewModel _groupViewModel;
-
     #endregion
 
     #region Construction
 
-    public FieldProcessorGroupEditorViewModel(GroupManagerIncludeViewModel groupViewModel)
+    public FieldProcessorGroupEditorViewModel()
     {
-        _groupViewModel = groupViewModel;
-
-        GroupName = groupViewModel.FieldProcessorGroup.Name;
-
-        foreach (FieldProcessor processor in groupViewModel.FieldProcessorGroup.FieldProcessors)
-        {
-            if (processor is StringReplacementFieldProcessor stringReplacementProcessor)
-            {
-                Processors.Add(new StringReplacementFieldProcessorViewModel(stringReplacementProcessor));
-            }
-        }
-
-        SelectedProcessor = Processors.FirstOrDefault();
     }
 
     #endregion
 
     #region Properties
 
-	public string																	FieldQualityProcessingFile { get; set; }
+	public string																	FieldQualityProcessingFile
+	{ 
+		set
+		{
+			FieldProcessorGroup = FieldProcessorGroup.Deserialize(value) ?? throw new Exception("Invalid file path.");
 
-    [ObservableProperty]
-    public partial string															GroupName { get; set; } = string.Empty;
+			foreach (FieldProcessor processor in FieldProcessorGroup.FieldProcessors)
+			{
+				if (processor is StringReplacementFieldProcessor stringReplacementProcessor)
+				{
+					Processors.Add(new StringReplacementFieldProcessorViewModel(stringReplacementProcessor));
+				}
+			}
+
+			SelectedProcessor = Processors.FirstOrDefault();
+		}
+	}
+
+	[ObservableProperty]
+	public partial FieldProcessorGroup												FieldProcessorGroup { get; set; }
+
+    //[ObservableProperty]
+    //public partial string															GroupName { get; set; } = string.Empty;
 
     [ObservableProperty]
     public partial ObservableCollection<StringReplacementFieldProcessorViewModel>	Processors { get; set; } = new();
@@ -96,13 +100,11 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
     public void Save()
     {
-        _groupViewModel.FieldProcessorGroup.Name = GroupName;
-
-        _groupViewModel.FieldProcessorGroup.FieldProcessors.Clear();
+        FieldProcessorGroup.FieldProcessors.Clear();
 
         foreach (StringReplacementFieldProcessorViewModel processorViewModel in Processors)
         {
-            _groupViewModel.FieldProcessorGroup.FieldProcessors.Add(processorViewModel.ToProcessor());
+            FieldProcessorGroup.FieldProcessors.Add(processorViewModel.ToProcessor());
         }
     }
 

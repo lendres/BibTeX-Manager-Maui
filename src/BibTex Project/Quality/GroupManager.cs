@@ -7,12 +7,11 @@ namespace BibtexManager;
 [XmlRoot("qualityprocessor")]
 public class GroupManager
 {
-
 	#region Fields
 
-	public const string		FieldQualityManagerExtension			= ".qlty";
-	public const string		FieldQualityProcessingGroupExtension	= ".fqpg";
-	private string			_path									= string.Empty;
+	public static readonly string	FieldQualityManagerExtension			= ".qlty";
+	public static readonly string	FieldQualityProcessingGroupExtension	= ".fqpg";
+	private string					_path									= string.Empty;
 
 	#endregion
 
