@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using BibTeXLibrary;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 
 namespace BibTeXManager.ViewModels;
@@ -28,9 +29,6 @@ public partial class StringReplacementFieldProcessorViewModel : ObservableObject
     #region Properties
 
     [ObservableProperty]
-    public partial FieldsToProcess FieldsToProcess { get; set; } = FieldsToProcess.OnlySpecified;
-
-    [ObservableProperty]
     public partial string Pattern { get; set; } = string.Empty;
 
     [ObservableProperty]
@@ -38,8 +36,10 @@ public partial class StringReplacementFieldProcessorViewModel : ObservableObject
 
     public ObservableCollection<string> Fields { get; } = new();
 
-    public List<FieldsToProcess> FieldsToProcessOptions { get; } =
-        Enum.GetValues<FieldsToProcess>().ToList();
+	public IReadOnlyList<string>				FieldsToProcessOptions { get; set; }		= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<FieldsToProcess>();
+
+    [ObservableProperty]
+    public partial FieldsToProcess FieldsToProcess { get; set; } = FieldsToProcess.OnlySpecified;
 
     #endregion
 

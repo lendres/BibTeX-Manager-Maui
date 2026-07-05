@@ -21,6 +21,11 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
     #region Properties
 
+	private bool								Modified  { get; set; }
+
+	[ObservableProperty]
+	public partial bool							IsSubmittable { get; set; }
+
 	public string																	FieldQualityProcessingFile
 	{ 
 		set
@@ -41,9 +46,6 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
 	[ObservableProperty]
 	public partial FieldProcessorGroup												FieldProcessorGroup { get; set; }
-
-    //[ObservableProperty]
-    //public partial string															GroupName { get; set; } = string.Empty;
 
     [ObservableProperty]
     public partial ObservableCollection<StringReplacementFieldProcessorViewModel>	Processors { get; set; } = new();
