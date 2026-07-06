@@ -163,8 +163,8 @@
                 </VerticalStackLayout>
 
                 <!-- Field quality. -->
-                    <Label Text="Bibliography Entry Field Quality" StyleClass="MediumTitleLabelStyle"/>
-                <VerticalStackLayout StyleClass="VerticalLayoutStyle">
+				<Label Text="Bibliography Entry Field Quality" StyleClass="MediumTitleLabelStyle"/>
+				<VerticalStackLayout StyleClass="VerticalLayoutStyle">
 					<Grid StyleClass="SwitchGridStyle">
 						<Switch Grid.Column="0"  Grid.Row="0" x:Name="FieldQualitySwitch" IsToggled="{Binding Settings.UseFieldQualityProcessing}">
 							<Switch.Behaviors>
