@@ -36,6 +36,9 @@ public abstract class FieldProcessor
 
 	#region Properties
 
+	[XmlAttribute("type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+	public string? XsiType { get; set; }
+
 	/// <summary>
 	/// Process any field or just those specified.
 	/// </summary>

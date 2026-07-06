@@ -74,7 +74,7 @@
 
 			<Grid ColumnDefinitions="0.5*,0.5*" Padding="0">
 				<Label Grid.Column="0" Text="Pattern" StyleClass="CollectionLabelStyle"/>
-				<Label Grid.Column="1" Text="Replacement" StyleClass="CollectionLabelStyle"/>
+				<Label Grid.Column="1" Text="Type" StyleClass="CollectionLabelStyle"/>
 			</Grid>
 			<ScrollView >
 				<CollectionView
@@ -86,7 +86,7 @@
 						<DataTemplate x:DataType="viewmodel:StringReplacementFieldProcessorViewModel">
 							<Grid Padding="6" ColumnDefinitions="0.5*,0.5*">
 								<Label Text="{Binding Pattern}" FontAttributes="Bold" VerticalOptions="Center"/>
-								<Label Grid.Column="1" Text="{Binding Replacement}" VerticalOptions="Center"/>
+								<Label Grid.Column="1" Text="{Binding Type}" VerticalOptions="Center"/>
 							</Grid>
 						</DataTemplate>
 					</CollectionView.ItemTemplate>

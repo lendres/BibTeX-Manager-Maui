@@ -17,6 +17,7 @@ public partial class StringReplacementFieldProcessorViewModel : ObservableObject
         FieldsToProcess	= processor.FieldsToProcess;
         Pattern			= processor.Pattern;
         Replacement		= processor.Replacement;
+        Type			= processor.XsiType;
 
         foreach (string field in processor.FieldNames)
         {
@@ -27,6 +28,9 @@ public partial class StringReplacementFieldProcessorViewModel : ObservableObject
     #endregion
 
     #region Properties
+
+    [ObservableProperty]
+    public partial string						Type	 { get; set; }						= string.Empty;
 
     [ObservableProperty]
     public partial string						Pattern { get; set; }						= string.Empty;
