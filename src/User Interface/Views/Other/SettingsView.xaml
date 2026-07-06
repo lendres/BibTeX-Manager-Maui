@@ -34,7 +34,7 @@
 
             <Label Grid.Column="0" Text="Settings" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
 
-            <HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0,0,0,0" VerticalOptions="Center">
+            <HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0" VerticalOptions="Center">
                 <Button 
 				    Text="OK"
 				    HorizontalOptions="End"

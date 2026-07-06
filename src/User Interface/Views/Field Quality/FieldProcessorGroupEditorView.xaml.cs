@@ -27,14 +27,19 @@ public partial class FieldProcessorGroupEditorView : ContentPage
 
 	private async void OnNewProcessor(object sender, EventArgs eventArgs)
 	{
-		//GetNameViewModel	viewModel	= new(_viewModel.TemplateNames!.ToList());
-		//GetNameView			view		= new(viewModel);
-		//object?				result		= await Shell.Current.ShowPopupAsync(view);
+		AddFieldProcessorViewModel	viewModel	= new();
+		AddFieldProcessorView		view		= new(viewModel);
+		object? result = await Shell.Current.ShowPopupAsync(view);
 
-		//if (result is bool boolResult && boolResult)
-		//{
-		//	_viewModel.AddProcessor(); // viewModel.Name);
-		//}
+		if (result is bool boolResult && boolResult)
+		{
+			//_viewModel.AddProcessor();
+			string viewName = _viewModel.SelectedProcessor + "View";
+			//await Shell.Current.GoToAsync(viewName, true, new Dictionary<string, object>
+			//{
+			//	//{ "FieldQualityProcessingFile", _viewModel.GetSelectedQualityFilePath() }
+			//});
+		}
 	}
 
 	private async void OnEditProcessor(object sender, EventArgs eventArgs)

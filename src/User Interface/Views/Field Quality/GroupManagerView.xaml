@@ -18,6 +18,7 @@
 
 	<Grid RowDefinitions="Auto,Auto,Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
 
+		<!-- Label and Button Row -->
 		<Grid Grid.Row="0" ColumnDefinitions="*,400" HorizontalOptions="Fill">
 			<Label Grid.Column="0" Text="Quality Processing Includes" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center" />
 			<HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle">
@@ -27,7 +28,7 @@
 			</HorizontalStackLayout>
 		</Grid>
 
-		<HorizontalStackLayout Grid.Row="1" Grid.Column="0" StyleClass="TopButtonRowStyle"  Padding="0,20,0,0">
+		<HorizontalStackLayout Grid.Row="1" Grid.Column="0" StyleClass="TopButtonRowStyle" Padding="0,20,0,0">
 			<Button Text="Add" Clicked="OnNewFieldProcessingGroup" StyleClass="SquareButtonStyle"/>
 			<Button Text="Rename" Clicked="OnRenameFieldProcessingGroup" StyleClass="SquareButton"
 				IsEnabled="{Binding SelectedFieldProcessingGroup, Converter={StaticResource IsNotNullConverter}}"/>
