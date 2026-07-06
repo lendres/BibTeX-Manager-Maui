@@ -14,9 +14,9 @@ public partial class StringReplacementFieldProcessorViewModel : ObservableObject
 
     public StringReplacementFieldProcessorViewModel(StringReplacementFieldProcessor processor)
     {
-        FieldsToProcess = processor.FieldsToProcess;
-        Pattern = processor.Pattern;
-        Replacement = processor.Replacement;
+        FieldsToProcess	= processor.FieldsToProcess;
+        Pattern			= processor.Pattern;
+        Replacement		= processor.Replacement;
 
         foreach (string field in processor.FieldNames)
         {
@@ -29,17 +29,17 @@ public partial class StringReplacementFieldProcessorViewModel : ObservableObject
     #region Properties
 
     [ObservableProperty]
-    public partial string Pattern { get; set; } = string.Empty;
+    public partial string						Pattern { get; set; }						= string.Empty;
 
     [ObservableProperty]
-    public partial string Replacement { get; set; } = string.Empty;
+    public partial string						Replacement { get; set; }					= string.Empty;
 
-    public ObservableCollection<string> Fields { get; } = new();
+    public ObservableCollection<string>			Fields { get; }								= new();
 
 	public IReadOnlyList<string>				FieldsToProcessOptions { get; set; }		= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<FieldsToProcess>();
 
     [ObservableProperty]
-    public partial FieldsToProcess FieldsToProcess { get; set; } = FieldsToProcess.OnlySpecified;
+    public partial FieldsToProcess				FieldsToProcess { get; set; }				= FieldsToProcess.OnlySpecified;
 
     #endregion
 

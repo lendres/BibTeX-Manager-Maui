@@ -18,10 +18,16 @@
 		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
 		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
 		<dpconverters:EnumToStringConverter x:Key="PartTypeEnumToStringConverter" x:TypeArguments="bibtexproject:FieldsToProcess"/>
+		<Style TargetType="Label" Class="CollectionLabelStyle">
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="FontAttributes" Value="Bold"/>
+			<Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource ControlLabelLight}, Dark={DynamicResource ControlLabelDark}}"/>
+		</Style>
 	</ContentPage.Resources>
 
-	<Grid RowDefinitions="Auto,Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
+	<Grid RowDefinitions="Auto,Auto,Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
 
+		<!-- Label and Button Row -->
 		<Grid Grid.Row="0" ColumnDefinitions="*,400" HorizontalOptions="Fill">
 			<Label Grid.Column="0" Text="Field Processor Group" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center" />
 			<HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle">
@@ -31,98 +37,119 @@
 			</HorizontalStackLayout>
 		</Grid>
 
-		<VerticalStackLayout Grid.Row="1" Spacing="8">
-			<Label Text="Group Name" />
+		<VerticalStackLayout Grid.Row="1" Spacing="8" Margin="0,15,0,0">
+			<Border StyleClass="SmallTitleBorderStyle">
+				<Label Text="Group" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<Label Text="Name" StyleClass="ControlLabel"/>
 			<Entry Text="{Binding FieldProcessorGroup.Name}" />
 		</VerticalStackLayout>
 
-		<Grid Grid.Row="2" ColumnDefinitions="*,2*" ColumnSpacing="12">
 
-			<VerticalStackLayout Grid.Column="0" Spacing="8">
-				<Label Text="Processors" FontAttributes="Bold" />
-
-				<HorizontalStackLayout Grid.Row="1" Grid.Column="0" StyleClass="TopButtonRowStyle">
-					<Button Text="Add" Clicked="OnNewProcessor" StyleClass="SquareButtonStyle"/>
-					<Button Text="Rename" Clicked="OnRenameProcessor" StyleClass="SquareButton"
+		<VerticalStackLayout Grid.Row="2" Spacing="8" Margin="0,10,0,0">
+			<Border Grid.Row="3" StyleClass="SmallTitleBorderStyle" >
+				<Label Text="Processors" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<HorizontalStackLayout Grid.Row="1" StyleClass="TopButtonRowStyle">
+				<Button Text="Add" Clicked="OnNewProcessor" StyleClass="SquareButtonStyle"/>
+				<Button Text="Edit" Clicked="OnEditProcessor" StyleClass="SquareButton"
 					IsEnabled="{Binding SelectedProcessor, Converter={StaticResource IsNotNullConverter}}"/>
-					<Button Text="Delete" Clicked="OnDeleteProcessor" StyleClass="SquareButton"
+				<Button Text="Delete" Clicked="OnDeleteProcessor" StyleClass="SquareButton"
 					IsEnabled="{Binding SelectedProcessor, Converter={StaticResource IsNotNullConverter}}"/>
-				</HorizontalStackLayout>
-				<Picker
-					Grid.Row="2"
-					Title="Entry Type"
-					x:Name="_processorPicker"
-					ItemsSource="{Binding Processors}"
-					SelectedItem="{Binding SelectedProcessor}">
-					<Picker.Behaviors>
-						<mct:EventToCommandBehavior
+			</HorizontalStackLayout>
+			<!--<Picker
+				Grid.Row="2"
+				Title="Entry Type"
+				x:Name="_processorPicker"
+				ItemsSource="{Binding ProcessorPatterns}"
+				SelectedItem="{Binding SelectedProcessor}">
+				<Picker.Behaviors>
+					<mct:EventToCommandBehavior
 						x:TypeArguments="system:EventArgs"
 						Command="{Binding SelectedProcessorChangedCommand}"
 						BindingContext="{Binding Path=BindingContext, Source={x:Reference __processorPicker}, x:DataType=Picker}"
 						EventName="SelectedIndexChanged"/>
-					</Picker.Behaviors>
-				</Picker>
+				</Picker.Behaviors>
+			</Picker>-->
 
-				<!--<CollectionView
-                    ItemsSource="{Binding Processors}"
-                    SelectedItem="{Binding SelectedProcessor}"
-                    SelectionMode="Single">
+			<Grid ColumnDefinitions="0.5*,0.5*" Padding="0">
+				<Label Grid.Column="0" Text="Pattern" StyleClass="CollectionLabelStyle"/>
+				<Label Grid.Column="1" Text="Replacement" StyleClass="CollectionLabelStyle"/>
+			</Grid>
+			<CollectionView
+                ItemsSource="{Binding Processors}"
+                SelectedItem="{Binding SelectedProcessor}"
+                SelectionMode="Single">
 
+				<CollectionView.ItemTemplate>
+					<DataTemplate x:DataType="viewmodel:StringReplacementFieldProcessorViewModel">
+						<Grid Padding="6" ColumnDefinitions="0.5*,0.5*">
+							<Label Text="{Binding Pattern}" FontAttributes="Bold" VerticalOptions="Center"/>
+							<Label Grid.Column="1" Text="{Binding Replacement}" VerticalOptions="Center"/>
+						</Grid>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+
+			<!--<CollectionView
+                ItemsSource="{Binding Processors}"
+                SelectedItem="{Binding SelectedProcessor}"
+                SelectionMode="Single">
+
+				<CollectionView.ItemTemplate>
+					<DataTemplate>
+						<Grid Padding="6" RowDefinitions="Auto,Auto">
+							<Label Text="{Binding Pattern}" FontAttributes="Bold" />
+							<Label Grid.Row="1" Text="{Binding Replacement}" FontSize="12" />
+						</Grid>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+
+			<HorizontalStackLayout Spacing="8">
+				<Button Text="Add" Command="{Binding AddProcessorCommand}" />
+				<Button Text="Delete" Command="{Binding DeleteProcessorCommand}" />
+			</HorizontalStackLayout>-->
+		</VerticalStackLayout>
+
+		<!--<ScrollView Grid.Row="3">
+			<VerticalStackLayout Spacing="10" BindingContext="{Binding SelectedProcessor}">
+
+				<Label Text="Selected Processor" FontAttributes="Bold" />
+
+				<Label Text="Fields To Process" />
+				<Picker
+                    ItemsSource="{Binding FieldsToProcessOptions}"
+                    SelectedItem="{Binding FieldsToProcess, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type bibtexproject:FieldsToProcess}}" />
+
+				<Label Text="Pattern" />
+				<Entry Text="{Binding Pattern}" />
+
+				<Label Text="Replacement" />
+				<Entry Text="{Binding Replacement}" />
+
+				<Label Text="Fields" FontAttributes="Bold" />
+
+				<CollectionView ItemsSource="{Binding Fields}">
 					<CollectionView.ItemTemplate>
 						<DataTemplate>
-							<Grid Padding="6" RowDefinitions="Auto,Auto">
-								<Label Text="{Binding Pattern}" FontAttributes="Bold" />
-								<Label Grid.Row="1" Text="{Binding Replacement}" FontSize="12" />
+							<Grid ColumnDefinitions="*,Auto" Padding="0,4">
+								<Entry Text="{Binding .}" />
+								<Button
+                                    Grid.Column="1"
+                                    Text="Delete"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteFieldCommand}"
+                                    CommandParameter="{Binding .}" />
 							</Grid>
 						</DataTemplate>
 					</CollectionView.ItemTemplate>
 				</CollectionView>
 
-				<HorizontalStackLayout Spacing="8">
-					<Button Text="Add" Command="{Binding AddProcessorCommand}" />
-					<Button Text="Delete" Command="{Binding DeleteProcessorCommand}" />
-				</HorizontalStackLayout>-->
+				<Button
+                    Text="Add Field"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddFieldCommand}" />
 			</VerticalStackLayout>
-
-			<ScrollView Grid.Column="1">
-				<VerticalStackLayout Spacing="10" BindingContext="{Binding SelectedProcessor}">
-
-					<Label Text="Selected Processor" FontAttributes="Bold" />
-
-					<Label Text="Fields To Process" />
-					<Picker
-                        ItemsSource="{Binding FieldsToProcessOptions}"
-                        SelectedItem="{Binding FieldsToProcess, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type bibtexproject:FieldsToProcess}}" />
-
-					<Label Text="Pattern" />
-					<Entry Text="{Binding Pattern}" />
-
-					<Label Text="Replacement" />
-					<Entry Text="{Binding Replacement}" />
-
-					<Label Text="Fields" FontAttributes="Bold" />
-
-					<CollectionView ItemsSource="{Binding Fields}">
-						<CollectionView.ItemTemplate>
-							<DataTemplate>
-								<Grid ColumnDefinitions="*,Auto" Padding="0,4">
-									<Entry Text="{Binding .}" />
-									<Button
-                                        Grid.Column="1"
-                                        Text="Delete"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteFieldCommand}"
-                                        CommandParameter="{Binding .}" />
-								</Grid>
-							</DataTemplate>
-						</CollectionView.ItemTemplate>
-					</CollectionView>
-
-					<Button
-                        Text="Add Field"
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddFieldCommand}" />
-				</VerticalStackLayout>
-			</ScrollView>
-		</Grid>
+		</ScrollView>-->
 
 	</Grid>
 </ContentPage>

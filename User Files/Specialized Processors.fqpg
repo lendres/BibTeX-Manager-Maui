@@ -32,12 +32,17 @@
 		</fieldprocessor>
 
 		<!-- Change titles from UPPPER CASE to Title Case. -->
-		<fieldprocessor xsi:type="StringCaseFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[A-Z\s\p{P}]*$" tocase="TitleCase">
+		<fieldprocessor xsi:type="StringCaseFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="^[A-Z\s\p{P}]*$"
+			tocase="TitleCase">
 			<fields><field>title</field></fields>
 		</fieldprocessor>
 
 		<!-- Change quotes to LaTeX quotes. -->
-		<fieldprocessor xsi:type="QuoteFieldProcessor" fieldstoprocess="All" pattern="&quot;[^&quot;]*&quot;">
+		<fieldprocessor xsi:type="QuoteFieldProcessor"
+			fieldstoprocess="All"
+			pattern="&quot;[^&quot;]*&quot;">
 			<fields></fields>
 		</fieldprocessor>
 		

@@ -25,7 +25,6 @@ public partial class FieldProcessorGroupEditorView : ContentPage
 
     #region Methods
 
-
 	private async void OnNewProcessor(object sender, EventArgs eventArgs)
 	{
 		//GetNameViewModel	viewModel	= new(_viewModel.TemplateNames!.ToList());
@@ -38,7 +37,7 @@ public partial class FieldProcessorGroupEditorView : ContentPage
 		//}
 	}
 
-	private async void OnRenameProcessor(object sender, EventArgs eventArgs)
+	private async void OnEditProcessor(object sender, EventArgs eventArgs)
 	{
 		//GetNameViewModel	viewModel	= new(_viewModel.SelectedProcessor!, _viewModel.TemplateNames!.ToList());
 		//GetNameView			view		= new(viewModel);
@@ -59,7 +58,6 @@ public partial class FieldProcessorGroupEditorView : ContentPage
 			_viewModel.DeleteProcessor();
 		}
 	}
-
 
     private async void OnSaveAndReturn(object? sender, EventArgs eventArgs)
     {

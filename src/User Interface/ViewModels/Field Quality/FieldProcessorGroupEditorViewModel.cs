@@ -37,6 +37,7 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 				if (processor is StringReplacementFieldProcessor stringReplacementProcessor)
 				{
 					Processors.Add(new StringReplacementFieldProcessorViewModel(stringReplacementProcessor));
+					ProcessorPatterns.Add(stringReplacementProcessor.Pattern);
 				}
 			}
 
@@ -47,8 +48,11 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 	[ObservableProperty]
 	public partial FieldProcessorGroup												FieldProcessorGroup { get; set; }
 
+	[ObservableProperty]
+	public partial ObservableCollection<string>										ProcessorPatterns { get; set; }		= new();
+
     [ObservableProperty]
-    public partial ObservableCollection<StringReplacementFieldProcessorViewModel>	Processors { get; set; } = new();
+    public partial ObservableCollection<StringReplacementFieldProcessorViewModel>	Processors { get; set; }			= new();
 
     [ObservableProperty]
     public partial StringReplacementFieldProcessorViewModel?						SelectedProcessor { get; set; }
