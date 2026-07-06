@@ -2,6 +2,7 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
 	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
@@ -40,7 +41,29 @@
 			<VerticalStackLayout Grid.Column="0" Spacing="8">
 				<Label Text="Processors" FontAttributes="Bold" />
 
-				<CollectionView
+				<HorizontalStackLayout Grid.Row="1" Grid.Column="0" StyleClass="TopButtonRowStyle">
+					<Button Text="Add" Clicked="OnNewProcessor" StyleClass="SquareButtonStyle"/>
+					<Button Text="Rename" Clicked="OnRenameProcessor" StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedProcessor, Converter={StaticResource IsNotNullConverter}}"/>
+					<Button Text="Delete" Clicked="OnDeleteProcessor" StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedProcessor, Converter={StaticResource IsNotNullConverter}}"/>
+				</HorizontalStackLayout>
+				<Picker
+					Grid.Row="2"
+					Title="Entry Type"
+					x:Name="_processorPicker"
+					ItemsSource="{Binding Processors}"
+					SelectedItem="{Binding SelectedProcessor}">
+					<Picker.Behaviors>
+						<mct:EventToCommandBehavior
+						x:TypeArguments="system:EventArgs"
+						Command="{Binding SelectedProcessorChangedCommand}"
+						BindingContext="{Binding Path=BindingContext, Source={x:Reference __processorPicker}, x:DataType=Picker}"
+						EventName="SelectedIndexChanged"/>
+					</Picker.Behaviors>
+				</Picker>
+
+				<!--<CollectionView
                     ItemsSource="{Binding Processors}"
                     SelectedItem="{Binding SelectedProcessor}"
                     SelectionMode="Single">
@@ -58,7 +81,7 @@
 				<HorizontalStackLayout Spacing="8">
 					<Button Text="Add" Command="{Binding AddProcessorCommand}" />
 					<Button Text="Delete" Command="{Binding DeleteProcessorCommand}" />
-				</HorizontalStackLayout>
+				</HorizontalStackLayout>-->
 			</VerticalStackLayout>
 
 			<ScrollView Grid.Column="1">

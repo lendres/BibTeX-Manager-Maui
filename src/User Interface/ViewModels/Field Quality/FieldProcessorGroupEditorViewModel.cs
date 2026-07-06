@@ -87,6 +87,11 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
         SelectedProcessor = Processors.FirstOrDefault();
     }
 
+	[RelayCommand]
+	private void SelectedProcessorChanged()
+	{
+	}
+
     [RelayCommand]
     public void AddField()
     {
