@@ -37,7 +37,7 @@ public abstract class FieldProcessor
 	#region Properties
 
 	[XmlAttribute("type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
-	public string XsiType { get; set; }
+	public string XsiType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Process any field or just those specified.

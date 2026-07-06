@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace BibTeXManager.ViewModels;
 
@@ -21,12 +22,7 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
     #region Properties
 
-	private bool								Modified  { get; set; }
-
-	[ObservableProperty]
-	public partial bool							IsSubmittable { get; set; }
-
-	public string																	FieldQualityProcessingFile
+	public string													FieldQualityProcessingFile
 	{ 
 		set
 		{
@@ -34,28 +30,35 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
 			foreach (FieldProcessor processor in FieldProcessorGroup.FieldProcessors)
 			{
-				if (processor is StringReplacementFieldProcessor stringReplacementProcessor)
-				{
-					Processors.Add(new StringReplacementFieldProcessorViewModel(stringReplacementProcessor));
-					ProcessorPatterns.Add(stringReplacementProcessor.Pattern);
-				}
+
+				string className					= processor.XsiType + "ViewModel";
+				string? nameSpace					= typeof(FieldProcessorGroupEditorViewModel).Namespace;
+				Type? type							= typeof(FieldProcessorGroupEditorViewModel).Assembly.GetType($"{nameSpace}.{className}");
+				Debug.Assert(type != null);
+
+				FieldProcessorViewModel instance	= (FieldProcessorViewModel)(Activator.CreateInstance(type) ?? throw new Exception("Failed to create field processor instance."));
+
+				instance.SetProcessor(processor);
+				Processors.Add(instance);
 			}
 
 			SelectedProcessor = Processors.FirstOrDefault();
 		}
 	}
 
-	[ObservableProperty]
-	public partial FieldProcessorGroup												FieldProcessorGroup { get; set; }
+	private bool													Modified  { get; set; }
 
 	[ObservableProperty]
-	public partial ObservableCollection<string>										ProcessorPatterns { get; set; }		= new();
+	public partial bool												IsSubmittable { get; set; }
+
+	[ObservableProperty]
+	public partial FieldProcessorGroup?								FieldProcessorGroup { get; set; }
 
     [ObservableProperty]
-    public partial ObservableCollection<StringReplacementFieldProcessorViewModel>	Processors { get; set; }			= new();
+    public partial ObservableCollection<FieldProcessorViewModel>	Processors { get; set; }			= new();
 
     [ObservableProperty]
-    public partial StringReplacementFieldProcessorViewModel?						SelectedProcessor { get; set; }
+    public partial FieldProcessorViewModel?							SelectedProcessor { get; set; }
 
     #endregion
 
@@ -85,7 +88,7 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
             return;
         }
 
-        StringReplacementFieldProcessorViewModel processor = SelectedProcessor;
+        FieldProcessorViewModel processor = SelectedProcessor;
 
         Processors.Remove(processor);
         SelectedProcessor = Processors.FirstOrDefault();
@@ -110,9 +113,9 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
     public void Save()
     {
-        FieldProcessorGroup.FieldProcessors.Clear();
+        FieldProcessorGroup!.FieldProcessors.Clear();
 
-        foreach (StringReplacementFieldProcessorViewModel processorViewModel in Processors)
+        foreach (FieldProcessorViewModel processorViewModel in Processors)
         {
             FieldProcessorGroup.FieldProcessors.Add(processorViewModel.ToProcessor());
         }

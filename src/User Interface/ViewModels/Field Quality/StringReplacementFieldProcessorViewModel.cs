@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace BibTeXManager.ViewModels;
 
-public partial class StringReplacementFieldProcessorViewModel : ObservableObject
+public partial class StringReplacementFieldProcessorViewModel : FieldProcessorViewModel
 {
     #region Construction
 
@@ -11,51 +11,31 @@ public partial class StringReplacementFieldProcessorViewModel : ObservableObject
     {
     }
 
-    public StringReplacementFieldProcessorViewModel(StringReplacementFieldProcessor processor)
-    {
-        FieldsToProcess	= processor.FieldsToProcess;
-        Pattern			= processor.Pattern;
-        Replacement		= processor.Replacement;
-        Type			= processor.XsiType;
-
-        foreach (string field in processor.FieldNames)
-        {
-            Fields.Add(field);
-        }
-    }
-
     #endregion
 
     #region Properties
 
     [ObservableProperty]
-    public partial string						Type	 { get; set; }						= string.Empty;
-
-    [ObservableProperty]
-    public partial string						Pattern { get; set; }						= string.Empty;
-
-    [ObservableProperty]
     public partial string						Replacement { get; set; }					= string.Empty;
 
-    public ObservableCollection<string>			Fields { get; }								= new();
+	#endregion
 
-	public IReadOnlyList<string>				FieldsToProcessOptions { get; set; }		= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<FieldsToProcess>();
+	#region Methods
 
-    [ObservableProperty]
-    public partial FieldsToProcess				FieldsToProcess { get; set; }				= FieldsToProcess.OnlySpecified;
+	override public void SetProcessor(FieldProcessor processor)
+	{
+		base.SetProcessor(processor);
+		Replacement = ((StringReplacementFieldProcessor)processor).Replacement;
+	}
 
-    #endregion
-
-    #region Methods
-
-    public StringReplacementFieldProcessor ToProcessor()
+	public override FieldProcessor ToProcessor()
     {
         return new StringReplacementFieldProcessor
         {
-            FieldsToProcess = FieldsToProcess,
-            Pattern = Pattern,
-            Replacement = Replacement,
-            FieldNames = Fields.Where(field => !string.IsNullOrWhiteSpace(field)).ToList()
+            FieldsToProcess	= FieldsToProcess,
+            Pattern			= Pattern,
+            Replacement		= Replacement,
+            FieldNames		= Fields.Where(field => !string.IsNullOrWhiteSpace(field)).ToList()
         };
     }
 

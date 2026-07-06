@@ -83,7 +83,7 @@
 					SelectionMode="Single">
 
 					<CollectionView.ItemTemplate>
-						<DataTemplate x:DataType="viewmodel:StringReplacementFieldProcessorViewModel">
+						<DataTemplate x:DataType="viewmodel:FieldProcessorViewModel">
 							<Grid Padding="6" ColumnDefinitions="0.5*,0.5*">
 								<Label Text="{Binding Pattern}" FontAttributes="Bold" VerticalOptions="Center"/>
 								<Label Grid.Column="1" Text="{Binding Type}" VerticalOptions="Center"/>
