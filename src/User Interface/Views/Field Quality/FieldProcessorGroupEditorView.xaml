@@ -76,20 +76,22 @@
 				<Label Grid.Column="0" Text="Pattern" StyleClass="CollectionLabelStyle"/>
 				<Label Grid.Column="1" Text="Replacement" StyleClass="CollectionLabelStyle"/>
 			</Grid>
-			<CollectionView
-                ItemsSource="{Binding Processors}"
-                SelectedItem="{Binding SelectedProcessor}"
-                SelectionMode="Single">
+			<ScrollView >
+				<CollectionView
+					ItemsSource="{Binding Processors}"
+					SelectedItem="{Binding SelectedProcessor}"
+					SelectionMode="Single">
 
-				<CollectionView.ItemTemplate>
-					<DataTemplate x:DataType="viewmodel:StringReplacementFieldProcessorViewModel">
-						<Grid Padding="6" ColumnDefinitions="0.5*,0.5*">
-							<Label Text="{Binding Pattern}" FontAttributes="Bold" VerticalOptions="Center"/>
-							<Label Grid.Column="1" Text="{Binding Replacement}" VerticalOptions="Center"/>
-						</Grid>
-					</DataTemplate>
-				</CollectionView.ItemTemplate>
-			</CollectionView>
+					<CollectionView.ItemTemplate>
+						<DataTemplate x:DataType="viewmodel:StringReplacementFieldProcessorViewModel">
+							<Grid Padding="6" ColumnDefinitions="0.5*,0.5*">
+								<Label Text="{Binding Pattern}" FontAttributes="Bold" VerticalOptions="Center"/>
+								<Label Grid.Column="1" Text="{Binding Replacement}" VerticalOptions="Center"/>
+							</Grid>
+						</DataTemplate>
+					</CollectionView.ItemTemplate>
+				</CollectionView>
+			</ScrollView>
 
 			<!--<CollectionView
                 ItemsSource="{Binding Processors}"
