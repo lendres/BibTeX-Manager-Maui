@@ -1,5 +1,4 @@
-﻿using BibTeXLibrary;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 
 namespace BibTeXManager.ViewModels;
