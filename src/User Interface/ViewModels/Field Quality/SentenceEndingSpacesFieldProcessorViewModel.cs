@@ -1,0 +1,47 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace BibTeXManager.ViewModels;
+
+public partial class SentenceEndingSpacesFieldProcessorViewModel : FieldProcessorViewModel
+{
+    #region Construction
+
+    public SentenceEndingSpacesFieldProcessorViewModel()
+    {
+    }
+
+    #endregion
+
+    #region Properties
+
+    [ObservableProperty]
+    public partial bool						FrenchSpacing { get; set; }					= false;
+
+    [ObservableProperty]
+    public partial List<string>				ExcludePatterns { get; set; }				= [];
+
+	#endregion
+
+	#region Methods
+
+	override public void SetProcessor(FieldProcessor processor)
+	{
+		base.SetProcessor(processor);
+		FrenchSpacing	= ((SentenceEndingSpacesFieldProcessor)processor).FrenchSpacing;
+		ExcludePatterns = ((SentenceEndingSpacesFieldProcessor)processor).ExcludePatterns;
+	}
+
+	public override FieldProcessor ToProcessor()
+    {
+        return new SentenceEndingSpacesFieldProcessor
+        {
+            FieldsToProcess	= FieldsToProcess,
+            Pattern			= Pattern,
+            FrenchSpacing	= FrenchSpacing,
+            ExcludePatterns	= ExcludePatterns,
+            FieldNames		= Fields.Where(field => !string.IsNullOrWhiteSpace(field)).ToList()
+        };
+    }
+
+    #endregion
+}
