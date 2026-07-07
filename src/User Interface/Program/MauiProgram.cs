@@ -1,13 +1,14 @@
 ﻿using BibTeXManager.ViewModels;
 using BibTeXManager.Views;
+using BibTeXManager.Views.Field_Quality;
 using CommunityToolkit.Maui;
-using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui.Media;
 using CommunityToolkit.Maui.Storage;
 using DigitalProduction.Maui;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.UI;
+using Microsoft.Extensions.Logging;
 
 namespace BibTeXManager;
 
@@ -83,6 +84,8 @@ public static class MauiProgram
 
 		services.AddTransient<FieldProcessorGroupEditorView>();
 		services.AddTransient<FieldProcessorGroupEditorViewModel>();
+
+		services.AddTransient<StringReplacementFieldProcessorView>();
 		services.AddTransient<StringReplacementFieldProcessorViewModel>();
 
 	}

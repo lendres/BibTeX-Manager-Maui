@@ -88,7 +88,16 @@
 		<MauiXaml Update="Views\Field Quality\FieldProcessorGroupEditorView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\FieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\Field Quality\GroupManagerView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\AddFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\StringReplacementFieldProcessorView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\Name Mapping\NameMapView.xaml">
@@ -137,6 +146,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\Field Quality\AddFieldProcessorView.xaml.cs">
+		  <DependentUpon>AddFieldProcessorView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\Name Mapping\GetNameView.xaml.cs">
 		  <DependentUpon>GetNameView.xaml</DependentUpon>
 		</Compile>

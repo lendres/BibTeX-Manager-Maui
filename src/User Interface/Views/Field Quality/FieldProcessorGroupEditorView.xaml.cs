@@ -34,7 +34,8 @@ public partial class FieldProcessorGroupEditorView : ContentPage
 		if (result is bool boolResult && boolResult)
 		{
 			//_viewModel.AddProcessor();
-			string viewName = _viewModel.SelectedProcessor + "View";
+			string viewName = _viewModel.SelectedProcessor!.Type + "View";
+			await Shell.Current.GoToAsync(viewName, true);
 			//await Shell.Current.GoToAsync(viewName, true, new Dictionary<string, object>
 			//{
 			//	//{ "FieldQualityProcessingFile", _viewModel.GetSelectedQualityFilePath() }

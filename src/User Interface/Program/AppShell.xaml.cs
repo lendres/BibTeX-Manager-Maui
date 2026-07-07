@@ -1,5 +1,6 @@
 ﻿using BibTeXManager.ViewModels;
 using BibTeXManager.Views;
+using BibTeXManager.Views.Field_Quality;
 
 namespace BibTeXManager;
 
@@ -14,5 +15,6 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(TemplatesEditView), typeof(TemplatesEditView));
 		Routing.RegisterRoute(nameof(GroupManagerView), typeof(GroupManagerView));
 		Routing.RegisterRoute(nameof(FieldProcessorGroupEditorView), typeof(FieldProcessorGroupEditorView));
+		Routing.RegisterRoute(nameof(StringReplacementFieldProcessorView), typeof(StringReplacementFieldProcessorView));
 	}
 }
