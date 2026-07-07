@@ -1,6 +1,5 @@
 ﻿using BibTeXManager.ViewModels;
 using BibTeXManager.Views;
-using BibTeXManager.Views.Field_Quality;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Media;
 using CommunityToolkit.Maui.Storage;

@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:system="clr-namespace:System;assembly=mscorlib"
-			 xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="BibTeXManager.Views.FieldProcessorView">
-    <VerticalStackLayout>
+<ContentView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:project="clr-namespace:BibTeXManager;assembly=BibTeXProject"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+    x:Class="BibTeXManager.Views.FieldProcessorView">
+
+
+	<ContentView.Resources>
+		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
+		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+	</ContentView.Resources>
+
+	<VerticalStackLayout>
 		<Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="*,250" HorizontalOptions="Fill" VerticalOptions="Start">
 
 			<Label Grid.Column="0" Text="Field Processor" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
@@ -27,20 +37,42 @@
 		
 		<!-- To Type -->
 		<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
-			<Label Text="To Type" StyleClass="ControlLabel"/>
+			<Label Text="Search Pattern" StyleClass="ControlLabel"/>
 			<Entry
 				x:Name="_patternEntry"
 				Placeholder="Search Pattern"
 				Text="{Binding Pattern.Value}">
 				<Entry.Behaviors>
 					<mct:EventToCommandBehavior
-							x:TypeArguments="system:EventArgs"
-							Command="{Binding ValidateToTypeCommand}"
-							BindingContext="{Binding Path=BindingContext, Source={x:Reference _patternEntry}, x:DataType=Entry}"
-							EventName="TextChanged"/>
+						x:TypeArguments="system:EventArgs"
+						Command="{Binding ValidateToTypeCommand}"
+						BindingContext="{Binding Path=BindingContext, Source={x:Reference _patternEntry}, x:DataType=Entry}"
+						EventName="TextChanged"/>
 				</Entry.Behaviors>
 			</Entry>
 			<Label Text="{Binding ToType.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
 		</VerticalStackLayout>
+
+		<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+			<Label Text="Replacement" StyleClass="ControlLabel"/>
+			<Entry
+				x:Name="_replacementEntry"
+				Placeholder="Replacement"
+				Text="{Binding Pattern.Value}">
+				<Entry.Behaviors>
+					<mct:EventToCommandBehavior
+						x:TypeArguments="system:EventArgs"
+						Command="{Binding ValidateToTypeCommand}"
+						BindingContext="{Binding Path=BindingContext, Source={x:Reference _replacementEntry}, x:DataType=Entry}"
+						EventName="TextChanged"/>
+				</Entry.Behaviors>
+			</Entry>
+			<Label Text="{Binding ToType.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+		</VerticalStackLayout>
+
+		<Picker Title="Fields to Process"
+
+			ItemsSource="{Binding FieldsToProcessOptions}"
+			SelectedIndex="{Binding FieldsToProcess, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type project:FieldsToProcess}}"/>
 	</VerticalStackLayout>
 </ContentView>

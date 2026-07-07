@@ -25,9 +25,4 @@ public enum FieldsToProcess
 	[Description("Only the Specified Fields")]
 	OnlySpecified,
 
-
-	/// <summary>The number of types/items in the enumeration.</summary>
-	[Description("Length")]
-	Length
-
 } // End enum.
