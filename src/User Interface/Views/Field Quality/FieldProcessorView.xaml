@@ -6,6 +6,7 @@
 	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:project="clr-namespace:BibTeXManager;assembly=BibTeXProject"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpcm="clr-namespace:DigitalProduction.Maui.ComponentModel;assembly=DigitalProduction.Maui"
     x:Class="BibTeXManager.Views.FieldProcessorView">
 
 
@@ -20,14 +21,14 @@
 			<Label Grid.Column="0" Text="Field Processor" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
 
 			<HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0" VerticalOptions="Center">
-				<Button 
+				<Button
 				    Text="OK"
 				    HorizontalOptions="End"
 				    StyleClass="StandardSizeButtonStyle"
 				    IsEnabled="{Binding IsSubmittable}"
                     VerticalOptions="Center"
 				    Clicked="OnSave"/>
-				<Button 
+				<Button
 				    Text="Cancel"
 				    StyleClass="StandardSizeButtonStyle"
 				    HorizontalOptions="End"
@@ -35,7 +36,7 @@
 			</HorizontalStackLayout>
 		</Grid>
 		
-		<!-- To Type -->
+		<!-- Search pattern. -->
 		<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
 			<Label Text="Search Pattern" StyleClass="ControlLabel"/>
 			<Entry
@@ -70,9 +71,40 @@
 			<Label Text="{Binding ToType.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
 		</VerticalStackLayout>
 
+		<!-- Fields -->
+		<Border Grid.Row="3" StyleClass="SmallTitleBorderStyle" Margin="0,20,0,10">
+			<Label Text="Fields" StyleClass="SmallTitleLabelStyle"/>
+		</Border>
 		<Picker Title="Fields to Process"
-
 			ItemsSource="{Binding FieldsToProcessOptions}"
 			SelectedIndex="{Binding FieldsToProcess, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type project:FieldsToProcess}}"/>
+
+		<Grid Grid.Row="4" StyleClass="DataGridEditStyle" Margin="0" Padding="0">
+			<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle" Margin="0" Padding="0">
+				<Button Text="Add" Command="{Binding AddFieldCommand}" StyleClass="SquareButtonStyle"/>
+				<!--<Button Text="Edit" Clicked="OnEditNameMap" StyleClass="SquareButtonStyle"
+						IsEnabled="{Binding SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>-->
+				<Button Text="Delete" Command="{Binding DeleteFieldCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
+				<Button Text="Move Up" Command="{Binding MoveFieldUpCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
+				<Button Text="Move Down" Command="{Binding MoveFieldDownCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
+			</HorizontalStackLayout>
+
+			<ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0">
+				<Grid Padding="0,0,10,0">
+					<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
+					<CollectionView Grid.Row="0" ItemsSource="{Binding ObservableTemplateFieldNames}" Margin="0">
+						<CollectionView.ItemTemplate>
+							<DataTemplate x:DataType="dpcm:ObservableString">
+								<Grid Padding="0,3">
+									<Entry Grid.Column="0" Text="{Binding Value}" Focused="EntryFocused" Unfocused="EntryUnfocused"/>
+								</Grid>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>
+					</CollectionView>
+				</Grid>
+
+			</ScrollView>
+		</Grid>
+		
 	</VerticalStackLayout>
 </ContentView>
