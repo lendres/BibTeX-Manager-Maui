@@ -64,14 +64,14 @@
 			<ScrollView Grid.Row="3" VerticalScrollBarVisibility="Always" Padding="0" Margin="0">
 				<Grid Padding="0,0,10,0">
 					<CollectionView
-						ItemsSource="{Binding Processors}"
+						ItemsSource="{Binding ProcessorViewModels}"
 						SelectedItem="{Binding SelectedProcessor}"
 						SelectionMode="Single">
 
 						<CollectionView.ItemTemplate>
 							<DataTemplate x:DataType="viewmodel:FieldProcessorViewModel">
 								<Grid Padding="6" ColumnDefinitions="0.5*,0.5*">
-									<Label Text="{Binding Pattern}" FontAttributes="Bold" VerticalOptions="Center"/>
+									<Label Text="{Binding SearchPattern.Value}" FontAttributes="Bold" VerticalOptions="Center"/>
 									<Label Grid.Column="1" Text="{Binding Type}" VerticalOptions="Center"/>
 								</Grid>
 							</DataTemplate>

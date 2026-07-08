@@ -2,12 +2,14 @@
 
 namespace BibTeXManager.ViewModels;
 
+[QueryProperty(nameof(AddFieldProcessorViewModelCallback), "AddFieldProcessorViewModelCallback")]
 public partial class SentenceEndingSpacesFieldProcessorViewModel : FieldProcessorViewModel
 {
     #region Construction
 
-    public SentenceEndingSpacesFieldProcessorViewModel()
-    {
+    public SentenceEndingSpacesFieldProcessorViewModel() :
+		base(nameof(SentenceEndingSpacesFieldProcessor))
+	{
     }
 
     #endregion
@@ -36,7 +38,7 @@ public partial class SentenceEndingSpacesFieldProcessorViewModel : FieldProcesso
         return new SentenceEndingSpacesFieldProcessor
         {
             FieldsToProcess	= FieldsToProcess,
-            Pattern			= Pattern,
+            Pattern			= SearchPattern.Value!,
             FrenchSpacing	= FrenchSpacing,
             ExcludePatterns	= ExcludePatterns,
             FieldNames		= Fields.Where(field => !string.IsNullOrWhiteSpace(field)).ToList()

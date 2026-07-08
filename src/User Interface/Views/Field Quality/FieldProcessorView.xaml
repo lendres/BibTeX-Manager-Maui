@@ -5,10 +5,11 @@
 	xmlns:system="clr-namespace:System;assembly=mscorlib"
 	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:project="clr-namespace:BibTeXManager;assembly=BibTeXProject"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpcm="clr-namespace:DigitalProduction.Maui.ComponentModel;assembly=DigitalProduction.Maui"
+	x:DataType="viewmodel:FieldProcessorViewModel"
     x:Class="BibTeXManager.Views.FieldProcessorView">
-
 
 	<ContentView.Resources>
 		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
@@ -42,7 +43,7 @@
 			<Entry
 				x:Name="_patternEntry"
 				Placeholder="Search Pattern"
-				Text="{Binding Pattern.Value}">
+				Text="{Binding SearchPattern.Value}">
 				<Entry.Behaviors>
 					<mct:EventToCommandBehavior
 						x:TypeArguments="system:EventArgs"
@@ -59,16 +60,8 @@
 			<Entry
 				x:Name="_replacementEntry"
 				Placeholder="Replacement"
-				Text="{Binding Pattern.Value}">
-				<Entry.Behaviors>
-					<mct:EventToCommandBehavior
-						x:TypeArguments="system:EventArgs"
-						Command="{Binding ValidateToTypeCommand}"
-						BindingContext="{Binding Path=BindingContext, Source={x:Reference _replacementEntry}, x:DataType=Entry}"
-						EventName="TextChanged"/>
-				</Entry.Behaviors>
+				Text="{Binding ReplacementText}">
 			</Entry>
-			<Label Text="{Binding ToType.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
 		</VerticalStackLayout>
 
 		<!-- Fields -->
@@ -92,7 +85,7 @@
 			<ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0">
 				<Grid Padding="0,0,10,0">
 					<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
-					<CollectionView Grid.Row="0" ItemsSource="{Binding ObservableTemplateFieldNames}" Margin="0">
+					<CollectionView Grid.Row="0" ItemsSource="{Binding ObservableFieldNames}" Margin="0">
 						<CollectionView.ItemTemplate>
 							<DataTemplate x:DataType="dpcm:ObservableString">
 								<Grid Padding="0,3">

@@ -2,11 +2,13 @@
 
 namespace BibTeXManager.ViewModels;
 
+[QueryProperty(nameof(AddFieldProcessorViewModelCallback), "AddFieldProcessorViewModelCallback")]
 public partial class StringReplacementFieldProcessorViewModel : FieldProcessorViewModel
 {
     #region Construction
 
-    public StringReplacementFieldProcessorViewModel()
+    public StringReplacementFieldProcessorViewModel() :
+		base(nameof(StringReplacementFieldProcessor))
     {
     }
 
@@ -32,7 +34,7 @@ public partial class StringReplacementFieldProcessorViewModel : FieldProcessorVi
         return new StringReplacementFieldProcessor
         {
             FieldsToProcess	= FieldsToProcess,
-            Pattern			= Pattern,
+            Pattern			= SearchPattern.Value!,
             Replacement		= Replacement,
             FieldNames		= Fields.Where(field => !string.IsNullOrWhiteSpace(field)).ToList()
         };

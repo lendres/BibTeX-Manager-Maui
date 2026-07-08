@@ -1,13 +1,12 @@
-﻿using BibTeXLibrary;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.ComponentModel;
-using DigitalProduction.Maui.Enums;
+using DigitalProduction.Maui.Validation;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace BibTeXManager.ViewModels;
 
+[QueryProperty(nameof(AddFieldProcessorViewModelCallback), "AddFieldProcessorViewModelCallback")]
 public abstract partial class FieldProcessorViewModel : ObservableObject
 {
 	#region Fields
@@ -18,8 +17,9 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 
 	#region Construction
 
-	public FieldProcessorViewModel()
+	public FieldProcessorViewModel(string type)
     {
+        Type = type;
     }
 
     #endregion
@@ -36,7 +36,10 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
     public partial string						Type { get; set; }							= string.Empty;
 
     [ObservableProperty]
-    public partial string						Pattern { get; set; }						= string.Empty;
+    public partial ValidatableObject<string>	SearchPattern { get; set; }					= new();
+
+    [ObservableProperty]
+    public partial string						ReplacementText { get; set; }				= string.Empty;
 
     public ObservableCollection<string>			Fields { get; }								= new();
 
@@ -45,9 +48,8 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
     [ObservableProperty]
     public partial FieldsToProcess				FieldsToProcess { get; set; }				= FieldsToProcess.OnlySpecified;
 
-
 	[ObservableProperty]
-	public partial ObservableCollection<ObservableWrapper<string>>	ObservableTemplateFieldNames { get; set; } = new();
+	public partial ObservableCollection<ObservableWrapper<string>>	ObservableFieldNames { get; set; } = new();
 
 	[ObservableProperty]
 	[NotifyCanExecuteChangedFor(nameof(DeleteFieldCommand))]
@@ -55,15 +57,18 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 	[NotifyCanExecuteChangedFor(nameof(MoveFieldDownCommand))]
 	public partial ObservableString?								SelectedField { get; set; }
 
+
+	public Action<FieldProcessorViewModel>?							AddFieldProcessorViewModelCallback { get; set; }
+
 	#endregion
 
 	#region Methods
 
 	virtual public void SetProcessor(FieldProcessor processor)
 	{
-		FieldsToProcess	= processor.FieldsToProcess;
-		Pattern			= processor.Pattern;
-		Type			= processor.XsiType;
+		FieldsToProcess		= processor.FieldsToProcess;
+		SearchPattern.Value	= processor.Pattern;
+		Type				= processor.XsiType;
 
 		foreach (string field in processor.FieldNames)
 		{
@@ -104,7 +109,7 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 			return;
 		}
 
-		ObservableTemplateFieldNames.Remove(SelectedField);
+		ObservableFieldNames.Remove(SelectedField);
 		SelectedField = null;
 		_isButtonPressed = false;
 		SetModified(true);
@@ -133,14 +138,14 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 			return;
 		}
 
-		int index = ObservableTemplateFieldNames.IndexOf(SelectedField);
+		int index = ObservableFieldNames.IndexOf(SelectedField);
 
 		if (index <= 0)
 		{
 			return;
 		}
 
-		ObservableTemplateFieldNames.Move(index, index - 1);
+		ObservableFieldNames.Move(index, index - 1);
 		SelectedField = null;
 		_isButtonPressed = false;
 		SetModified(true);
@@ -148,7 +153,7 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 
 	private bool CanMoveFieldUp()
 	{
-		return SelectedField is not null && ObservableTemplateFieldNames.IndexOf(SelectedField) > 0;
+		return SelectedField is not null && ObservableFieldNames.IndexOf(SelectedField) > 0;
 	}
 
 	[RelayCommand(CanExecute = nameof(CanMoveFieldDown))]
@@ -159,14 +164,14 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 			return;
 		}
 
-		int index = ObservableTemplateFieldNames.IndexOf(SelectedField);
+		int index = ObservableFieldNames.IndexOf(SelectedField);
 
-		if (index < 0 || index >= ObservableTemplateFieldNames.Count - 1)
+		if (index < 0 || index >= ObservableFieldNames.Count - 1)
 		{
 			return;
 		}
 
-		ObservableTemplateFieldNames.Move(index, index + 1);
+		ObservableFieldNames.Move(index, index + 1);
 		SelectedField = null;
 		_isButtonPressed = false;
 		SetModified(true);
@@ -174,14 +179,14 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 
 	private bool CanMoveFieldDown()
 	{
-		return SelectedField is not null && ObservableTemplateFieldNames.IndexOf(SelectedField) >= 0 && ObservableTemplateFieldNames.IndexOf(SelectedField) < ObservableTemplateFieldNames.Count - 1;
+		return SelectedField is not null && ObservableFieldNames.IndexOf(SelectedField) >= 0 && ObservableFieldNames.IndexOf(SelectedField) < ObservableFieldNames.Count - 1;
 	}
 
 	private void AddTemlateFieldName(string fieldName)
 	{
 		ObservableString observableString = new(fieldName);
 		observableString.ModifiedChanged += OnChildModifiedChanged;
-		ObservableTemplateFieldNames.Add(observableString);
+		ObservableFieldNames.Add(observableString);
 	}
 
 	//private void StoreFieldNames()

@@ -84,9 +84,23 @@ public static class MauiProgram
 		services.AddTransient<FieldProcessorGroupEditorView>();
 		services.AddTransient<FieldProcessorGroupEditorViewModel>();
 
+		services.AddTransient<QuoteFieldProcessorView>();
+		services.AddTransient<QuoteFieldProcessorViewModel>();
+
 		services.AddTransient<StringReplacementFieldProcessorView>();
 		services.AddTransient<StringReplacementFieldProcessorViewModel>();
 
+		services.AddTransient<RemoveEnclosingBracesFieldProcessorView>();
+		services.AddTransient<RemoveEnclosingBracesFieldProcessorViewModel>();
+
+		services.AddTransient<SentenceEndingSpacesFieldProcessorView>();
+		services.AddTransient<SentenceEndingSpacesFieldProcessorViewModel>();
+
+		services.AddTransient<StringCaseFieldProcessorView>();
+		services.AddTransient<StringCaseFieldProcessorViewModel>();
+
+		services.AddTransient<StringReplacementFieldProcessorView>();
+		services.AddTransient<StringReplacementFieldProcessorViewModel>();
 	}
 
 	private static void RegisterServices(IServiceCollection services)

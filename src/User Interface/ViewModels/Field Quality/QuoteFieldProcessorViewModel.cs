@@ -2,12 +2,14 @@
 
 namespace BibTeXManager.ViewModels;
 
+[QueryProperty(nameof(AddFieldProcessorViewModelCallback), "AddFieldProcessorViewModelCallback")]
 public partial class QuoteFieldProcessorViewModel : FieldProcessorViewModel
 {
     #region Construction
 
-    public QuoteFieldProcessorViewModel()
-    {
+    public QuoteFieldProcessorViewModel() :
+		base(nameof(QuoteFieldProcessor))
+	{
     }
 
     #endregion
@@ -28,7 +30,7 @@ public partial class QuoteFieldProcessorViewModel : FieldProcessorViewModel
         return new QuoteFieldProcessor
 		{
             FieldsToProcess	= FieldsToProcess,
-            Pattern			= Pattern,
+            Pattern			= SearchPattern.Value!,
             FieldNames		= Fields.Where(field => !string.IsNullOrWhiteSpace(field)).ToList()
         };
     }

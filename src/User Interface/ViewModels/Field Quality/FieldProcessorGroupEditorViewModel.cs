@@ -26,6 +26,11 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 	{ 
 		set
 		{
+			if (string.IsNullOrEmpty(value))
+			{
+				return;
+			}
+
 			FieldProcessorGroup = FieldProcessorGroup.Deserialize(value) ?? throw new Exception("Invalid file path.");
 
 			foreach (FieldProcessor processor in FieldProcessorGroup.FieldProcessors)
@@ -39,10 +44,10 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 				FieldProcessorViewModel instance	= (FieldProcessorViewModel)(Activator.CreateInstance(type) ?? throw new Exception("Failed to create field processor instance."));
 
 				instance.SetProcessor(processor);
-				Processors.Add(instance);
+				ProcessorViewModels.Add(instance);
 			}
 
-			SelectedProcessor = Processors.FirstOrDefault();
+			SelectedProcessor = ProcessorViewModels.FirstOrDefault();
 		}
 	}
 
@@ -55,7 +60,7 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 	public partial FieldProcessorGroup?								FieldProcessorGroup { get; set; }
 
     [ObservableProperty]
-    public partial ObservableCollection<FieldProcessorViewModel>	Processors { get; set; }			= new();
+    public partial ObservableCollection<FieldProcessorViewModel>	ProcessorViewModels { get; set; }			= new();
 
     [ObservableProperty]
     public partial FieldProcessorViewModel?							SelectedProcessor { get; set; }
@@ -65,19 +70,10 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
     #region Commands
 
     [RelayCommand]
-    public void AddProcessor()
+    public void AddProcessor(FieldProcessorViewModel fieldProcessorViewModel)
     {
-        StringReplacementFieldProcessorViewModel processor = new()
-        {
-            FieldsToProcess	= FieldsToProcess.OnlySpecified,
-            Pattern			= string.Empty,
-            Replacement		= string.Empty
-        };
-
-        processor.Fields.Add("title");
-
-        Processors.Add(processor);
-        SelectedProcessor = processor;
+        ProcessorViewModels.Add(fieldProcessorViewModel);
+        SelectedProcessor = fieldProcessorViewModel;
     }
 
     [RelayCommand]
@@ -90,8 +86,8 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
         FieldProcessorViewModel processor = SelectedProcessor;
 
-        Processors.Remove(processor);
-        SelectedProcessor = Processors.FirstOrDefault();
+        ProcessorViewModels.Remove(processor);
+        SelectedProcessor = ProcessorViewModels.FirstOrDefault();
     }
 
 	[RelayCommand]
@@ -115,7 +111,7 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
     {
         FieldProcessorGroup!.FieldProcessors.Clear();
 
-        foreach (FieldProcessorViewModel processorViewModel in Processors)
+        foreach (FieldProcessorViewModel processorViewModel in ProcessorViewModels)
         {
             FieldProcessorGroup.FieldProcessors.Add(processorViewModel.ToProcessor());
         }
