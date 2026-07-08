@@ -27,36 +27,35 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
     #region Properties
 
     [ObservableProperty]
-    public partial bool							Modified { get; set; }						= false;
+    public partial bool												Modified { get; set; }						= false;
 
     [ObservableProperty]
-    public partial bool							IsSubmittable { get; set; }					= false;
+    public partial bool												IsSubmittable { get; set; }					= false;
 
     [ObservableProperty]
-    public partial string						Type { get; set; }							= string.Empty;
+    public partial string											Type { get; set; }							= string.Empty;
 
     [ObservableProperty]
-    public partial ValidatableObject<string>	SearchPattern { get; set; }					= new();
+    public partial ValidatableObject<string>						SearchPattern { get; set; }					= new();
 
     [ObservableProperty]
-    public partial string						ReplacementText { get; set; }				= string.Empty;
+    public partial string											ReplacementText { get; set; }				= string.Empty;
 
-    public ObservableCollection<string>			Fields { get; }								= new();
+    public ObservableCollection<string>								Fields { get; }								= new();
 
-	public IReadOnlyList<string>				FieldsToProcessOptions { get; set; }		= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<FieldsToProcess>();
+	public IReadOnlyList<string>									FieldsToProcessOptions { get; set; }		= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<FieldsToProcess>();
 
     [ObservableProperty]
-    public partial FieldsToProcess				FieldsToProcess { get; set; }				= FieldsToProcess.OnlySpecified;
+    public partial FieldsToProcess									FieldsToProcess { get; set; }				= FieldsToProcess.OnlySpecified;
 
 	[ObservableProperty]
-	public partial ObservableCollection<ObservableWrapper<string>>	ObservableFieldNames { get; set; } = new();
+	public partial ObservableCollection<ObservableWrapper<string>>	ObservableFieldNames { get; set; }			= new();
 
 	[ObservableProperty]
 	[NotifyCanExecuteChangedFor(nameof(DeleteFieldCommand))]
 	[NotifyCanExecuteChangedFor(nameof(MoveFieldUpCommand))]
 	[NotifyCanExecuteChangedFor(nameof(MoveFieldDownCommand))]
 	public partial ObservableString?								SelectedField { get; set; }
-
 
 	public Action<FieldProcessorViewModel>?							AddFieldProcessorViewModelCallback { get; set; }
 
