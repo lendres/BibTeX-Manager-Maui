@@ -10,7 +10,7 @@ public partial class StringReplacementFieldProcessorViewModel : FieldProcessorVi
     public StringReplacementFieldProcessorViewModel() :
 		base(nameof(StringReplacementFieldProcessor))
     {
-    }
+	}
 
     #endregion
 
