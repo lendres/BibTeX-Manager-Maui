@@ -35,7 +35,7 @@ public partial class FieldProcessorGroupEditorView : ContentPage
 		{
 			//_viewModel.AddProcessor();
 			string viewName = viewModel.SelectedType + "View";
-			await Shell.Current.GoToAsync(viewName, true, new Dictionary<string, object>
+			await Shell.Current.GoToAsync(viewName, true, new Dictionary<string, object?>
 			{
 				{ "AddFieldProcessorViewModelCallback", new Action<FieldProcessorViewModel>(_viewModel.AddProcessor) }
 			});
@@ -44,14 +44,11 @@ public partial class FieldProcessorGroupEditorView : ContentPage
 
 	private async void OnEditProcessor(object sender, EventArgs eventArgs)
 	{
-		//GetNameViewModel	viewModel	= new(_viewModel.SelectedProcessor!, _viewModel.TemplateNames!.ToList());
-		//GetNameView			view		= new(viewModel);
-		//object?				result		= await Shell.Current.ShowPopupAsync(view);
-
-		//if (result is bool boolResult && boolResult)
-		//{
-		//	_viewModel.RenameTemplate(_viewModel.SelectedTemplate!, viewModel.Name);
-		//}
+		string viewName = _viewModel!.SelectedProcessor!.Type + "View";
+		await Shell.Current.GoToAsync(viewName, true, new Dictionary<string, object?>
+		{
+			{ "AddFieldProcessorViewModelCallback", null }
+		});
 	}
 
 	private async void OnDeleteProcessor(object sender, EventArgs eventArgs)

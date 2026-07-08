@@ -9,7 +9,7 @@
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:dpcm="clr-namespace:DigitalProduction.Maui.ComponentModel;assembly=DigitalProduction.Maui"
 	x:DataType="viewmodel:FieldProcessorViewModel"
-    x:Class="BibTeXManager.Views.FieldProcessorView">
+    x:Class="BibTeXManager.Views.FieldProcessorFieldsView">
 
 	<ContentView.Resources>
 		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
@@ -17,52 +17,6 @@
 	</ContentView.Resources>
 
 	<VerticalStackLayout>
-		<Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="*,250" HorizontalOptions="Fill" VerticalOptions="Start">
-
-			<Label Grid.Column="0" Text="Field Processor" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
-
-			<HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0" VerticalOptions="Center">
-				<Button
-				    Text="OK"
-				    HorizontalOptions="End"
-				    StyleClass="StandardSizeButtonStyle"
-				    IsEnabled="{Binding IsSubmittable}"
-                    VerticalOptions="Center"
-				    Clicked="OnSave"/>
-				<Button
-				    Text="Cancel"
-				    StyleClass="StandardSizeButtonStyle"
-				    HorizontalOptions="End"
-				    Clicked="OnCancel"/>
-			</HorizontalStackLayout>
-		</Grid>
-		
-		<!-- Search pattern. -->
-		<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
-			<Label Text="Search Pattern" StyleClass="ControlLabel"/>
-			<Entry
-				x:Name="_patternEntry"
-				Placeholder="Search Pattern"
-				Text="{Binding SearchPattern.Value}">
-				<Entry.Behaviors>
-					<mct:EventToCommandBehavior
-						x:TypeArguments="system:EventArgs"
-						Command="{Binding ValidateToTypeCommand}"
-						BindingContext="{Binding Path=BindingContext, Source={x:Reference _patternEntry}, x:DataType=Entry}"
-						EventName="TextChanged"/>
-				</Entry.Behaviors>
-			</Entry>
-			<Label Text="{Binding ToType.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
-		</VerticalStackLayout>
-
-		<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
-			<Label Text="Replacement" StyleClass="ControlLabel"/>
-			<Entry
-				x:Name="_replacementEntry"
-				Placeholder="Replacement"
-				Text="{Binding ReplacementText}">
-			</Entry>
-		</VerticalStackLayout>
 
 		<!-- Fields -->
 		<Border Grid.Row="3" StyleClass="SmallTitleBorderStyle" Margin="0,20,0,10">

@@ -9,8 +9,9 @@ public partial class SentenceEndingSpacesFieldProcessorView : ContentPage
 	public SentenceEndingSpacesFieldProcessorView(SentenceEndingSpacesFieldProcessorViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext					= viewModel;
-		_fieldProcessorView.ViewModel	= viewModel;
+		BindingContext						= viewModel;
+		_fieldProcessorHeaderView.ViewModel = viewModel;
+		_fieldProcessorFieldsView.ViewModel = viewModel;
 	}
 
 	#endregion

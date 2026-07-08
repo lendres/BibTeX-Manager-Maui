@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:project="clr-namespace:BibTeXManager;assembly=BibTeXProject"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpcm="clr-namespace:DigitalProduction.Maui.ComponentModel;assembly=DigitalProduction.Maui"
+	x:DataType="viewmodel:FieldProcessorViewModel"
+    x:Class="BibTeXManager.Views.FieldProcessorHeaderView">
+
+	<ContentView.Resources>
+		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
+		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+	</ContentView.Resources>
+
+	<VerticalStackLayout>
+		<Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="*,250" HorizontalOptions="Fill" VerticalOptions="Start">
+
+			<Label Grid.Column="0" Text="Field Processor" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
+
+			<HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0" VerticalOptions="Center">
+				<Button
+				    Text="OK"
+				    HorizontalOptions="End"
+				    StyleClass="StandardSizeButtonStyle"
+				    IsEnabled="{Binding IsSubmittable}"
+                    VerticalOptions="Center"
+				    Clicked="OnSave"/>
+				<Button
+				    Text="Cancel"
+				    StyleClass="StandardSizeButtonStyle"
+				    HorizontalOptions="End"
+				    Clicked="OnCancel"/>
+			</HorizontalStackLayout>
+		</Grid>
+		
+		<!-- Search pattern. -->
+		<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+			<Label Text="Search Pattern" StyleClass="ControlLabel"/>
+			<Entry
+				x:Name="_patternEntry"
+				Placeholder="Search Pattern"
+				Text="{Binding SearchPattern.Value}">
+				<Entry.Behaviors>
+					<mct:EventToCommandBehavior
+						x:TypeArguments="system:EventArgs"
+						Command="{Binding ValidateSearchPatternCommand}"
+						BindingContext="{Binding Path=BindingContext, Source={x:Reference _patternEntry}, x:DataType=Entry}"
+						EventName="TextChanged"/>
+				</Entry.Behaviors>
+			</Entry>
+			<Label Text="{Binding SearchPattern.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>
+		</VerticalStackLayout>
+	
+	</VerticalStackLayout>
+</ContentView>

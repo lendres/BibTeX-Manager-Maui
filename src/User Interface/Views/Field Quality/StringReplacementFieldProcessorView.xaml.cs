@@ -9,8 +9,9 @@ public partial class StringReplacementFieldProcessorView : ContentPage
 	public StringReplacementFieldProcessorView(StringReplacementFieldProcessorViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext					= viewModel;
-		_fieldProcessorView.ViewModel	= viewModel;
+		BindingContext						= viewModel;
+		_fieldProcessorHeaderView.ViewModel	= viewModel;
+		_fieldProcessorFieldsView.ViewModel	= viewModel;
 	}
 
 	#endregion

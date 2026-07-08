@@ -9,8 +9,9 @@ public partial class RemoveEnclosingBracesFieldProcessorView : ContentPage
 	public RemoveEnclosingBracesFieldProcessorView(RemoveEnclosingBracesFieldProcessorViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext					= viewModel;
-		_fieldProcessorView.ViewModel	= viewModel;
+		BindingContext						= viewModel;
+		_fieldProcessorHeaderView.ViewModel = viewModel;
+		_fieldProcessorFieldsView.ViewModel = viewModel;
 	}
 
 	#endregion

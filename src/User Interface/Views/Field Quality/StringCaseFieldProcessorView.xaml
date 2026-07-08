@@ -5,8 +5,12 @@
              x:Class="BibTeXManager.Views.StringCaseFieldProcessorView">
 	
 	<Grid RowDefinitions="Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
-		<views:FieldProcessorView 
+		<views:FieldProcessorHeaderView 
+			Grid.Row="0"
+			x:Name="_fieldProcessorHeaderView"/>
+
+		<views:FieldProcessorFieldsView 
 			Grid.Row="1"
-			x:Name="_fieldProcessorView"/>
+			x:Name="_fieldProcessorFieldsView"/>
 	</Grid>
 </ContentPage>

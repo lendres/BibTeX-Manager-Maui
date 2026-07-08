@@ -3,11 +3,11 @@ using DigitalProduction.Maui.ComponentModel;
 
 namespace BibTeXManager.Views;
 
-public partial class FieldProcessorView : ContentView
+public partial class FieldProcessorFieldsView : ContentView
 {
 	private FieldProcessorViewModel?		_viewModel;
 
-	public FieldProcessorView()
+	public FieldProcessorFieldsView()
 	{
 		InitializeComponent();
 
@@ -21,23 +21,6 @@ public partial class FieldProcessorView : ContentView
 			_viewModel		= value;
 			BindingContext	= value;
 		}
-	}
-
-	async private void OnSave(object? sender, EventArgs eventArgs)
-	{
-		_viewModel!.AddFieldProcessorViewModelCallback?.Invoke(_viewModel);
-		await Shell.Current.GoToAsync("../", true, new Dictionary<string, object>
-		{
-			{ "FieldQualityProcessingFile", string.Empty }
-		});
-	}
-
-	async private void OnCancel(object sender, EventArgs eventArgs)
-	{
-		await Shell.Current.GoToAsync("../", true, new Dictionary<string, object>
-		{
-			{ "FieldQualityProcessingFile", string.Empty }
-		});
 	}
 
 	#region Fields

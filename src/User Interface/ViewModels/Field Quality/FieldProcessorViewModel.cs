@@ -20,7 +20,8 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 	public FieldProcessorViewModel(string type)
     {
         Type = type;
-    }
+		Initialize();
+	}
 
     #endregion
 
@@ -61,6 +62,31 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 
 	#endregion
 
+	#region Initialization and Validation
+
+	private void Initialize()
+	{
+		AddValidations();
+		ValidateSubmittable();
+	}
+
+	private void AddValidations()
+	{
+		SearchPattern.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "A name is required." });
+		ValidateSearchPattern();
+	}
+
+	[RelayCommand]
+	private void ValidateSearchPattern()
+	{
+		SearchPattern.Validate();
+		SetModified(true);
+	}
+
+	public virtual bool ValidateSubmittable() => IsSubmittable = Modified && SearchPattern.IsValid;
+
+	#endregion
+
 	#region Methods
 
 	virtual public void SetProcessor(FieldProcessor processor)
@@ -91,7 +117,7 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 
 	#endregion
 
-	#region Template Field Editting
+	#region Fields Editting
 
 	[RelayCommand]
 	public void AddField()
@@ -206,33 +232,10 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 
 	#region Helper Functions
 
-	private void SetModified(bool modified)
+	protected void SetModified(bool modified)
 	{
 		Modified = modified;
 		ValidateSubmittable();
-	}
-
-	/// <summary>
-	/// Checks if a given template is in use by any of the NameMaps.
-	/// </summary>
-	/// <param name="template">The template name to check for.</param>
-	/// <returns>True if any of the NameMaps uses the template, false otherwise.</returns>
-	public bool IsCurrentTemplateInUse()
-	{
-		//Trace.Assert(Items != null);
-		//foreach (NameMap nameMap in Items)
-		//{
-		//	if (nameMap.To == SelectedTemplate)
-		//	{
-		//		return true;
-		//	}
-		//}
-		return false;
-	}
-
-	public virtual bool ValidateSubmittable()
-	{
-		return IsSubmittable = Modified;
 	}
 
 	#endregion
