@@ -1,4 +1,3 @@
-using BibtexManager;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 
