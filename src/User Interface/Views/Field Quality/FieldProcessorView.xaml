@@ -79,7 +79,7 @@
 			ItemsSource="{Binding FieldsToProcessOptions}"
 			SelectedIndex="{Binding FieldsToProcess, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type project:FieldsToProcess}}"/>
 
-		<Grid Grid.Row="4" StyleClass="DataGridEditStyle" Margin="0" Padding="0">
+		<Grid Grid.Row="4" StyleClass="DataGridEditStyle" Margin="0,20,0,0" Padding="0">
 			<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle" Margin="0" Padding="0">
 				<Button Text="Add" Command="{Binding AddFieldCommand}" StyleClass="SquareButtonStyle"/>
 				<!--<Button Text="Edit" Clicked="OnEditNameMap" StyleClass="SquareButtonStyle"
