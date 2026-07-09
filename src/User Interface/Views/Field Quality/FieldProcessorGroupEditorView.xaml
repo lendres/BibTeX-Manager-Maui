@@ -69,10 +69,10 @@
 						SelectionMode="Single">
 
 						<CollectionView.ItemTemplate>
-							<DataTemplate x:DataType="viewmodel:FieldProcessorViewModel">
+							<DataTemplate x:DataType="bibtexproject:FieldProcessor">
 								<Grid Padding="6" ColumnDefinitions="0.5*,0.5*">
-									<Label Text="{Binding SearchPattern.Value}" FontAttributes="Bold" VerticalOptions="Center"/>
-									<Label Grid.Column="1" Text="{Binding Type}" VerticalOptions="Center"/>
+									<Label Text="{Binding Pattern}" FontAttributes="Bold" VerticalOptions="Center"/>
+									<Label Grid.Column="1" Text="{Binding XsiType}" VerticalOptions="Center"/>
 								</Grid>
 							</DataTemplate>
 						</CollectionView.ItemTemplate>

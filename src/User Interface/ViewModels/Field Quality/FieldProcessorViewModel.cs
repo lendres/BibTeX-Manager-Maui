@@ -7,11 +7,13 @@ using System.Collections.ObjectModel;
 namespace BibTeXManager.ViewModels;
 
 [QueryProperty(nameof(AddFieldProcessorViewModelCallback), "AddFieldProcessorViewModelCallback")]
+[QueryProperty(nameof(FieldProcessor), "FieldProcessor")]
 public abstract partial class FieldProcessorViewModel : ObservableObject
 {
 	#region Fields
 
-	private bool _isButtonPressed;
+	private bool			_isButtonPressed;
+	private FieldProcessor?	_fieldProcessor;
 
 	#endregion
 
@@ -60,6 +62,8 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 
 	public Action<FieldProcessorViewModel>?							AddFieldProcessorViewModelCallback { get; set; }
 
+	public FieldProcessor?											FieldProcessor { get => _fieldProcessor; set => SetProcessor(value!); }
+
 	#endregion
 
 	#region Initialization and Validation
@@ -89,8 +93,9 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 
 	#region Methods
 
-	virtual public void SetProcessor(FieldProcessor processor)
+	public virtual void SetProcessor(FieldProcessor processor)
 	{
+		_fieldProcessor		= processor;
 		FieldsToProcess		= processor.FieldsToProcess;
 		SearchPattern.Value	= processor.Pattern;
 		Type				= processor.XsiType;
