@@ -3,7 +3,6 @@ using DigitalProduction.Strings;
 
 namespace BibTeXManager.ViewModels;
 
-[QueryProperty(nameof(AddFieldProcessorViewModelCallback), "AddFieldProcessorViewModelCallback")]
 public partial class StringCaseFieldProcessorViewModel : FieldProcessorViewModel
 {
     #region Construction
@@ -42,8 +41,8 @@ public partial class StringCaseFieldProcessorViewModel : FieldProcessorViewModel
             Pattern			= SearchPattern.Value!,
             StringCase		= StringCase,
 			Culture			= Culture,
-            FieldNames		= Fields.Where(field => !string.IsNullOrWhiteSpace(field)).ToList()
-        };
+            FieldNames		= ObservableFieldNames.Select(field => field.Value).Where(value => !string.IsNullOrWhiteSpace(value)).ToList()!
+		};
     }
 
     #endregion

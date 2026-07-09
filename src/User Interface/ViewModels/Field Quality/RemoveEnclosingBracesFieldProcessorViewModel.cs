@@ -1,6 +1,5 @@
 ﻿namespace BibTeXManager.ViewModels;
 
-[QueryProperty(nameof(AddFieldProcessorViewModelCallback), "AddFieldProcessorViewModelCallback")]
 public partial class RemoveEnclosingBracesFieldProcessorViewModel : FieldProcessorViewModel
 {
     #region Construction
@@ -29,7 +28,7 @@ public partial class RemoveEnclosingBracesFieldProcessorViewModel : FieldProcess
 		{
             FieldsToProcess	= FieldsToProcess,
             Pattern			= SearchPattern.Value!,
-            FieldNames		= Fields.Where(field => !string.IsNullOrWhiteSpace(field)).ToList()
+            FieldNames		= ObservableFieldNames.Select(field => field.Value).Where(value => !string.IsNullOrWhiteSpace(value)).ToList()!
         };
     }
 

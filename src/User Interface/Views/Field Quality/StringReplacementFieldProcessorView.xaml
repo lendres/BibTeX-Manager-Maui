@@ -17,7 +17,7 @@
 			<Entry
 				x:Name="_replacementEntry"
 				Placeholder="Replacement"
-				Text="{Binding ReplacementText}">
+				Text="{Binding Replacement}">
 			</Entry>
 		</VerticalStackLayout>
 
