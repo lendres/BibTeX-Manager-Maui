@@ -18,9 +18,7 @@
 
 	<VerticalStackLayout>
 		<Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="*,250" HorizontalOptions="Fill" VerticalOptions="Start">
-
 			<Label Grid.Column="0" Text="Field Processor" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
-
 			<HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0" VerticalOptions="Center">
 				<Button
 				    Text="OK"
@@ -37,7 +35,7 @@
 			</HorizontalStackLayout>
 		</Grid>
 		
-		<!-- Search pattern. -->
+		<!-- Pattern. -->
 		<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
 			<Label Text="Search Pattern" StyleClass="ControlLabel"/>
 			<Entry

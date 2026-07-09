@@ -34,10 +34,10 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
 			foreach (FieldProcessor processor in FieldProcessorGroup.FieldProcessors)
 			{
-				ProcessorViewModels.Add(processor);
+				Processors.Add(processor);
 			}
 
-			SelectedProcessor = ProcessorViewModels.FirstOrDefault();
+			SelectedProcessor = Processors.FirstOrDefault();
 		}
 	}
 
@@ -50,20 +50,32 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 	public partial FieldProcessorGroup?								FieldProcessorGroup { get; set; }
 
     [ObservableProperty]
-    public partial ObservableCollection<FieldProcessor>				ProcessorViewModels { get; set; }			= new();
+    public partial ObservableCollection<FieldProcessor>				Processors { get; set; }			= new();
 
     [ObservableProperty]
     public partial FieldProcessor?									SelectedProcessor { get; set; }
 
-    #endregion
+	#endregion
 
-    #region Commands
+	#region Commands
 
-    [RelayCommand]
-    public void AddProcessor(FieldProcessor fieldProcessorViewModel)
+	[RelayCommand]
+	public void AddNewProcessor()
+	{
+		AddProcessor(
+			new StringReplacementFieldProcessor
+			{
+				Pattern = "New Processor",
+				XsiType = "StringReplacementFieldProcessor"
+			});
+	}
+
+
+	[RelayCommand]
+    public void AddProcessor(FieldProcessor fieldProcessor)
     {
-        ProcessorViewModels.Add(fieldProcessorViewModel);
-        SelectedProcessor = fieldProcessorViewModel;
+        Processors.Add(fieldProcessor);
+        SelectedProcessor = fieldProcessor;
     }
 
     [RelayCommand]
@@ -76,8 +88,8 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
         FieldProcessor processor = SelectedProcessor;
 
-        ProcessorViewModels.Remove(processor);
-        SelectedProcessor = ProcessorViewModels.FirstOrDefault();
+        Processors.Remove(processor);
+        SelectedProcessor = Processors.FirstOrDefault();
     }
 
 	[RelayCommand]
@@ -101,7 +113,7 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
     {
         FieldProcessorGroup!.FieldProcessors.Clear();
 
-        foreach (FieldProcessor processor in ProcessorViewModels)
+        foreach (FieldProcessor processor in Processors)
         {
             FieldProcessorGroup.FieldProcessors.Add(processor);
         }

@@ -33,11 +33,10 @@ public partial class FieldProcessorGroupEditorView : ContentPage
 
 		if (result is bool boolResult && boolResult)
 		{
-			//_viewModel.AddProcessor();
 			string viewName = viewModel.SelectedType + "View";
 			await Shell.Current.GoToAsync(viewName, true, new Dictionary<string, object?>
 			{
-				{ "AddFieldProcessorViewModelCallback", new Action<FieldProcessor>(_viewModel.AddProcessor) }
+				{ "AddFieldProcessorCallback", new Action<FieldProcessor>(_viewModel.AddProcessor) }
 			});
 		}
 	}

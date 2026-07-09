@@ -7,7 +7,7 @@ public partial class SentenceEndingSpacesFieldProcessorViewModel : FieldProcesso
     #region Construction
 
     public SentenceEndingSpacesFieldProcessorViewModel() :
-		base(nameof(SentenceEndingSpacesFieldProcessor))
+		base(new SentenceEndingSpacesFieldProcessor())
 	{
     }
 

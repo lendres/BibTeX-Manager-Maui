@@ -1,4 +1,5 @@
 ﻿using BibTeXLibrary;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
@@ -28,8 +29,9 @@ public abstract class FieldProcessor
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public FieldProcessor()
+	public FieldProcessor(string xsiType)
 	{
+		XsiType = xsiType;
 	}
 
 	#endregion

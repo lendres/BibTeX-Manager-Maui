@@ -19,9 +19,9 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 
 	#region Construction
 
-	public FieldProcessorViewModel(string type)
+	public FieldProcessorViewModel(FieldProcessor defaultFieldProcessor)
     {
-        Type = type;
+		FieldProcessor = defaultFieldProcessor;
 		Initialize();
 	}
 
@@ -34,9 +34,6 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 
     [ObservableProperty]
     public partial bool												IsSubmittable { get; set; }					= false;
-
-    [ObservableProperty]
-    public partial string											Type { get; set; }							= string.Empty;
 
     [ObservableProperty]
     public partial ValidatableObject<string>						SearchPattern { get; set; }					= new();
@@ -61,7 +58,7 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 	[NotifyCanExecuteChangedFor(nameof(MoveFieldDownCommand))]
 	public partial ObservableString?								SelectedField { get; set; }
 
-	public Action<FieldProcessorViewModel>?							AddFieldProcessorViewModelCallback { get; set; }
+	public Action<FieldProcessor>?									AddFieldProcessorCallback { get; set; }
 
 	public FieldProcessor?											FieldProcessor { get => _fieldProcessor; set => SetProcessor(value!); }
 
@@ -71,10 +68,10 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 
 	public void ApplyQueryAttributes(IDictionary<string, object> query)
 	{
-		query.TryGetValue("AddFieldProcessorViewModelCallback", out var value);
-		if (value is Action<FieldProcessorViewModel> callback)
+		query.TryGetValue("AddFieldProcessorCallback", out var value);
+		if (value is Action<FieldProcessor> callback)
 		{
-			AddFieldProcessorViewModelCallback = callback;
+			AddFieldProcessorCallback = callback;
 		}
 
 		query.TryGetValue("FieldProcessor", out value);
@@ -103,6 +100,10 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 	[RelayCommand]
 	private void ValidateSearchPattern()
 	{
+		if (SearchPattern.Validate())
+		{
+			FieldProcessor!.Pattern = SearchPattern.Value!;
+		}
 		SearchPattern.Validate();
 		SetModified(true);
 	}
@@ -120,12 +121,15 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 		_fieldProcessor		= processor;
 		FieldsToProcess		= processor.FieldsToProcess;
 		SearchPattern.Value	= processor.Pattern;
-		Type				= processor.XsiType;
 
 		foreach (string field in processor.FieldNames)
 		{
-			ObservableFieldNames.Add(new ObservableString(field));
+			ObservableString observableString	= new(field);
+			observableString.ModifiedChanged	+= OnChildModifiedChanged;
+			ObservableFieldNames.Add(observableString);
 		}
+
+		SetModified(false);
 	}
 
 	abstract public FieldProcessor ToProcessor();

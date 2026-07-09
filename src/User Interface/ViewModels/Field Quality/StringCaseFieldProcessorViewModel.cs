@@ -8,7 +8,7 @@ public partial class StringCaseFieldProcessorViewModel : FieldProcessorViewModel
     #region Construction
 
     public StringCaseFieldProcessorViewModel() :
-		base(nameof(StringCaseFieldProcessor))
+		base(new StringCaseFieldProcessor())
     {
     }
 

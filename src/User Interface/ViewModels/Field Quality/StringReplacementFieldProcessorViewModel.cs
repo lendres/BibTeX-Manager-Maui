@@ -7,7 +7,7 @@ public partial class StringReplacementFieldProcessorViewModel : FieldProcessorVi
     #region Construction
 
     public StringReplacementFieldProcessorViewModel() :
-		base(nameof(StringReplacementFieldProcessor))
+		base(new StringReplacementFieldProcessor())
     {
 	}
 

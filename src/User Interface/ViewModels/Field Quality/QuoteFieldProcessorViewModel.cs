@@ -7,7 +7,7 @@ public partial class QuoteFieldProcessorViewModel : FieldProcessorViewModel
     #region Construction
 
     public QuoteFieldProcessorViewModel() :
-		base(nameof(QuoteFieldProcessor))
+		base(new QuoteFieldProcessor())
 	{
     }
 

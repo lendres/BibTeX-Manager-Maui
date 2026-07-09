@@ -5,7 +5,7 @@ public partial class RemoveEnclosingBracesFieldProcessorViewModel : FieldProcess
     #region Construction
 
     public RemoveEnclosingBracesFieldProcessorViewModel() :
-		base(nameof(RemoveEnclosingBracesFieldProcessor))
+		base(new RemoveEnclosingBracesFieldProcessor())
 	{
     }
 

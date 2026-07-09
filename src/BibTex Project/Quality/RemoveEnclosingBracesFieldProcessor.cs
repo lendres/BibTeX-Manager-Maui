@@ -5,24 +5,17 @@
 /// </summary>
 public class RemoveEnclosingBracesFieldProcessor : FieldProcessor
 {
-	#region Fields
-
-	#endregion
-
 	#region Construction
 
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public RemoveEnclosingBracesFieldProcessor()
+	public RemoveEnclosingBracesFieldProcessor() :
+		base(nameof(RemoveEnclosingBracesFieldProcessor))
 	{
 		// Provide a default pattern.  It can be overridden in the input file.
 		_pattern = @"^{[\s\S]*}$";
 	}
-
-	#endregion
-
-	#region Properties
 
 	#endregion
 

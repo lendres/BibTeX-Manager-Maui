@@ -23,7 +23,8 @@ public partial class FieldProcessorHeaderView : ContentView
 
 	async private void OnSave(object? sender, EventArgs eventArgs)
 	{
-		_viewModel!.AddFieldProcessorViewModelCallback?.Invoke(_viewModel);
+		_viewModel!.AddFieldProcessorCallback?.Invoke(_viewModel.FieldProcessor!);
+		// We have to add an empty to prevent the file from being reloaded. Otherwise, the previous file will be reloaded and the changes will be lost.
 		await Shell.Current.GoToAsync("../", true, new Dictionary<string, object>
 		{
 			{ "FieldQualityProcessingFile", string.Empty }
@@ -32,6 +33,7 @@ public partial class FieldProcessorHeaderView : ContentView
 
 	async private void OnCancel(object sender, EventArgs eventArgs)
 	{
+		// We have to add an empty to prevent the file from being reloaded. Otherwise, the previous file will be reloaded and the changes will be lost.
 		await Shell.Current.GoToAsync("../", true, new Dictionary<string, object>
 		{
 			{ "FieldQualityProcessingFile", string.Empty }
