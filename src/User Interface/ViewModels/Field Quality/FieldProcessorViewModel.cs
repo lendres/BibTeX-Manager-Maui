@@ -3,12 +3,11 @@ using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.ComponentModel;
 using DigitalProduction.Maui.Validation;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace BibTeXManager.ViewModels;
 
-[QueryProperty(nameof(AddFieldProcessorViewModelCallback), "AddFieldProcessorViewModelCallback")]
-[QueryProperty(nameof(FieldProcessor), "FieldProcessor")]
-public abstract partial class FieldProcessorViewModel : ObservableObject
+public abstract partial class FieldProcessorViewModel : ObservableObject, IQueryAttributable
 {
 	#region Fields
 
@@ -44,15 +43,13 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
     [ObservableProperty]
     public partial string											ReplacementText { get; set; }				= string.Empty;
 
-    public ObservableCollection<string>								Fields { get; }								= new();
-
 	public IReadOnlyList<string>									FieldsToProcessOptions { get; set; }		= DigitalProduction.Reflection.Enumerations.GetAllDescriptionAttributesForType<FieldsToProcess>();
 
     [ObservableProperty]
     public partial FieldsToProcess									FieldsToProcess { get; set; }				= FieldsToProcess.OnlySpecified;
 
 	[ObservableProperty]
-	public partial ObservableCollection<ObservableWrapper<string>>	ObservableFieldNames { get; set; }			= new();
+	public partial ObservableCollection<ObservableString>			ObservableFieldNames { get; set; }			= new();
 
 	[ObservableProperty]
 	[NotifyCanExecuteChangedFor(nameof(DeleteFieldCommand))]
@@ -63,6 +60,25 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 	public Action<FieldProcessorViewModel>?							AddFieldProcessorViewModelCallback { get; set; }
 
 	public FieldProcessor?											FieldProcessor { get => _fieldProcessor; set => SetProcessor(value!); }
+
+	#endregion
+
+	#region QueryAttributable Implementation
+
+	public void ApplyQueryAttributes(IDictionary<string, object> query)
+	{
+		query.TryGetValue("AddFieldProcessorViewModelCallback", out var value);
+		if (value is Action<FieldProcessorViewModel> callback)
+		{
+			AddFieldProcessorViewModelCallback = callback;
+		}
+
+		query.TryGetValue("FieldProcessor", out value);
+		if (value is FieldProcessor processor)
+		{
+			FieldProcessor = processor;
+		}
+	}
 
 	#endregion
 
@@ -95,6 +111,8 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 
 	public virtual void SetProcessor(FieldProcessor processor)
 	{
+		Debug.Assert(processor != null, "Processor cannot be null.");
+
 		_fieldProcessor		= processor;
 		FieldsToProcess		= processor.FieldsToProcess;
 		SearchPattern.Value	= processor.Pattern;
@@ -102,7 +120,7 @@ public abstract partial class FieldProcessorViewModel : ObservableObject
 
 		foreach (string field in processor.FieldNames)
 		{
-			Fields.Add(field);
+			ObservableFieldNames.Add(new ObservableString(field));
 		}
 	}
 

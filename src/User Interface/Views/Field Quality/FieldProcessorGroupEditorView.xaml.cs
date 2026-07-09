@@ -47,7 +47,7 @@ public partial class FieldProcessorGroupEditorView : ContentPage
 		string viewName = _viewModel!.SelectedProcessor!.XsiType + "View";
 		await Shell.Current.GoToAsync(viewName, true, new Dictionary<string, object?>
 		{
-			{ "FieldProcessor", ((FieldProcessor)_viewModel!.SelectedProcessor!) }
+			{ "FieldProcessor", _viewModel!.SelectedProcessor! }
 		});
 	}
 

@@ -46,7 +46,7 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	public partial string?											SelectedTemplate { get; set; }
 
 	[ObservableProperty]
-	public partial ObservableCollection<ObservableWrapper<string>>	ObservableTemplateFieldNames { get; set; } = new();
+	public partial ObservableCollection<ObservableString>			ObservableTemplateFieldNames { get; set; } = new();
 
 	private SerializableDictionary<string, List<string>>			TemplatesDictionary { get; set; }
 
