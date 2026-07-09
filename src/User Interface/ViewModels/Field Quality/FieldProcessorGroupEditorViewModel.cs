@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace BibTeXManager.ViewModels;
 
@@ -35,15 +34,6 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
 			foreach (FieldProcessor processor in FieldProcessorGroup.FieldProcessors)
 			{
-
-				//string className					= processor.XsiType + "ViewModel";
-				//string? nameSpace					= typeof(FieldProcessorGroupEditorViewModel).Namespace;
-				//Type? type							= typeof(FieldProcessorGroupEditorViewModel).Assembly.GetType($"{nameSpace}.{className}");
-				//Debug.Assert(type != null);
-
-				//FieldProcessorViewModel instance	= (FieldProcessorViewModel)(Activator.CreateInstance(type) ?? throw new Exception("Failed to create field processor instance."));
-
-				//instance.SetProcessor(processor);
 				ProcessorViewModels.Add(processor);
 			}
 
