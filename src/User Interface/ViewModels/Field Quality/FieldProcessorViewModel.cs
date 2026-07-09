@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.ComponentModel;
 using DigitalProduction.Maui.Validation;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BibTeXManager.ViewModels;
 
@@ -13,7 +13,7 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 	#region Fields
 
 	private bool			_isButtonPressed;
-	private FieldProcessor?	_fieldProcessor;
+	private FieldProcessor	_fieldProcessor;
 
 	#endregion
 
@@ -60,7 +60,8 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 
 	public Action<FieldProcessor>?									AddFieldProcessorCallback { get; set; }
 
-	public FieldProcessor?											FieldProcessor { get => _fieldProcessor; set => SetProcessor(value!); }
+	[MemberNotNull(nameof(_fieldProcessor))]
+	public FieldProcessor											FieldProcessor { get => _fieldProcessor; set => SetProcessor(value!); }
 
 	#endregion
 
@@ -102,10 +103,10 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 	{
 		if (SearchPattern.Validate())
 		{
-			FieldProcessor!.Pattern = SearchPattern.Value!;
+			FieldProcessor.Pattern = SearchPattern.Value!;
+			SetModified(true);
 		}
 		SearchPattern.Validate();
-		SetModified(true);
 	}
 
 	public virtual bool ValidateSubmittable() => IsSubmittable = Modified && SearchPattern.IsValid;
