@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DigitalProduction.Maui.ComponentModel;
 using DigitalProduction.Maui.Validation;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -47,6 +48,9 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 
     [ObservableProperty]
     public partial FieldsToProcess									FieldsToProcess { get; set; }				= FieldsToProcess.OnlySpecified;
+
+    [ObservableProperty]
+    public partial bool												ShowFields { get; set; }					= true;
 
 	[ObservableProperty]
 	public partial ObservableCollection<ObservableString>			ObservableFieldNames { get; set; }			= new();
@@ -141,6 +145,25 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 	#endregion
 
 	#region Fields Editting
+
+	[RelayCommand]
+	private void SelectedFieldsToProcess()
+	{
+		switch (FieldsToProcess)
+		{
+			case FieldsToProcess.OnlySpecified:
+				ShowFields = true;
+				break;
+			case FieldsToProcess.ExcludeSpecified:
+				ShowFields = true;
+				break;
+			case FieldsToProcess.All:
+				ShowFields = false;
+				break;
+			default:
+				throw new ArgumentOutOfRangeException();
+		}
+	}
 
 	[RelayCommand]
 	public void AddField()
