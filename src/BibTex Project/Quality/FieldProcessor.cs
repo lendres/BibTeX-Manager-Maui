@@ -38,7 +38,7 @@ public abstract class FieldProcessor
 
 	#region Properties
 
-	[XmlAttribute("type", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+	[XmlIgnore()]
 	public string XsiType { get; set; } = string.Empty;
 
 	/// <summary>

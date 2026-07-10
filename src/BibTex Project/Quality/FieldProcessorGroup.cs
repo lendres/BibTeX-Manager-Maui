@@ -14,6 +14,7 @@ public class FieldProcessorGroup
 
 	private string								_name					= string.Empty;
 	private BindingList<FieldProcessor>			_fieldProcessors		= [];
+	private string								_path					= string.Empty;
 
 	#endregion
 
@@ -51,6 +52,15 @@ public class FieldProcessorGroup
 	#region XML
 
 	/// <summary>
+	/// Write this object to a file to the original path.
+	/// </summary>
+	/// <exception cref="InvalidOperationException">Thrown when the projects path is not valid.</exception>
+	public void Serialize()
+	{
+		Serialize(_path);
+	}
+
+	/// <summary>
 	/// Write this object to a file to the provided path.
 	/// </summary>
 	/// <param name="path">Path (full path and filename) to write to.</param>
@@ -71,7 +81,12 @@ public class FieldProcessorGroup
 	/// <param name="path">The file to read from.</param>
 	public static FieldProcessorGroup? Deserialize(string path)
 	{
-		return Serialization.DeserializeObject<FieldProcessorGroup>(path);
+		FieldProcessorGroup? fieldProcessorGroup = Serialization.DeserializeObject<FieldProcessorGroup>(path);
+		if (fieldProcessorGroup != null)
+		{
+			fieldProcessorGroup._path = path;
+		}
+		return fieldProcessorGroup;		
 	}
 
 	#endregion

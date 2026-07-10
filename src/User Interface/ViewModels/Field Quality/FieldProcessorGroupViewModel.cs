@@ -97,6 +97,7 @@ public partial class FieldProcessorGroupViewModel : ObservableObject
         {
             FieldProcessorGroup.FieldProcessors.Add(processor.FieldProcessor);
         }
+		FieldProcessorGroup.Serialize();
 		SetModified(false);
 	}
 
