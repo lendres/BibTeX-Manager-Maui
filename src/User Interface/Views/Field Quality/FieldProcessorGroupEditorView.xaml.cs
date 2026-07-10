@@ -43,11 +43,11 @@ public partial class FieldProcessorGroupEditorView : ContentPage
 
 	private async void OnEditProcessor(object sender, EventArgs eventArgs)
 	{
-		string viewName = _viewModel!.SelectedProcessor!.FieldProcessor.XsiType + "View";
+		string viewName = _viewModel!.SelectedProcessorViewModel!.FieldProcessor.XsiType + "View";
 		await Shell.Current.GoToAsync(viewName, true, new Dictionary<string, object?>
 		{
 			{ "SaveFieldProcessorCallback", new Action<FieldProcessor>(_viewModel.UpdateProcessor) },
-			{ "FieldProcessor", _viewModel!.SelectedProcessor!.FieldProcessor }
+			{ "FieldProcessor", _viewModel!.SelectedProcessorViewModel!.FieldProcessor }
 		});
 	}
 
