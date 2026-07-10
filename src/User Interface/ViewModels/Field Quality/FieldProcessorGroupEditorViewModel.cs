@@ -60,17 +60,6 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 	#region Commands
 
 	[RelayCommand]
-	public void AddNewProcessor()
-	{
-		AddProcessor(
-		new StringReplacementFieldProcessor
-		{
-			Pattern = "New Processor",
-			XsiType = "StringReplacementFieldProcessor"
-		});
-	}
-
-	[RelayCommand]
     public void AddProcessor(FieldProcessor fieldProcessor)
     {
         ProcessorsViewModels.Add(new FieldProcessorSimpleViewModel(fieldProcessor));
@@ -107,5 +96,17 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
         }
     }
 
-    #endregion
+	#endregion
+
+	#region Helper Functions
+
+	public virtual bool ValidateSubmittable() => IsSubmittable = Modified;
+
+	public void SetModified(bool modified)
+	{
+		Modified = modified;
+		ValidateSubmittable();
+	}
+
+	#endregion
 }
