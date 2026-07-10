@@ -4,7 +4,6 @@ using DigitalProduction.Maui.ComponentModel;
 using DigitalProduction.Maui.Validation;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 
 namespace BibTeXManager.ViewModels;
 
@@ -13,7 +12,7 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 	#region Fields
 
 	private bool			_isButtonPressed;
-	private FieldProcessor	_fieldProcessor;
+	private FieldProcessor	_fieldProcessor = new StringReplacementFieldProcessor();
 
 	#endregion
 
@@ -58,9 +57,8 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 	[NotifyCanExecuteChangedFor(nameof(MoveFieldDownCommand))]
 	public partial ObservableString?								SelectedField { get; set; }
 
-	public Action<FieldProcessor>?									AddFieldProcessorCallback { get; set; }
+	public Action<FieldProcessor>?									SaveFieldProcessorCallback { get; set; }
 
-	[MemberNotNull(nameof(_fieldProcessor))]
 	public FieldProcessor											FieldProcessor { get => _fieldProcessor; set => SetProcessor(value!); }
 
 	#endregion
@@ -69,10 +67,10 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 
 	public void ApplyQueryAttributes(IDictionary<string, object> query)
 	{
-		query.TryGetValue("AddFieldProcessorCallback", out var value);
-		if (value is Action<FieldProcessor> callback)
+		query.TryGetValue("SaveFieldProcessorCallback", out var value);
+		if (value is Action<FieldProcessor> addCallback)
 		{
-			AddFieldProcessorCallback = callback;
+			SaveFieldProcessorCallback = addCallback;
 		}
 
 		query.TryGetValue("FieldProcessor", out value);
@@ -103,7 +101,6 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 	{
 		if (SearchPattern.Validate())
 		{
-			FieldProcessor.Pattern = SearchPattern.Value!;
 			SetModified(true);
 		}
 		SearchPattern.Validate();
@@ -131,6 +128,19 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 		}
 
 		SetModified(false);
+	}
+
+	virtual public void Save()
+	{
+		_fieldProcessor.Pattern = SearchPattern.Value!;
+
+		_fieldProcessor.FieldsToProcess = FieldsToProcess;
+
+		_fieldProcessor.FieldNames.Clear();
+		foreach (ObservableString field in ObservableFieldNames)
+		{
+			_fieldProcessor.FieldNames.Add(field.Value!);
+		}
 	}
 
 	abstract public FieldProcessor ToProcessor();
@@ -168,6 +178,7 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 			default:
 				throw new ArgumentOutOfRangeException();
 		}
+		SetModified(true);
 	}
 
 	[RelayCommand]
@@ -283,7 +294,7 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 
 	#region Helper Functions
 
-	protected void SetModified(bool modified)
+	public void SetModified(bool modified)
 	{
 		Modified = modified;
 		ValidateSubmittable();

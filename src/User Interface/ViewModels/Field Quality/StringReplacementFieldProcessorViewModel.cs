@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using DigitalProduction.Maui.ComponentModel;
+using System.Diagnostics;
 
 namespace BibTeXManager.ViewModels;
 
@@ -26,6 +28,13 @@ public partial class StringReplacementFieldProcessorViewModel : FieldProcessorVi
 	{
 		base.SetProcessor(processor);
 		Replacement = ((StringReplacementFieldProcessor)processor).Replacement;
+		SetModified(false);
+	}
+
+	override public void Save()
+	{
+		base.Save();
+		((StringReplacementFieldProcessor)FieldProcessor).Replacement = Replacement;
 	}
 
 	public override FieldProcessor ToProcessor()
