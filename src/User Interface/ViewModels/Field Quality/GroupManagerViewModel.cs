@@ -21,7 +21,7 @@ public partial class GroupManagerViewModel : ObservableObject
 		List<string> includeNames	= GroupManager.IncludeNames;
 		List<string> availableNames	= GroupManager.GetAvailableQualityFiles();
 
-		FieldProcessingGroups = new ObservableCollection<GroupManagerIncludeViewModel>();
+		FieldProcessingGroups		= new ObservableCollection<GroupManagerIncludeViewModel>();
 		foreach (string name in availableNames)
 		{
 			AddNewGroupManagerIncludeViewModel(
@@ -117,9 +117,9 @@ public partial class GroupManagerViewModel : ObservableObject
 	{
 		GroupManagerIncludeViewModel groupManagerIncludeViewModel = new GroupManagerIncludeViewModel
 		{
-			Name = name,
-			IsIncluded = isIncluded,
-			FieldProcessorGroup = fieldProcessorGroup
+			Name				= name,
+			IsIncluded			= isIncluded,
+			FieldProcessorGroup	= fieldProcessorGroup
 		};
 		groupManagerIncludeViewModel.PropertyChanged += (sender, args) =>
 		{
