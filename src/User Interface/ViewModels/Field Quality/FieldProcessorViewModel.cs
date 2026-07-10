@@ -127,6 +127,8 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 			ObservableFieldNames.Add(observableString);
 		}
 
+		SelectedFieldsToProcess();
+
 		SetModified(false);
 	}
 
