@@ -64,12 +64,14 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
     {
         ProcessorsViewModels.Add(new FieldProcessorSimpleViewModel(fieldProcessor));
         SelectedProcessorViewModel = ProcessorsViewModels.Last();
+		SetModified(true);
     }
 
 	[RelayCommand]
 	public void UpdateProcessor(FieldProcessor fieldProcessor)
 	{
 		SelectedProcessorViewModel!.UpdateFromProcessor();
+		SetModified(true);
 	}
 
 	[RelayCommand]
@@ -84,7 +86,8 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
         ProcessorsViewModels.Remove(processor);
         SelectedProcessorViewModel = ProcessorsViewModels.FirstOrDefault();
-    }
+		SetModified(true);
+	}
 
     public void Save()
     {
@@ -94,7 +97,8 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
         {
             FieldProcessorGroup.FieldProcessors.Add(processor.FieldProcessor);
         }
-    }
+		SetModified(false);
+	}
 
 	#endregion
 
