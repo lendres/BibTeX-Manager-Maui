@@ -23,7 +23,8 @@ public partial class FieldProcessorHeaderView : ContentView
 
 	async private void OnSave(object? sender, EventArgs eventArgs)
 	{
-		_viewModel!.SaveFieldProcessorCallback?.Invoke(_viewModel.FieldProcessor!);
+		_viewModel!.Save();
+		_viewModel.SaveFieldProcessorCallback?.Invoke(_viewModel.FieldProcessor!);
 		// We have to add an empty to prevent the file from being reloaded. Otherwise, the previous file will be reloaded and the changes will be lost.
 		await Shell.Current.GoToAsync("../", true, new Dictionary<string, object>
 		{

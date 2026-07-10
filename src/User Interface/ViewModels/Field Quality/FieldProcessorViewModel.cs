@@ -101,7 +101,6 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 	{
 		if (SearchPattern.Validate())
 		{
-			FieldProcessor.Pattern = SearchPattern.Value!;
 			SetModified(true);
 		}
 		SearchPattern.Validate();
@@ -129,6 +128,19 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 		}
 
 		SetModified(false);
+	}
+
+	virtual public void Save()
+	{
+		_fieldProcessor.Pattern = SearchPattern.Value!;
+
+		_fieldProcessor.FieldsToProcess = FieldsToProcess;
+
+		_fieldProcessor.FieldNames.Clear();
+		foreach (ObservableString field in ObservableFieldNames)
+		{
+			_fieldProcessor.FieldNames.Add(field.Value!);
+		}
 	}
 
 	abstract public FieldProcessor ToProcessor();
@@ -166,6 +178,7 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 			default:
 				throw new ArgumentOutOfRangeException();
 		}
+		SetModified(true);
 	}
 
 	[RelayCommand]
@@ -281,7 +294,7 @@ public abstract partial class FieldProcessorViewModel : ObservableObject, IQuery
 
 	#region Helper Functions
 
-	protected void SetModified(bool modified)
+	public void SetModified(bool modified)
 	{
 		Modified = modified;
 		ValidateSubmittable();

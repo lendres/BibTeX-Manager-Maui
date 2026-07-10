@@ -34,10 +34,10 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
 			foreach (FieldProcessor processor in FieldProcessorGroup.FieldProcessors)
 			{
-				Processors.Add(new FieldProcessorSimpleViewModel(processor));
+				ProcessorsViewModels.Add(new FieldProcessorSimpleViewModel(processor));
 			}
 
-			SelectedProcessor = Processors.FirstOrDefault();
+			SelectedProcessorViewModel = ProcessorsViewModels.FirstOrDefault();
 		}
 	}
 
@@ -50,10 +50,10 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 	public partial FieldProcessorGroup?									FieldProcessorGroup { get; set; }
 
     [ObservableProperty]
-    public partial ObservableCollection<FieldProcessorSimpleViewModel>	Processors { get; set; }			= new();
+    public partial ObservableCollection<FieldProcessorSimpleViewModel>	ProcessorsViewModels { get; set; }			= new();
 
     [ObservableProperty]
-    public partial FieldProcessorSimpleViewModel?						SelectedProcessor { get; set; }
+    public partial FieldProcessorSimpleViewModel?						SelectedProcessorViewModel { get; set; }
 
 	#endregion
 
@@ -73,35 +73,35 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 	[RelayCommand]
     public void AddProcessor(FieldProcessor fieldProcessor)
     {
-        Processors.Add(new FieldProcessorSimpleViewModel(fieldProcessor));
-        SelectedProcessor = Processors.Last();
+        ProcessorsViewModels.Add(new FieldProcessorSimpleViewModel(fieldProcessor));
+        SelectedProcessorViewModel = ProcessorsViewModels.Last();
     }
 
 	[RelayCommand]
 	public void UpdateProcessor(FieldProcessor fieldProcessor)
 	{
-		SelectedProcessor!.UpdateFromProcessor();
+		SelectedProcessorViewModel!.UpdateFromProcessor();
 	}
 
 	[RelayCommand]
     public void DeleteProcessor()
     {
-        if (SelectedProcessor is null)
+        if (SelectedProcessorViewModel is null)
         {
             return;
         }
 
-        FieldProcessorSimpleViewModel processor = SelectedProcessor;
+        FieldProcessorSimpleViewModel processor = SelectedProcessorViewModel;
 
-        Processors.Remove(processor);
-        SelectedProcessor = Processors.FirstOrDefault();
+        ProcessorsViewModels.Remove(processor);
+        SelectedProcessorViewModel = ProcessorsViewModels.FirstOrDefault();
     }
 
     public void Save()
     {
         FieldProcessorGroup!.FieldProcessors.Clear();
 
-        foreach (FieldProcessorSimpleViewModel processor in Processors)
+        foreach (FieldProcessorSimpleViewModel processor in ProcessorsViewModels)
         {
             FieldProcessorGroup.FieldProcessors.Add(processor.FieldProcessor);
         }

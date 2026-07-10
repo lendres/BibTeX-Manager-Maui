@@ -17,8 +17,8 @@
 			<Entry
 				x:Name="_replacementEntry"
 				Placeholder="Replacement"
-				Text="{Binding Replacement}">
-			</Entry>
+				Text="{Binding Replacement}"
+				TextChanged="OnTextChanged"/>
 		</VerticalStackLayout>
 
 		<views:FieldProcessorFieldsView 

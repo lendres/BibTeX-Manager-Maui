@@ -52,7 +52,7 @@ public partial class FieldProcessorSimpleViewModel : ObservableObject
 	public void UpdateFromProcessor()
 	{
 		SearchPattern.Value	= _fieldProcessor.Pattern;
-		Type			= _fieldProcessor.XsiType;
+		Type				= _fieldProcessor.XsiType;
 	}
 
 	#endregion
