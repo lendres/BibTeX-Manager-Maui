@@ -34,26 +34,26 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
 			foreach (FieldProcessor processor in FieldProcessorGroup.FieldProcessors)
 			{
-				Processors.Add(processor);
+				Processors.Add(new FieldProcessorSimpleViewModel(processor));
 			}
 
 			SelectedProcessor = Processors.FirstOrDefault();
 		}
 	}
 
-	private bool													Modified  { get; set; }
+	private bool														Modified  { get; set; }
 
 	[ObservableProperty]
-	public partial bool												IsSubmittable { get; set; }
+	public partial bool													IsSubmittable { get; set; }
 
 	[ObservableProperty]
-	public partial FieldProcessorGroup?								FieldProcessorGroup { get; set; }
+	public partial FieldProcessorGroup?									FieldProcessorGroup { get; set; }
 
     [ObservableProperty]
-    public partial ObservableCollection<FieldProcessor>				Processors { get; set; }			= new();
+    public partial ObservableCollection<FieldProcessorSimpleViewModel>	Processors { get; set; }			= new();
 
     [ObservableProperty]
-    public partial FieldProcessor?									SelectedProcessor { get; set; }
+    public partial FieldProcessorSimpleViewModel?						SelectedProcessor { get; set; }
 
 	#endregion
 
@@ -63,22 +63,27 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 	public void AddNewProcessor()
 	{
 		AddProcessor(
-			new StringReplacementFieldProcessor
-			{
-				Pattern = "New Processor",
-				XsiType = "StringReplacementFieldProcessor"
-			});
+		new StringReplacementFieldProcessor
+		{
+			Pattern = "New Processor",
+			XsiType = "StringReplacementFieldProcessor"
+		});
 	}
-
 
 	[RelayCommand]
     public void AddProcessor(FieldProcessor fieldProcessor)
     {
-        Processors.Add(fieldProcessor);
-        SelectedProcessor = fieldProcessor;
+        Processors.Add(new FieldProcessorSimpleViewModel(fieldProcessor));
+        SelectedProcessor = Processors.Last();
     }
 
-    [RelayCommand]
+	[RelayCommand]
+	public void UpdateProcessor(FieldProcessor fieldProcessor)
+	{
+		SelectedProcessor!.UpdateFromProcessor();
+	}
+
+	[RelayCommand]
     public void DeleteProcessor()
     {
         if (SelectedProcessor is null)
@@ -86,36 +91,19 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
             return;
         }
 
-        FieldProcessor processor = SelectedProcessor;
+        FieldProcessorSimpleViewModel processor = SelectedProcessor;
 
         Processors.Remove(processor);
         SelectedProcessor = Processors.FirstOrDefault();
-    }
-
-	[RelayCommand]
-	private void SelectedProcessorChanged()
-	{
-	}
-
-    [RelayCommand]
-    public void AddField()
-    {
-        SelectedProcessor?.FieldNames.Add(string.Empty);
-    }
-
-    [RelayCommand]
-    public void DeleteField(string field)
-    {
-        SelectedProcessor?.FieldNames.Remove(field);
     }
 
     public void Save()
     {
         FieldProcessorGroup!.FieldProcessors.Clear();
 
-        foreach (FieldProcessor processor in Processors)
+        foreach (FieldProcessorSimpleViewModel processor in Processors)
         {
-            FieldProcessorGroup.FieldProcessors.Add(processor);
+            FieldProcessorGroup.FieldProcessors.Add(processor.FieldProcessor);
         }
     }
 
