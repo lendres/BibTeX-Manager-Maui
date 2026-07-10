@@ -3,17 +3,17 @@ using CommunityToolkit.Maui.Views;
 
 namespace BibTeXManager.Views;
 
-public partial class FieldProcessorGroupEditorView : ContentPage
+public partial class FieldProcessorGroupView : ContentPage
 {
     #region Fields
 
-    private readonly FieldProcessorGroupEditorViewModel _viewModel;
+    private readonly FieldProcessorGroupViewModel _viewModel;
 
     #endregion
 
     #region Construction
 
-    public FieldProcessorGroupEditorView(FieldProcessorGroupEditorViewModel viewModel)
+    public FieldProcessorGroupView(FieldProcessorGroupViewModel viewModel)
     {
         InitializeComponent();
 

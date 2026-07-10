@@ -7,8 +7,8 @@
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:bibtexproject="clr-namespace:BibTeXManager;assembly=BibTexProject"
-	x:DataType="viewmodel:FieldProcessorGroupEditorViewModel"
-    x:Class="BibTeXManager.Views.FieldProcessorGroupEditorView">
+	x:DataType="viewmodel:FieldProcessorGroupViewModel"
+    x:Class="BibTeXManager.Views.FieldProcessorGroupView">
 
 	<Shell.BackButtonBehavior>
 		<BackButtonBehavior IsVisible="False" IsEnabled="False" />

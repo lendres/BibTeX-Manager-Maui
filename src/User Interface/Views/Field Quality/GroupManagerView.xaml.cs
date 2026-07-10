@@ -70,7 +70,7 @@ public partial class GroupManagerView : ContentPage
 
 	private async void OnEditFieldProcessingGroup(object sender, EventArgs eventArgs)
 	{
-		await Shell.Current.GoToAsync(nameof(FieldProcessorGroupEditorView), true, new Dictionary<string, object>
+		await Shell.Current.GoToAsync(nameof(FieldProcessorGroupView), true, new Dictionary<string, object>
 		{
 			{ "FieldQualityProcessingFile", _viewModel.GetSelectedQualityFilePath() }
 		});

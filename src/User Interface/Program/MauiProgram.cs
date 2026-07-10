@@ -81,8 +81,8 @@ public static class MauiProgram
 		services.AddTransient<GroupManagerViewModel>();
 		services.AddTransient<GroupManagerIncludeViewModel>();
 
-		services.AddTransient<FieldProcessorGroupEditorView>();
-		services.AddTransient<FieldProcessorGroupEditorViewModel>();
+		services.AddTransient<FieldProcessorGroupView>();
+		services.AddTransient<FieldProcessorGroupViewModel>();
 
 		services.AddTransient<QuoteFieldProcessorView>();
 		services.AddTransient<QuoteFieldProcessorViewModel>();

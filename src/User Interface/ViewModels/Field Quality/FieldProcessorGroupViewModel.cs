@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 namespace BibTeXManager.ViewModels;
 
 [QueryProperty(nameof(FieldQualityProcessingFile), "FieldQualityProcessingFile")]
-public partial class FieldProcessorGroupEditorViewModel : ObservableObject
+public partial class FieldProcessorGroupViewModel : ObservableObject
 {
     #region Fields
 
@@ -13,7 +13,7 @@ public partial class FieldProcessorGroupEditorViewModel : ObservableObject
 
     #region Construction
 
-    public FieldProcessorGroupEditorViewModel()
+    public FieldProcessorGroupViewModel()
     {
     }
 

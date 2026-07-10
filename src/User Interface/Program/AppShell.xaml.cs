@@ -12,7 +12,7 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(NameMappingView), typeof(NameMappingView));
 		Routing.RegisterRoute(nameof(TemplatesEditView), typeof(TemplatesEditView));
 		Routing.RegisterRoute(nameof(GroupManagerView), typeof(GroupManagerView));
-		Routing.RegisterRoute(nameof(FieldProcessorGroupEditorView), typeof(FieldProcessorGroupEditorView));
+		Routing.RegisterRoute(nameof(FieldProcessorGroupView), typeof(FieldProcessorGroupView));
 		Routing.RegisterRoute(nameof(QuoteFieldProcessorView), typeof(QuoteFieldProcessorView));
 		Routing.RegisterRoute(nameof(StringReplacementFieldProcessorView), typeof(StringReplacementFieldProcessorView));
 		Routing.RegisterRoute(nameof(RemoveEnclosingBracesFieldProcessorView), typeof(RemoveEnclosingBracesFieldProcessorView));
