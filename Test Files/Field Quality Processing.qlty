@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<qualityprocessor
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <fieldprocessorgroups>
+        <include
+            href="Capitol Letters and Acronyms.fqpg"
+            xmlns="http://www.w3.org/2001/XInclude" />
+        <include
+            href="LaTeX Field Quality Processing.fqpg"
+            xmlns="http://www.w3.org/2001/XInclude" />
+        <include
+            href="Month Abbreviations to Full Name.fqpg"
+            xmlns="http://www.w3.org/2001/XInclude" />
+        <include
+            href="Month Numbers to Text.fqpg"
+            xmlns="http://www.w3.org/2001/XInclude" />
+        <include
+            href="Special Screw Ups by SPE.fqpg"
+            xmlns="http://www.w3.org/2001/XInclude" />
+        <include
+            href="Specialized Processors.fqpg"
+            xmlns="http://www.w3.org/2001/XInclude" />
+        <include
+            href="String Replacement.fqpg"
+            xmlns="http://www.w3.org/2001/XInclude" />
+    </fieldprocessorgroups>
+</qualityprocessor>

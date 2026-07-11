@@ -7,7 +7,6 @@ using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Maui.Views;
-using System.Timers;
 
 namespace BibTeXManager.Views;
 
@@ -260,6 +259,11 @@ public partial class MainView : DigitalProductionMainPage
 	async void OnEditBibliographyTemplates(object sender, EventArgs eventArgs)
 	{
 		await Shell.Current.GoToAsync(nameof(TemplatesEditView), true);
+	}
+
+	async void OnConfigureFieldQualityProcessing(object sender, EventArgs eventArgs)
+	{
+		await Shell.Current.GoToAsync(nameof(GroupManagerView), true);
 	}
 
 	#endregion

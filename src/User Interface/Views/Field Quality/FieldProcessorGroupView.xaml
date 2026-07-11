@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:bibtexproject="clr-namespace:BibTeXManager;assembly=BibTexProject"
+	x:DataType="viewmodel:FieldProcessorGroupViewModel"
+    x:Class="BibTeXManager.Views.FieldProcessorGroupView">
+
+	<Shell.BackButtonBehavior>
+		<BackButtonBehavior IsVisible="False" IsEnabled="False" />
+	</Shell.BackButtonBehavior>
+
+	<ContentPage.Resources>
+		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
+		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+		<dpconverters:EnumToStringConverter x:Key="PartTypeEnumToStringConverter" x:TypeArguments="bibtexproject:FieldsToProcess"/>
+		<Style TargetType="Label" Class="CollectionLabelStyle">
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="FontAttributes" Value="Bold"/>
+			<Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource ControlLabelLight}, Dark={DynamicResource ControlLabelDark}}"/>
+		</Style>
+	</ContentPage.Resources>
+
+	<Grid RowDefinitions="Auto,Auto,*" Margin="0" Padding="30" WidthRequest="850" VerticalOptions="Fill">
+
+		<!-- Label and Button Row -->
+		<Grid Grid.Row="0" ColumnDefinitions="*,400" HorizontalOptions="Fill" Padding="0" Margin="0">
+			<Label Grid.Column="0" Text="Field Processor Group" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center" />
+			<HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle">
+				<Button Text="Save &amp; Return" StyleClass="StandardSizeButtonStyle" Clicked="OnSaveAndReturn" HorizontalOptions="End" IsEnabled="{Binding IsSubmittable}"/>
+				<Button Text="Save" StyleClass="StandardSizeButtonStyle" Clicked="OnSave" HorizontalOptions="End" IsEnabled="{Binding IsSubmittable}"/>
+				<Button Text="Cancel" StyleClass="StandardSizeButtonStyle" Clicked="OnCancel" HorizontalOptions="End"/>
+			</HorizontalStackLayout>
+		</Grid>
+
+		<VerticalStackLayout Grid.Row="1" Padding="0" Margin="0,20,0,0" Spacing="8">
+			<!--<Border StyleClass="SmallTitleBorderStyle">
+				<Label Text="Group" StyleClass="SmallTitleLabelStyle"/>
+			</Border>-->
+			<Label Text="Group" StyleClass="ControlLabel"/>
+			<Label Text="{Binding FieldProcessorGroup.Name}" FontSize="14" FontAttributes="Bold"/>
+		</VerticalStackLayout>
+
+		<Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,*" Margin="0,15,0,0" Padding="0">
+			<Border Grid.Row="0" StyleClass="SmallTitleBorderStyle" Margin="0 ">
+				<Label Text="Processors" StyleClass="SmallTitleLabelStyle"/>
+			</Border>
+			<HorizontalStackLayout Grid.Row="1" StyleClass="TopButtonRowStyle" Margin="0,10,0,0">
+				<Button Text="Add" Clicked="OnNewProcessor" StyleClass="SquareButtonStyle"/>
+				<Button Text="Edit" Clicked="OnEditProcessor" StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedProcessorViewModel, Converter={StaticResource IsNotNullConverter}}"/>
+				<Button Text="Delete" Clicked="OnDeleteProcessor" StyleClass="SquareButton"
+					IsEnabled="{Binding SelectedProcessorViewModel, Converter={StaticResource IsNotNullConverter}}"/>
+			</HorizontalStackLayout>
+
+			<Grid Grid.Row="2" ColumnDefinitions="0.5*,0.5*" Margin="0,10,0,0" Padding="0">
+				<Label Grid.Column="0" Text="Pattern" StyleClass="CollectionLabelStyle"/>
+				<Label Grid.Column="1" Text="Type" StyleClass="CollectionLabelStyle"/>
+			</Grid>
+			<ScrollView Grid.Row="3" VerticalScrollBarVisibility="Always" Padding="0" Margin="0">
+				<Grid Padding="0,0,10,0">
+					<CollectionView
+						ItemsSource="{Binding ProcessorsViewModels}"
+						SelectedItem="{Binding SelectedProcessorViewModel}"
+						SelectionMode="Single">
+
+						<CollectionView.ItemTemplate>
+							<DataTemplate x:DataType="viewmodel:FieldProcessorSimpleViewModel">
+								<Grid Padding="6" ColumnDefinitions="0.5*,0.5*">
+									<Label Text="{Binding SearchPattern.Value}" FontAttributes="Bold" VerticalOptions="Center"/>
+									<Label Grid.Column="1" Text="{Binding Type}" VerticalOptions="Center"/>
+								</Grid>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>
+					</CollectionView>
+				</Grid>
+			</ScrollView>
+		</Grid>
+	</Grid>
+</ContentPage>

@@ -4,7 +4,7 @@ namespace BibTeXManager.Views;
 
 public partial class SettingsView : ContentPage
 {
-	readonly SettingsViewModel	_viewModel;
+	readonly SettingsViewModel			_viewModel;
 
 	readonly IBibTeXFilePicker			_filePicker		= IPlatformApplication.Current!.Services.GetRequiredService<IBibTeXFilePicker>();
 

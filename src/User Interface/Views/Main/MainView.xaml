@@ -125,8 +125,9 @@
 		<!-- Settings. -->
 		<MenuBarItem Text="Settings">
 			<MenuFlyoutItem Text="Options..." Clicked="OnOptions"/>
-			<MenuFlyoutItem Text="Edit Bibliography Name Mapping..." Clicked="OnEditBibliographyNameMapping"/>
-			<MenuFlyoutItem Text="Edit Bibliography Templates..." Clicked="OnEditBibliographyTemplates"/>
+			<MenuFlyoutItem Text="Configure Bibliography Name Mapping..." Clicked="OnEditBibliographyNameMapping"/>
+			<MenuFlyoutItem Text="Configure Bibliography Templates..." Clicked="OnEditBibliographyTemplates"/>
+			<MenuFlyoutItem Text="Configure Field Quality Processing..." Clicked="OnConfigureFieldQualityProcessing"/>
 		</MenuBarItem>
 
 		<!-- Tools. -->

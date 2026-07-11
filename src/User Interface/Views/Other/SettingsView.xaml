@@ -34,7 +34,7 @@
 
             <Label Grid.Column="0" Text="Settings" StyleClass="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
 
-            <HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0,0,0,0" VerticalOptions="Center">
+            <HorizontalStackLayout Grid.Column="1" StyleClass="BottomButtonRowStyle" Padding="0" VerticalOptions="Center">
                 <Button 
 				    Text="OK"
 				    HorizontalOptions="End"
@@ -112,10 +112,10 @@
 						    Text="{Binding AuxiliaryFile.Value}" IsEnabled="{Binding Settings.UseAuxiliaryFile}">
                             <Entry.Behaviors>
                                 <mct:EventToCommandBehavior
-								x:TypeArguments="system:EventArgs"
-								Command="{Binding ValidateAuxiliaryFileCommand}"
-								BindingContext="{Binding Path=BindingContext, Source={x:Reference AuxiliaryFileEntry}, x:DataType=Entry}"
-								EventName="TextChanged"/>
+									x:TypeArguments="system:EventArgs"
+									Command="{Binding ValidateAuxiliaryFileCommand}"
+									BindingContext="{Binding Path=BindingContext, Source={x:Reference AuxiliaryFileEntry}, x:DataType=Entry}"
+									EventName="TextChanged"/>
                             </Entry.Behaviors>
                         </Entry>
                         <Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding Settings.UseAuxiliaryFile}"
@@ -148,10 +148,10 @@
 						    Text="{Binding FieldOrderFile.Value}" IsEnabled="{Binding Settings.UseBibEntryInitialization}">
                             <Entry.Behaviors>
                                 <mct:EventToCommandBehavior
-								x:TypeArguments="system:EventArgs"
-								Command="{Binding ValidateFieldOrderFileCommand}"
-								BindingContext="{Binding Path=BindingContext, Source={x:Reference FieldOrderEntry}, x:DataType=Entry}"
-								EventName="TextChanged"/>
+									x:TypeArguments="system:EventArgs"
+									Command="{Binding ValidateFieldOrderFileCommand}"
+									BindingContext="{Binding Path=BindingContext, Source={x:Reference FieldOrderEntry}, x:DataType=Entry}"
+									EventName="TextChanged"/>
                             </Entry.Behaviors>
                         </Entry>
                         <Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding Settings.UseBibEntryInitialization}"
@@ -163,8 +163,8 @@
                 </VerticalStackLayout>
 
                 <!-- Field quality. -->
-                    <Label Text="Bibliography Entry Field Quality" StyleClass="MediumTitleLabelStyle"/>
-                <VerticalStackLayout StyleClass="VerticalLayoutStyle">
+				<Label Text="Bibliography Entry Field Quality" StyleClass="MediumTitleLabelStyle"/>
+				<VerticalStackLayout StyleClass="VerticalLayoutStyle">
 					<Grid StyleClass="SwitchGridStyle">
 						<Switch Grid.Column="0"  Grid.Row="0" x:Name="FieldQualitySwitch" IsToggled="{Binding Settings.UseFieldQualityProcessing}">
 							<Switch.Behaviors>
@@ -184,10 +184,10 @@
 						    Text="{Binding FieldQualityFile.Value}" IsEnabled="{Binding Settings.UseFieldQualityProcessing}">
                             <Entry.Behaviors>
                                 <mct:EventToCommandBehavior
-								x:TypeArguments="system:EventArgs"
-								Command="{Binding ValidateFieldQualityFileCommand}"
-								BindingContext="{Binding Path=BindingContext, Source={x:Reference FieldQualityEntry}, x:DataType=Entry}"
-								EventName="TextChanged"/>
+									x:TypeArguments="system:EventArgs"
+									Command="{Binding ValidateFieldQualityFileCommand}"
+									BindingContext="{Binding Path=BindingContext, Source={x:Reference FieldQualityEntry}, x:DataType=Entry}"
+									EventName="TextChanged"/>
                             </Entry.Behaviors>
                         </Entry>
                         <Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle" IsEnabled="{Binding Settings.UseFieldQualityProcessing}"
@@ -220,10 +220,10 @@
 						    Text="{Binding NameRemappingFile.Value}" IsEnabled="{Binding Settings.UseBibEntryRemapping}">
                             <Entry.Behaviors>
                                 <mct:EventToCommandBehavior
-								x:TypeArguments="system:EventArgs"
-								Command="{Binding ValidateNameRemappingFileCommand}"
-								BindingContext="{Binding Path=BindingContext, Source={x:Reference NameRemappingEntry}, x:DataType=Entry}"
-								EventName="TextChanged"/>
+									x:TypeArguments="system:EventArgs"
+									Command="{Binding ValidateNameRemappingFileCommand}"
+									BindingContext="{Binding Path=BindingContext, Source={x:Reference NameRemappingEntry}, x:DataType=Entry}"
+									EventName="TextChanged"/>
                             </Entry.Behaviors>
                         </Entry>
                         <Label Grid.Row="2" Grid.Column="0" StyleClass="InvalidLabelStyle"
@@ -263,7 +263,7 @@
                     <Picker Grid.Row="2" Grid.Column="1"
 			            MinimumHeightRequest="32"
 			            HeightRequest="32"
-			            ItemsSource="{Binding SorBibliographyByItems}"
+			            ItemsSource="{Binding SortBibliographyByItems}"
 			            IsEnabled="{Binding Settings.SortBibliography}"
 			            SelectedIndex="{Binding Settings.BibliographySortMethod, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type library:SortBibliographyBy}}"/>
                 </Grid>
@@ -347,14 +347,6 @@
 						    IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
 						    IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverter}}"/>
                     </Grid>
-					<!--<Grid  Grid.Row="5" Grid.Column="1" ColumnDefinitions="110,*" RowDefinitions="auto">
-						<Label Grid.Row="0" Grid.Column="0" Text="Bracket Type:" Margin="0" VerticalTextAlignment="Center"/>
-						<Picker Grid.Row="0" Grid.Column="1"
-							MinimumHeightRequest="32" HeightRequest="32"
-							ItemsSource="{Binding BracketType}"
-							SelectedIndex="{Binding Settings.WriteSettings.BibEntryBracketType, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type library:EntryBracketType}}"/>
-					</Grid>-->
-
 				</Grid>
 
                 <!-- Automation -->

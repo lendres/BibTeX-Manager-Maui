@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<fieldprocessorgroup name="Month Numbers to Text" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<fieldprocessors>
+		<!-- Change month numbers to strings. -->
+		<!-- The regular expression [0]* matches leading zeros. -->
+		<!-- The ^ and $ characters are used to match the entire string. -->
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*1$" replacement="January">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*2$" replacement="February">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*3$" replacement="March">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*4$" replacement="April">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*5$" replacement="May">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*6$" replacement="June">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*7$" replacement="July">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*8$" replacement="August">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*9$" replacement="September">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*10$" replacement="October">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*11$" replacement="November">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="^[0]*12$" replacement="December">
+			<fields><field>month</field></fields>
+		</fieldprocessor>
+		
+	</fieldprocessors>
+</fieldprocessorgroup>

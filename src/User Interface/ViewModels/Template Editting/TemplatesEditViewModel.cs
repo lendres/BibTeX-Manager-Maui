@@ -6,7 +6,6 @@ using DigitalProduction.Maui.ComponentModel;
 using DigitalProduction.Maui.Enums;
 using DigitalProduction.Maui.ViewModels;
 using DigitalProduction.Xml.Serialization;
-using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -47,9 +46,10 @@ public partial class TemplatesEditViewModel : DataGridBaseViewModel<NameMap>
 	public partial string?											SelectedTemplate { get; set; }
 
 	[ObservableProperty]
-	public partial ObservableCollection<ObservableWrapper<string>>	ObservableTemplateFieldNames { get; set; } = new();
+	public partial ObservableCollection<ObservableString>			ObservableTemplateFieldNames { get; set; } = new();
 
 	private SerializableDictionary<string, List<string>>			TemplatesDictionary { get; set; }
+
 	private string?													LastTemplateSelected { get; set; } = null;
 
 	[ObservableProperty]

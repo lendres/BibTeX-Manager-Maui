@@ -73,6 +73,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="ViewModels\Field Quality\GroupManagerViewModel.cs~RF70a88363.TMP" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
 		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.*" />
 		<PackageReference Include="DigitalProduction.Maui.Images" Version="1.1.0" />
@@ -81,6 +85,36 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="Views\Field Quality\FieldProcessorGroupView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\FieldProcessorHeaderView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\FieldProcessorFieldsView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\GroupManagerView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\AddFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\StringCaseFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\SentenceEndingSpacesFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\QuoteFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\RemoveEnclosingBracesFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\StringReplacementFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\Name Mapping\NameMapView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -127,6 +161,30 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Views\Field Quality\AddFieldProcessorView.xaml.cs">
+		  <DependentUpon>AddFieldProcessorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\FieldProcessorGroupView.xaml.cs">
+		  <DependentUpon>FieldProcessorGroupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\FieldProcessorHeaderView.xaml.cs">
+		  <DependentUpon>FieldProcessorHeaderView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\FieldProcessorFieldsView.xaml.cs">
+		  <DependentUpon>FieldProcessorFieldsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\StringCaseFieldProcessorView.xaml.cs">
+		  <DependentUpon>StringCaseFieldProcessorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\SentenceEndingSpacesFieldProcessorView.xaml.cs">
+		  <DependentUpon>SentenceEndingSpacesFieldProcessorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\RemoveEnclosingBracesFieldProcessorView.xaml.cs">
+		  <DependentUpon>RemoveEnclosingBracesFieldProcessorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\QuoteFieldProcessorView.xaml.cs">
+		  <DependentUpon>QuoteFieldProcessorView.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Views\Name Mapping\GetNameView.xaml.cs">
 		  <DependentUpon>GetNameView.xaml</DependentUpon>
 		</Compile>

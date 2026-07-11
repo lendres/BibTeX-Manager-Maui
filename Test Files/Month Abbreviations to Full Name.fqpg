@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<fieldprocessorgroup name="Month Abbreviations to Full Name" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <fieldprocessors>
+        <!-- Change month abbreviations to full names. -->
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="jan" replacement="January">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="feb" replacement="February">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="mar" replacement="March">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="apr" replacement="April">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="may" replacement="May">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="jun" replacement="June">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="jul" replacement="July">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="aug" replacement="August">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="sep" replacement="September">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="oct" replacement="October">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="nov" replacement="November">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+
+        <fieldprocessor xsi:type="StringReplacementFieldProcessor" fieldstoprocess="OnlySpecified" pattern="dec" replacement="December">
+            <fields><field>month</field></fields>
+        </fieldprocessor>
+        
+    </fieldprocessors>
+</fieldprocessorgroup>

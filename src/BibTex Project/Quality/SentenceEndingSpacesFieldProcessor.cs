@@ -20,7 +20,8 @@ public class SentenceEndingSpacesFieldProcessor : FieldProcessor
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public SentenceEndingSpacesFieldProcessor()
+	public SentenceEndingSpacesFieldProcessor() :
+		base(nameof(SentenceEndingSpacesFieldProcessor))
 	{
 	}
 

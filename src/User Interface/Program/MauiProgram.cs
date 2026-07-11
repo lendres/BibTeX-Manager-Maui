@@ -1,13 +1,13 @@
 ﻿using BibTeXManager.ViewModels;
 using BibTeXManager.Views;
 using CommunityToolkit.Maui;
-using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui.Media;
 using CommunityToolkit.Maui.Storage;
 using DigitalProduction.Maui;
 using DigitalProduction.Maui.Services;
 using DigitalProduction.Maui.Storage;
 using DigitalProduction.Maui.UI;
+using Microsoft.Extensions.Logging;
 
 namespace BibTeXManager;
 
@@ -76,6 +76,31 @@ public static class MauiProgram
 
 		services.AddTransient<TemplatesEditView>();
 		services.AddTransient<TemplatesEditViewModel>();
+
+		services.AddTransient<GroupManagerView>();
+		services.AddTransient<GroupManagerViewModel>();
+		services.AddTransient<GroupManagerIncludeViewModel>();
+
+		services.AddTransient<FieldProcessorGroupView>();
+		services.AddTransient<FieldProcessorGroupViewModel>();
+
+		services.AddTransient<QuoteFieldProcessorView>();
+		services.AddTransient<QuoteFieldProcessorViewModel>();
+
+		services.AddTransient<StringReplacementFieldProcessorView>();
+		services.AddTransient<StringReplacementFieldProcessorViewModel>();
+
+		services.AddTransient<RemoveEnclosingBracesFieldProcessorView>();
+		services.AddTransient<RemoveEnclosingBracesFieldProcessorViewModel>();
+
+		services.AddTransient<SentenceEndingSpacesFieldProcessorView>();
+		services.AddTransient<SentenceEndingSpacesFieldProcessorViewModel>();
+
+		services.AddTransient<StringCaseFieldProcessorView>();
+		services.AddTransient<StringCaseFieldProcessorViewModel>();
+
+		services.AddTransient<StringReplacementFieldProcessorView>();
+		services.AddTransient<StringReplacementFieldProcessorViewModel>();
 	}
 
 	private static void RegisterServices(IServiceCollection services)
