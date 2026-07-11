@@ -14,8 +14,8 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	public GroupManagerViewModel()
 	{
+		// Create the group manager by deserializing the field quality processing file.
 		FieldQualityProcessingFile	= BibTeXProject.Instance!.Settings.FieldQualityProcessingFile;
-
 		GroupManager				= GroupManager.Deserialize(FieldQualityProcessingFile) ?? throw new Exception("Failed to deserialize group manager.");
 
 		List<string> includeNames	= GroupManager.IncludeNames;
@@ -26,8 +26,8 @@ public partial class GroupManagerViewModel : ObservableObject
 		{
 			AddNewGroupManagerIncludeViewModel(
 				Path.GetFileNameWithoutExtension(name),
-				includeNames.Contains(name, StringComparer.CurrentCultureIgnoreCase),
-				FieldProcessorGroup.Deserialize(Path.Combine(GroupManager.Directory, name)) ?? new FieldProcessorGroup()
+				includeNames.Contains(name, StringComparer.CurrentCultureIgnoreCase)
+				//FieldProcessorGroup.Deserialize(Path.Combine(GroupManager.Directory, name)) ?? new FieldProcessorGroup()
 			);
 		}
 	}
@@ -71,7 +71,7 @@ public partial class GroupManagerViewModel : ObservableObject
 
 	public void NewFieldProcessingGroup(string name)
 	{
-		AddNewGroupManagerIncludeViewModel(name, false, new FieldProcessorGroup());
+		AddNewGroupManagerIncludeViewModel(name, false);
 		Modified = true;
 	}
 
@@ -101,25 +101,24 @@ public partial class GroupManagerViewModel : ObservableObject
 	{
 		GroupManager.IncludeNames = FieldProcessingGroups
 			.Where(include => include.IsIncluded)
-			.Select(include => include.Name)
+			.Select(include => include.Name + GroupManager.FieldQualityProcessingGroupExtension)
 			.ToList();
 
-		GroupManager.DeleteAllFieldQualityProcessingGroups();
-		foreach (GroupManagerIncludeViewModel include in FieldProcessingGroups)
-		{
-			include.FieldProcessorGroup.Serialize(Path.Combine(GroupManager.Directory, Path.ChangeExtension(include.Name, GroupManager.FieldQualityProcessingGroupExtension)));
-		}
+		//GroupManager.DeleteAllFieldQualityProcessingGroups();
+		//foreach (GroupManagerIncludeViewModel include in FieldProcessingGroups)
+		//{
+		//	include.FieldProcessorGroup.Serialize(Path.Combine(GroupManager.Directory, Path.ChangeExtension(include.Name, GroupManager.FieldQualityProcessingGroupExtension)));
+		//}
 		GroupManager.Serialize();
-		Modified = true;
+		Modified = false;
 	}
 
-	private void AddNewGroupManagerIncludeViewModel(string name, bool isIncluded, FieldProcessorGroup fieldProcessorGroup)
+	private void AddNewGroupManagerIncludeViewModel(string name, bool isIncluded)
 	{
 		GroupManagerIncludeViewModel groupManagerIncludeViewModel = new GroupManagerIncludeViewModel
 		{
 			Name				= name,
 			IsIncluded			= isIncluded,
-			FieldProcessorGroup	= fieldProcessorGroup
 		};
 		groupManagerIncludeViewModel.PropertyChanged += (sender, args) =>
 		{

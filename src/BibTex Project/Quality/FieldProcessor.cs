@@ -1,5 +1,4 @@
 ﻿using BibTeXLibrary;
-using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
