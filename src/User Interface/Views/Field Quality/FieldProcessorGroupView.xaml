@@ -15,6 +15,7 @@
 	</Shell.BackButtonBehavior>
 
 	<ContentPage.Resources>
+		<mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
 		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
 		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
 		<dpconverters:EnumToStringConverter x:Key="PartTypeEnumToStringConverter" x:TypeArguments="bibtexproject:FieldsToProcess"/>
