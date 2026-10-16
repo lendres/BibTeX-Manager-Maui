@@ -316,7 +316,7 @@
                         <dpcontrols:Stepper Grid.Column="0" VerticalOptions="Center" Minimum="1" Maximum="10"
 							Value="{Binding Settings.WriteSettings.StringEntryAlignAtTabStop}"
 							IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
-							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConvert1er}}"/>
+							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverter}}"/>
                         <Label Grid.Column="1" Text="Alignment Tab Stop" Margin="0" VerticalTextAlignment="Center"
 							IsEnabled="{Binding Settings.WriteSettings.AlignFieldValues}"
 							IsVisible="{Binding Settings.WriteSettings.WhiteSpace, Converter={StaticResource UseTabsConverter}}"/>
