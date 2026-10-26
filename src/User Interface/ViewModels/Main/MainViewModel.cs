@@ -113,6 +113,7 @@ public partial class MainViewModel : ProjectViewModel<BibTeXProject>
 	private void OnProjectOpenChanged()
 	{
 		ValidateHasTemplates();
+        ValidateCanAdd();
 	}
 
 	partial void OnSelectedStringItemChanged(object? value)
