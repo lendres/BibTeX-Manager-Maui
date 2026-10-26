@@ -27,7 +27,7 @@ public partial class BibEntryViewModel : ObservableObject
 
 	public BibEntryViewModel()
 	{
-		_timer = new Timer((obj) => CheckClipboard(), null, 200, Timeout.Infinite);
+		_timer = new Timer((obj) => CheckClipboard(), null, 200, 200);
 	}
 
 	#endregion
