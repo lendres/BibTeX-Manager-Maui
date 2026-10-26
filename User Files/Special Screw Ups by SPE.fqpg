@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<fieldprocessorgroup name="Special Screw Ups by SPE" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<fieldprocessors>
+		
+		<!-- Both how and why? You suck SPE. -->
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="\\\\%"
+			replacement="\%">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="\\\\&amp;amp;"
+			replacement="\&amp;">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="\\&amp;amp;"
+			replacement="\&amp;">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="\&amp;amp;"
+			replacement="\&amp;">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="\\\\$"
+			replacement="\$">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="\\\\&amp;lt;"
+			replacement="\textless{}">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>				
+		
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="\\\\&amp;gt;"
+			replacement="\textgreater{}">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+	</fieldprocessors>
+</fieldprocessorgroup>
+

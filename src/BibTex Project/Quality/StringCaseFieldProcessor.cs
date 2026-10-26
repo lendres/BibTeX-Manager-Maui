@@ -20,7 +20,8 @@ public class StringCaseFieldProcessor : FieldProcessor
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public StringCaseFieldProcessor()
+	public StringCaseFieldProcessor() :
+		base(nameof(StringCaseFieldProcessor))
 	{
 	}
 

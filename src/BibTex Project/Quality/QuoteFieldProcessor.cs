@@ -8,7 +8,8 @@ public class QuoteFieldProcessor : FieldProcessor
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public QuoteFieldProcessor()
+	public QuoteFieldProcessor() :
+		base(nameof(QuoteFieldProcessor))
 	{
 	}
 

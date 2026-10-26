@@ -18,7 +18,8 @@ public class StringReplacementFieldProcessor : FieldProcessor
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public StringReplacementFieldProcessor()
+	public StringReplacementFieldProcessor() :
+		base(nameof(StringReplacementFieldProcessor))
 	{
 	}
 

@@ -1,5 +1,4 @@
 ﻿using BibTeXLibrary;
-using BibTeXManager.Quality;
 using DigitalProduction.Xml.Serialization;
 using System.ComponentModel;
 using System.Xml.Serialization;

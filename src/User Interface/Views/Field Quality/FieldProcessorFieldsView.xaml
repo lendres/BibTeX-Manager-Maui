@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:project="clr-namespace:BibTeXManager;assembly=BibTeXProject"
+	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpcm="clr-namespace:DigitalProduction.Maui.ComponentModel;assembly=DigitalProduction.Maui"
+	x:DataType="viewmodel:FieldProcessorViewModel"
+    x:Class="BibTeXManager.Views.FieldProcessorFieldsView">
+
+	<ContentView.Resources>
+		<mct:EnumToIntConverter x:Key="EnumToIntConverter"/>
+		<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+	</ContentView.Resources>
+
+	<VerticalStackLayout>
+
+		<!-- Fields -->
+		<Border Grid.Row="3" StyleClass="SmallTitleBorderStyle" Margin="0,20,0,10">
+			<Label Text="Fields" StyleClass="SmallTitleLabelStyle"/>
+		</Border>
+		<Picker
+			Title="Fields to Process"
+			x:Name="_fieldsToProcessPicker"
+			ItemsSource="{Binding FieldsToProcessOptions}"
+			SelectedIndex="{Binding FieldsToProcess, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type project:FieldsToProcess}}">
+			<Picker.Behaviors>
+				<mct:EventToCommandBehavior
+                    x:TypeArguments="system:EventArgs"
+                    Command="{Binding SelectedFieldsToProcessCommand}"
+                    BindingContext="{Binding Path=BindingContext, Source={x:Reference _fieldsToProcessPicker}, x:DataType=Picker}"
+                    EventName="SelectedIndexChanged"/>
+			</Picker.Behaviors>
+		</Picker>
+
+		<Grid Grid.Row="4" StyleClass="DataGridEditStyle" Margin="0,20,0,0" Padding="0" IsVisible="{Binding ShowFields}">
+			<HorizontalStackLayout Grid.Row="0" Grid.Column="0" StyleClass="TopButtonRowStyle" Margin="0" Padding="0">
+				<Button Text="Add" Command="{Binding AddFieldCommand}" StyleClass="SquareButtonStyle"/>
+				<Button Text="Delete" Command="{Binding DeleteFieldCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
+				<Button Text="Move Up" Command="{Binding MoveFieldUpCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
+				<Button Text="Move Down" Command="{Binding MoveFieldDownCommand}" Pressed="ButtonPressed" StyleClass="SquareButton"/>
+			</HorizontalStackLayout>
+
+			<ScrollView Grid.Row="1" VerticalScrollBarVisibility="Always" Padding="0" Margin="0">
+				<Grid Padding="0,0,10,0">
+					<!-- Top padding is used so the controls do not scroll into the top text and buttons. -->
+					<CollectionView Grid.Row="0" ItemsSource="{Binding ObservableFieldNames}" Margin="0">
+						<CollectionView.ItemTemplate>
+							<DataTemplate x:DataType="dpcm:ObservableString">
+								<Grid Padding="0,3">
+									<Entry Grid.Column="0" Text="{Binding Value}" Focused="EntryFocused" Unfocused="EntryUnfocused"/>
+								</Grid>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>
+					</CollectionView>
+				</Grid>
+
+			</ScrollView>
+		</Grid>
+		
+	</VerticalStackLayout>
+</ContentView>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<fieldprocessorgroup name="Capitol Letters and Acronyms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<fieldprocessors>
+		
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="3D"
+			replacement="{3D}">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="FEA"
+			replacement="{FEA}">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="FEM"
+			replacement="{FEM}">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="CFD"
+			replacement="{CFD}">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="FPSO"
+			replacement="{FPSO}">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="BHA"
+			replacement="{BHA}">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="PDC"
+			replacement="{PDC}">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="RSS"
+			replacement="{RSS}">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="OnlySpecified"
+			pattern="RWD"
+			replacement="{RWD}">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+	</fieldprocessors>
+</fieldprocessorgroup>

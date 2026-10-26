@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<fieldprocessorgroup name="String Replacement" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<fieldprocessors>
+		
+		<!-- HTML characters. -->
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="All"
+			pattern="&amp;amp;"
+			replacement="\&amp;">
+			<fields></fields>
+		</fieldprocessor>
+		
+		<!-- Spacing. -->
+		<fieldprocessor xsi:type="StringReplacementFieldProcessor"
+			fieldstoprocess="All"
+			pattern="  "
+			replacement=" ">
+			<fields>
+				<field>title</field>
+				<field>abstract</field>
+			</fields>
+		</fieldprocessor>
+
+	</fieldprocessors>
+</fieldprocessorgroup>

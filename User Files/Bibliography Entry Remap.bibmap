@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<bibliographyentryremapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<maps>
+		<item key="proceedings">
+			<value name="Proceedings to InProceedings" totype="inproceedings">
+				<fieldmaps>
+					<namemap from="series" to="booktitle"/>
+					<namemap from="eprint" to="href"/>
+				</fieldmaps>
+			</value>
+		</item>
+		<item key="article">
+			<value name="Article" totype="article">
+				<fieldmaps>
+					<namemap from="publisher" to="organization"/>
+				</fieldmaps>
+			</value>
+		</item>
+	</maps>
+</bibliographyentryremapping>

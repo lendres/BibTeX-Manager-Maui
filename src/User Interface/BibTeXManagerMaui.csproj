@@ -73,36 +73,85 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="ViewModels\Field Quality\GroupManagerViewModel.cs~RF70a88363.TMP" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
-		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.*" />
+		<PackageReference Include="DigitalProduction.Maui.AppToolKit" Version="0.13.14" />
 		<PackageReference Include="DigitalProduction.Maui.Images" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="Views\HeaderView.xaml">
+		<MauiXaml Update="Views\Field Quality\FieldProcessorGroupView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\BibliographyEditView.xaml">
+		<MauiXaml Update="Views\Field Quality\FieldProcessorHeaderView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\StringsEditView.xaml">
+		<MauiXaml Update="Views\Field Quality\FieldProcessorFieldsView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\StringEditView.xaml">
+		<MauiXaml Update="Views\Field Quality\GroupManagerView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\SettingsView.xaml">
+		<MauiXaml Update="Views\Field Quality\AddFieldProcessorView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\EditRawBibEntryForm.xaml">
+		<MauiXaml Update="Views\Field Quality\StringCaseFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\SentenceEndingSpacesFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\QuoteFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\RemoveEnclosingBracesFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Field Quality\StringReplacementFieldProcessorView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Name Mapping\NameMapView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Name Mapping\GetNameView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Name Mapping\NameMappingView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Main\HeaderView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Main\Bibliography Entries\BibliographyEditView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Main\String Entries\StringsEditView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Main\String Entries\StringEditView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Template Editting\TypeToTemplateView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Template Editting\TemplatesEditView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Other\SettingsView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Main\Bibliography Entries\EditRawBibEntryForm.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\CorrectionView.xaml">
+		<MauiXaml Update="Views\Main\Bibliography Entries\CorrectionView.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\TemplateSelectionView.xaml">
+		<MauiXaml Update="Views\Main\Bibliography Entries\TemplateSelectionView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 	</ItemGroup>
@@ -112,28 +161,67 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Views\HeaderView.xaml.cs">
+		<Compile Update="Views\Field Quality\AddFieldProcessorView.xaml.cs">
+		  <DependentUpon>AddFieldProcessorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\FieldProcessorGroupView.xaml.cs">
+		  <DependentUpon>FieldProcessorGroupView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\FieldProcessorHeaderView.xaml.cs">
+		  <DependentUpon>FieldProcessorHeaderView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\FieldProcessorFieldsView.xaml.cs">
+		  <DependentUpon>FieldProcessorFieldsView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\StringCaseFieldProcessorView.xaml.cs">
+		  <DependentUpon>StringCaseFieldProcessorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\SentenceEndingSpacesFieldProcessorView.xaml.cs">
+		  <DependentUpon>SentenceEndingSpacesFieldProcessorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\RemoveEnclosingBracesFieldProcessorView.xaml.cs">
+		  <DependentUpon>RemoveEnclosingBracesFieldProcessorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Field Quality\QuoteFieldProcessorView.xaml.cs">
+		  <DependentUpon>QuoteFieldProcessorView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Name Mapping\GetNameView.xaml.cs">
+		  <DependentUpon>GetNameView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Name Mapping\NameMapView.xaml.cs">
+		  <DependentUpon>NameMapView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Name Mapping\NameMappingView.xaml.cs">
+		  <DependentUpon>NameMappingView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Main\HeaderView.xaml.cs">
 		  <DependentUpon>HeaderView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\BibliographyEditView.xaml.cs">
+		<Compile Update="Views\Main\Bibliography Entries\BibliographyEditView.xaml.cs">
 		  <DependentUpon>BibliographyEditView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\CorrectionView.xaml.cs">
+		<Compile Update="Views\Main\Bibliography Entries\CorrectionView.xaml.cs">
 		  <DependentUpon>CorrectionView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\MainView.xaml.cs">
+		<Compile Update="Views\Main\MainView.xaml.cs">
 		  <DependentUpon>MainView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\SettingsView.xaml.cs">
+		<Compile Update="Views\Template Editting\TypeToTemplateView.xaml.cs">
+		  <DependentUpon>TypeToTemplateView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Template Editting\TemplatesEditView.xaml.cs">
+		  <DependentUpon>TemplatesEditView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Other\SettingsView.xaml.cs">
 		  <DependentUpon>SettingsView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\StringsEditView.xaml.cs">
+		<Compile Update="Views\Main\String Entries\StringsEditView.xaml.cs">
 		  <DependentUpon>StringsEditView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\StringEditView.xaml.cs">
+		<Compile Update="Views\Main\String Entries\StringEditView.xaml.cs">
 		  <DependentUpon>StringEditView.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Views\TemplateSelectionView.xaml.cs">
+		<Compile Update="Views\Main\Bibliography Entries\TemplateSelectionView.xaml.cs">
 			<DependentUpon>TemplateSelectionView.xaml</DependentUpon>
 		</Compile>
 	</ItemGroup>

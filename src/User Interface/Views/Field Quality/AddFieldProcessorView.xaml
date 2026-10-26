@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dpviews:PopupView
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:dpconverters="clr-namespace:DigitalProduction.Maui.Converters;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
+	xmlns:viewmodels="clr-namespace:BibTeXManager.ViewModels"
+	x:Class="BibTeXManager.Views.AddFieldProcessorView"
+	x:DataType="viewmodels:AddFieldProcessorViewModel"
+	CanBeDismissedByTappingOutsideOfPopup="False">
+
+	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="192" MaximumHeightRequest="200">
+
+		<Border.Resources>
+			<ResourceDictionary>
+				<dpconverters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+			</ResourceDictionary>
+		</Border.Resources>
+
+		<VerticalStackLayout StyleClass="VerticalLayoutStyle">
+			<Label Text="Add Field Processor" StyleClass="Title"  HorizontalOptions="Start"/>
+
+			<VerticalStackLayout StyleClass="TitleVerticalStackStyle">
+				<Picker
+					Title="Processor Type"
+					x:Name="_typePicker"
+					ItemsSource="{Binding ProcessorTypes}"
+					SelectedItem="{Binding SelectedType}">
+				</Picker>
+				<!--<Label Text="{Binding ToName.Errors, Converter={StaticResource FirstValidationErrorConverter}}" StyleClass="InvalidLabelStyle"/>-->
+			</VerticalStackLayout>
+
+			<HorizontalStackLayout StyleClass="BottomButtonRowStyle">
+				<Button 
+					Text="OK"
+					HorizontalOptions="End"
+					StyleClass="StandardSizeButtonStyle"
+					Clicked="OnSaveButtonClicked"/>
+				<Button 
+					Text="Cancel"
+					StyleClass="StandardSizeButtonStyle"
+					HorizontalOptions="End"
+					Clicked="OnCancelButtonClicked"/>
+			</HorizontalStackLayout>
+		</VerticalStackLayout>
+	</Border>
+</dpviews:PopupView>

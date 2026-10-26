@@ -1,6 +1,4 @@
 ﻿using BibTeXLibrary;
-using BibTeXManager.Quality;
-using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
@@ -20,7 +18,7 @@ public abstract class FieldProcessor
 	#region Fields
 
 	private FieldsToProcess					_fieldsToProcess	= FieldsToProcess.All;
-	private	readonly BindingList<string>	_fieldNames			= [];
+	private	readonly List<string>			_fieldNames			= [];
 	protected string						_pattern			= string.Empty;
 
 	#endregion
@@ -30,13 +28,17 @@ public abstract class FieldProcessor
 	/// <summary>
 	/// Default constructor.
 	/// </summary>
-	public FieldProcessor()
+	public FieldProcessor(string xsiType)
 	{
+		XsiType = xsiType;
 	}
 
 	#endregion
 
 	#region Properties
+
+	[XmlIgnore()]
+	public string XsiType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Process any field or just those specified.
@@ -48,7 +50,7 @@ public abstract class FieldProcessor
 	/// Field names to process.
 	/// </summary>
 	[XmlArray("fields"), XmlArrayItem("field")]
-	public BindingList<string> FieldNames
+	public List<string> FieldNames
 	{
 		get
 		{

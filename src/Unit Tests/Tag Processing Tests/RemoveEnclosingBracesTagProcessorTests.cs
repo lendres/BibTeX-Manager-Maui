@@ -1,6 +1,5 @@
 using BibTeXLibrary;
 using BibTeXManager;
-using BibTeXManager.Quality;
 
 namespace BibTeXManagerUnitTests;
 
