@@ -133,7 +133,7 @@ public partial class MainView : DigitalProductionMainPage
 			}
 			catch (Exception exception)
 			{
-				await DisplayAlert("Write Error", exception.Message, "OK");
+				await DisplayAlertAsync("Write Error", exception.Message, "OK");
 			}
 		}
 	}
@@ -186,24 +186,24 @@ public partial class MainView : DigitalProductionMainPage
 		GetActiveGridView().OnDeleteEntry(sender, eventArgs);
 	}
 
-	void OnFind(object sender, EventArgs eventArgs)
+	async void OnFind(object sender, EventArgs eventArgs)
 	{
-		ShowFindDialogBox();
+		await ShowFindDialogBoxAsync();
 	}
 
-	void OnFindNext(object sender, EventArgs eventArgs)
+	async void OnFindNext(object sender, EventArgs eventArgs)
 	{
 		if (_viewModel.RequireSearchString)
 		{
-			ShowFindDialogBox();
+			await ShowFindDialogBoxAsync();
 		}
 		else
 		{
-			SelectNextFoundItem();
+			await SelectNextFoundItemAsync();
 		}
 	}
 
-	private async void ShowFindDialogBox()
+	private async Task ShowFindDialogBoxAsync()
 	{
 		SearchTermsViewModel    viewModel   = new();
 		SearchTermsView         view        = new(viewModel);
@@ -218,24 +218,24 @@ public partial class MainView : DigitalProductionMainPage
 			SearchResult searchResult = GetActiveGridView().Find(viewModel.SearchTermsString);
 			if (searchResult == SearchResult.NoItemsFound)
 			{
-				await DisplayAlert("Not Found", "No entries found for the specified search term(s).\nSearch string: "+viewModel.SearchTermsString , "OK");
+				await DisplayAlertAsync("Not Found", "No entries found for the specified search term(s).\nSearch string: "+viewModel.SearchTermsString , "OK");
 			}
 			else
 			{
-				SelectNextFoundItem();
+				await SelectNextFoundItemAsync();
 			}
 		}
 	}
 
-	private void SelectNextFoundItem()
+	private async Task SelectNextFoundItemAsync()
 	{
 		switch (GetActiveGridView().SelectNextFoundItem())
 		{
 			case SearchResult.NoMoreFoundItems:
-				DisplayAlert("Find", "No more items were found.", "OK");
+				await DisplayAlertAsync("Find", "No more items were found.", "OK");
 				break;
 			case SearchResult.NoItemsFound:
-				DisplayAlert("Find", "No items were found.", "OK");
+				await DisplayAlertAsync("Find", "No items were found.", "OK");
 				break;
 		};
 	}

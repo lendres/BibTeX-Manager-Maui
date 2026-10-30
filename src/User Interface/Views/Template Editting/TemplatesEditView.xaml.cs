@@ -87,7 +87,7 @@ public partial class TemplatesEditView : ContentPage
 
 	async void OnDeleteNameMap(object sender, EventArgs eventArgs)
 	{
-		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+		bool result = await DisplayAlertAsync("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 
 		if (result)
 		{
@@ -129,11 +129,11 @@ public partial class TemplatesEditView : ContentPage
 	{
 		if (_viewModel.IsCurrentTemplateInUse())
 		{
-			await DisplayAlert("Delete", "The selected template is in use. Select a new template for any types mapped to this template before attempting to delete it..", "OK");
+			await DisplayAlertAsync("Delete", "The selected template is in use. Select a new template for any types mapped to this template before attempting to delete it..", "OK");
 			return;
 		}
 
-		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+		bool result = await DisplayAlertAsync("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 
 		if (result)
 		{
