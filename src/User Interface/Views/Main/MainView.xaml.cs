@@ -1,4 +1,7 @@
-﻿using BibTeXLibrary;
+﻿using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui;
+using BibTeXLibrary;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 using DigitalProduction.Maui.Controls;
@@ -204,9 +207,9 @@ public partial class MainView : DigitalProductionMainPage
 	{
 		SearchTermsViewModel    viewModel   = new();
 		SearchTermsView         view        = new(viewModel);
-		object?                 result      = await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool> result = await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResut && boolResut)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			_viewModel.SearchString = viewModel.SearchTermsString;
 			_stringsEditView.Find(viewModel.SearchTermsString);
@@ -294,13 +297,11 @@ public partial class MainView : DigitalProductionMainPage
 			}
 
 			CorrectionView		view		= new(viewModel);
-			object?				result		= await Shell.Current.ShowPopupAsync(view);
+			IPopupResult<MessageBoxYesNoToAllResult> result = await Shell.Current.ShowPopupAsync<MessageBoxYesNoToAllResult>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-			if (result is MessageBoxYesNoToAllResult messageBoxResult)
-			{
-				lastDialogResult	= messageBoxResult;
-				breakNext			= messageBoxResult == MessageBoxYesNoToAllResult.Cancel;
-			}
+			MessageBoxYesNoToAllResult messageBoxResult = result.WasDismissedByTappingOutsideOfPopup ? MessageBoxYesNoToAllResult.Cancel : result.Result;
+			lastDialogResult	= messageBoxResult;
+			breakNext			= messageBoxResult == MessageBoxYesNoToAllResult.Cancel;
 		}
 	}
 
@@ -319,7 +320,7 @@ public partial class MainView : DigitalProductionMainPage
 	async void OnAbout(object sender, EventArgs eventArgs)
 	{
 		AboutView1 view = new(new AboutViewModel(true));
-		_ = await Shell.Current.ShowPopupAsync(view);
+		_ = await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 	}
 
 	#endregion

@@ -25,3 +25,11 @@ _BibTeX Manager_ includes features to keep bibliography entries and files ordere
 # What _BibTex Manager_ Is Not
 It is not a generalized full-feature reference/research manager.  If you are looking for one of those, consider Jabref.  It is a full-featured manager that includes algorithms for common cleanup issues.
 https://www.jabref.org/
+
+## Building
+
+Version 0.7.0 requires Windows, the .NET 10 SDK and MAUI workload, and the SDK's default C# 14 language version. Build the complete src/BibTeX Manager Maui.sln solution in Release configuration. The .NET 9 application version is no longer maintained.
+
+The application uses DigitalProduction.BibTeXLibrary 0.10.0, DigitalProduction.Projects 0.2.0, DigitalProduction.Maui.AppToolKit 0.15.2 and DigitalProduction.Maui.Images 1.2.0. Restore these packages from the configured NuGet feeds; the upgrade builds them into the local NuGetTesting feed.
+
+The remaining obsolete DisplayAlert warnings are tracked in [issue #128](https://github.com/lendres/BibTeX-Manager-Maui/issues/128).

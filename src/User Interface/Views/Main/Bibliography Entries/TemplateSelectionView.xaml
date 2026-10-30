@@ -6,8 +6,7 @@
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	xmlns:dpcontrols="clr-namespace:DigitalProduction.Maui.Controls;assembly=DigitalProduction.Maui"
 	x:DataType="viewmodel:TemplateSelectionViewModel"
-	x:Class="BibTeXManager.Views.TemplateSelectionView"
-	CanBeDismissedByTappingOutsideOfPopup="False">
+	x:Class="BibTeXManager.Views.TemplateSelectionView">
 
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="360" MinimumHeightRequest="200" MaximumHeightRequest="201">
 

@@ -1,3 +1,6 @@
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui;
 using BibTeXLibrary;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
@@ -48,9 +51,9 @@ public partial class NameMappingView : ContentPage
 	{
 		GetNameViewModel	viewModel	= new(ViewModel.BibliographyEntryTypes!);
 		GetNameView			view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool>				result		= await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			ViewModel.NewBibliographyEntryMap(viewModel.Name);
 		}
@@ -60,9 +63,9 @@ public partial class NameMappingView : ContentPage
 	{
 		GetNameViewModel	viewModel	= new(ViewModel.SelectedType!, ViewModel.BibliographyEntryTypes!);
 		GetNameView			view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool>				result		= await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			ViewModel.RenameBibliographyEntryMap(ViewModel.SelectedType!, viewModel.Name);
 		}
@@ -82,9 +85,9 @@ public partial class NameMappingView : ContentPage
 	{
 		NameMapViewModel	viewModel	= new(ViewModel.SelectedBibliographyEntryMap!.InUseTypes);
 		NameMapView			view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool>				result		= await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			ViewModel.Insert(viewModel.NameMap);
 		}
@@ -95,9 +98,9 @@ public partial class NameMappingView : ContentPage
 		NameMap				nameMap			= new(ViewModel.SelectedItem!);
 		NameMapViewModel	viewModel		= new(nameMap, ViewModel.SelectedBibliographyEntryMap!.InUseTypes);
 		NameMapView			view			= new(viewModel);
-		object?				result			= await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool>				result			= await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			ViewModel.ReplaceSelected(viewModel.NameMap);
 		}

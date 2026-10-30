@@ -8,8 +8,7 @@
 	xmlns:dpviews="clr-namespace:DigitalProduction.Maui.Views;assembly=DigitalProduction.Maui.AppToolkit"
 	xmlns:viewModels="clr-namespace:BibTeXManager.ViewModels"
 	x:DataType="viewModels:GetNameViewModel"
-	x:Class="BibTeXManager.Views.GetNameView"
-	CanBeDismissedByTappingOutsideOfPopup="False">
+	x:Class="BibTeXManager.Views.GetNameView">
 
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="400" MinimumHeightRequest="220">
 

@@ -1,4 +1,7 @@
-﻿using BibTeXLibrary;
+﻿using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui;
+using BibTeXLibrary;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 
@@ -30,9 +33,9 @@ public partial class StringsEditView : BibliographyPartDataGridView<StringsEditV
 	{
 		StringEditViewModel	viewModel	= new();
 		StringEditView		view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool>				result		= await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			ViewModel.Insert(viewModel.StringEntry);
 		}
@@ -43,9 +46,9 @@ public partial class StringsEditView : BibliographyPartDataGridView<StringsEditV
 		StringEntry			stringEntry	= new(ViewModel.SelectedItem!);
 		StringEditViewModel	viewModel	= new(stringEntry);
 		StringEditView		view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool>				result		= await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			ViewModel.ReplaceSelected(viewModel.StringEntry);
 		}

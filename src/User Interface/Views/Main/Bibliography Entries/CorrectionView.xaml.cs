@@ -1,10 +1,11 @@
-﻿using BibTeXManager.ViewModels;
+﻿using CommunityToolkit.Maui.Views;
+using BibTeXManager.ViewModels;
 using DigitalProduction.Maui.Controls;
 using DigitalProduction.Maui.Views;
 
 namespace BibTeXManager.Views;
 
-public partial class CorrectionView : PopupView
+public partial class CorrectionView : Popup<MessageBoxYesNoToAllResult>
 {
 	#region Fields
 
@@ -16,6 +17,10 @@ public partial class CorrectionView : PopupView
 
 	public CorrectionView(CorrectionViewModel viewModel)
 	{
+		// The content border and shared popup style control the dialog appearance.
+		ClearValue(BackgroundColorProperty);
+		ClearValue(PaddingProperty);
+
 		BindingContext	= viewModel;
 		_viewModel		= viewModel;
 		InitializeComponent();
@@ -40,7 +45,7 @@ public partial class CorrectionView : PopupView
 		await HandleResult(MessageBoxYesNoToAllResult.No);
 	}
 
-	async new void OnCancelButtonClicked(object? sender, EventArgs eventArgs)
+	async void OnCancelButtonClicked(object? sender, EventArgs eventArgs)
 	{
 		await HandleResult(MessageBoxYesNoToAllResult.Cancel);
 	}

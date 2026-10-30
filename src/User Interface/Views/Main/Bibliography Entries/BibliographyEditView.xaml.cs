@@ -1,3 +1,6 @@
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui;
 using BibTeXLibrary;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
@@ -36,9 +39,9 @@ public partial class BibliographyEditView : BibliographyPartDataGridView<Bibliog
 	{
 		TemplateSelectionViewModel	viewModel	= new();
 		TemplateSelectionView		view		= new(viewModel);
-		object? result = await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool> result = await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			BibEntry entry = BibEntry.NewBibEntryFromTemplate(ViewModel.Project.BibEntryInitialization, viewModel.Type);
 

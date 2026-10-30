@@ -9,8 +9,7 @@
 	xmlns:viewmodel="clr-namespace:BibTeXManager.ViewModels"
 	x:Class="BibTeXManager.Views.StringEditView"
 	x:DataType="viewmodel:StringEditViewModel"
-	x:Name="self"
-	CanBeDismissedByTappingOutsideOfPopup="False">
+	x:Name="self">
 
 	<Border StyleClass="PopupFrameStyle" MinimumWidthRequest="570" MinimumHeightRequest="380">
 
