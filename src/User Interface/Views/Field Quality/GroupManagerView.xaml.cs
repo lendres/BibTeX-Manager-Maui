@@ -1,3 +1,6 @@
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
 
@@ -48,9 +51,9 @@ public partial class GroupManagerView : ContentPage
 	{
 		GetNameViewModel	viewModel	= new(_viewModel.AvailableIncludeNames);
 		GetNameView			view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool>				result		= await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			_viewModel.NewFieldProcessingGroup(viewModel.Name);
 		}
@@ -60,9 +63,9 @@ public partial class GroupManagerView : ContentPage
 	{
 		GetNameViewModel	viewModel	= new(_viewModel.SelectedFieldProcessingGroup!.Name, _viewModel.AvailableIncludeNames);
 		GetNameView			view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool>				result		= await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			_viewModel.RenameFieldProcessingGroup(viewModel.Name);
 		}

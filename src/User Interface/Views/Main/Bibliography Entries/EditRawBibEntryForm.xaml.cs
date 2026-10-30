@@ -1,3 +1,6 @@
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui;
 using BibTeXLibrary;
 using BibTeXManager;
 using BibTeXManager.ViewModels;
@@ -112,13 +115,11 @@ public partial class EditRawBibEntryForm : ContentPage
 			}
 
 			CorrectionView		view		= new(viewModel);
-			object?				result		= await Shell.Current.ShowPopupAsync(view);
+			IPopupResult<MessageBoxYesNoToAllResult> result = await Shell.Current.ShowPopupAsync<MessageBoxYesNoToAllResult>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-			if (result is MessageBoxYesNoToAllResult messageBoxResult)
-			{
-				lastDialogResult	= messageBoxResult;
-				breakNext			= messageBoxResult == MessageBoxYesNoToAllResult.Cancel;
-			}
+			MessageBoxYesNoToAllResult messageBoxResult = result.WasDismissedByTappingOutsideOfPopup ? MessageBoxYesNoToAllResult.Cancel : result.Result;
+			lastDialogResult	= messageBoxResult;
+			breakNext			= messageBoxResult == MessageBoxYesNoToAllResult.Cancel;
 		}
 	}
 }

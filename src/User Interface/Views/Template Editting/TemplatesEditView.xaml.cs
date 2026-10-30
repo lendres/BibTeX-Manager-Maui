@@ -1,3 +1,6 @@
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui;
 using BibTeXLibrary;
 using BibTeXManager.ViewModels;
 using CommunityToolkit.Maui.Views;
@@ -61,9 +64,9 @@ public partial class TemplatesEditView : ContentPage
 	{
 		TypeToTemplateViewModel viewModel	= new(_viewModel.Initializer.TypeNames);
 		TypeToTemplateView		view		= new(viewModel);
-		object?					result		= await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool>					result		= await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			_viewModel.Insert(viewModel.NameMap);
 		}
@@ -74,9 +77,9 @@ public partial class TemplatesEditView : ContentPage
 		NameMap					nameMap		= new(_viewModel.SelectedItem!);
 		TypeToTemplateViewModel	viewModel	= new(nameMap, _viewModel.Initializer.TypeNames);
 		TypeToTemplateView		view		= new(viewModel);
-		object? result = await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool> result = await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			_viewModel.ReplaceSelected(viewModel.NameMap);
 		}
@@ -102,9 +105,9 @@ public partial class TemplatesEditView : ContentPage
 	{
 		GetNameViewModel	viewModel	= new(_viewModel.TemplateNames!.ToList());
 		GetNameView			view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool>				result		= await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			_viewModel.NewTemplate(viewModel.Name);
 		}
@@ -114,9 +117,9 @@ public partial class TemplatesEditView : ContentPage
 	{
 		GetNameViewModel	viewModel	= new(_viewModel.SelectedTemplate!, _viewModel.TemplateNames!.ToList());
 		GetNameView			view		= new(viewModel);
-		object?				result		= await Shell.Current.ShowPopupAsync(view);
+		IPopupResult<bool>				result		= await Shell.Current.ShowPopupAsync<bool>(view, new PopupOptions { CanBeDismissedByTappingOutsideOfPopup = false, Shape = null, Shadow = null });
 
-		if (result is bool boolResult && boolResult)
+		if (!result.WasDismissedByTappingOutsideOfPopup && result.Result)
 		{
 			_viewModel.RenameTemplate(_viewModel.SelectedTemplate!, viewModel.Name);
 		}
