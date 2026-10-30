@@ -111,7 +111,7 @@ public abstract class BibliographyPartDataGridView<TViewModel, TPart> : Bibliogr
 
 	public async void OnDeleteEntry(object sender, EventArgs eventArgs)
 	{
-		bool result = await _dialogService.HostingPage!.DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+		bool result = await _dialogService.HostingPage!.DisplayAlertAsync("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 		if (result)
 		{
 			ViewModel.Delete();

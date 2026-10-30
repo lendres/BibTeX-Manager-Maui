@@ -56,7 +56,7 @@ public partial class FieldProcessorGroupView : ContentPage
 
 	private async void OnDeleteProcessor(object sender, EventArgs eventArgs)
 	{
-		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+		bool result = await DisplayAlertAsync("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 
 		if (result)
 		{

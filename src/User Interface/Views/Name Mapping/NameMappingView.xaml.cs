@@ -73,7 +73,7 @@ public partial class NameMappingView : ContentPage
 
 	private async void OnDeleteBibliographyEntryMap(object sender, EventArgs eventArgs)
 	{
-		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+		bool result = await DisplayAlertAsync("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 
 		if (result)
 		{
@@ -108,7 +108,7 @@ public partial class NameMappingView : ContentPage
 
 	async void OnDeleteFieldMap(object sender, EventArgs eventArgs)
 	{
-		bool result = await DisplayAlert("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
+		bool result = await DisplayAlertAsync("Delete", "Delete the selected item, do you wish to continue?", "Yes", "No");
 
 		if (result)
 		{
